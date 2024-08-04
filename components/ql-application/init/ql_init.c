@@ -432,7 +432,7 @@ static void ql_init_demo_thread(void *param)
 #endif
 
 #ifdef QL_APP_FEATURE_MQTT
-	//ql_mqtt_app_init();
+	ql_mqtt_app_init();
 #endif
 #ifdef QL_APP_FEATURE_SSL
 	//ql_ssl_app_init();

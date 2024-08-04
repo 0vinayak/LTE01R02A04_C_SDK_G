@@ -12,6 +12,8 @@ target_include_directories(${target} PUBLIC inc)
 
 target_sources(${target} PRIVATE
 	mqtt_demo.c
+	data.c
+	pbtools.c
 )
 
 relative_glob(srcs include/*.h src/*.c inc/*.h)

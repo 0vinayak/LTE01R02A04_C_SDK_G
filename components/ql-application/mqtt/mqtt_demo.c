@@ -28,15 +28,19 @@ WHEN              WHO         WHAT, WHERE, WHY
 #include "ql_mqttclient.h"
 
 #include "ql_ssl.h"
+#include "base64.h"
 
-#define QL_MQTT_LOG_LEVEL	            QL_LOG_LEVEL_INFO
-#define QL_MQTT_LOG(msg, ...)			QL_LOG(QL_MQTT_LOG_LEVEL, "ql_MQTT", msg, ##__VA_ARGS__)
-#define QL_MQTT_LOG_PUSH(msg, ...)	    QL_LOG_PUSH("ql_MQTT", msg, ##__VA_ARGS__)
+#include "data.h"
+#include "pbtools.h"
+
+#define QL_MQTT_LOG_LEVEL QL_LOG_LEVEL_INFO
+#define QL_MQTT_LOG(msg, ...) QL_LOG(QL_MQTT_LOG_LEVEL, "ql_MQTT", msg, ##__VA_ARGS__)
+#define QL_MQTT_LOG_PUSH(msg, ...) QL_LOG_PUSH("ql_MQTT", msg, ##__VA_ARGS__)
 static ql_task_t mqtt_task = NULL;
 
-#define MQTT_CLIENT_IDENTITY        "quectel_01"
-#define MQTT_CLIENT_USER            ""
-#define MQTT_CLIENT_PASS            ""
+#define MQTT_CLIENT_IDENTITY "Amigo Bike"
+#define MQTT_CLIENT_USER "test"
+#define MQTT_CLIENT_PASS "3Motorad"
 
 
 #define MQTT_CLIENT_ONENET_PRODUCTID             "417661"
@@ -46,15 +50,15 @@ static ql_task_t mqtt_task = NULL;
 
 #define USE_CRT_BUFFER 0
 
-#define MQTT_CLIENT_QUECTEL_URL                  "mqtt://220.180.239.212:8306"
-#define MQTT_CLIENT_ONENET_URL                   "mqtt://mqtts.heclouds.com:1883" //onenet 的ip地址
+#define MQTT_CLIENT_QUECTEL_URL "mqtts://mqtt.emotorad.com:8883"
+#define MQTT_CLIENT_ONENET_URL "mqtts://mqtt.emotorad.com:8883" // onenet 的ip地址
 
 #if USE_CRT_BUFFER
 #define MQTT_CLIENT_QUECTEL_SSL_URL              "mqtts://112.31.84.164:8308"
 #else
-#define MQTT_CLIENT_QUECTEL_SSL_URL              "mqtts://220.180.239.212:8307"
+#define MQTT_CLIENT_QUECTEL_SSL_URL "mqtts://mqtt.emotorad.com:8883"
 #endif
-#define MQTT_CLIENT_ONENET_SSL_URL               "mqtts://mqttstls.heclouds.com:8883"//onenet 的ip地址
+#define MQTT_CLIENT_ONENET_SSL_URL "mqtts://mqtt.emotorad.com:8883" // onenet 的ip地址
 
 // publist 的内容
 #define MQTT_PUB_MSG0 "{\"id\": 000000,\"dp\": {\"temperatrue\": [{\"v\": 0.001,}],\"power\": [{\"v\": 0.001,}]}}"
@@ -162,6 +166,31 @@ NeSK2tDE/kM2APQa0qJg2yzJydY28f+45vPXScNcmfhlJ8wHd/aV\r\n\
 -----END RSA PRIVATE KEY-----";
 #endif
 
+uint8_t encodedCore[1024];
+uint8_t encodedTrip1[256];
+uint8_t encodedTrip2[256];
+uint8_t encodedEnd[128];
+
+uint8_t sendCore[1024];
+uint8_t sendTrip1[256];
+uint8_t sendTrip2[256];
+uint8_t sendEnd[128];
+
+size_t encodedLengthBike;
+size_t encodedLengthTrip1;
+size_t encodedLengthTrip2;
+size_t encodedLengthEnd;
+
+struct com_emotorad_backend_aggregation_flink_data_bike_t *Bike_Core_Data;
+struct pbtools_heap_t *heap_core;
+
+struct com_emotorad_backend_aggregation_flink_data_trip1_t *Bike_Trip1_Data;
+struct pbtools_heap_t *heap_trip1;
+struct com_emotorad_backend_aggregation_flink_data_trip2_t *Bike_Trip2_Data;
+struct pbtools_heap_t *heap_trip2;
+struct com_emotorad_backend_aggregation_flink_data_end_t *Bike_End_Data;
+struct pbtools_heap_t *heap_end;
+
 static void mqtt_state_exception_cb(mqtt_client_t *client)
 {
 	QL_MQTT_LOG("mqtt session abnormal disconnect");
@@ -186,16 +215,148 @@ static void mqtt_requst_result_cb(mqtt_client_t *client, void *arg,int err)
 
 static void mqtt_inpub_data_cb(mqtt_client_t *client, void *arg, int pkt_id, const char *topic, const unsigned char *payload, unsigned short payload_len)
 {
-	QL_MQTT_LOG("topic: %s", topic);
-	QL_MQTT_LOG("payload: %s", payload);
+	QL_MQTT_LOG("topic on which message is received: %s", topic);
+	QL_MQTT_LOG("received payload: %s", payload);
 }
 
-static void mqtt_disconnect_result_cb(mqtt_client_t *client, void *arg,int err){
-	QL_MQTT_LOG("err: %d", err);
+// static void mqtt_disconnect_result_cb(mqtt_client_t *client, void *arg,int err){
+// 	QL_MQTT_LOG("err: %d", err);
 	
-	ql_rtos_semaphore_release(mqtt_semp);
+// 	ql_rtos_semaphore_release(mqtt_semp);
+// }
+
+char *base64Encoder(unsigned char input_str[])
+{
+	// Character set of base64 encoding scheme
+	char char_set[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+	int len_str;
+	// Resultant string
+	char *res_str = (char *)malloc(1000 * sizeof(char));
+
+	int index, no_of_bits = 0, padding = 0, val = 0, count = 0, temp;
+	int i, j, k = 0;
+
+	len_str = strlen((const char *)input_str);
+
+	// Loop takes 3 characters at a time from
+	// input_str and stores it in val
+	for (i = 0; i < len_str; i += 3)
+	{
+		val = 0, count = 0, no_of_bits = 0;
+
+		for (j = i; j < len_str && j <= i + 2; j++)
+		{
+			// binary data of input_str is stored in val
+			val = val << 8;
+
+			// (A + 0 = A) stores character in val
+			val = val | input_str[j];
+
+			// calculates how many time loop
+			// ran if "MEN" -> 3 otherwise "ON" -> 2
+			count++;
+		}
+
+		no_of_bits = count * 8;
+
+		// calculates how many "=" to append after res_str.
+		padding = no_of_bits % 3;
+
+		// extracts all bits from val (6 at a time)
+		// and find the value of each block
+		while (no_of_bits != 0)
+		{
+			// retrieve the value of each block
+			if (no_of_bits >= 6)
+			{
+				temp = no_of_bits - 6;
+
+				// binary of 63 is (111111) f
+				index = (val >> temp) & 63;
+				no_of_bits -= 6;
+			}
+			else
+			{
+				temp = 6 - no_of_bits;
+
+				// append zeros to right if bits are less than 6
+				index = (val << temp) & 63;
+				no_of_bits = 0;
+			}
+			res_str[k++] = char_set[index];
+		}
+	}
+
+	// padding is done here
+	for (i = 1; i <= padding; i++)
+	{
+		res_str[k++] = '=';
+	}
+
+	res_str[k] = '\0';
+
+	return res_str;
 }
-static void mqtt_app_thread(void * arg)
+
+static void make_Bike_message()
+{
+	// int rc;
+	// int size;
+
+	uint8_t workspace1[1024];
+
+	// heap_core->size = 4;
+
+	Bike_Core_Data = com_emotorad_backend_aggregation_flink_data_bike_new(&workspace1[0], sizeof(workspace1));
+	com_emotorad_backend_aggregation_flink_data_bike_init(Bike_Core_Data, heap_core);
+
+	com_emotorad_backend_aggregation_flink_data_bike_encode(Bike_Core_Data, &encodedCore[0], sizeof(encodedCore));
+}
+
+static void make_Trip1_message()
+{
+	// int rc;
+	// int size;
+
+	uint8_t workspace2[1024];
+	// heap_trip1->size = 512;
+
+	Bike_Trip1_Data = com_emotorad_backend_aggregation_flink_data_trip1_new(&workspace2[0], sizeof(workspace2));
+	com_emotorad_backend_aggregation_flink_data_trip1_init(Bike_Trip1_Data, heap_trip1);
+
+	com_emotorad_backend_aggregation_flink_data_trip1_encode(Bike_Trip1_Data, &encodedTrip1[0], sizeof(encodedTrip1));
+}
+
+static void make_Trip2_message()
+{
+	// int rc;
+	// int size;
+
+	uint8_t workspace3[1024];
+	// heap_trip2->size = 512;
+
+	Bike_Trip2_Data = com_emotorad_backend_aggregation_flink_data_trip2_new(&workspace3[0], sizeof(workspace3));
+	com_emotorad_backend_aggregation_flink_data_trip2_init(Bike_Trip2_Data, heap_trip2);
+
+	// size = com_emotorad_backend_aggregation_flink_data_trip2_encode(Bike_Trip2_Data, &encodedTrip2[0], sizeof(encodedTrip2));
+	com_emotorad_backend_aggregation_flink_data_trip2_encode(Bike_Trip2_Data, &encodedTrip2[0], sizeof(encodedTrip2));
+}
+
+static void make_End_message()
+{
+	// int rc;
+	// int size;
+
+	uint8_t workspace4[1024];
+	// heap_end->size = 512;
+	Bike_End_Data = com_emotorad_backend_aggregation_flink_data_end_new(&workspace4[0], sizeof(workspace4));
+	com_emotorad_backend_aggregation_flink_data_end_init(Bike_End_Data, heap_end);
+
+	com_emotorad_backend_aggregation_flink_data_end_encode(Bike_End_Data, &encodedEnd[0], sizeof(encodedEnd));
+}
+
+static void mqtt_app_thread(void *arg)
 {
 	int ret = 0;
 	int i = 0, run_num = 1;
@@ -205,9 +366,22 @@ static void mqtt_app_thread(void * arg)
 	mqtt_client_t  mqtt_cli;
 	uint8_t nSim = 0;
 	uint16_t sim_cid;
-    struct mqtt_connect_client_info_t  client_info = {0};
-    char *token = NULL;
-    int is_user_onenet = 1;
+	struct mqtt_connect_client_info_t client_info = {0};
+	// char *token = NULL;
+	int is_user_onenet = 0;
+
+	char *sendBikePacket;
+	char *sendTrip1Packet;
+	char *sendTrip2Packet;
+	char *sendEndPacket;
+
+	char sendBikeMqttPacket[152];
+	char sendTrip1MqttPacket[256];
+	char sendTrip2MqttPacket[256];
+	char sendEndMqttPacket[256];
+
+	mqtt_error_code_e subscribeResult;
+
 	ql_rtos_semaphore_create(&mqtt_semp, 0);
 	ql_rtos_task_sleep_s(10);
 
@@ -233,7 +407,7 @@ static void mqtt_app_thread(void * arg)
 	ql_set_data_call_asyn_mode(nSim, profile_idx, 0);
 
 	QL_MQTT_LOG("===start data call====");
-	ret=ql_start_data_call(nSim, profile_idx, QL_PDP_TYPE_IP, "uninet", NULL, NULL, 0); 
+	ret = ql_start_data_call(nSim, profile_idx, QL_PDP_TYPE_IP, "airtelgprs.com", NULL, NULL, 0);
 	QL_MQTT_LOG("===data call result:%d", ret);
 	if(ret != 0){
 		QL_MQTT_LOG("====data call failure!!!!=====");
@@ -286,59 +460,61 @@ static void mqtt_app_thread(void * arg)
 
 		QL_MQTT_LOG("mqtt_cli:%d", mqtt_cli);
 
-        if(is_user_onenet == 1)
-        {
-    		client_info.keep_alive = 60;
-    		client_info.pkt_timeout = 5;
-    		client_info.retry_times = 3;
-    		client_info.clean_session = 1;
-    		client_info.will_qos = 0;
-    		client_info.will_retain = 0;
-    		client_info.will_topic = NULL;
-    		client_info.will_msg = NULL;
-            
-    		client_info.client_id = client_id;
-    		client_info.client_user = client_user;
-    		client_info.client_pass = client_pass;
-            
-            memset((void*)client_info.client_user,0,256);
-            memset((void*)client_info.client_id,0,256);
-            memset((void*)client_info.client_pass,0,256);
-             /*token过期时间(单位为s),请按照实际具体需求计算token过期时间,本例中为当前时刻的一年后过期*/
-            signed long long expire_time = 24 * 60 * 60 * 365;
-            token = ql_mqtt_onenet_generate_auth_token(expire_time,MQTT_CLIENT_ONENET_PRODUCTID,MQTT_CLIENT_ONENET_DEVICENAME,MQTT_CLIENT_ONENET_VERSION,MQTT_CLIENT_ONENET_ACCESSKEY);
-            
-		    if(NULL != token) {
-		    	memcpy((void*)client_info.client_pass, token, strlen(token));
-                memcpy((void*)client_info.client_user,MQTT_CLIENT_ONENET_PRODUCTID,strlen(MQTT_CLIENT_ONENET_PRODUCTID));
-                memcpy((void*)client_info.client_id,MQTT_CLIENT_ONENET_DEVICENAME,strlen(MQTT_CLIENT_ONENET_DEVICENAME));
-                free(token);
-                token = NULL;
-		    }
-            else 
-            {
-                break;
-            }
-		    QL_MQTT_LOG("clientid_str=%s", client_info.client_id);
-            QL_MQTT_LOG("username_str=%s", client_info.client_user);
-            QL_MQTT_LOG("password_str=%s", client_info.client_pass);
-        }
-        else 
-        {
-            client_info.keep_alive = 60;
-    		client_info.pkt_timeout = 5;
-    		client_info.retry_times = 3;
-            client_info.clean_session = 1;
-            client_info.will_qos = 0;
-            client_info.will_retain = 0;
-            client_info.will_topic = NULL;
-            client_info.will_msg = NULL;
-            client_info.client_id = MQTT_CLIENT_IDENTITY;
-            client_info.client_user = MQTT_CLIENT_USER;
-            client_info.client_pass = MQTT_CLIENT_PASS;
-        }
-        QL_MQTT_LOG("connect ssl %d onenet mode %d",case_id,is_user_onenet);
-		if(case_id == 0){
+		if (is_user_onenet == 1)
+		{
+			// 	client_info.keep_alive = 60;
+			// 	client_info.pkt_timeout = 5;
+			// 	client_info.retry_times = 3;
+			// 	client_info.clean_session = 1;
+			// 	client_info.will_qos = 0;
+			// 	client_info.will_retain = 0;
+			// 	client_info.will_topic = NULL;
+			// 	client_info.will_msg = NULL;
+
+			// 	client_info.client_id = client_id;
+			// 	client_info.client_user = client_user;
+			// 	client_info.client_pass = client_pass;
+
+			// 	memset((void *)client_info.client_user, 0, 256);
+			// 	memset((void *)client_info.client_id, 0, 256);
+			// 	memset((void *)client_info.client_pass, 0, 256);
+			// 	/*token过期时间(单位为s),请按照实际具体需求计算token过期时间,本例中为当前时刻的一年后过期*/
+			// 	signed long long expire_time = 24 * 60 * 60 * 365;
+			// 	token = ql_mqtt_onenet_generate_auth_token(expire_time, MQTT_CLIENT_ONENET_PRODUCTID, MQTT_CLIENT_ONENET_DEVICENAME, MQTT_CLIENT_ONENET_VERSION, MQTT_CLIENT_ONENET_ACCESSKEY);
+
+			// 	if (NULL != token)
+			// 	{
+			// 		memcpy((void *)client_info.client_pass, token, strlen(token));
+			// 		memcpy((void *)client_info.client_user, MQTT_CLIENT_ONENET_PRODUCTID, strlen(MQTT_CLIENT_ONENET_PRODUCTID));
+			// 		memcpy((void *)client_info.client_id, MQTT_CLIENT_ONENET_DEVICENAME, strlen(MQTT_CLIENT_ONENET_DEVICENAME));
+			// 		free(token);
+			// 		token = NULL;
+			// 	}
+			// 	else
+			// 	{
+			// 		break;
+			// 	}
+			// 	QL_MQTT_LOG("clientid_str=%s", client_info.client_id);
+			// 	QL_MQTT_LOG("username_str=%s", client_info.client_user);
+			// 	QL_MQTT_LOG("password_str=%s", client_info.client_pass);
+		}
+		else
+		{
+			client_info.keep_alive = 60;
+			client_info.pkt_timeout = 5;
+			client_info.retry_times = 3;
+			client_info.clean_session = 1;
+			client_info.will_qos = 0;
+			client_info.will_retain = 0;
+			client_info.will_topic = NULL;
+			client_info.will_msg = NULL;
+			client_info.client_id = MQTT_CLIENT_IDENTITY;
+			client_info.client_user = MQTT_CLIENT_USER;
+			client_info.client_pass = MQTT_CLIENT_PASS;
+		}
+		QL_MQTT_LOG("connect ssl %d onenet mode %d", case_id, is_user_onenet);
+		if (case_id == 0)
+		{
 			client_info.ssl_cfg = NULL;
 		    if(is_user_onenet == 1)
 		    {
@@ -435,49 +611,104 @@ static void mqtt_app_thread(void * arg)
                 }
             }
         }
-        else{
-    		while(test_num < 10 && mqtt_connected == 1){
-    			if(ql_mqtt_sub_unsub(&mqtt_cli, "test", 1, mqtt_requst_result_cb,NULL, 1) == MQTTCLIENT_WOUNDBLOCK){
-    				QL_MQTT_LOG("======wait subscrible result");
-    				ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
-    			}
+		else
+		{
+			while (test_num < 10000 && mqtt_connected == 1)
+			{
 
-    			if(ql_mqtt_publish(&mqtt_cli, "test", "hi, mqtt qos 0", strlen("hi, mqtt qos 0"), 0, 0, mqtt_requst_result_cb,NULL) == MQTTCLIENT_WOUNDBLOCK){
-    				QL_MQTT_LOG("======wait publish result");
-    				ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
-    			}
+				ql_mqtt_set_inpub_callback(&mqtt_cli, mqtt_inpub_data_cb, NULL);
 
-    			if(ql_mqtt_publish(&mqtt_cli, "test", "hi, mqtt qos 1", strlen("hi, mqtt qos 1"), 1, 0, mqtt_requst_result_cb,NULL) == MQTTCLIENT_WOUNDBLOCK){
-    				QL_MQTT_LOG("======wait publish result");
-    				ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
-    			}
+				subscribeResult = ql_mqtt_sub_unsub(&mqtt_cli, "topic/reverse/gps/GPS12345", 0, mqtt_requst_result_cb, NULL, 1);
 
-    			if(ql_mqtt_publish(&mqtt_cli, "test", "hi, mqtt qos 2", strlen("hi, mqtt qos 2"), 2, 0, mqtt_requst_result_cb,NULL) == MQTTCLIENT_WOUNDBLOCK){
-    				QL_MQTT_LOG("======wait publish result");
-    				ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
-    			}
-    			
-    			if(ql_mqtt_sub_unsub(&mqtt_cli, "test", 1, mqtt_requst_result_cb,NULL, 0) == MQTTCLIENT_WOUNDBLOCK){
-    				QL_MQTT_LOG("=====wait unsubscrible result");
-    				ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
-    			}
-    			test_num++;
-    			ql_rtos_task_sleep_ms(500);
-    		}
-        }
-        if(mqtt_connected == 1 && ql_mqtt_disconnect(&mqtt_cli, mqtt_disconnect_result_cb, NULL) == MQTTCLIENT_WOUNDBLOCK){
-            QL_MQTT_LOG("=====wait disconnect result");
-            ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
-        }
-		QL_MQTT_LOG("==============mqtt_client_test[%d] end=======%x=========\n",run_num,&mqtt_cli);
-		ql_mqtt_client_deinit(&mqtt_cli);
-		mqtt_connected = 0;
+				if (subscribeResult == MQTTCLIENT_WOUNDBLOCK)
+				{
+					QL_MQTT_LOG("======wait subscrible result");
+					ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
+				}
+
+				make_Bike_message();
+				// mbedtls_base64_encode(&sendCore[0], 0, &encodedLengthBike, &encodedCore[0], sizeof(encodedCore));
+				sendBikePacket = base64Encoder(encodedCore);
+				strncpy(sendBikeMqttPacket, sendBikePacket, 72);
+
+				QL_MQTT_LOG("bike data packet length:%d", strlen(sendBikePacket));
+				QL_MQTT_LOG("bike data packet length final:%d", strlen(sendBikeMqttPacket));
+				QL_MQTT_LOG("bike data packet:%s", sendBikePacket);
+
+				if (ql_mqtt_publish(&mqtt_cli, "topic/telemetry/bike", sendBikePacket, strlen(sendBikePacket), 0, 1, mqtt_requst_result_cb, NULL) == MQTTCLIENT_WOUNDBLOCK)
+				{
+					QL_MQTT_LOG("======wait publish result bike");
+					// ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
+				}
+
+				make_Trip1_message();
+				// mbedtls_base64_encode(&sendTrip1[0], 0, &encodedLengthTrip1, &encodedTrip1[0], sizeof(encodedTrip1));
+
+				sendTrip1Packet = base64Encoder(encodedTrip1);
+				strncpy(sendTrip1MqttPacket, sendTrip1Packet, strlen(sendTrip1Packet));
+				QL_MQTT_LOG("trip1 data packet:%s", sendTrip1Packet);
+				// QL_MQTT_LOG("trip1 data packet:%c", encodedTrip1);
+
+				if (ql_mqtt_publish(&mqtt_cli, "topic/telemetry/trip1", sendTrip1Packet, strlen(sendTrip1Packet), 0, 1, mqtt_requst_result_cb, NULL) == MQTTCLIENT_WOUNDBLOCK)
+				{
+					QL_MQTT_LOG("======wait publish result trip1");
+					// ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
+				}
+
+				make_Trip2_message();
+
+				// mbedtls_base64_encode(&sendTrip2[0], 0, &encodedLengthTrip2, &encodedTrip2[0], sizeof(encodedTrip2));
+
+				sendTrip2Packet = base64Encoder(encodedTrip2);
+				strncpy(sendTrip2MqttPacket, sendTrip2Packet, strlen(sendTrip2Packet));
+				QL_MQTT_LOG("trip2 data packet:%s", sendTrip2Packet);
+
+				// QL_MQTT_LOG("trip2 data packet:%c", &encodedTrip2);
+
+				if (ql_mqtt_publish(&mqtt_cli, "topic/telemetry/trip2", sendTrip2Packet, strlen(sendTrip2Packet), 0, 1, mqtt_requst_result_cb, NULL) == MQTTCLIENT_WOUNDBLOCK)
+				{
+					QL_MQTT_LOG("======wait publish result trip2");
+					ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
+				}
+
+				make_End_message();
+				// mbedtls_base64_encode(&sendEnd[0], 0, &encodedLengthEnd, &encodedEnd[0], sizeof(encodedEnd));
+
+				sendEndPacket = base64Encoder(encodedEnd);
+				strncpy(sendEndMqttPacket, sendEndPacket, strlen(sendEndPacket));
+				QL_MQTT_LOG("end data packet:%s", sendEndPacket);
+
+				//	QL_MQTT_LOG("trip2 data packet:%c", &encodedEnd);
+
+				if (ql_mqtt_publish(&mqtt_cli, "topic/telemetry/end", sendEndPacket, strlen(sendEndPacket), 0, 0, mqtt_requst_result_cb, NULL) == MQTTCLIENT_WOUNDBLOCK)
+				{
+					QL_MQTT_LOG("======wait publish result end");
+					ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
+				}
+
+				// if (ql_mqtt_sub_unsub(&mqtt_cli, "topic/telemetry/gps/live", 1, mqtt_requst_result_cb, NULL, 0) == MQTTCLIENT_WOUNDBLOCK)
+				// {
+				// 	QL_MQTT_LOG("=====wait unsubscrible result");
+				// 	ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
+				// }
+				test_num++;
+				ql_rtos_task_sleep_ms(500);
+			}
+		}
+		// if (mqtt_connected == 1 && ql_mqtt_disconnect(&mqtt_cli, mqtt_disconnect_result_cb, NULL) == MQTTCLIENT_WOUNDBLOCK)
+		// {
+		// 	QL_MQTT_LOG("=====wait disconnect result");
+		// 	ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
+		// }
+		// QL_MQTT_LOG("==============mqtt_client_test[%d] end=======%x=========\n", run_num, &mqtt_cli);
+		// ql_mqtt_client_deinit(&mqtt_cli);
+		// mqtt_connected = 0;
 		run_num++;
 		ql_rtos_task_sleep_s(1);
-        if(is_user_onenet == 1)
-        {
-            break;
-        }
+		// if (is_user_onenet == 1)
+		// // {
+		// // 	break;
+		// // }
 	}
 	
 exit:
