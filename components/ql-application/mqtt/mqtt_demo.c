@@ -38,7 +38,7 @@ WHEN              WHO         WHAT, WHERE, WHY
 #define QL_MQTT_LOG_PUSH(msg, ...) QL_LOG_PUSH("ql_MQTT", msg, ##__VA_ARGS__)
 static ql_task_t mqtt_task = NULL;
 
-#define MQTT_CLIENT_IDENTITY "Amigo Bike"
+#define MQTT_CLIENT_IDENTITY "MCU GEN3"
 #define MQTT_CLIENT_USER "test"
 #define MQTT_CLIENT_PASS "3Motorad"
 

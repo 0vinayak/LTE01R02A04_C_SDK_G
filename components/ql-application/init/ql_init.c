@@ -481,8 +481,8 @@ static void ql_init_demo_thread(void *param)
     //ql_vsim_adapt_init();
 #endif
 
-#ifdef QL_APP_FEATURE_GNSS      //内置GNSS
-    //ql_gnss_app_init();
+#ifdef QL_APP_FEATURE_GNSS      
+    ql_gnss_app_init();
 #endif
 #ifdef QL_APP_FEATURE_HD_GNSS   //外挂华大GNSS
     //ql_hd_gnss_app_init();

@@ -110,7 +110,7 @@ static void ql_uart_demo_thread(void *param)
     ql_uart_config_s uart_cfg = {0};
     int write_len = 0;
     ql_uart_tx_status_e tx_status;
-    unsigned char data[] = "andre iddli kayegi\r\n";
+    unsigned char data[] = "hello demo\r\n";
 
     /***********************************************************
 	Note start:
