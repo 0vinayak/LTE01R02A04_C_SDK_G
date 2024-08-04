@@ -1,0 +1,26 @@
+
+///////////////////////////////////////////// IMS /////////////////////////////////////////////
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\USSI_Enabled=1
+
+// sip_regExpireSec: Register expire time send to server in register request header
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\sip_regExpireSec=86400
+
+// MT call no answer timer after send 180 (Sec)
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingingTimer=120
+
+// MO call no answer timer after receive 180 (Sec)
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingbackTimer=120
+
+
+//The XCAP server PORT
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\ss_XcapPort=8090
+
+///////////////////////////////////////////// GAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// LAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// WAS /////////////////////////////////////////////
+

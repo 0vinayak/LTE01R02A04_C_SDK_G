@@ -1,0 +1,116 @@
+# Copyright (C) 2018 RDA Technologies Limited and/or its affiliates("RDA").
+# All rights reserved.
+#
+# This software is supplied "AS IS" without any warranties.
+# RDA assumes no responsibility or liability for the use of the software,
+# conveys no license or title under any patent, copyright, or mask work
+# right to the product. RDA reserves the right to make changes in the
+# software without notification.  RDA also make no representation or
+# warranty that such application will be suitable for the specified use
+# without further testing or modification.
+
+menu "GNSS"
+
+config SUPPORT_GNSS
+    bool "Support GNSS"
+    default y
+    help
+    	When defined, Target device can support GNSS position fix
+
+choice
+	prompt "GNSS chip version"
+	depends on SUPPORT_GNSS
+	default GPS_CHIP_VER_GREENEYE2
+
+config GPS_CHIP_VER_GREENEYE2
+	depends on SUPPORT_GNSS
+	bool "GE2"
+
+config GPS_CHIP_VER_NONE
+	depends on SUPPORT_GNSS
+	bool "None"
+
+endchoice
+
+choice
+	prompt "Switch of GNSS FW Mode"
+	default GPS_MODE_GPS_BD
+
+config GPS_MODE_GPS_BD
+	bool "GPS BDS"
+
+config GPS_MODE_GPS_GLONASS
+	bool "GPS GLONASS"
+
+endchoice
+
+config GPS_TCARD_LOG_SUPPORT
+    bool "Switch of GNSS tcard log storage"
+    default n
+
+config GPS_MINI_LOG_SUPPORT
+    bool "Switch of GNSS MINI mini log"
+    default y
+
+choice
+	prompt "Switch of A-GNSS"
+	default GPS_AGPS_SUPPORT_QX
+
+config GPS_AGPS_SUPPORT_NONE
+	bool "NONE"
+
+config GPS_AGPS_SUPPORT_QX
+	bool "QXWZ"
+
+config GPS_AGPS_SUPPORT_SPRD_AGPS
+	bool "SPRD AGNSS"
+
+endchoice
+
+choice
+	prompt "GNSS COMM MODE"
+	default GPS_TRANS_VIA_SIPC
+
+config GPS_TRANS_VIA_UART
+	bool "UART"
+
+config GPS_TRANS_VIA_SIPC
+	bool "SIPC"
+
+endchoice
+
+config GPS_SPREAD_ORBIT_SUPPORT
+    bool "Support SPREAD ORBIT"
+    default n
+
+choice
+	prompt "Spread Orbit Mode"
+	depends on GPS_SPREAD_ORBIT_SUPPORT
+	default SPREAD_ORBIT_MODE_GPS
+
+config SPREAD_ORBIT_MODE_GPS
+	depends on GPS_SPREAD_ORBIT_SUPPORT
+	bool "GPS"
+
+config BDS
+	depends on GPS_SPREAD_ORBIT_SUPPORT
+	bool "GPS_BDS"
+
+endchoice
+
+choice
+	prompt "Spread Orbit PreDayNum"
+	depends on GPS_SPREAD_ORBIT_SUPPORT
+	default SPREAD_ORBIT_PRED_DAYS1
+
+config SPREAD_ORBIT_PRED_DAYS1
+	depends on GPS_SPREAD_ORBIT_SUPPORT
+	bool "pread days 1"
+
+config SPREAD_ORBIT_PRED_DAYS2
+	depends on GPS_SPREAD_ORBIT_SUPPORT
+	bool "pread days 2"
+
+endchoice
+
+endmenu

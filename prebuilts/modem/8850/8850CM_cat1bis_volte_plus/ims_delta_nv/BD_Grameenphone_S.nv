@@ -1,0 +1,47 @@
+
+///////////////////////////////////////////// IMS /////////////////////////////////////////////
+
+// MT call no answer timer after send 180 (Sec)
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingingTimer=120
+
+// MO call no answer timer after receive 180 (Sec)
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingbackTimer=120
+
+// Value in Session-Expire (Sec)
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\sip_sessionTimer=1800
+
+// audioRtcpInterval: 0:Random RTCP interval; >0:Fixed RTCP interval(in seconds)
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\audioRtcpInterval=5
+
+// audioRtcpTimeout: Seconds. Call will be disconnected if not receive audio RTCP before expire
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\audioRtcpTimeout=120
+
+//The Conference server URI.
+//If not set, UE will generate one according to TS23.003 with format:
+//  sip:mmtel@conf-factory.[domain]
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\conf_uri="sip:mmtel@conf-factory.ims.mnc001.mcc470.3gppnetwork.org"
+
+//The XCAP server URI.
+//If not set, UE will generate one according to TS23.003 with format:
+//  xcap.mnc***.mcc###.pub.3gppnetwork.org:[ss_XcapPort]
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\ss_XcapUri="xcap.ims.mnc001.mcc470.pub.3gppnetwork.org"
+
+//The BSF server URI.
+//If not set, UE will generate one according to TS23.003 with format:
+//  bsf.mnc***.mcc###.pub.3gppnetwork.org:[ss_BsfPort]
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\ss_BsfUri="bsf.mnc001.mcc470.pub.3gppnetwork.org"
+
+
+///////////////////////////////////////////// GAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// LAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// WAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// MN //////////////////////////////////////////////
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\mn_sim_nvinfo\forbid_activate_ims_pdn_when_roaming=0x1
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\mn_sim_nvinfo\ecc_cs_prefer=0x1
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\mn_sim_nvinfo\ss_domain=0x1

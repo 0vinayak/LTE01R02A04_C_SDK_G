@@ -1,0 +1,51 @@
+# Copyright (C) 2018 RDA Technologies Limited and/or its affiliates("RDA").
+# All rights reserved.
+#
+# This software is supplied "AS IS" without any warranties.
+# RDA assumes no responsibility or liability for the use of the software,
+# conveys no license or title under any patent, copyright, or mask work
+# right to the product. RDA reserves the right to make changes in the
+# software without notification.  RDA also make no representation or
+# warranty that such application will be suitable for the specified use
+# without further testing or modification.
+
+menu "at_cmd_unisoc"
+
+config AT_UNISOC_SPECIAL_SUPPORT
+    bool "UNISOC special AT command support"
+    default y if SOC_8910 || SOC_8811 || SOC_8850 || SOC_8821
+    default n
+
+if AT_UNISOC_SPECIAL_SUPPORT
+
+config AT_EMMCDDRSIZE_SUPPORT
+    bool "Enable +EMMCDDRSIZE"
+    default y
+    help
+        AT command to read flash and RAM(PSRAM or DDR) capacity
+
+config AT_U_CREATE_AT_CHANNEL
+    bool "Create AT channel (UNISOC)"
+    default y
+
+endif
+
+config AT_UTEST_SUPPORT
+    bool "Support Utest for I2C, GPIO and PM"
+    default n
+    help
+        When defined, UTEST AT Command can be used.
+
+config AT_ARMLOG_SUPPORT
+    bool "Support ArmLogel AT command or not"
+    default y if KERNEL_DIAG_TRACE
+    default n
+
+config AT_SELFREG_SUPPORT
+	bool "AT_SELFREG_SUPPORT enabled"
+	depends on NET_SELFREG_COAP_SUPPORT
+	default y
+	help
+		When enabled, AT_DM_SUPPORT will be defined
+
+endmenu

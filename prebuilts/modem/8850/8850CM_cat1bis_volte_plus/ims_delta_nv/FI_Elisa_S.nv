@@ -1,0 +1,25 @@
+
+///////////////////////////////////////////// IMS /////////////////////////////////////////////
+
+// sip_timerT4: Absorb retrans message time, in ms
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\sip_timerT4=20000
+
+// MT call no answer timer after send 180 (Sec)
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingingTimer=90
+
+// MO call no answer timer after receive 180 (Sec)
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingbackTimer=90
+
+//The Conference server URI.
+//If not set, UE will generate one according to TS23.003 with format:
+//  sip:mmtel@conf-factory.[domain]
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\conf_uri="sip:7888@ims.mnc005.mcc244.3gppnetwork.org"
+
+///////////////////////////////////////////// GAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// LAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// WAS /////////////////////////////////////////////
+

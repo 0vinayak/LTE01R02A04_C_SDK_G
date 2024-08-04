@@ -1,0 +1,5 @@
+
+///////////////////////////////////////////// IMS /////////////////////////////////////////////
+
+// confSubscribe_inDialog: 1 : When send SUBSCRIBE of confernce in dialog
+PS_NV_PARAMS\NV_PARAM_TYPE_PLMN_DELTA_NV\ims_plmn_nvinfo\confSubscribe_inDialog=1

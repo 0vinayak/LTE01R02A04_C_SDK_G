@@ -1,0 +1,105 @@
+<!--
+Copyright (C) 2018 RDA Technologies Limited and/or its affiliates("RDA").
+All rights reserved.
+
+This software is supplied "AS IS" without any warranties.
+RDA assumes no responsibility or liability for the use of the software,
+conveys no license or title under any patent, copyright, or mask work
+right to the product. RDA reserves the right to make changes in the
+software without notification.  RDA also make no representation or
+warranty that such application will be suitable for the specified use
+without further testing or modification.
+-->
+
+<!--
+Most likely the configuration is suitable. And it can be changed if needed.
+
+Method is patch method fine tune. The default method is "diff":
+* diff: (default option) create differential patch
+* ignore: not touch the file
+* remove: remove the file forcedly
+* replace: remove the file if exists, and insert with new content
+-->
+
+<pacdiff>
+    <!-- The default bootloader ID is "BOOT1", and it is flash image.
+         Bootloader is compressed on flash, so there are no saving with
+         "diff". The method should be "replace".
+         For dual bootloader, fota will just upgrade BOOT1. And bootloader
+         itself will upgrade BOOT2 and upgrade security version if needed.
+
+         The bootloader upgrade is disabled in this config file by default.
+
+         Be caution:
+         If you want to enable it, please double check the product and 
+         make sure that one of the following two features is enabled in product.
+         * Secure boot feature.
+         * Dual bootloader feature.
+         This is very important and may cause the boot failure after fota if you ignore it.
+    -->
+    <!-- <pacflash id="BOOT1" flash="SFL1" blocksize="0x8000" method="replace"/> -->
+    <!-- The default AP application ID is "AP", and it runs on FLASH. -->
+    <pacflash id="AP" flash="SFL1" blocksize="0x8000" bundleblock="8" method="diff"/>
+    <!-- The default OpenCPU application ID is "OPENCPU_MCU", and it runs on FLASH. -->
+    <pacflash id="OPENCPU_MCU" flash="SFL1" blocksize="0x8000" bundleblock="8" method="diff"/>
+    <!-- The default App image application ID is "OPENCPU_APPIMG_FLASH", and it runs on FLASH. -->
+    <pacflash id="OPENCPU_APPIMG_FLASH" flash="SFL1" blocksize="0x8000" bundleblock="8" method="diff"/>
+    <!--
+         NV will be updated according to the pacnvbin config in default replace mode.
+         There is no big size different between "diff" and "replace" method due to the compress of nv file.
+         Some NV files which contain calib param will be ignored during update.
+    -->
+    <pacnvbin id="NV" method="diff">
+        <!--
+        <nvitem id="id" fixednv="/xxx" method="ignore"/>
+        -->
+        <nvitem id="0x2" fixednv="/factory/calibparam.bin.lz4" method="ignore"/>
+        <nvitem id="0x5" fixednv="" method="ignore"/>
+        <nvitem id="0x179" fixednv="" method="ignore"/>
+        <nvitem id="0x186" fixednv="" method="ignore"/>
+        <nvitem id="0x1e4" fixednv="" method="ignore"/>
+        <nvitem id="0x26d" fixednv="/factory/gsm_rf_calib.bin.lz4" method="ignore"/>
+        <nvitem id="0x26e" fixednv="/factory/lte_rf_calib.bin.lz4" method="ignore"/>
+        <nvitem id="0x26f" fixednv="/factory/golden_board.bin.lz4" method="ignore"/>
+        <nvitem id="0x26c" fixednv="/factory/rf_nv.bin.lz4"/>
+        <nvitem id="0x2d0" fixednv="/factory/nb_static_nv.bin.lz4"/>
+        <nvitem id="0x2d1" fixednv="/factory/license_param.bin.lz4"/>
+    </pacnvbin>
+    <!--
+        The following are only describing clear running NV rules.
+
+        * always clear running NV:
+                <cleanrunning onchange="always"/>
+        * never clear running NV:
+                <cleanrunning onchange="never"/>
+        * clear running NV on any listed NV changes:
+                <cleanrunning onchange="any"/>
+        * clear running NV when either 0x123 or 0x456 is changed:
+                <cleanrunning onchange="0x123"/>
+                <cleanrunning onchange="0x456"/>
+    -->
+    <pacnv id="NV">
+        <nvitem id="0x26c" runningnv="/modemnvm/rf_nv.bin.lz4">
+            <cleanrunning onchange="always"/>
+        </nvitem>
+        <nvitem id="0x2d0" runningnv="/modemnvm/nb_static_nv.bin.lz4">
+            <cleanrunning onchange="0x2d0"/>
+        </nvitem>
+    </pacnv>
+    <paccpio id="INDELTANV" method="diff">
+        <!--
+            <file name="some_file_name" method="ignore"/>
+        -->
+    </paccpio>
+    <paccpio id="PREPACK" method="diff">
+        <!--
+            <file name="some_file_name" method="ignore"/>
+        -->
+    </paccpio>
+    <!-- The default OpenCPU App image application ID is "OPENCPU_APPIMG_FILE", and it runs as FILE. -->
+    <paccpio id="OPENCPU_APPIMG_FILE" method="diff">
+        <!--
+            <file name="some_file_name" method="ignore"/>
+        -->
+    </paccpio>
+</pacdiff>

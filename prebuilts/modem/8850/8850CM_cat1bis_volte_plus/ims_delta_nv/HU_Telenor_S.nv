@@ -1,0 +1,38 @@
+
+///////////////////////////////////////////// IMS /////////////////////////////////////////////
+
+//AUID: Vendor defined XCAP header prefix
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\ss_XcapAuid="/Service"
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\USSI_Enabled=1
+
+// audioRtpTimeout: Seconds. Call will be disconnected if not receive audio RTP before expire
+//PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\audioRtpTimeout=3600
+
+// audioRtcpTimeout: Seconds. Call will be disconnected if not receive audio RTCP before expire
+//PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\audioRtcpTimeout=3600
+
+// MT call no answer timer after send 180 (Sec)
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingingTimer=90
+
+// MO call no answer timer after receive 180 (Sec)
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingbackTimer=90
+
+// Value in Session-Expire (Sec)
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\sip_sessionTimer=1800
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\ss_BsfUri="bsf.ims.mnc001.mcc216.pub.3gppnetwork.org"
+
+
+///////////////////////////////////////////// GAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// LAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// WAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// L4 /////////////////////////////////////////////
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\mn_sim_nvinfo\cw_strategy=0x1
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\mn_sim_nvinfo\forbid_activate_ims_pdn_when_roaming=0x1

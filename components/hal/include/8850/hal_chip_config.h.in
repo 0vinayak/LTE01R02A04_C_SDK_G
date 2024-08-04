@@ -1,0 +1,212 @@
+/* Copyright (C) 2018 RDA Technologies Limited and/or its affiliates("RDA").
+ * All rights reserved.
+ *
+ * This software is supplied "AS IS" without any warranties.
+ * RDA assumes no responsibility or liability for the use of the software,
+ * conveys no license or title under any patent, copyright, or mask work
+ * right to the product. RDA reserves the right to make changes in the
+ * software without notification.  RDA also make no representation or
+ * warranty that such application will be suitable for the specified use
+ * without further testing or modification.
+ */
+
+#ifndef _HAL_CHIP_CONFIG_H_
+#define _HAL_CHIP_CONFIG_H_
+
+// @AUTO_GENERATION_NOTICE@
+
+/**
+ * system ROM load address
+ */
+#cmakedefine CONFIG_ROM_SRAM_LOAD_ADDRESS @CONFIG_ROM_SRAM_LOAD_ADDRESS@
+
+/**
+ * system ROM load maximum size
+ */
+#cmakedefine CONFIG_ROM_LOAD_SIZE @CONFIG_ROM_LOAD_SIZE@
+
+/**
+ * system ROM SRAM data size can be accessed in bootloader
+ */
+#cmakedefine CONFIG_ROM_SRAM_DATA_SIZE @CONFIG_ROM_SRAM_DATA_SIZE@
+
+/**
+ * bootloader image address, on AON SRAM
+ */
+#cmakedefine CONFIG_BOOT_IMAGE_START @CONFIG_BOOT_IMAGE_START@
+
+/**
+ * FDL image address, on AON SRAM
+ */
+#cmakedefine CONFIG_NORFDL_IMAGE_START @CONFIG_NORFDL_IMAGE_START@
+
+/**
+ * AON SRAM code address
+ */
+#cmakedefine CONFIG_AON_SRAM_CODE_ADDRESS @CONFIG_AON_SRAM_CODE_ADDRESS@
+
+/**
+ * AON SRAM code size
+ */
+#cmakedefine CONFIG_AON_SRAM_CODE_SIZE @CONFIG_AON_SRAM_CODE_SIZE@
+
+/**
+ * AON SRAM shared memory address
+ */
+#cmakedefine CONFIG_AON_SRAM_SHMEM_ADDRESS @CONFIG_AON_SRAM_SHMEM_ADDRESS@
+
+/**
+ * AON SRAM shared memory size
+ */
+#cmakedefine CONFIG_AON_SRAM_SHMEM_SIZE @CONFIG_AON_SRAM_SHMEM_SIZE@
+
+/**
+ * AON SRAM for CP address
+ */
+#cmakedefine CONFIG_AON_SRAM_CP_ADDRESS @CONFIG_AON_SRAM_CP_ADDRESS@
+
+/**
+ * AON SRAM for CP size
+ */
+#cmakedefine CONFIG_AON_SRAM_CP_SIZE @CONFIG_AON_SRAM_CP_SIZE@
+
+/**
+ * CP RAM address
+ */
+#cmakedefine CONFIG_CP_RAM_ADDRESS @CONFIG_CP_RAM_ADDRESS@
+
+/**
+ * CP RAM size
+ */
+#cmakedefine CONFIG_CP_RAM_SIZE @CONFIG_CP_RAM_SIZE@
+
+/**
+ * APP RAM address
+ */
+#cmakedefine CONFIG_APP_RAM_ADDRESS @CONFIG_APP_RAM_ADDRESS@
+
+/**
+ * APP RAM size
+ */
+#cmakedefine CONFIG_APP_RAM_SIZE @CONFIG_APP_RAM_SIZE@
+
+/**
+ * File APPIMG reserved RAM address
+ */
+#cmakedefine CONFIG_APP_FILEIMG_RAM_ADDRESS @CONFIG_APP_FILEIMG_RAM_ADDRESS@
+
+/**
+ * File APPIMG reserved RAM size
+ */
+#cmakedefine CONFIG_APP_FILEIMG_RAM_SIZE @CONFIG_APP_FILEIMG_RAM_SIZE@
+
+/**
+ * File APPIMG2 reserved RAM address   --Quectel update
+ */
+#cmakedefine CONFIG_APP2_FILEIMG_RAM_ADDRESS @CONFIG_APP2_FILEIMG_RAM_ADDRESS@
+
+/**
+ * File APPIMG2 reserved RAM size      --Quectel update
+ */
+#cmakedefine CONFIG_APP2_FILEIMG_RAM_SIZE @CONFIG_APP2_FILEIMG_RAM_SIZE@
+
+/**
+ * Flash APPIMG reserved RAM address
+ */
+#cmakedefine CONFIG_APP_FLASHIMG_RAM_ADDRESS @CONFIG_APP_FLASHIMG_RAM_ADDRESS@
+
+/**
+ * Flash APPIMG reserved RAM size
+ */
+#cmakedefine CONFIG_APP_FLASHIMG_RAM_SIZE @CONFIG_APP_FLASHIMG_RAM_SIZE@
+
+/**
+ * Flash APPIMG2 reserved RAM address    --Quectel update
+ */
+#cmakedefine CONFIG_APP2_FLASHIMG_RAM_ADDRESS @CONFIG_APP2_FLASHIMG_RAM_ADDRESS@
+
+/**
+ * Flash APPIMG2 reserved RAM size       --Quectel update
+ */
+#cmakedefine CONFIG_APP2_FLASHIMG_RAM_SIZE @CONFIG_APP2_FLASHIMG_RAM_SIZE@
+
+/**
+ * gnss reserved RAM address
+ */
+#cmakedefine CONFIG_GNSS_RAM_ADDRESS @CONFIG_GNSS_RAM_ADDRESS@
+
+/**
+ * gnss reserved RAM size
+ */
+#cmakedefine CONFIG_GNSS_RAM_SIZE @CONFIG_GNSS_RAM_SIZE@
+
+/**
+ * trust zone tos reserved RAM address
+ */
+#cmakedefine CONFIG_APP_TRUSTZONE_TOS_RAM_ADDRESS @CONFIG_APP_TRUSTZONE_TOS_RAM_ADDRESS@
+
+/**
+ * trust zone tos reserved RAM size
+ */
+#cmakedefine CONFIG_APP_TRUSTZONE_TOS_RAM_SIZE @CONFIG_APP_TRUSTZONE_TOS_RAM_SIZE@
+
+/**
+ * trust zone sml reserved RAM address
+ */
+#cmakedefine CONFIG_APP_TRUSTZONE_SML_RAM_ADDRESS @CONFIG_APP_TRUSTZONE_SML_RAM_ADDRESS@
+
+/**
+ * trust zone sml reserved RAM size
+ */
+#cmakedefine CONFIG_APP_TRUSTZONE_SML_RAM_SIZE @CONFIG_APP_TRUSTZONE_SML_RAM_SIZE@
+
+/**
+ * openCPU reserved RAM address
+ */
+#cmakedefine CONFIG_OPENCPU_RAM_ADDRESS @CONFIG_OPENCPU_RAM_ADDRESS@
+
+/**
+ * openCPU reserved RAM size
+ */
+#cmakedefine CONFIG_OPENCPU_RAM_SIZE @CONFIG_OPENCPU_RAM_SIZE@
+
+/**
+ * IRQ stack size
+ */
+#cmakedefine CONFIG_IRQ_STACK_SIZE @CONFIG_IRQ_STACK_SIZE@
+
+/**
+ * SVC stack size (8850)
+ */
+#cmakedefine CONFIG_SVC_STACK_SIZE @CONFIG_SVC_STACK_SIZE@
+
+/**
+ * appll frequency
+ */
+#cmakedefine CONFIG_DEFAULT_APPLL_FREQ @CONFIG_DEFAULT_APPLL_FREQ@
+
+/**
+ * APA5 cpu frequency
+ */
+#cmakedefine CONFIG_DEFAULT_APA5_FREQ @CONFIG_DEFAULT_APA5_FREQ@
+
+/**
+ * default AXI bus frequency
+ */
+#cmakedefine CONFIG_DEFAULT_AP_BUS_FREQ @CONFIG_DEFAULT_AP_BUS_FREQ@
+
+/**
+ * config rc26m frequency
+ */
+#cmakedefine CONFIG_RC26M_CALIB_FIXED_FREQ @CONFIG_RC26M_CALIB_FIXED_FREQ@
+
+/**
+ * maximum AXI bus frequency
+ */
+#cmakedefine CONFIG_MAX_AP_BUS_FREQ @CONFIG_MAX_AP_BUS_FREQ@
+
+/**
+ * AHB bus frequency
+ */
+#cmakedefine CONFIG_DEFAULT_SYSAHB_FREQ @CONFIG_DEFAULT_SYSAHB_FREQ@
+#endif

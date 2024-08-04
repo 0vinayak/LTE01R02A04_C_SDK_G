@@ -1,0 +1,2599 @@
+/**************************************************************************/
+/*                                                                        */
+/*   Copyright (C) 2004 - 2011 CYIT. All rights reserved.                 */
+/*                                                                        */
+/**************************************************************************/
+/**************************************************************************/
+/* FILE NAME   tgl.het                                                    */
+/*                                                                        */
+/* COMPONENT   PUB                                                        */
+/*                                                                        */
+/* DESCRIPTION                                                            */
+/*                                                                        */
+/* This file define the data structure that used by all ps module.        */
+/*                                                                        */
+/* FUNCTIONS                                                              */
+/*                                                                        */
+/* NONE                                                                   */
+/*                                                                        */
+/* HISTORY                                                                */
+/*                                                                        */
+/* NAME        DATE        VERSION  COMMENT                               */
+/* tangyanhua  2010.05.06  v0.0.1   creation                              */
+/* tangyanhua  2011.03.20  v0.3.0   Release after pass IOT test by TD6300 */
+/* luoyong     2012.01.09  v1.0.0   version update                        */
+/**************************************************************************/
+#ifndef TGL_HET
+#define TGL_HET
+
+/* add for td and w head*/
+/*------------------------------------------------------------------------
+*   Primitive Define
+------------------------------------------------------------------------*/
+
+typedef struct  T_MsgHeader_Tag
+{
+    u16  len;
+    u16  txName;
+    u16  txIns;
+    u16  rxName;
+    u16  rxIns;
+    u16  opType;
+    u16  simFlag;// 0 for SIM1, 1 for SIM2
+    u16  reserved;
+} T_MsgHeader;
+
+typedef struct
+{
+    U32             lPrimId;
+    U32             lPrimLen;
+} Prim_Hdr_Type;
+
+typedef union
+{
+    Prim_Hdr_Type     hdr;
+    T_MsgHeader       signalHeader;
+} T_MsgHdr_U;
+
+typedef struct T_HeaderInfo_Tag
+{
+    u16   subFrameNum;
+    u16   workMode;
+    u16   stateFlag;
+    u16   primitiveFlag;
+    u16   spareLen;
+    u16   length;
+} T_HeaderInfo;
+
+typedef struct T_DrxDeactiveTime_Tag
+{
+  u16 nextActiveSsfn;
+  u16 nextActiveHfn;
+  u16 stopSsfn;
+  u16 stopHfn;
+} T_DrxDeactiveTime;
+
+typedef struct T_DrxDlHarqInfo_Tag
+{
+  u16 pdschFlag;
+  u16 dciEndSfn;
+  u16 pdschEndSfn;
+  u16 harqId;
+  u16 dataType;
+  u16 resourceType;
+}T_DrxDlHarqInfo;
+
+typedef struct  T_CommonPdu_Tag
+{
+    u16  pduLen;        // unit: bit
+    u16  pdcpHeaderLen; // unit: bit
+    u8   *pduData;      // dynamic apply memory,
+} T_CommonPdu;
+
+/*to backup data for rohc */
+typedef struct T_RohcRestoreInfo_Tag
+{
+    u16 orgPduLen;    // unit: byte
+    u8 *ipHeaderPoint;
+    u8 *ipHeaderData;      // dynamic apply memory,
+} T_RohcRestoreInfo;
+
+typedef struct T_ComPduLte_Tag
+{
+    u8 pduType;
+    u8 dataType;/*0:NORMAL_DATA，1:VOLTE_DATA, 2:TC_DATA*/
+
+    /*In control plane, it's the NAS or ERRC message SN.
+      In data plane, it's the EPS bear ID.*/
+    u16 ebi;
+    u16 pdcpSn;
+
+    /*In data plane, it's the discard time;
+      In control plane, it's the cipher flag used to indicate that whether epdc should cipher the message or not.*/
+    u32 maxExpireCnt;
+#ifdef __MDT__
+    u32 ulPktArrivalTime;
+#endif
+    /*It's the count used for integration and cipher; */
+    u32 count;
+
+    /* The sudOffset is used to record how many bytes has been transmited of the ERLC sdu in the uplink;
+       it's effective value is between 0 to (pduLen - 1)(ERLC sdu data length).
+       The li is used to record how many bytes has been transmited of the ERLC sdu in this transmission;
+       it's effective value is between 1 to pduLen.
+    */
+    u16 sduOffset;
+    u16 li;
+
+    u16 pduLen;// unit: byte
+
+    /*In the uplink, pdcpHeaderLen has two usage:
+      1. Before epdc process the data package, use pdcpHeaderLen to record the length reserved for epdc pdu head.
+      2. In AM mode, erlc use pdcpHeaderLen to record the data length has been confirmed of this sdu.
+    */
+    u16 pdcpHeaderLen; // unit: byte
+    T_RohcRestoreInfo rohcRestoreInfo;  //开启ROHC 时使用
+    u8 feedback;
+
+    u16 rai;
+    u16 type_of_user_data;//0 RegularData, 1 ExceptionData
+
+    u8 *pPduData;
+    void *pFreeQE;
+    struct T_ComPduLte_Tag  *pNext;
+} T_ComPduLte;
+
+typedef struct T_ComSduLte_Tag
+{
+    u8 dataType;/*0:NORMAL_DATA, 2:TC_DATA*/
+    u16  pdcpSn;
+    u16  discardFlag;
+    u16  sduLen;        // unit: byte
+    u16  pdcpHeaderLen; // unit: byte
+    u32  dhcpFlag; //for PF20101227
+    u8   *pSduData;
+    void *pSduDataFree; //20110428
+    struct T_ComSduLte_Tag  *pNext;
+} T_ComSduLte;
+
+typedef struct  T_headComInfo_Tag
+{
+    u16                         maxCid;
+    u16                         profiles;
+} T_headComInfo;
+
+#ifdef LTE_NBIOT_SUPPORT
+typedef struct
+{
+    u32             earfcn;/*NB-IoT carrier frequency的EARFCN。
+                            取值范围：
+                            0~262143
+                            */
+    s8              offset;/*NB-IoT channel number相对于EARFCN的偏移。真实取值中有-0.5，为了方便，将真实值乘2作为此变量的值。
+                            取值范围（转成真实值时需要除以2）：
+                            -20,-18,-16,-14,-12,-10,-8,-6,-4,-2,-1,0,2,4,6,8,10,12,14,16,18。
+                            */
+    u8              reserved[3];
+} T_CarrierFreqNB;
+#endif
+
+//remove macro STACK_SUPPORT_LTE, 20121123
+//add for LTE 20100324
+typedef struct T_CellDescLte_Tag
+{
+#ifdef LTE_NBIOT_SUPPORT
+    T_CarrierFreqNB carrierFreqNB;
+#endif
+    u32  frequency;
+    u16  phyCellId;
+    u16  reserved;
+} T_CellDescLte;
+
+#ifdef LTE_NBIOT_SUPPORT
+typedef T_CellDescLte T_CellDescNB;
+#endif
+
+typedef struct T_UBIT_DMA_INFO_Tag
+{
+    /*The pointer that point to source data discription structure list
+      that include a data segment's start pointer and length.*/
+    u32                                  sourceAddr;
+    /*The total length of this data block.*/
+    u32                                  length;
+} T_UBIT_DMA_INFO;
+
+// add for engineer mode,get the strongest ncells, 20100907 add
+typedef struct T_CellMesResult_MultiMode_TAG
+{
+    u16 freq;
+    u16 cellParameterId;       //to gsm cell,is bsic; to lte, is cellPhyId
+    u8  rscp;                  //to gsm cell,is rssi;to lte, is rsrp
+    u8  rsrq;                  //only used by lte
+    u8  sfType;                //only used by lte server cell
+    u8  sfPattern;            //only used by lte server cell
+} T_CellMesResult_MultiMode;
+
+typedef struct T_CellInfo_MultiMode_TAG
+{
+    T_CellMesResult_MultiMode      servCell;
+
+    u16                           lteNum;              // lte ncell number;
+    T_CellMesResult_MultiMode     lteNeighbourCell[STRONGEST_NCELL_NUM_ENG_MODE];
+} T_CellInfo_MultiMode;
+
+/*add for trace neighbour cell.*/
+typedef struct T_NcellInfoForTrace_Tag
+{
+    u8                             lteNum;
+    u8                             gsmNum;
+    u8                             reserved[2];
+    u32                            frequency[TRACE_NCELL_NUM];
+    u16                            cellId[TRACE_NCELL_NUM];
+    s16                            rscpLevel[TRACE_NCELL_NUM];
+    s16                            rssiLevel[TRACE_NCELL_NUM];
+    s16                            s[TRACE_NCELL_NUM];
+    s16                            r[TRACE_NCELL_NUM];
+    u16                            sinrLevel[TRACE_NCELL_NUM];
+} T_NcellInfoForTrace; //T_NeighCellInfoForTrace
+
+typedef struct T_ERRC_servCellInfoForTrac_Tag
+{
+    u8                             errcMode;
+    u8                             errcSubState;
+    u8                             tai[5];
+    u8                             resvered1;
+    u32                            freq;
+    u16                            phyId;
+    u32                            measEvent;
+    u8                             dlBandWidth;
+    u8                             sfAssignment;
+    u8                             icsResult;
+    u8                             accResult;
+} T_ERRC_servCellInfoForTrac;
+
+/********************* ********************/
+
+/* common struct for emac_errc. and  L1C_errc */
+typedef struct T_CellServLte_Tag
+{
+    u32  frequency;
+    u16  phyCellId;
+    u16  cellType; /* 0:TDD, 1:FDD*/
+    u16  dlBandWidth;
+    u16  ulBandWidth;
+    u16  dlCpType;
+    u16  ulCpType;
+    u16  sfAssigment;
+    u16  specialSfPatern;
+    u16  antennaPortsCount;
+    u16  reserved;
+} T_CellServLte;
+
+typedef struct T_MeasSubframePatternR10_Tag
+{
+    u16   subframePatternIndex;
+    u16   subframePattern[7];
+} T_MeasSubframePatternR10;
+
+typedef struct T_PhichConfig_Tag
+{
+    u16                phichDuration;
+    u16                phichResource;
+} T_PhichConfig;
+
+typedef struct T_MbsfnConfigInfo_Tag
+{
+    u16    radioframeAllocatPeriod;
+    u16    radioframeAllocatOffset;
+    u32    subframeAllocationInfo;
+} T_MbsfnConfigInfo;
+
+typedef struct T_MeasFreqResult_Tag
+{
+    u32   frequency;
+    u16   intraCellMeasNum;
+    u16   measFlag;
+    u16   lteMeasCellIdList[EAS_WB_MAX_LTE_CELL_NUM];
+    u16   rsrp[EAS_WB_MAX_LTE_CELL_NUM];
+    u16   rsrq[EAS_WB_MAX_LTE_CELL_NUM];
+    u32   syncOffset[EAS_WB_MAX_LTE_CELL_NUM];
+    u16   cellCpType[EAS_WB_MAX_LTE_CELL_NUM];
+    u16   sinr[EAS_WB_MAX_LTE_CELL_NUM];
+    s16   rssi[EAS_WB_MAX_LTE_CELL_NUM];
+} T_MeasFreqResult;
+
+
+/****************move from EL1C_ERRC.HET *************************/
+/****************common  structure of  ERRC,EL1C,L1CC *************************/
+/****************L1C <---> ERRC interface signal body *************************/
+typedef struct T_DrxConfigInfo_WB_Tag
+{
+    /*0：释放；1：建立*/
+    u16       validFlag;
+    u16       onDurationTimer;
+    u16       inactiveTimer;
+    u16       dlReTranTimer;  //reTranTimer;
+    u16       ulRetranTimer;
+    u16       longDrxCycle;
+    u16       longDrxStartOffset;
+    u16       shortDrxCycle;
+    u16       shortCycleTimer;
+    u16       reserved;
+} T_DrxConfigInfo_WB;
+
+
+typedef struct T_p0Persistent_Tag
+{
+    u16 p0PersisTentFlag;
+    s16 p0UePusch;
+    s16 p0NomiPusch;
+    u16 reserved;
+} T_p0Persistent;
+
+typedef struct T_SpsConfigUl_Tag
+{
+    u16                spsUlFlag;
+    u16                spsIntervalUl;
+    u16                implicitReleaseAfter;
+    u16                twoIntervalFlag;
+    T_p0Persistent     p0Persistent;
+    u16                numUlProcess;
+    u16        reserved;
+} T_SpsConfigUl;
+
+typedef struct T_SpsConfigDl_Tag
+{
+    u16 spsDlFlag;
+    u16 spsIntervalDl;
+    u16 numDlProcess;
+    u16 n1PucchNum;
+    u16 n1PucchNumP1;
+    u16 reserved;
+    u16 n1Pucch[EAS_WB_MAX_N1_PUCCH_NUM];
+    u16 n1PucchP1[EAS_WB_MAX_N1_PUCCH_NUM];
+} T_SpsConfigDl;
+
+typedef struct T_SpsConfigInfo_Tag
+{
+    u32              spsRnti;
+    T_SpsConfigDl    spsConfigDl;
+    T_SpsConfigUl    spsConfigUl;
+} T_SpsConfigInfo;
+
+#ifdef _3gppR14_
+typedef struct T_EmacSpsConfigUl_Tag
+{
+    u8 spsUlFlag;
+    u8 spsIntervalUl;
+    u8 implicitReleaseAfter;
+    u8 twoIntervalFlag;
+    u8 numUlProcess;
+    u8 fixedRVNonAdaptive;
+    u16 reserved;
+} T_EmacSpsConfigUl;
+
+typedef struct T_EmacSpsConfigInfo_Tag
+{
+    u32 spsRnti;
+    T_EmacSpsConfigUl spsConfigUl;
+} T_EmacSpsConfigInfo;
+#endif
+
+typedef struct T_RachCommInfoToL1_Tag
+{
+    u16 powerRampingStep;
+    u16 preambleInitTargetPower;
+    u16 preambleTransMax;
+    u16 reserved;
+} T_RachCommInfoToL1;
+
+typedef struct T_PrachConfigInfo_Tag
+{
+    u16   prachConfigIndex;/* 0 - 63*/
+    u16   highSpeedFlag; /*FASLE,TRUE*/
+    u16   zeroCorrelationZoneConfig;/* 0 - 15*/
+    u16   prachFreqOffset; /* 0 - 94*/
+} T_PrachConfigInfo;
+
+typedef struct T_PrachConfig_Tag
+{
+    u16   rootSequenceIndex;/* 0 - 837*/
+    u16   reserved;
+    T_PrachConfigInfo  prachConfigInfo;
+} T_PrachConfig;
+
+typedef struct T_PrachParametersListCE_Tag
+{
+    u16    prachConfigIndex; /* 0 - 63*/
+    u16    prachFreqOffset;  /* 0 - 63*/
+    u16    prachStartingSubframe; /* 0 - 7*/
+    u16    maxNumPreambleAttemptCE; /* n3, n4, n5, n6, n7, n8, n10 */
+    u16    numRepetitionPerPreambleAttemp;/* 0 - 7*/
+    u16    mpdcchNbsNum;
+    u16    mpdcchNbsToMonitor[2];
+    u16    mpdcchNumRepetitionRA;/* 0 - 8*/
+    u16    prachHopConfig;  /* 0: open hop,1:close hop*/
+} T_PrachParametersListCE;
+
+typedef struct T_PrachConfigR13_Tag
+{
+    u16    rsrpThresholdNum;
+    u16    rsrpThresholdsPrachInfoList[3];
+    u16    mpdcchStartSFCssRAType;
+    u16    mpdcchStartSFCssRA;
+    u16    prachHoppingOffset;
+    u16    prachParameterNum;
+    T_PrachParametersListCE    prachParametersListCE[4];
+    u16    initialCeLevel;  /* ho init ce level, 0 - 3*/
+    u16    reserved;
+} T_PrachConfigR13;
+
+typedef struct T_BLValidSubfBitMap_Tag
+{
+    u16  validMapBitNum; /*value = 10, 40*/
+    u16  fddDownOrTddSubframeBitmap [3];/* bit, 0:subframe invalid;1:subframe valid*/
+    u16  fddUplinkSubframeBitmapLC /*bit0 bit1….bit9 --> subframe 0~9*/;
+    u16  Reserved;
+} T_BLValidSubfBitMap;
+
+typedef struct T_PdschCommInfo_Tag
+{
+    s16   referenceSignalPower; /*（-60~50）*/
+    u16   pb;
+} T_PdschCommInfo;
+
+typedef struct T_PdschCommInfoV1310_Tag
+{
+    u16   pdschMaxNumRepetitionCEmodeAR13;/*16，32*/
+    u16   pdschMaxNumRepetitionCEmodeBR13;/*192，256，384，512，768，1024，2048*/
+} T_PdschCommInfoV1310;
+
+typedef struct T_PuschRsInfo_Tag
+{
+    u16  groupHopFlag;
+    u16  groupAssign;
+    u16  sequenceHopFlag;
+    u16  cyclicShift;
+} T_PuschRsInfo;
+
+typedef struct T_PuschConfigBasic_Tag
+{
+    u16     nSb;
+    u16     hopMode ;
+    u16     hopOffset;
+    u16     qam64Flag;
+} T_PuschConfigBasic;
+
+typedef struct T_PuschCommInfo_Tag
+{
+    T_PuschRsInfo  puschRs;
+    T_PuschConfigBasic puschCfgBasic;
+} T_PuschCommInfo;
+
+typedef struct T_PuschCommInfoV1310_Tag
+{
+    u16            puschMaxNumCEModeA;
+    u16            puschMaxNumCEModeB;
+    u16            puschHoppingOffset; /* 1 -16 */
+    u16            reserved;
+} T_PuschCommInfoV1310;
+
+typedef struct T_PucchCommInfo_Tag
+{
+    u16   deltaPucchShift;
+    u16   cqiNrb;
+    u16   nCsAn;
+    u16   n1pucchAn;
+} T_PucchCommInfo;
+
+typedef struct T_PucchCommInfoV1310_Tag
+{
+    u16    n1pucchAnNum;
+    u16    reserved;
+    u16    n1pucchAnList[4];
+    u16    pucchNumRepetitionCEMsg4Level0;
+    u16    pucchNumRepetitionCEMsg4Level1;
+    u16    pucchNumRepetitionCEMsg4Level2;
+    u16    pucchNumRepetitionCEMsg4Level3;
+} T_PucchCommInfoV1310;
+
+typedef struct T_FreqHoppingParameters_Tag
+{
+    u16    mpdcchPdschHoppingNB;/*（0~1）*/
+    u16    dlModeAType;/*0：interval-FDD-r13,1：interval-TDD-r13*/
+    u16    intervalDlHoppingConfigCommModeA;/*0-3*/
+    u16    dlModeBType;/*0：interval-FDD-r13,1：interval-TDD-r13*/
+    u16    intervalDlHoppingConfigCommModeB;/*0-3*/
+    u16    ulModeAType;/*0：interval-FDD-r13,1：interval-TDD-r13*/
+    u16    intervalUlHoppingConfigCommModeA;/*0-3*/
+    u16    ulModeBType;/*0：interval-FDD-r13,1：interval-TDD-r13*/
+    u16    intervalUlHoppingConfigCommModeB;/*0-3*/
+    u16    mpdcchPdschHoppingOffset;/*1-16*/
+} T_FreqHoppingParameters;
+
+typedef struct T_UlSrsCommInfo_Tag
+{
+    u16   ulSrsCommInfoFlag;
+    u16   srsBandWidth;
+    u16   srsSubFrameType;
+    u16   ackNackSimulFlag;
+    u16   uptsRecofigFlag;
+    u16   reserved;
+} T_UlSrsCommInfo;
+
+typedef struct T_PucchDeltaFList_Tag
+{
+    u16   format1;
+    u16   format1b;
+    u16   format2;
+    u16   format2a;
+    u16   format2b;
+    u16   reseved;
+} T_PucchDeltaFList;
+
+typedef struct T_UlPowerCtlCommInfo_Tag
+{
+    s16    p0NomiPusch;
+    u16    alpha;
+    s16    p0NomiPucch;
+    s16    deltaPreambleMsg3;
+    T_PucchDeltaFList    pucchDeltaFlist;
+} T_UlPowerCtlCommInfo;
+
+/*typedef struct T_MbsfnConfigInfo_Tag
+{
+  u16   radioframeAllocatPeriod;
+  u16   radioframeAllocatOffset;
+  u32   subframeAllocationInfo;
+}T_MbsfnConfigInfo;*/ // move to easpub.het
+
+typedef struct T_CqiReportConf_Tag
+{
+    /*是否配置R8版本的CQI报告；0：未配置，1：配置。*/
+    u16     cqiReportFlag;
+    u16     reportModeAp;
+    s16     nomPdschRsEpreOff;
+    u16     cqiRepPeriodFlag;
+    u16     simulFlag;
+    u16     cqiPucchRescIndex;
+    u16     pmiConfIndex;
+    u16     cqiFormatInd;
+    u16     k;
+    u16     riIndex;
+    u16     pmiRiReportFlag;
+    u16     cqiMaskFlag;
+} T_CqiReportConf;
+
+typedef struct T_AntennaInfo_Tag
+{
+    u16  transMode;
+    u16  codBkSubSetNum;
+    u16  codBkSubsetRest[8];
+    u16  ueTransAntSel;
+    u16  reserved;
+} T_AntennaInfo;
+
+typedef struct T_PdschConfigDedicated_Tag
+{
+    u16   pa;
+    u16   reserved;
+} T_PdschConfigDedicated;
+
+typedef struct T_MpdcchConfigR13_Tag
+{
+    u16   validF;
+    u16   csiNumRepetitionCE;
+    u16   mpdcchPdschHoppingConfig;
+    u16   mpdcchStartSFUESS;
+    u16   mpdcchNumRepetition;
+    u16   mpdcchNarrowband;
+} T_MpdcchConfigR13;
+
+typedef struct T_EpdcchSetConfigR11_Tag
+{
+    u16  transmissionType;
+    u16  numberPbrPais;
+    u16  resBlockAssignBitNum;
+    u16  resourceBlockAssignment[3];
+    u16  dmrsScramblingSequenceInt;
+    u16  pucchResourceStartOffset;
+    u16  csiRSConfigZPId2;
+    u16  reserved;
+    T_MpdcchConfigR13   mpdcchConfigR13;
+} T_EpdcchSetConfigR11;
+
+typedef struct T_EpdcchConfigR11_Tag
+{
+    u16  startSymbolR11;
+    u16  EpdcchSetNum;
+    T_EpdcchSetConfigR11  EpdcchSetConfigR11[2];
+} T_EpdcchConfigR11;
+
+
+typedef struct T_PuschDMRS_Tag
+{
+    u16   validF;
+    u16   nPUSCHIdentity;
+    u16   nDMRSCSHIdentity;
+    u16   reserved;
+} T_PuschDMRS;
+
+typedef struct T_PuschDediInfo_Tag
+{
+    u16  ackIndexBetaOffset;
+    u16  riIndexBetaOffset;
+    u16  cqiIndexBetaOffset;
+    /*来自于MAC-MainConfig,ul-Sch-Config
+    取值为：0: not set, 1: set.*/
+    u16  ulSchttiBundlingFlag;
+    u16  groupHoppingDisabled;
+    u16  reserved;
+    T_PuschDMRS puschDMRS;
+} T_PuschDediInfo;
+
+typedef struct T_PuschConfigDedicatedR13_Tag
+{
+    u16  puschHoppingConfig;
+    u16  reserved;
+} T_PuschConfigDedicatedR13;
+
+typedef struct T_TpcConfig_Tag
+{
+    u32   tpcRnti;
+    u16   formatType;
+    u16   IndexFormat3;
+    u16   IndexFormat3A;
+    u16   reserved;
+} T_TpcConfig;
+
+typedef struct T_SrsConfigAp_Tag
+{
+    u16 srsAntennaPortAp;
+    u16 srsBandwidthAp;
+    u16 freqDomainPosAp;
+    u16 transCombAp;
+    u16 cyclicShiftAp;
+    u16 transmissionCombNumR13;
+} T_SrsConfigAp;
+
+typedef struct T_UlSrsDediInfoAperiodic_Tag
+{
+    u16   confFlag;
+    u16   srsConfigIndexApR10;
+    u16                     srsActivateApConfigFlag;
+    /*ENUMERATED {sym2, sym4};INVALID_U16为无效值；srsDediInfoUpPTsExt存在时使用*/
+    u16                     srsUpPtsAddR13;
+    T_SrsConfigAp        srsConfigApFormat0;
+    T_SrsConfigAp        srsConfigApFormat1a2b2c;
+} T_UlSrsDediInfoAperiodic;
+
+typedef struct T_UlSrsDediInfo_Tag
+{
+    u16   ulSrsDediFlag;
+    u16   srsBandWidth;
+    u16   srsHopBand;
+    u16   freqDomainPos;
+    u16   duration;
+    u16   srsConfIndex;
+    u16   transComb;
+    u16   cyclicShift;
+    u16   srsAntennaPortR10;
+    u16   transmissionCombNumR13;
+    /*编码值表示（0,1），对应实际值{sym2, sym4},INVALID_U16表示未配置srsDediInfoUpPTsExt时使用*/
+    u16   srsUpPtsAdd;
+    u16   reserved;
+
+} T_UlSrsDediInfo;
+
+typedef struct T_PucchParam_Tag
+{
+    u16   validF;
+    u16   nPucchIdentity;
+    u16   n1PucchAN;
+    u16   reserved;
+} T_PucchParam;
+
+typedef struct T_PucchNumRepetitionCe_Tag
+{
+    u16       validF;
+    u16       modeType;
+    u16       repNumFormat1;
+    u16       repNumFormat2;
+} T_PucchNumRepetitionCe;
+
+typedef struct T_PucchConfigDedicated_Tag
+{
+    u16 pucchCfgDedFlag;
+    u16 ackNackRepetition;
+    u16 repFactor;
+    u16 n1PucchAnRep;
+    u16 tddAckNackFeedbackMode;
+    u16 reserved;
+} T_PucchConfigDedicated;
+
+typedef struct T_PucchConfigDedicatedR13_Tag
+{
+    T_PucchNumRepetitionCe pucchNumRepInfo;
+} T_PucchConfigDedicatedR13;
+
+typedef struct T_DeltaTxDoffsetListPucch_Tag
+{
+    u16  deltaTxDoffsetPucchFormat1R10;
+    u16  deltaTxDoffsetPucchFormat1a1bR10;
+    u16  deltaTxDoffsetPucchFormat22a2bR10;
+    u16  deltaTxDoffsetPucchFormat3R10;
+    u16  deltaTxDoffsetPucchFormat1bCSR11;
+    u16  reserved;
+} T_DeltaTxDoffsetListPucch;
+
+typedef struct T_UlPowerCtrDediInfo_Tag
+{
+    s16    p0UePusch;
+    u16    deltaMcsFlag;
+    u16    accumFlag;
+    s16    p0UePucch;
+    u16    pSrsOffset;
+    u16    filterCoeff;
+    u16    pSrsOffsetAp;
+    u16    reserved;
+    T_DeltaTxDoffsetListPucch  deltaTxDoffsetListPucch;
+} T_UlPowerCtrDediInfo;
+
+typedef struct T_FreqBandLte_Tag
+{
+    u32   startPoint;
+    u32   endPoint;
+} T_FreqBandLte;
+
+typedef struct T_NeighCellsCrsInfo_Tag
+{
+    u16  physCellId;
+    u16  antennaPortsCount;
+    u16  mbsfnConfigNum;
+    u16  reserved;
+    T_MbsfnConfigInfo  mbsfnConfigList[EAS_WB_MAX_MBSFN_NUM];
+} T_NeighCellsCrsInfo;
+
+typedef struct T_NeighCellsCrsInfoList_Tag
+{
+    u16  numOfNCCI;
+    u16  reserved;
+    T_NeighCellsCrsInfo  neighCellsCrsInfo[EAS_WB_MAX_NEIGH_CELLS_CRS_INFO_NUM];
+} T_NeighCellsCrsInfoList;
+
+typedef struct T_sfnInfo_Tag
+{
+    u16  ssfn;
+    u16  offset;
+} T_sfnInfo;
+
+typedef struct T_adjustSFNInfo_Tag
+{
+    T_sfnInfo       currentCellSFNInfo;
+
+    T_sfnInfo       targetCellSFNInfo;
+} T_adjustSFNInfo;
+
+typedef struct T_adjustHFNInfo_Tag
+{
+    u16             targetCellHFNInfo;
+    u16             currentCellHFNInfo;
+    T_sfnInfo       currentCellSFNInfo;
+} T_adjustHFNInfo;
+
+typedef struct T_RL1C_PWR_SWEEP_REQ_Tag
+{
+    u16             sweepId;  /* TO match the sweepId of PWR_SWEEP_CNF. */
+    u16             freqBandNum;
+    u16             plmnSearchFlag; /* 0:no plmn serach;1:plmn serach*/
+    u16             reserved;
+    T_FreqBandLte   freqBand[EAS_WB_MAX_FREQBAND]; /* The start to end point. */
+} T_RL1C_PWR_SWEEP_REQ;
+
+typedef struct T_RL1C_PWR_SWEEP_CNF_Tag
+{
+    u16            sweepId;  /* TO match the sweepId of PWR_SWEEP_REQ. */
+    u16            freqPointNum;  /* If not find freqPoint, the num is zero. */
+    T_FreqBandLte  scanFreqBandInfo;/*携带本次盲扫的起始频点和结束频点*/
+} T_RL1C_PWR_SWEEP_CNF;
+
+typedef struct T_RL1C_CELL_SEARCH_REQ_Tag
+{
+    u16            cellSearchId; /* To match the cellSearchId of CNF. */
+    u16            dlCpType;
+    u32            freq; /* Target freq point. */
+    u16            phyCellId;/*指定小区的小区ID，默认值为0xFFFF；有效取值目前仅在nv指定锁小区时使用；*/
+    u16            plmnSearchFlag;/* 0:no plmn serach;1:plmn serach*/
+    u16            pwrFlag;  // 0: NOT PWR CELL SERACH  1: PWR CELL SEARCH
+    u16            cellSearchInEc;// 0:非CE驻留类型（Normal类型）；1：CE驻留类型(应用场景包含带BA表的CE驻留和盲搜的CE驻留)
+    /*
+    0：单频点检测，即只检测当前频点，即只在原语携带的Freq上进行小区盲检；
+    1：三频点检测，即在Freq-1，Freq，Freq+1三个频点上进行小区盲检
+    2：五频点检测，即在Freq-2，Freq-1，Freq，Freq+1，Freq+2五个频点上进行小区盲检    */
+    u16            cellSearchFreqNumInd;
+    u16            reserved2;
+} T_RL1C_CELL_SEARCH_REQ;
+
+typedef struct T_RL1C_CELL_SEARCH_CNF_Tag
+{
+    u16           cellSearchId; /* To match the cellSearchId of REQ. */
+    u16           cellNum; /* Find cell num, if cellNum = 0 failed to sync. */
+    u32           frequency; /* Freq index. */
+    u16           phyCellId[EAS_WB_MAX_CELL_SEARCH_NUM]; /* Report phyCellId of one freq. */
+    u16           dlCpType[EAS_WB_MAX_CELL_SEARCH_NUM]; /* Invalid value is INVALID_U16. */
+    u32           syncOff[EAS_WB_MAX_CELL_SEARCH_NUM]; /* Sync info of cell,invalid value is INVALID_U32. */
+    s16           rssi;
+    u8            reserved[2];
+} T_RL1C_CELL_SEARCH_CNF;
+
+typedef struct T_RL1C_FREQ_MEAS_REQ_Tag
+{
+    u16            freqMeasId; /* To match the icsMeasId of ICS_MEAS_CNF. */
+    u16            freqNum; /* To be measured cell num or freq point num. */
+    u32            freq[EAS_WB_MAX_FREQ_MEAS_NUM];
+} T_RL1C_FREQ_MEAS_REQ;
+
+typedef struct T_RL1C_FREQ_MEAS_CNF_Tag
+{
+    u16            freqMeasId; /* To match the icsMeasId of ICS_MEAS_REQ. */
+    u16            freqNum; /* To be measured cell num. */
+    u32            freq[EAS_WB_MAX_FREQ_MEAS_NUM];
+} T_RL1C_FREQ_MEAS_CNF;
+
+typedef struct T_RL1C_CELL_SYNC_REQ_Tag
+{
+    u16             syncId;
+    u16             sinr;
+    T_CellServLte   cellInfo;
+    u32             syncOffset;
+    u16             syncType;      // 0: res 1: ho 3: for l1c wake from deep sleep
+    u16             syncBackFlag;  // 0: not need to backoff syncoffset  1: need to backoff syncOffset
+} T_RL1C_CELL_SYNC_REQ;
+
+typedef struct T_RL1C_CELL_SYNC_CNF_Tag
+{
+    u16            syncId;
+    u16            successfulFlag; /* 0:fail;1:success*/
+    u16            dlCpType;
+    u16            reserved;
+} T_RL1C_CELL_SYNC_CNF;
+
+typedef struct T_RL1C_SI_READ_REQ_Tag
+{
+    T_CellServLte  siCellDesc;
+
+    u16             siReadScenario;/* 0:no plmn serach;1:plmn serach,2：OTDOA测量时参考小区MIB读取,3：better小区重选*/
+    u16             useSysModPeriodFlag; // indicate use system modity or not  1:use ; 0: not use
+    u32             syncOffset;
+    u16             siWindowLenth;
+    u16             siType;/*bit 0:  mib,  0: no read; 1: read
+                           bit 1:  sib1, 0: no read; 1: read
+                           bit 2:  other si message, 0: no read; 1: read */
+    u32             siReadSchedulBitMap;
+
+    u16             reserved1;
+    u16             siSchedulNum;
+    u16             siNvalue[EAS_WB_MAX_SI_NUM]; /*EDHI_MAX_SI_MESSAGE = 32*/
+    u16             siPeriod[EAS_WB_MAX_SI_NUM];
+
+    T_PhichConfig   phichCfg;
+    u16             sib1SchedulIndex;/*SystemInformationBlockType1-BR , 0-31*/
+    u16             siRepPatten; /*0~3*/
+    u16             siHoppingComCfg;/**/
+    u16             startSymbolLC; /*MPDCCH,PDSCH start symbol, 1-4*/
+    T_BLValidSubfBitMap      validSubFrameConfig;/*BL/CE valid subframe*/
+    T_FreqHoppingParameters  freqHoppingParam;  //HOPPING param for decode other SI
+    u16                      mbsfnConfigNum;
+    u16                      isNewCell;
+    T_MbsfnConfigInfo        mbsfnConfigList[EAS_WB_MAX_MBSFN_NUM];
+    u16             siNbIndex[EAS_WB_MAX_SI_NUM];
+    u16             siTBS[EAS_WB_MAX_SI_NUM];
+    u16                      ceMode;//0:NORMAL,1:MODE A,2:MODE B,0xFFFF,INVALID
+    u16                      reserved;
+#ifdef TEST_INTEGRATE
+    u16            SIPresent[6];
+#endif
+    /*Indicates whether SI data may difference between two successive periods.*/
+    u32            siDataDiffBitMap;
+
+} T_RL1C_SI_READ_REQ;
+
+typedef struct T_RL1C_MIB_DATA_IND_Tag
+{
+    u16                 crcFlag;/*1:crc success;0:crc error*/
+    u16                 rsrp;
+    u16                 rsrq;
+    u16                 antennaPortsCount;
+    u16                 sfn_low2bit;
+    u16                 reserved;
+    u8                  data[4];
+    T_adjustSFNInfo     adjustSFNInfo;
+} T_RL1C_MIB_DATA_IND;
+
+typedef struct T_RL1C_SIB1_DATA_IND_Tag
+{
+    u16            crcFlag;/*1:crc success;0:crc error*/
+    u16            rsrp;
+    u16            rsrq;
+    u16            currentCellHFNInfo;
+    T_sfnInfo      currentCellSFNInfo;
+    u16            sinr;
+    u16            rssi;
+    u16            reserved;
+    u16            dataLen;
+    u8             data[EAS_WB_MAX_SI_DATA_LENGTH];
+} T_RL1C_SIB1_DATA_IND;
+
+typedef struct T_RL1C_SI_DATA_IND_Tag
+{
+    u16            rsrp;
+    u16            rsrq;
+    u16            dataLen;
+    u16            reserved;
+    u8             data[EAS_WB_MAX_SI_DATA_LENGTH];
+} T_RL1C_SI_DATA_IND;
+
+typedef struct T_EutranMeasFreqInfo_Tag
+{
+    u32  frequency;
+    u16  measBandWidth;
+    u16  presenceAntennaPort1;
+    u16  neighCellConfig;
+    u16  priority;
+    u16  intraCellMeasNum;
+    u16  reserved;
+    u16  lteMeasCellIdList[EAS_WB_MAX_LTE_CELL_NUM];
+} T_EutranMeasFreqInfo;
+
+typedef struct T_GeranCellMeasInfo_Tag
+{
+    /*
+    最高bit为1：PCS1900，
+    最高bit为0：DCS1800.*/
+    u16  gsmArfcn;
+    u16  bsicThreshd;
+    u16  priority;
+    u16  reserved;
+} T_GeranCellMeasInfo;
+
+typedef struct T_CellSelectionInfo_Tag
+{
+    u16  ceMode; //0：NORMAL 1：CE MODEA；2：CE MODEB
+    s16  pMax;
+    s16  qualMin;
+    s16  qRxLevMin;
+    s16  qualMinCe;
+    s16  qRxLevMinCe;
+    s16  qualMinCe1;
+    s16  qRxLevMinCe1;
+} T_CellSelectionInfo;
+
+typedef struct T_AtDummyFun_Tag
+{
+    u16  forceMeasGeran;
+    s16  sCellRsrpDelta;
+    s16  sCellRsrqDelta;
+    u16  reserved;
+} T_AtDummyFun;
+
+typedef struct T_IdlMeasurementInfo_Tag
+{
+    u16  measId;
+    u16  intraSearchP;
+    u16  intraSearchQ;
+    u16  nonIntraSearchP;
+    u16  nonIntraSearchQ;
+    u16  rsrqOnAllSymbol;
+    u16  immediateMeasFlag;
+    u16  lteFreqNum;
+    T_EutranMeasFreqInfo  lteMeasFreqInfo[EAS_WB_MAX_LTE_FREQ_NUM];
+
+#ifdef   __IRAT__
+    u16  gsmCellNum;
+    u16  reserved;
+    T_GeranCellMeasInfo  gsmCellList[EAS_MAX_GGE_CELL_NUM];
+#endif
+
+    T_AtDummyFun atDummyFun;
+
+} T_IdlMeasurementInfo;
+
+typedef struct T_PagingParam_Tag
+{
+    u16  nValue;
+    u16  pagingPeriod;
+    u16  ueIdPo;
+    u16  ueIdPtw;
+    u32  edrxPeriod;
+    u32  ptwLen;
+    u16  maxMpdcchRepNum;
+    u16  numOfPagingNb;
+    u16  siHoppingConfigComm;
+    u16  startSymbolLC;
+    T_BLValidSubfBitMap      validSfn;
+    T_FreqHoppingParameters  freqHoppingParam;
+    T_PhichConfig            phichCfg;
+    T_PdschCommInfo          pdschCommInfo;
+    T_PdschCommInfoV1310     pdschCommInfoV1310;
+    u16                      mbsfnConfigNum;
+    u16                      reserved;
+    T_MbsfnConfigInfo        mbsfnConfigList[EAS_WB_MAX_MBSFN_NUM];
+} T_PagingParam;
+
+typedef struct T_RL1C_IDL_CONFIG_REQ_Tag
+{
+    T_CellServLte  cellDescInfo;
+    u16            idlConfigType;  // 0: normal config , 1: psm resume config  2: edrx resume config
+    u16            highSpeedFlag;
+    u32            siModiPeriod;
+    T_CellSelectionInfo   cellSelectionInfo;
+    T_PagingParam         pagingParam;
+} T_RL1C_IDL_CONFIG_REQ;
+
+typedef struct T_RL1C_PAGING_DATA_IND_Tag
+{
+    u16           result; /* 0: decode err, 1: decode success*/
+    u16           dataLen;
+    u8            data[EAS_WB_MAX_PCH_INFO_LENGTH];
+
+    u16           serveRsrp;
+    u16           serveRsrq;
+    u16           serveSinr;
+    s16           serveRssi;
+} T_RL1C_PAGING_DATA_IND;
+
+typedef struct T_IdlMeasFreqResult_Tag
+{
+    u16    intraCellNum;
+    u16    resultTypeFlag;
+    u32    frequency;
+    u16    lteMeasCellIdList[EAS_WB_MAX_LTE_CELL_NUM];
+    u16    rsrp[EAS_WB_MAX_LTE_CELL_NUM];
+    u16    rsrq[EAS_WB_MAX_LTE_CELL_NUM];
+    u32    syncOffset[EAS_WB_MAX_LTE_CELL_NUM];
+    u16    cellCpType[EAS_WB_MAX_LTE_CELL_NUM];
+    u16    sinr[EAS_WB_MAX_LTE_CELL_NUM];
+    s16    rssi[EAS_WB_MAX_LTE_CELL_NUM];
+} T_IdlMeasFreqResult;
+
+typedef struct T_GeranCellMeasResult_Tag
+{
+    /*
+    最高bit为1：PCS1900，
+    最高bit为0：DCS1800.*/
+    u16   gsmArfcn;
+    u16   rssi;
+    u16   bsic;
+    u16   resultTypeFlag;
+} T_GeranCellMeasResult;
+
+typedef struct T_RL1C_IDL_MEAS_IND_Tag
+{
+    u16            measId;
+    u16            lteFreqNum;/*no lte nc cell, report 0*/
+    u16            serveRsrp;
+    u16            serveRsrq;
+    u16            serveSinr;
+    /*BUG1233278,20191230. L1 reports RSSI Level to EL1C currently. */
+    s16            serveRssi;
+    /*BUG968073, 20181115. Indicates OOS(S<0)Or not.*/
+    u16            oosFlag;
+    u16            reserved;
+    T_IdlMeasFreqResult    lteMeasResult[EAS_WB_MAX_LTE_FREQ_NUM];
+#ifdef  __IRAT__
+    u16                    gsmCellNum;
+    u16                    reserved2;
+    T_GeranCellMeasResult  gsmCellMeasResultList[EAS_MAX_GGE_CELL_NUM];
+#endif
+} T_RL1C_IDL_MEAS_IND;
+
+typedef struct T_UlPowerCtlCommInfoV1020_Tag
+{
+    u16                ulPowerCtlComV1020Flag;
+    u16                deltafPucchFormat3R10;
+    u16                deltaPucchFormat1bCsR10;
+    u16                reserved;
+} T_UlPowerCtlCommInfoV1020;
+
+typedef struct T_UlPowerCtlCommInfoV1310_Tag
+{
+    u16                deltaFPucchFormat4R13; //{deltaF16, deltaF15, deltaF14,deltaF13, deltaF12, deltaF11, deltaF10, spare1}
+    u16                deltaFPucchFormat5R13; //{deltaF13, deltaF12, deltaF11, deltaF10, deltaF9,deltaF8, deltaF7, spare1}
+} T_UlPowerCtlCommInfoV1310;
+
+typedef struct T_CommCfgForComm_Tag
+{
+    s16  pcmax;
+    u16  nValue;
+    u16  pagingPeriod;
+    u16  ueId;
+    u16  mbsfnConfigNum;
+    u16  additionalSpectrumEmission;
+    u32  siModiPeriod;
+
+    T_PrachConfig      prachCfg;
+    T_PdschCommInfo    pdschCommCfg;
+    T_PuschCommInfo    puschCommCfg;
+    T_PucchCommInfo    pucchCommCfg;
+    T_UlSrsCommInfo    ulSrsCommInfo;
+    T_UlPowerCtlCommInfo       ulPowerCtrCommInfo;
+    T_PhichConfig              phichCfg;
+    T_UlPowerCtlCommInfoV1020  ulPowerCtlCommInfoV1020;
+    T_MbsfnConfigInfo          mbsfnConfigList[EAS_WB_MAX_MBSFN_NUM];
+    T_RachCommInfoToL1         rachCommInfo;
+} T_CommCfgForComm;
+
+typedef struct T_CommCfgForBlCe_Tag
+{
+    u16  startSymbolLC;
+    u16  reserved;
+    T_PrachConfigR13         prachCfgR13;
+    T_PdschCommInfoV1310     pdschCommInfoV1310;
+    T_PuschCommInfoV1310     puschCommInfoV1310;
+    T_PucchCommInfoV1310     pucchCommInfoV1310;
+    T_FreqHoppingParameters  freqHoppingParam;
+    T_BLValidSubfBitMap      validSfn;
+} T_CommCfgForBlCe;
+
+typedef struct T_CommCfgForNonBlCe_Tag
+{
+    u32  reserved;
+} T_CommCfgForNonBlCe;
+
+typedef struct T_RL1C_CHN_COMM_CONFIG_REQ_Tag
+{
+    T_CellServLte        servCellInfo;
+    T_CommCfgForComm     *pCommCfgForComm;
+    T_CommCfgForBlCe     *pCommCfgForBlCe;
+    T_CommCfgForNonBlCe  *pCommCfgForNonBlCe;
+} T_RL1C_CHN_COMM_CONFIG_REQ;
+
+typedef struct T_AntennaInfoUlR10_Tag
+{
+    u16     ulTransMode;
+    u16     fourAntennaPortActivated;
+} T_AntennaInfoUlR10;
+
+typedef struct T_CqiReportAperiodicR10_Tag
+{
+    u16                 aperiodicCqiFlag;
+    u16                 cqiReportModeAperiodic;
+    u16                 aperiodicCSITrigger1R10;
+    u16                 aperiodicCSITrigger2R10;
+} T_CqiReportAperiodicR10;
+
+typedef struct T_CqiReportPeriodicR10_Tag
+{
+    /*指示R10 版本中周期Cqi机制是否建立：
+    0：表示释放周期性Cqi的配置，底层需释放周期性的配置；
+    1：表示建立周期性Cqi的配置，该结构中其他配置有效。
+    INVALID_U16：表示周期性的CQI配置不存在，
+    底层无需关心T_CqiReportPeriodicR10 中的所有配置。*/
+    u16     periodicCqiFlag;
+    u16     cqiPucchResourceIndexR10;
+    u16     cqiPucchResourceP1IndexR10;
+    u16     cqiPmiConfigIndex;
+    u16     cqiFormatIndFlag;
+    u16     csiReportMode;
+    u16     k;
+    u16     periodicityFactorR10;
+    u16     riConfigIndex;
+    u16     simultaneousAckNackAndCQI;
+    u16     cqiMaskFlag;
+    u16     csiConfigFlag;
+    u16     cqiPmiConfigIndex2R10;
+    u16     riConfigIndex2R10;
+} T_CqiReportPeriodicR10;
+
+typedef struct T_CqiReportConfR10_Tag
+{
+    u16                             cqiReportR10Flag;
+    s16                             nomPdschRsEpreOffset;
+    T_CqiReportAperiodicR10         cqiReportAperiodicR10;
+    T_CqiReportPeriodicR10          cqiReportPeriodicR10;
+    u16                             pmiRIReportR9;
+    u16                             csiSubframePatternConfigFlag;
+    T_MeasSubframePatternR10        csiMeasSubframeSet1R10;
+    T_MeasSubframePatternR10        csiMeasSubframeSet2R10;
+} T_CqiReportConfR10;
+
+typedef struct T_PucchConfigDedicatedV1020_Tag
+{
+    u16         pucchCfgDedV1020Flag;
+    u16         pucchFromatChoice;
+    u16         n3PucchAnListR10[4];
+    u16         twoAntPortActivatedFormat3R10Flag;
+    u16         n3PucchAnListP1R10[4];
+    u16         n1PucchAnCsR10Flag;
+    u16         n1PucchAnCsListR10[2][4];
+    u16         twoAntPortActPucchFormat1a1bR10;
+    u16         simulPucchPuschR10;
+    u16         n1PucchAnRepP1R10;
+    u16         reserved;
+} T_PucchConfigDedicatedV1020;
+
+typedef struct T_CsiRsConfigR10_Tag
+{
+    u16   csiRsConfigFlag;
+    u16   antennaPortsCount;
+    u16   resourceConfig;
+    u16   subframeConfig;
+    u16   pC;
+    u16   zeroTxPowerFlag;
+    u16   zeroTxPwrSubframeCfg;
+    u16   reserved;
+    u32   zeroTxPwrResourceCfg;
+} T_CsiRsConfigR10;
+
+typedef struct T_CsiRsConfZpR11_Tag
+{
+    u16  csiRsConfZpId;
+    u16  resourceConfList;
+    u16  subframeConf;
+    u16  reserved;
+} T_CsiRsConfZpR11;
+
+typedef struct T_CsiRsConfZpListR11_Tag
+{
+    u16  numOfCsiRsConfZp;
+    u16  reserved;
+    T_CsiRsConfZpR11  csiRsConfZpList[EAS_WB_MAX_CSI_RS_ZP_NUM];
+} T_CsiRsConfZpListR11;
+
+typedef struct T_PuschConfigDedicatedR1430_Tag
+{
+    /*  0:??;????0xFFFF*/
+    u16                                     cePuschNbMaxTbsR14;
+    /*  ENUMERATED {bw5};????0xFFFF*/
+    u16                                     cePuschMaxBandwidthR14;
+
+} T_PuschConfigDedicatedR1430;
+
+typedef struct T_PdschConfigDedicatedR1430_Tag
+{
+    /*  ?????{bw5, bw20};????0xFFFF*/
+    u16                                     cePdschMaxBandwidthR14;
+    /*  0:??;????0xFFFF*/
+    u16                                     cePdschTenProcessesR14;
+    /*  0:??;????0xFFFF*/
+    u16                                     ceHarqAckBundlingR14;
+    /*  ENUMERATED {range1, range2};????0xFFFF*/
+    u16                                     ceSchedulingEnhancementR14;
+    /*  ENUMERATED {b33};????0xFFFF*/
+    u16                                     tbsIndexAlt2R14;
+
+    u16                                     reserved;
+} T_PdschConfigDedicatedR1430;
+
+typedef struct T_PuschEnhancementsConfigR14_Tag
+{
+    /*????{0~100},????0xFFFF;*/
+    u16                                     puschHoppingOffsetPuschEnhr14;
+
+    /*????  ENUMERATED {int1, int2, int4, int8},????0xFFFF;*/
+    u16                                     intervalFddPuschEnhr14;
+
+    /*????  ENUMERATED {int1, int5, int10, int20},????0xFFFF;*/
+    u16                                     intervalTddPuschEnhr14;
+
+    u16                                     reserved;
+} T_PuschEnhancementsConfigR14;
+
+typedef struct T_DedCfgForBlCeR14_Tag
+{
+    /*bitMAP??,??bit?0????IE???,??bit?1?????*/
+    u16                                     cfgBitMap;
+
+    u16                                     reserved;
+
+    /*0:??;????0xFFFF*/
+    u16                                     cePdschPuschEnhancementConfigR14;
+
+    /*0:??,  ????0xFFFF;*/
+    u16                                     ceUeTxAntennaSelectionConfigR14;
+
+    T_PuschEnhancementsConfigR14            puschEnhancementsConfigR14;
+
+
+    T_PdschConfigDedicatedR1430             pdschConfigDedicatedR1430;
+
+    T_PuschConfigDedicatedR1430             puschConfigDedicatedR1430;
+} T_DedCfgForBlCeR14;
+
+typedef struct T_DedCfgForComm_Tag
+{
+    u32  crnti;
+    u16  n310;
+    u16  n311;
+    u16  t310;
+    u16  reserved;
+    T_PucchConfigDedicated         pucchDedInfo;
+    T_PucchParam                   pucchParam;
+    T_CqiReportConf                cqiReportConf;
+    T_CqiReportConfR10             cqiReportConfR10;
+    T_AntennaInfo                  antennalInfo;
+    T_PdschConfigDedicated         pdschDedInfo;
+    T_PuschDediInfo                puschDedCfg;
+    T_TpcConfig                    tpcPusch;
+    T_TpcConfig                    tpcPucch;
+    T_UlSrsDediInfo                srsDedInfo;
+    T_UlSrsDediInfoAperiodic       srsApInfo;
+    T_SpsConfigInfo                spsConfig;
+    T_UlPowerCtrDediInfo           ulPowerCtrDedInfo;
+    T_DrxConfigInfo_WB                drxConfig;
+    T_MeasSubframePatternR10       measSubframePatternPcellR10;
+    T_NeighCellsCrsInfoList        neighCellsCrsInfo;
+} T_DedCfgForComm;
+
+typedef struct T_DedCfgForBlCe_Tag
+{
+    u16  ceMode;
+    u16  reserved;
+    T_EpdcchConfigR11          epdcchInfo;
+    T_PucchConfigDedicatedR13  pucchConfigDedicatedR13;
+    T_PuschConfigDedicatedR13  puschConfigDedicatedR13;
+    T_DedCfgForBlCeR14         dedCfgForBlCeR14;
+} T_DedCfgForBlCe;
+
+typedef struct T_DedCfgForNonBlCe_Tag
+{
+    T_AntennaInfoUlR10           atennaInfoUlR10;
+    T_CsiRsConfigR10             csiRsConfigR10;
+    T_CsiRsConfZpListR11         csiRsConfZpR11;
+    T_PucchConfigDedicatedV1020  pucchDedCfgV1020;
+} T_DedCfgForNonBlCe;
+
+typedef struct T_RL1C_CHN_DED_CONFIG_REQ_Tag
+{
+    T_CellServLte       servCellInfo;
+    T_DedCfgForComm     *pDedCfgForComm;
+    T_DedCfgForBlCe     *pDedCfgForBlCe;
+    T_DedCfgForNonBlCe  *pDedCfgForNonBlCe;
+} T_RL1C_CHN_DED_CONFIG_REQ;
+
+typedef struct T_MeasSubframePatternConfigNeighR10_Tag
+{
+    /*表示应用该子帧格式的小区列表个数*/
+    u16  measSubframeCellNum;
+    u16  reserved;
+    T_MeasSubframePatternR10  measSubframePattern;
+    u16  startPhyCellId[EAS_WB_MAX_DCH_BLACKCELL_NUM];
+    u16  phyCellIdRange[EAS_WB_MAX_DCH_BLACKCELL_NUM];
+} T_MeasSubframePatternConfigNeighR10;
+
+typedef struct T_RL1C_DCH_MEAS_REQ_Tag
+{
+    u16   measId;
+    u16   gapType;
+    u16   gapOffset;
+    u16   filterCoefRsrp;
+    u16   filterCoefRsrq;
+    u16   lteFreqNum;
+    u16   sMeasure;
+    u16   rsrqOnAllSymbol;
+    u16   filterCoefSinr;
+    u16   ceMode;//0：NORMAL  1：CE MODEA；2：CE MODEB。
+
+    T_CellServLte                        serveInfo;
+    T_EutranMeasFreqInfo                 lteMeasFreqInfo[EAS_WB_MAX_LTE_FREQ_NUM];
+    T_MeasSubframePatternConfigNeighR10  measSubframePatternConfigNeighR10[EAS_WB_MAX_LTE_FREQ_NUM];
+
+#ifdef  __IRAT__
+    u16    gsmCellNum;
+    u16    filterCoefRssi;
+    /*gsm arfcn.*/
+    u16    gsmCell[EAS_MAX_GGE_CELL_NUM];
+#endif
+
+    T_AtDummyFun atDummyFun;
+    u16          highSpeedFlag;
+    u16          reserved;
+} T_RL1C_DCH_MEAS_REQ;
+
+typedef struct T_RL1C_DCH_MEAS_IND_Tag
+{
+    u16   measId;
+    u16   lteFreqNum;
+    u16   measStatus;  // 0: only serving cell measurement  1: including inter FREQ meas
+    u16   reserved1;
+    T_MeasFreqResult   lteMeasResult[EAS_WB_MAX_LTE_FREQ_NUM];/* EDHI_MAX_LTE_FREQ_NUM = 9*/
+#ifdef  __IRAT__
+    u16   gsmCellNum;
+    u16   reserved2;
+    T_GeranCellMeasResult  gsmCellMeasResultList[EAS_MAX_GGE_CELL_NUM];
+#endif
+} T_RL1C_DCH_MEAS_IND;
+
+typedef struct T_RL1C_DEACT_REQ_Tag
+{
+    u16   cause;  /* 1:power off; 2:psm; 3:EDRX  4:lost cover */
+    u16   reserved;
+} T_RL1C_DEACT_REQ;
+
+typedef struct T_RL1C_PHY_RESET_REQ_Tag
+{
+    u16                resetType;
+    u16                resetForSuspend; /*0 – Other; 1 – Reset for Suspend. */
+} T_RL1C_PHY_RESET_REQ;
+
+typedef struct RL1C_CGI_MEAS_REQ_Tag
+{
+    T_CellDescLte    cgiCellInfo;
+    u32              syncOffset;
+    u16              cellCpType;
+    u16              autoGapFlag;
+    u16              presenceAntennaPort1;
+    u16              cellType; // 0 : tdd cell 1:fdd cell
+} T_RL1C_CGI_MEAS_REQ;
+
+
+typedef struct T_RL1C_CGI_MEAS_IND_Tag
+{
+    u16    cgiDataLen;
+    u16    reserved;
+    u8     cgiData[EAS_WB_MAX_SI_DATA_LENGTH];
+    u8     mibData[4];
+} T_RL1C_CGI_MEAS_IND;
+
+typedef struct T_RL1C_RLF_STATUS_IND
+{
+    /*指示RL的状态，取值0、1、2；
+    在T310开启时为0；
+    在T310关闭时为1；
+    在T310超时时为2；*/
+
+    u32         statusInd;
+} T_RL1C_RLF_STATUS_IND;
+
+typedef struct T_RL1C_EDRX_SLEEP_IND_Tag
+{
+    u32  sleepLen;
+} T_RL1C_EDRX_SLEEP_IND;
+
+typedef struct T_RL1C_DIRECT_IND_Tag
+{
+    u16   data;
+    u16   reserved;
+} T_RL1C_DIRECT_IND;
+
+/*CR: http://rdabug.rdamicro.com/show_bug.cgi?id=4417, 20171024. */
+typedef struct T_RL1C_OUT_OF_SERVICE_IND_Tag
+{
+    /*RL1C_OUT_OF_SERVICE_CAUSE__S_LOWER_THAN_ZERO OR RL1C_OUT_OF_SERVICE_CAUSE__CELL_SYNC_FAIL*/
+    u16    cause;
+    u16    reserved;
+} T_RL1C_OUT_OF_SERVICE_IND;
+
+typedef struct T_RL1C_PCELL_MEAS_IND_Tag
+{
+    u16  rsrp;
+    u16  rsrq;
+    u16  rxTxDiff;
+    u16  sinr;
+    s16  rssi;  /*BUG1233278,20191230. L1 reports RSSI Level to EL1C currently. */
+    u16  reserved;
+} T_RL1C_PCELL_MEAS_IND;
+
+typedef struct T_RL1C_CE_MODE_CONFIG_REQ_Tag
+{
+    /* 0：NORMAL 1：CE MODEA；2：CE MODEB.*/
+    u16  ceMode;
+    u16  reserved;
+} T_RL1C_CE_MODE_CONFIG_REQ;
+
+typedef struct T_RL1C_BAND_SCAN_REQ_Tag
+{
+    u16  scanId;
+    u16  plmnSearchFlag;
+    u16  freqBandNum;
+    u16  reserved;
+    T_FreqBandLte  freqBand[EAS_WB_MAX_FREQBAND];
+} T_RL1C_BAND_SCAN_REQ;
+
+typedef struct T_RL1C_BAND_SCAN_CNF_Tag
+{
+    u16  scanId;
+    u16  freqBandNum;
+    T_FreqBandLte  freqBand[EAS_WB_MAX_FREQBAND];
+} T_RL1C_BAND_SCAN_CNF;
+
+typedef struct T_RL1C_HSFN_INFO_REQ_Tag
+{
+    u16  hyperSfn;
+    u16  reserved;
+} T_RL1C_HSFN_INFO_REQ;
+
+typedef struct T_RL1C_TARGET_CELL_SYNC_INFO_REQ_Tag
+{
+    T_adjustSFNInfo         adjustSFNInfo;
+    T_adjustHFNInfo         adjustHFNInfo;
+} T_RL1C_TARGET_CELL_SYNC_INFO_REQ;
+
+typedef struct T_RL1C_SI_SCHEDULING_BITMAP_REQ_Tag
+{
+    u32                     siReadSchedulBitMap;
+#ifdef TEST_INTEGRATE
+    u16            SIPresent[6];
+#endif
+} T_RL1C_SI_SCHEDULING_BITMAP_REQ;
+
+typedef struct T_RL1C_IDL_MEAS_REQ_Tag
+{
+    T_IdlMeasurementInfo    measurementInfo;
+} T_RL1C_IDL_MEAS_REQ;
+/*1322972*/
+typedef struct T_RL1C_IDL_MEAS_UPDATE_REQ_Tag
+{
+    u16  lteCandidateFreqNum;
+    u16  reserved;
+    u32  lteCandidateFreq[EAS_WB_MAX_LTE_FREQ_NUM];
+} T_RL1C_IDL_MEAS_UPDATE_REQ;
+typedef struct  T_PlmnTag
+{
+    u8       mcc[2];//Mobile Colour Code (octet 1, octet 2 bits 1 to 4)
+    u8       mnc;  //Mobile Network Code (octet 3, octet 2bits 5 to 8);
+    u8       reserved;
+} T_Plmn;
+
+typedef struct T_CellGlobalIdEutra_Tag
+{
+	T_Plmn			plmnId		;//小区所在的PLMN		 
+	u32 			cellIdentity;//PLMN中该小区对应的标识
+}T_CellGlobalIdEutra;
+
+#ifdef _OTDOA_LOCATION_
+typedef struct T_RL1C_OTDOA_REFCELL_SEARCH_REQ_Tag
+{
+    u32                                     frequency;
+    u16                                     phyCellId;
+    u16                                     dlCpType;
+} T_RL1C_OTDOA_REFCELL_SEARCH_REQ;
+
+typedef struct T_RL1C_OTDOA_REFCELL_SEARCH_CNF_Tag
+{
+    u16                                     successFlag;//0:失败，1：成功
+    u16                                     reserved;
+    u32                                     frequency;//搜索的频点索引值。
+    u16                                     phyCellId;//小区ID。
+    u16                                     dlCpType;//小区CP类型。无效值为INVALID_U16
+    u32                                     syncOff;//小区同步信息。无效值为INVALID_U32
+} T_RL1C_OTDOA_REFCELL_SEARCH_CNF;
+
+typedef struct T_PrsMutingInfo_Tag
+{
+    u16                                     prsMutingPeriodic;//PRS muting周期,枚举值,指示prsMutingBitmap的bit长度，取值[0-3]分别对应值：
+    u16                                     prsMutingBitmap  ;//enum{
+    //PO2 = 0//2bit；
+    //PO4 ；
+    //PO8;
+    //PO16 ；                                                                                               ;
+    //}；
+    //PRS muting bitmap映射，根据prsMutingPeriodic指示获取对应bit长度，bit为0时有效；
+} T_PrsMutingInfo;
+
+typedef struct T_PrsInfo_Tag
+{
+    u16                                     prsBandWidth    ;//PRS配置带宽，取值范围[0,5]，分别对应6PRB，15PRB，25PRB，50PRB，75PRB，100PRB
+    u16                                     prsCfgIndex     ;//取值范围[0, 4095]
+    u16                                     dlSubframeNum   ;//连续PRS子帧个数，枚举值，取值[0-3],对应[sf-1,sf-2,sf-4,sf-6];
+    u16                                     cfgBitmap       ;//Bit0表示prsMutingInfo是否存在；为1时存在，为0时不存在
+    T_PrsMutingInfo                         prsMutingInfo   ;//PRS muting 信息
+} T_PrsInfo;
+
+typedef struct T_OtdoaRefCellInfo_Tag
+{
+    u16                                     cfgBitmap   ;//对应bit为0时表示对应参数无效，为1时表示对应参数有效?
+                                                             //Bit0：earfcnRef；//Bit1：cpLength； //Bit2：cellGloablledId；//Bit3：prsInfo
+                                                                  //bit4:    antenaProtCfg;
+    u16                                     reserved1;                                                               
+    u32                                     frequency   ;//频点
+    u16                                     phyCellId   ;//小区ID   
+    
+    u16                                     antenaPort  ;//天线端口配置，0:1或2天线端口，1:4天线端口
+    u16                                     cpLength    ;//0：常规CP，1：扩展CP
+    u16                                     reserved2;  
+    T_CellGlobalIdEutra                     cellGloballd;
+    T_PrsInfo                               prsInfo     ;// 参考小区PRS配置
+} T_OtdoaRefCellInfo;
+
+typedef struct T_OtdoaNeighCellInfo_Tag
+{
+    u16                                     cfgBitmap   ;//对应bit为0时表示对应参数无效，为1时表示对应参数有效?
+                                                                  //Bit0：earfcnRef；//Bit1：cpLength； //Bit2：cellGloablledId；//Bit3：prsInfo
+                                                                  //bit4:    antenaProtCfg;   //bit5:slotNumOffset;  //bit6:prsSubFrameOffset
+    u16                                     reserved1;
+    u32                                     frequency               ;//频点信息
+    u16                                     phyCellId               ;//小区ID，【0-503】
+    u16                                     antenaPortCfg           ;//天线端口配置，0:1或2天线端口，1:4天线端口
+    u16                                     cpLength                ;//0：常规CP，1：扩展CP
+    u16                                     slotNumOffset           ;//时隙偏移个数，[0-19]
+    u16                                     prsSubframeOffset       ;//该字段描述了参考小区prs时机第一个子帧与该邻区随后最近一个prs时机的第一个子帧之间偏移的子帧个数,[0-1279]
+    u16                                     expectedRSTD            ;//取值范围[0, 16383]
+    u16                                     expectedRSTD_uncertainty;//取值范围[0, 1023]
+    u16                                     reserved2;
+    T_CellGlobalIdEutra                     cellGlobalId;
+    T_PrsInfo                               prsInfo                 ;//邻小区PRS配置
+
+} T_OtdoaNeighCellInfo;
+
+typedef struct T_RL1C_OTDOA_MEAS_CFG_REQ_Tag
+{
+    u32                                     neighbourFrequency;//需要进行RSTD测量的频点信息
+    u16                                     neighbourCellNum;//进行RSTD测量的该频点下的小区个数
+    u16                                     reserved;
+    T_OtdoaRefCellInfo                      otdoaRefCellInfo;//参考小区信息
+    T_OtdoaNeighCellInfo                    otdoaNCellInfo[MAX_OTDOA_NCELL_NUM];//邻小区信息, EAS_OTDOA_MAX_NCELL_NUM = 24
+} T_RL1C_OTDOA_MEAS_CFG_REQ;
+
+typedef struct T_OtdoaMeasQuality_Tag
+{
+    u16                                     errorResolution;//误差精度，取值0-3
+    u16                                     errorValue     ;//误差值，取值0-31
+    u16                                     errorNumSample ;//误差样本个数，取值0-7
+    u16                                     reserved       ;//保留字
+} T_OtdoaMeasQuality;
+
+typedef struct T_OtdoaRefCellresult_Tag
+{
+    u32                                     frequency     ;//频点
+    u16                                     reserved;
+    u16                                     phyCellId     ;//小区ID
+    u16                                     refCellSfn      ;
+    u16                                     cfgBitmap;//bit0:refCellQuality;   bit1: cellGlobalId
+    T_CellGlobalIdEutra                     cellGlobalId;
+    T_OtdoaMeasQuality                      refCellQuality;//参考小区RSTD测量质量
+} T_OtdoaRefCellresult;
+typedef struct T_OtdoaNCellResult_Tag
+{
+    u16                                     phyCellId   ;//小区ID
+    u16                                     rstd        ;//取值范围[0, 12711]
+    T_OtdoaMeasQuality                      nCellQuality;//邻小区RSTD测量质量
+} T_OtdoaNCellResult;
+
+typedef struct T_RL1C_OTDOA_MEAS_RESULT_IND_Tag
+{
+    u32                                     neighbourFrequency                       ;//邻区频点EARFCN
+    u16                                     refCellSFN                               ;//最近一个邻区RSTD测量时，参考小区prs Occasion 起始子帧所属的SFN
+    u16                                     neighbourCellNum                         ;//已完成RSTD测量的邻区个数
+    u16                                     refCellResultValid                       ;//指示参考小区测量结果是否有效，0：无效，1：有效，2：本次测量上报中不包含参考小区结果
+    u16                                     reserved;
+    T_OtdoaRefCellresult                    otdoaRefCellResult                       ;//参考小区RSTD测量结果
+    T_OtdoaNCellResult                      otdoaNCellResult[MAX_OTDOA_NCELL_NUM];//邻区RSTD测量结果，EAS_OTDOA_MAX_NCELL_NUM = 24
+} T_RL1C_OTDOA_MEAS_RESULT_IND;
+
+typedef struct T_RL1C_OTDOA_NCELL_PRS_INFO_IND_Tag
+{
+    u16                                     prsPeriod        ;//PRS周期，对应取值160ms，320ms，640ms，1280ms
+    u16                                     prsSubframeOffset;//PRS时机起始点在PRS周期内偏移子帧个数，取值（0-1279）
+    u16                                     prsSubframeNum   ;//PRS时机持续子帧个数，连续PRS子帧个数，枚举值，取值1-7
+    u16                                     reserved         ;//保留字
+} T_RL1C_OTDOA_NCELL_PRS_INFO_IND;
+
+typedef struct T_RL1C_OTDOA_MEAS_CTRL_REQ_Tag
+{
+    u16                                     measFlag;//测量状态：
+    //0：停止，LPP模块指示ABORT当前流程时；
+    //1：开启，满足测量要求时通知底层开始OTDOA的测量；
+    //2： 继续，在切换、重建后，正在测量的频点为同频时；
+
+    u16                                     reserved;//
+} T_RL1C_OTDOA_MEAS_CTRL_REQ;
+
+#endif
+
+/****************move from EL1C_EMAC.HET *************************/
+/****************common  structure of  EMAC,EL1C,L1CC *************************/
+/****************L1C <---> EMAC interface signal body *************************/
+
+typedef struct T_RarResourceInfo_Tag
+{
+    u16 ceMode;
+    u16 msg3NbIndex;
+    u16 startRB;
+    u16 lcrb;
+    u16 msg3RepNum;
+    u16 modulationOrder;
+    u16 tbSize;
+    u16 tpcCommond;
+    u16 csiFlag;
+    u16 uldelay;
+    u16 mpdcchNbIndex;
+    u16 reserved;
+} T_RarResourceInfo;
+
+typedef struct T_ResourceInfo_Tag
+{
+    u16 dciType;
+    u16 hoppingFlag;
+    u16 modulationOrder;
+    u16 lcrb;
+    u16 ulDelay;
+    u16 redundancyVers;
+    u16 ulIndex;
+    u16 aperiodicCsiFlag;
+    u16 spsFlag;
+    u16 srsFlag;
+    u16 puschTocComm;
+    u16 dmrsValue;
+    u16 dai;
+    u16 tbsize;
+    u16 ndiValue;
+    u16 tranRepNum;
+    u16 harqId;
+    /*以下IE仅在BL/CE使用*/
+    u16 startRB;
+    u16 nb_index;
+    u16 dciRepNum;
+    /*以下IE仅在非BL/CE使用*/
+    u16 resIndicator;
+    u16 hoppingBit;
+    u16 tpmi;
+    u16 resourceAllocationType;
+} T_ResourceInfo;
+
+typedef struct T_PuschDataCtr_Tag
+{
+    u16 flag; /*  0: no data;
+                1: data ok, writed by emac;
+                2: time overflow, writed by el1;
+                3: mac clear*/
+#ifdef TEST_INTEGRATE
+    u8 reserved;
+    u8 paddingPduFlag;
+#else
+    u16 paddingPduFlag;
+#endif
+    u8* dataPtr;
+} T_PuschDataCtr;
+
+typedef union
+{
+    T_RarResourceInfo rarResource;
+    T_ResourceInfo dciResource;
+} T_Msg3ResourceInfo_union;
+
+typedef struct T_ML1C_PRACH_SEND_REQ_Tag
+{
+    T_CellServLte cellDesc;
+    u16 prachType;
+    u16 preamblIndex;
+    u16 prachMaskIndex;
+    u16 rarWinLen;
+    s16 targetTransPower;
+    u16 firstTransFlag;/*初始接入和切换的首次PRACH传输，需要设置该标志*/
+    u16 preambleTransCounter;
+    u16 diffPreambleIdLess2Flag;
+    u16 preambleTransMax;
+
+    /*以下IE仅在BL/CE使用*/
+    u16 rarHopping;
+    u16 preambRepNum;
+    u16 ceLevel;
+} T_ML1C_PRACH_SEND_REQ;
+
+typedef struct T_ML1C_RAR_RESULT_IND_Tag
+{
+    u16 rarSfn;
+    u16 successFlag;
+    u8 rarData[MAX_RECV_RAR_BUFF];
+} T_ML1C_RAR_RESULT_IND;
+
+typedef struct T_ML1C_SEND_MSG3_REQ_Tag
+{
+    u16 msg3Sfn;
+    u16 transType;
+    u16 ceMode;
+    u16 reserved1;
+    u32 tempCrnti;
+    u32 crnti;
+    T_PuschDataCtr *msg3;
+    T_ResourceInfo grantInfo;
+    /*以下IE仅在BL/CE使用*/
+    u16 mpdcchNbIndex;
+    u16 reserved2;
+    /*以下IE仅在非BL/CE使用*/
+    u16 sendCounter;
+    u16 harqId;
+} T_ML1C_SEND_MSG3_REQ;
+
+typedef struct T_ML1C_PDCCH_ORDER_IND_Tag
+{
+    u16 raPreamblIndex;
+    u16 prachMaskIndex;
+    /*以下IE仅在BL/CE使用*/
+    u16 startCeLevel;
+    u16 reserved;
+} T_ML1C_PDCCH_ORDER_IND;
+
+typedef struct T_ML1C_PRACH_END_REQ_Tag
+{
+    u32 crnti;
+} T_ML1C_PRACH_END_REQ;
+
+typedef struct T_ML1C_DL_HARQ_INFO_IND_Tag
+{
+    u16 dciEndSfn;
+    u16 pdschEndSfn;
+    u16 harqId;
+    u16 dataType;
+    u16 resourceType;
+    u16 reserved;
+} T_ML1C_DL_HARQ_INFO_IND;
+
+typedef struct  T_ML1C_PDSCH_DLSCH_READ_IND_Tag
+{
+    u16 dataSfn;
+    u16 crcFlag;
+    u16 tbSize;
+    u16 harqId;
+    u8 *data;
+} T_ML1C_PDSCH_DLSCH_READ_IND;
+
+typedef struct T_ML1C_UL_HARQ_INFO_IND_Tag
+{
+    u16 dciRecvSfn;
+    u16 resourceType;
+    u16 crntiResInfoNum;
+    u16 spsResInfoNum;
+    T_ResourceInfo crntiResInfo[MAX_UL_GRANT_RES_NUM];
+    T_ResourceInfo spsResInfo[MAX_UL_GRANT_RES_NUM];
+#ifdef _3gppR14_
+    T_ResourceInfo preallocResourInfo;
+#endif
+    u16 hfn;
+    /*以下IE仅在非BL/CE使用*/
+    u16 harqIndPresent;
+    u16 harqId[MAX_UL_ACK_NACK_NUM];
+    u16 ackOrNack[MAX_UL_ACK_NACK_NUM];
+} T_ML1C_UL_HARQ_INFO_IND;
+
+typedef struct T_ML1C_PUSCH_SEND_REQ_Tag
+{
+    u16 sendSfn;
+    u16 transType;
+    u16 rnti;
+    u16 hfn;
+    T_PuschDataCtr *data;
+    T_ResourceInfo resourInfo;
+    /*以下IE仅在非BL/CE使用*/
+    u16 rearmostPuschFlag;
+    u16 sendCounter;
+    u16 harqId;/*仅用于CAT1*/
+    u16 reserved2;
+} T_ML1C_PUSCH_SEND_REQ;
+
+typedef struct T_ML1C_SR_SEND_REQ_Tag
+{
+    u16 srPeriod;
+    u16 srOffset;
+    u16 srMaxNum;
+    u16 srProhibitTimer;
+    u16 srResourceIndex;
+    u16 reserved;
+} T_ML1C_SR_SEND_REQ;
+
+typedef struct T_ML1C_DRX_STATUS_REQ_Tag
+{
+    u16 cause;
+    u16 stopSsfn;
+    u16 stopHfn;
+    u16 nextActiveSsfn;
+    u16 nextActiveHfn;
+    u16 activeCause;
+} T_ML1C_DRX_STATUS_REQ;
+
+typedef struct T_ML1C_ADJUST_TA_REQ_Tag
+{
+    u16 sfn;
+    u16 ta;
+    u16 rarTaFlag;
+    u16 reserved;
+} T_ML1C_ADJUST_TA_REQ;
+
+typedef struct T_ML1C_SEND_UL_SPS_INFO_Tag
+{
+    u16 nextSpsScheHfn;
+    u16 nextSpsScheSsfn;
+} T_ML1C_SEND_UL_SPS_INFO_REQ;
+
+typedef struct H_T_ML1C_PUSCH_SEND_REQ_Tag
+{
+    T_MsgHeader signalHeader;
+    T_ML1C_PUSCH_SEND_REQ sigInfo;
+} H_T_ML1C_PUSCH_SEND_REQ;
+
+typedef struct H_T_ML1C_SEND_MSG3_REQ_Tag
+{
+    T_MsgHeader signalHeader;
+    T_ML1C_SEND_MSG3_REQ sigInfo;
+} H_T_ML1C_SEND_MSG3_REQ;
+
+#ifdef  LTE_NBIOT_SUPPORT
+typedef struct T_EPDC_DATA_Tag
+{
+    u8       times;
+    u32      ul_bytes;
+    u32      dl_bytes;
+    u32      ul_bps;
+    u32      dl_bps;
+} T_EPDC_DATA;
+#endif
+
+#ifdef __AUTO_TEST__
+
+typedef struct T_AutoTestCellDesc_Tag
+{
+    u32  arfcn;     //无效值:INVALID_U32, 当为GGE频点时，BIT15为1代表PCS1900
+    u16  ratType;   //AUTO_TEST_RAT__LTE, AUTO_TEST_RAT__GGE, AUTO_TEST_RAT__INVALID
+    u16  cellId;    //无效值:INVALID_U16，当为GGE小区时，表示BSIC
+} T_AutoTestCellDesc;
+
+typedef struct T_AutoTestCellMeasResult_Tag
+{
+    T_AutoTestCellDesc cellInfo;
+    s16                rsrp;    //无效值-255, 对于GGE小区为RSSI
+    s16                rsrq;    //无效值-255, 对于GGE小区不关注
+} T_AutoTestCellMeasResult;
+
+typedef struct T_AutoTestInfo_Tag
+{
+    /*指示当前操作和处理的是哪张卡的自动化测试信息；0代表SIM1，1代表SIM2. */
+    u16 simFlag;
+    /*指示当前的任务，取值:
+    {
+    AUTO_TEST_ACTION__ACQUIRE_MEAS_RESULT,
+    AUTO_TEST_ACTION__TRIGGER_INTRA_MEAS,
+    AUTO_TEST_ACTION__TRIGGER_INTER_MEAS,
+    AUTO_TEST_ACTION__TRIGGER_GGE_MEAS,
+    AUTO_TEST_ACTION__INITIAL_RESEL_SERVING_CELL_NOT_SUITABLE,
+    AUTO_TEST_ACTION__INITIAL_BETTER_RESEL,
+    AUTO_TEST_ACTION__INITIAL_LOSSCOVERAGE,
+    AUTO_TEST_ACTION__SET_MEAS_REPORT_TARGET_CELL,
+    AUTO_TEST_ACTION__CLR_MEAS_REPORT_TARGET_CELL,
+
+    AUTO_TEST_ACTION__MAX,
+    AUTO_TEST_ACTION__INVALID = 65535
+    }*/
+
+    u16 action;
+
+    /*指示当前任务的执行状态，取值:
+    {
+    AUTO_TEST_ACTION_STATUS__PROCESSING,  //正在处理过程中
+    AUTO_TEST_ACTION_STATUS__ERROR,       //异常，不能正常处理(比如设置服务小区不可用，而当前不处于小区驻留状态)
+    AUTO_TEST_ACTION_STATUS__FAIL,        //执行失败
+    AUTO_TEST_ACTION_STATUS__SUCCESS,     //成功完成指定任务
+    AUTO_TEST_ACTION_STATUS__MAX,
+    AUTO_TEST_ACTION_STATUS__NVALID = 65535
+    }*/
+    u16 actionStatus;
+
+    /*
+    协议栈ERRC当前状态
+    {
+    ERRC_NUL,
+    ERRC_SEL,
+    ERRC_IDL,
+    ERRC_RES,
+    ERRC_ACC,
+    ERRC_DCH,
+    ERRC_REL,
+    ERRC_LIM,
+    ERRC_SNW,
+    ERRC_PEND,
+    ERRC_WAIT,
+    ERRC_SUSPEND,
+    MAX_ERRC_STATE
+    }*/
+    u16 errcCurState;
+
+    /*指示BETTER重选、尝试触发测量报告的目标小区. */
+    T_AutoTestCellDesc targetCell;
+
+    /*空闲或连接下的测量结果信息. */
+    T_AutoTestCellMeasResult servingCell;
+    T_AutoTestCellMeasResult bestIntraCell;
+    T_AutoTestCellMeasResult bestInterCell;
+    T_AutoTestCellMeasResult bestGgeCell;
+
+} T_AutoTestInfo;
+#endif
+
+
+
+/*phy层反馈统计参数结构体*/
+typedef struct T_PHY_STATISTICS_INFO_Tag
+{
+    S16           v_sinr;//sinr瞬时值, Q4数据，需PS按照var/16,并提供整数和小数部分方式输出，小数点后保留2位；
+    S16           v_txPower;// 上行发射功率瞬时值，Q0数据,取值-46 ~23，单位dbm；
+    U16           v_dl_rbNumber_tti;// 每TTI RB数目
+    U16           v_ul_rbNumber_tti;// 每TTI RB数目
+    U16           v_dl_mcs; //每TTI的mcs
+    U16           v_ul_mcs; //每TTI的mcs
+    U16           v_dl_rb_start; //每TTI RB Start位置，从0开始
+    U16           v_ul_rb_start; //每TTI RB Start位置，从0开始
+    U16           v_mpdcch_real_rep_num; //每个TTI的mpdcch实际重复次数
+    U16           v_pdsch_real_rep; //每个TTI的pdsch实际重复次数
+    U16           v_pusch_real_rep; //每个TTI的pusch实际重复次数
+    U16           v_static_time_ms;  //本次统计上报的时间窗长，单位ms
+
+    U32           v_dl_rbNumber_total;// 每次统计窗内RB数目总数，需PS换算每秒内的总数
+    U32           v_ul_rbNumber_total;// 每次统计窗内RB数目总数，需PS换算每秒内的总数
+    U16           v_dl_mcs_total;// 每次统计窗内MCS总数，需PS换算每秒内的总数
+    U16           v_ul_mcs_total;// 每次统计窗内MCS总数，需PS换算每秒内的总数
+    U16           v_dl_cnt;// 每次统计窗内dl授权数目，需PS换算每秒内的总数
+    U16           v_ul_cnt;// 每次统计窗内ul授权数目，需PS换算每秒内的总数
+
+    S16           v_rsrp_q4; //服务小区RSRP瞬时值， 需PS按照var/16,并提供整数和小数部分方式输出，小数点后保留2位；
+    S16           v_rsrq_q4; //服务小区RSRQ， 需PS按照var/16,并提供整数和小数部分方式输出，小数点后保留2位；
+    S16           v_rssi_q4; //服务小区RSSI， 需PS按照var/16,并提供整数和小数部分方式输出，小数点后保留2位；
+    U16           v_wb_cqi;  //宽带CQI值
+
+    S16           v_afc_min;   //afc估计值, 记录最近1s内的最小的afc
+    S16           v_afc_max;   //afc估计值, 记录最近1s内的最大的afc
+    
+    S16           v_ta;    //LTE服务小区的时间提前量
+    U16           v_phr;  //LTE服务小区的UE发送功率余量
+} T_PHY_STATISTICS_INFO;
+
+typedef struct T_UE_L2_TIME_INFO_Tag
+{
+    u32   time;
+    u16   SystemFrameNumber;
+    u8    SubFrameNumber;
+    u8    reserved;
+} T_UE_L2_TIME_INFO;
+
+typedef struct T_UE_L2_HO_INFO_Tag
+{
+    T_UE_L2_TIME_INFO  Before; //切换前，在原PCI上的最后一条
+    T_UE_L2_TIME_INFO  After;  //切换后，在新PCI上的第一条
+} T_UE_L2_HO_INFO;
+
+typedef struct T_UE_L2_HO_INFO_RPT_Tag
+{
+    /*用于统计下行PDCP用户数据的中断时延.*/
+    T_UE_L2_HO_INFO ho_pdcp_delay;
+
+    /*用于统计下行RLC用户数据的中断时延.*/
+    T_UE_L2_HO_INFO ho_rlc_delay;
+
+    /*用于统计下行MAC用户数据的中断时延.*/
+    T_UE_L2_HO_INFO ho_mac_delay;
+
+} T_UE_L2_HO_INFO_RPT;
+
+typedef struct T_ERLC_INST_STATISTICS_tag
+{
+    u8 drbId;
+    u16 ulAmDataPduNackNum;
+    u16 ulAmDataPduAckNum;
+    u32 ulAmDataPduRetrByte;
+    u32 ulAmNewPduByte;
+    u32 ulAmDataPduNackByte;
+    u32 ulAmDataPduAckByte;
+    u32 sendBufferRemain;
+    u32 dlAmPduByte;
+}T_ERLC_INST_STATISTICS;
+
+typedef struct T_ERLC_STATISTICS_INFO_tag
+{
+    u8 drbNum;
+    u32 totalUlAmNewPduByte;//PDU size of all AM inst UL new transmission for quantitative reporting comparison
+    T_ERLC_INST_STATISTICS rlcStatic[L2_WB_MAX_DRB_NUM];
+}T_ERLC_STATISTICS_INFO;
+
+typedef struct T_EPDC_INST_STATISTICS_tag
+{
+    u8 drbId;
+    u16 ulPacketDiscardNum;
+    u16 ulNewPacketNum;
+    u16 ulSduBuffLastRemainNum;
+}T_EPDC_INST_STATISTICS;
+
+typedef struct T_EPDC_STATISTICS_INFO_tag
+{
+    u8 drbNum;
+    T_EPDC_INST_STATISTICS pdcpStatic[L2_WB_MAX_DRB_NUM]; 
+}T_EPDC_STATISTICS_INFO;
+
+typedef struct T_STACK_STATISTICS_INFO_Tag
+{
+    U16 rsrp;//rsrp瞬时值
+    U16 pathLoss;//路损值
+    U16 dlTransMode;//下行传输模式
+    U16 ulHarqRetrans;//上行HARQ重传次数
+    U16 dlHarqRetrans;//下行HARQ重传次数
+    U16 ulInitialBler;//上行的初传BLER(该值保留小数2位，如5.05%，该值为505)
+    U16 dlInitialBler;//下行的初传BLER(该值保留小数2位，如5.05%，该值为505)
+    U16 ulBler;//上行总BLER（该值保留小数2位，如5.05%，该值为505）
+    U16 dlBler;//下行总BLER（该值保留小数2位，如5.05%，该值为505）
+    U16 ulAckNum;//累计pdsch的ACK数
+    U16 ulNackNum;//累计pdsch的NACK数
+    U16 ulNewNum;//累计上行新传个数
+    U16 ulHarqRetxNum[EMAC_STATISTICS_RETX_TYPE_NUM];//索引0~7分别表示上行1~7的重传次数，索引8表示大于8的重传次数。
+    U16 dlNewNum;//累计下行新传个数
+    U16 dlHarqRetxNum[EMAC_STATISTICS_RETX_TYPE_NUM];//索引0~7分别表示下行1~7的重传次数，索引8表示大于8的重传次数。
+    u16 dlDiscardRlcRepPduNum;
+    U32 ulPdcpRate;//上行pdcp速率 bps
+    U32 dlPdcpRate;//下行pdcp速率 bps
+    U32 ulPdcpRohcRate;//上行pdcp压缩后的速率 bps
+    U32 dlPdcpRohcRate;//下行pdcp解压缩前的速率 bps
+    U32 ulRlcRate;//rlc上行速率 bps
+    U32 dlRlcRate;//rlc下行速率 bps
+    U32 ulMacRate;//mac上行速率 bps
+    U32 dlMacRate;//mac下行速率 bps
+    U32 txPhyRate;//物理层上行速率 bps
+    U32 rxPhyRate;//物理层下行速率 bps
+    U16 volteStreamLossMax;
+    U16 volteStreamLossSum;
+    T_UE_L2_HO_INFO pdcpHoDelay;//pdcp用户面切换时延
+    T_ERLC_STATISTICS_INFO rlcStaticInfo;
+    T_EPDC_STATISTICS_INFO pdcpStaticInfo;
+} T_STACK_STATISTICS_INFO;
+
+typedef struct T_UE_L2_STATUS_PERIOD_RPT_Tag
+{
+    u16   ulNewNum;
+    u16   ulHarqRetxNum[EMAC_STATISTICS_RETX_TYPE_NUM];
+    u16   dlNewNum;
+    u16   dlHarqRetxNum[EMAC_STATISTICS_RETX_TYPE_NUM];
+    u16   ulInitialBler;
+    u16   dlInitialBler;
+    u16   ulAckNum;
+    u16   ulNackNum;
+    u32   ulPdcpRohcTroughout;
+    u32   dlPdcpRohcTroughout;
+    u32   ulPdcpTroughout;
+    u32   dlPdcpTroughout;
+    u32   ulRlcTroughout;
+    u32   dlRlcTroughout;
+    u32   ulMacTroughout;
+    u32   dlMacTroughout;
+    u32   ulPhyTroughout;
+    u32   dlPhyTroughout;
+} T_UE_L2_STATUS_PERIOD_RPT;
+
+typedef struct T_UE_ERRC_MSG_RPT_Tag
+{
+    u8   channelType;
+    u8   reserved;
+    u16  msgLen;
+    u8   msg[UE_ERRC_MSG_RPT__MAX_LENTH];
+} T_UE_ERRC_MSG_RPT;
+
+typedef struct T_UE_SERVCELL_INFO_RPT_Tag
+{
+    u32          earfcn;
+    u32          cellId;
+    u16          pci;
+    u8           band;
+    u8           bandWidthDl;
+    u8           tranMode;
+    u8           Technology;  //0: emtc
+    u8           servTac[2];
+    T_Plmn       servCellPlmn;
+} T_UE_SERVCELL_INFO_RPT;
+
+typedef struct T_UE_NAS_MSG_RPT_Tag
+{
+    u8          direction; //0: ul; 1:dl
+    u8          nasMsgType;//24.301 9.8
+    u16         msgLen;
+    u8          msg[1600];
+} T_UE_NAS_MSG_RPT;
+
+typedef struct T_UE_GSM_MSG_RPT_Tag
+{
+    u8          direction; //0: ul; 1:dl
+    u8          nasMsgType;//bit1&bit0: 00:with L2 Pseudo Length;01:main DCCH without L2 Pseudo Length;10:shourt PD;11:other
+    u16         msgLen;
+    u8          msg[1600];
+} T_UE_GSM_MSG_RPT;
+
+
+
+typedef struct
+{
+    u16         success;  //success times
+    u16         fail;   //failure times
+    u16         passRatio;  //success rate
+    u32         delay;   //delay time,unit:ms
+} api_statistic_t;
+
+
+typedef struct
+{
+    u16         dropOn2g;  //drop times on gsm
+    u16         dropOn4g;   //drop times on lte
+} api_dropTimes_t;
+
+
+typedef struct
+{
+    u32         timeOn2g;   //time on gsm registered
+    u32         timeOn4g;    //time on lte registered
+    u32         timeOnVolte;  //time on volte registered
+    u32         timeOnUnknow;   //time on no RAT or drop
+    u32         allTheTime;    //total time from power on
+} api_attachTime_t;
+
+
+typedef struct
+{
+    api_statistic_t     handoverStatistic[8];  //0:GToGHO,1:GToGCCO,2:GToLCCO,3:LToGCCO,4:GToLHO,5:LToLHO,6:LToGHO,7:SRVCC
+} api_handoverInfo_t;
+
+
+typedef struct
+{
+    api_statistic_t     reselStatistic[4];  //0:GToLResel,1:GToLResel,2:LToLResel,3:LToGResel
+} api_reselectInfo_t;
+
+typedef struct
+{
+    u8    lteCipherFlag;   //default value 1
+    u8    bsrvccFlag;     //default value 1
+    u8    emfbiFlag;    //default value 1
+    u8    ipv6Flag;     //default value 1
+    u8    asrvccFlag;   //default value 1
+    u8    esrvccFlag;   //default value 1
+} api_capInfoLte_t;
+
+typedef struct
+{
+    u8   validFlag;     /*0: invalid; 1:valid */
+    u8   reselPriority; /*0~7*/
+    u8   threshXLow;    /*0~62*/
+    u8   threshXHigh;   /*0~62*/
+    u8   nccPermit;
+    u8   reserver[3];
+}api_gsmCellReselInfo_t;
+
+typedef struct
+{
+    u32     arfcn;  /*BIT31~BIT0, 其中BIT15:0--DCS1800, 1--PCS1900*/
+    u16     bsic;   //if not decode BSIC,apply 0xffff
+    u16     rxlev;
+    s16     srxlev;
+    u16     reserved;
+    api_gsmCellReselInfo_t gsmCellReselInfo;
+} api_gsmNcell_t;
+
+typedef struct
+{
+    u8      validFlag;    //0: plmn/enodeBID/cellId/tac are invalid, 1:plmn/enodeBID/cellId/tac are valid
+    u8      plmn[3];
+    u32     enodeBID;      //first 20 bits of SIB1 cell identity
+    u16     cellId;        //default value 0xff
+    u16     tac;           //serving tac(from SIB1)
+} api_lteCellAccessRelatedInfo_t; //CellAccessRelatedInfo
+
+typedef struct
+{
+    u8   validFlag;     /*0: invalid; 1:valid */
+    u8   reselPriority; /*0~7, invalid value:255*/
+    u8   threshXLow;    /*0~62*/
+    u8   threshXHigh;   /*0~62*/
+}api_lteCellReselInfo_t;
+
+typedef struct
+{
+    u32     frequency;
+    u16     pcid;
+    u16     bandWidth;  //default value:0xffff
+    s16     rsrp;
+    s16     rsrq;
+    s16     Srxlev;
+    u16     sinr;
+    s16     rssi;
+    u16     cellType; /*0:intra lte ncell, 1:inter lte ncell*/
+    api_lteCellAccessRelatedInfo_t cellAccRelInfo;
+    api_lteCellReselInfo_t         cellReselInfo;
+} api_lteNcell_t;
+
+typedef struct
+{
+    u32     frequency;
+    u16     freqType; /*0:intra lte freq, 1:inter lte freq*/
+    u16     reserverd;
+    api_lteCellReselInfo_t         cellReselInfo;
+} api_lteFreq_t;
+
+typedef struct
+{
+    u8      plmn[3];
+    u8      imsi[16];    //imsi[0]:length of IMSI
+    u8      roamingFlag;  //1:roaming,0:non roaming
+    u16     bandInfo;    //band1-band256
+    u32     dlEarfcn;    //0-262143, invalid value 0xffffffff(It means camping on no cell currently, all other info in this struct are invalid)
+    u16     pcid;
+    s16     rsrp;
+    s16     rsrq;
+    s16     Srxlev;
+    u16     tsMode;       //default value 0xffff
+    u16     bandwidth;    //default value 0xffff
+    u16     SA;      //default value 0xffff
+    u16     SSP;     //default value 0xffff
+    u16     SINR;
+    u32     ulMcs;   //default value 0xffff
+    u32     dlMcs;   //default value 0xffff
+    u8      ulBler;
+    u8      dlBler;
+    u32     enodeBID;      //first 20 bits of SIB1 cell identity
+    u16     cellId;        //default value 0xff
+    u16     tac;           //serving tac(from SIB1)
+    u16     netMode;  //0--tdd  1--fdd
+    s16     rxPower;  //Dl receiving power; Real value(Unit:dbm)=rxPower divide 16.
+    s16     txPower;  //UE transmits power, -46~23 dbm
+    s16     rssi;
+    u16     ulBandWidth;      /*ul_bandwidth, default value 0xffff*/
+    u16     threshServingLow; /*0~62*/
+    u16     sNonIntraSearch;  /*0~62*/
+    u16     sIntraSearch;     /*0~62*/
+} lteScell_t;
+
+typedef struct
+{
+    lteScell_t   lteScell;
+    u16      lteNcellNum;
+    api_lteNcell_t   lteNcell[MAX_NETINFO_LTE_NCELL_NUM];
+    u16      gsmNcellNum;
+    api_gsmNcell_t   gsmNcell[MAX_NETINFO_GSM_NCELL_NUM];
+    api_capInfoLte_t   capInfoLte;
+    u16      state;     /*0:search 1: limit serve 2:no connect 3:connect*/
+    u16      lteNFreqNum;
+    api_lteFreq_t      lteNFreq[MAX_NETINFO_LTE_FREQ_NUM];
+} api_nwCapLte_t;
+
+
+typedef struct
+{
+    u32   vamos;
+    u32   diversityGsm;
+    u8    Plmn[3];
+    bool  Roaming;
+    u8    CellId[2];
+    u16   Arfcn;
+    u8    Bsic;
+    u8    Rla;
+    u8    Lai[5];
+} api_ueCapGsm_t;
+
+
+typedef struct
+{
+    api_ueCapGsm_t   ueCapabilityGsm;
+    api_nwCapLte_t   nwCapabilityLte;
+} api_netInfo_t;
+
+typedef struct
+{
+    api_reselectInfo_t   reselectInfo;
+    api_handoverInfo_t   handoverInfo;
+    api_attachTime_t     attachTime;
+    api_dropTimes_t      dropTimes;
+} api_netinfoStatistic_t;
+
+typedef struct T_UeStatusInfo_Tag
+{
+    u32    dlEarfcn;
+    u16    pcid;
+    s16    rsrp;
+    s16    rsrq;
+    u16    sinr;
+    u16    mcl;
+    u16    ulMcs;
+    u16    dlMcs;
+    u16    mpdcchRepNum;
+    u16    puschRepNum;
+    u16    pdschRepNum;
+    u16    ulInitialBler;
+    u16    dlInitialBler;
+    u32    ulRbNum;
+    u32    dlRbNum;
+    u32    ulRlcRate;
+    u32    dlRlcRate;
+    u32    ulTbs;
+    u32    dlTbs;
+} T_UeStatusInfo;
+
+#define API_JAMMING_RAT_BIT_GSM  (1<<0)
+#define API_JAMMING_RAT_BIT_LTE  (1<<1)
+
+enum
+{
+    E_JAMMING_STATE_NO,      /*no jamming*/
+    E_JAMMING_STATE_JAMMING, /*have jamming*/
+    E_JAMMING_STATE_INIT,    /*init state*/
+};
+    
+typedef struct
+{
+    u8 gsmJamming;
+    u8 lteJamming;
+    u8 reportJamming;
+    u8 enableJamming;
+}api_jammingStateStore_t;
+
+typedef struct T_ENGEVTRPT_CELL_INFO_Tag
+{
+    u8 tac[MAX_TAC_NUM];
+    u16 pci;
+    u32 cellIdentity;
+    u32 dlEarfcn;
+    T_Plmn plmn;
+}T_ENGEVTRPT_CELL_INFO;
+
+typedef struct T_ENGEVTRPT_INITACC_RPT_Tag
+{
+    E_EventRptModeType mode;
+    u16 accResult;
+    u16 reserved;
+    T_ENGEVTRPT_CELL_INFO cellInfo;
+}T_ENGEVTRPT_INITACC_RPT;
+
+typedef struct T_ENGEVTRPT_MACACCFAIL_RPT_Tag
+{
+    T_ENGEVTRPT_CELL_INFO cellInfo;
+}T_ENGEVTRPT_MACACCFAIL_RPT;
+
+typedef struct T_ENGEVTRPT_T310EXPI_RPT_Tag
+{
+    T_ENGEVTRPT_CELL_INFO cellInfo;
+}T_ENGEVTRPT_T310EXPI_RPT;
+
+typedef struct T_ENGEVTRPT_RLCMAXRETRAN_RPT_Tag
+{
+    T_ENGEVTRPT_CELL_INFO cellInfo;
+}T_ENGEVTRPT_RLCMAXRETRAN_RPT;
+
+typedef struct T_ENGEVTRPT_RRCSTATUS_RPT_Tag
+{
+    E_EventRptRrcStatus rrcStatus;
+    T_ENGEVTRPT_CELL_INFO cellInfo;
+}T_ENGEVTRPT_RRCSTATUS_RPT;
+
+typedef struct T_ENGEVTRPT_RRCESTREQ_RPT_Tag
+{
+    T_ENGEVTRPT_CELL_INFO cellInfo;
+}T_ENGEVTRPT_RRCESTREQ_RPT;
+
+typedef struct T_ENGEVTRPT_RRCESTFAIL_RPT_Tag
+{
+    E_EventRrcEstFailCause failCause;
+    T_ENGEVTRPT_CELL_INFO cellInfo;
+}T_ENGEVTRPT_RRCESTFAIL_RPT;
+
+typedef struct T_ENGEVTRPT_INTRALTE_HO_RPT_Tag
+{
+    u16 targetPci;
+    u16 reserved;
+    u32 targetDlEarfcn;
+    T_ENGEVTRPT_CELL_INFO orgCellInfo;
+}T_ENGEVTRPT_INTRALTE_HO_RPT;
+
+#ifdef __IRAT__
+typedef struct T_ENGEVTRPT_IRAT_ORGLTE_INFO_Tag
+{
+    u8 mode;
+    u8 reserved[3];
+    T_ENGEVTRPT_CELL_INFO cellInfo;
+}T_ENGEVTRPT_IRAT_ORGLTE_INFO;
+
+typedef struct T_ENGEVTRPT_IRAT_TARGETGSM_INFO_Tag
+{
+    u8 mode;
+    u8 gsmBandIndicator;
+    u8 bsic;
+    u8 reserved;
+    u16 dlArfcn;
+    u8 reserved1[2];
+}T_ENGEVTRPT_IRAT_TARGETGSM_INFO;
+
+typedef struct T_ENGEVTRPT_IRAT_L2G_RPT_Tag
+{
+    T_ENGEVTRPT_IRAT_ORGLTE_INFO orgLteCellInfo;
+    T_ENGEVTRPT_IRAT_TARGETGSM_INFO targetGsmCellInfo;
+}T_ENGEVTRPT_IRAT_L2G_RPT;
+
+typedef struct T_ENGEVTRPT_IRAT_REDIREC_GSMCELL_INFO_Tag
+{
+    u8 bsic;
+    u8 nccPermitted;
+    u16 arfcn;
+}T_ENGEVTRPT_IRAT_REDIREC_GSMCELL_INFO;
+
+typedef struct T_ENGEVTRPT_IRAT_REDIREC_TARGETGSM_LIST_Tag
+{
+    u8 mode;
+    u8 gsmCellNum;
+    u16 reserved;
+    T_ENGEVTRPT_IRAT_REDIREC_GSMCELL_INFO gsmCell[MAX_REDIRECTION_GSM_CELL_NUM];
+}T_ENGEVTRPT_IRAT_REDIREC_TARGETGSM_LIST;
+
+typedef struct T_ENGEVTRPT_IRAT_L2G_REDIREC_RPT_Tag
+{
+    T_ENGEVTRPT_IRAT_ORGLTE_INFO orgLteCellInfo;
+    T_ENGEVTRPT_IRAT_REDIREC_TARGETGSM_LIST targetGsmCellList;
+}T_ENGEVTRPT_IRAT_L2G_REDIREC_RPT;
+#endif
+
+typedef struct T_ENG_EVT_RPT_Tag
+{
+    u8 eventId;
+    u8 reserved[3];
+    union
+    {
+        T_ENGEVTRPT_INITACC_RPT initAccInfo;
+        T_ENGEVTRPT_MACACCFAIL_RPT macAccFailInfo;
+        T_ENGEVTRPT_T310EXPI_RPT t310ExpiredInfo;
+        T_ENGEVTRPT_RLCMAXRETRAN_RPT rlcMaxNumRetranInfo;
+        T_ENGEVTRPT_RRCSTATUS_RPT rrcStatusInfo;
+        T_ENGEVTRPT_RRCESTREQ_RPT rrcEstReqInfo;
+        T_ENGEVTRPT_RRCESTFAIL_RPT rrcEstFailInfo;
+        T_ENGEVTRPT_INTRALTE_HO_RPT intraLteHoInfo;
+#ifdef __IRAT__
+        T_ENGEVTRPT_IRAT_L2G_RPT IratHoL2GInfo;
+        T_ENGEVTRPT_IRAT_L2G_REDIREC_RPT IratRedirectionL2GInfo;
+#endif
+    };
+}T_ENG_EVT_RPT;
+
+typedef struct T_ENGSTATISRPT_EL1_RPT_Tag
+{
+    s16 ta;    
+    u16 phr;  
+}T_ENGSTATISRPT_EL1_RPT;
+
+typedef struct T_ENGSTATISRPT_RLC_INSTSTATIS_Tag
+{
+    u8 drbId;
+    u8 reserved[3];
+    u16 ulAmDataPduNackNum; 
+    u16 ulAmDataPduAckNum; 
+    u32 ulAmDataPduRetrRate;
+    u32 ulAmNewPduByte; 
+    u32 ulAmDataPduNackByte; 
+    u32 ulAmDataPduAckByte; 
+    u32 sendBufferRemain; 
+    u32 dlAmPduByte; 
+}T_ENGSTATISRPT_RLC_INSTSTATIS;
+
+typedef struct T_ENGSTATISRPT_PDCP_INSTSTATIS_Tag
+{
+    u8 drbId; 
+    u8 reserved[3];
+    u32 ulPacketDiscardRate; 
+}T_ENGSTATISRPT_PDCP_INSTSTATIS;
+
+typedef struct T_ENGSTATISRPT_EL2_RPT_Tag
+{
+    T_ENGSTATISRPT_RLC_INSTSTATIS rlcInstStatis[L2_WB_MAX_DRB_NUM]; 
+    T_ENGSTATISRPT_PDCP_INSTSTATIS pdcpInstStatis[L2_WB_MAX_DRB_NUM]; 
+}T_ENGSTATISRPT_EL2_RPT;
+
+typedef struct T_ENG_STATIS_RPT_Tag
+{
+    BOOL el1ValidFlag;
+    BOOL el2ValidFlag;
+    T_ENGSTATISRPT_EL1_RPT el1StatisInfo;
+    T_ENGSTATISRPT_EL2_RPT el2StatisInfo;
+}T_ENG_STATIS_RPT;
+
+typedef struct T_ENGSTATISRPT_EL2_SAVED_INFO_Tag
+{    
+    u16 ulPacketDiscardNum[L2_WB_MAX_DRB_NUM]; 
+    u16 ulNewPacketNum[L2_WB_MAX_DRB_NUM]; 
+    u16 ulSduBuffLastRemainNum[L2_WB_MAX_DRB_NUM]; 
+    u32 ulAmDataPduRetrByte[L2_WB_MAX_DRB_NUM];
+    u32 totalUlAmNewPduByte;
+}T_ENGSTATISRPT_EL2_SAVED_INFO;
+
+typedef struct T_ENGSTATISRPT_SAVED_INFO_Tag
+{
+    T_ENGSTATISRPT_EL2_SAVED_INFO el2SavedInfo;
+    T_ENG_STATIS_RPT statisRpt;
+} T_ENGSTATISRPT_SAVED_INFO;
+#endif
+

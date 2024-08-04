@@ -1,0 +1,962 @@
+/* Copyright (C) 2018 RDA Technologies Limited and/or its affiliates("RDA").
+ * All rights reserved.
+ *
+ * This software is supplied "AS IS" without any warranties.
+ * RDA assumes no responsibility or liability for the use of the software,
+ * conveys no license or title under any patent, copyright, or mask work
+ * right to the product. RDA reserves the right to make changes in the
+ * software without notification.  RDA also make no representation or
+ * warranty that such application will be suitable for the specified use
+ * without further testing or modification.
+ */
+
+#ifndef _HAL_CONFIG_H_
+#define _HAL_CONFIG_H_
+
+#include "hal_chip_config.h"
+
+//quectel update
+#include "quec_proj_config.h"
+
+// @AUTO_GENERATION_NOTICE@
+
+/**
+ * SOC name
+ */
+#cmakedefine CONFIG_SOC "@CONFIG_SOC@"
+
+/**
+ * build target
+ */
+#cmakedefine CONFIG_BUILD_TARGET "@CONFIG_BUILD_TARGET@"
+
+/**
+ * whether it is 8910 series
+ */
+#cmakedefine CONFIG_SOC_8910
+
+/**
+ * whether it is 8811 series
+ */
+#cmakedefine CONFIG_SOC_8811
+
+/**
+ * whether it is 8821 series
+ */
+#cmakedefine CONFIG_SOC_8821
+
+/**
+ * whether it is 8850 series
+ */
+#cmakedefine CONFIG_SOC_8850
+
+/**
+ * whether it is FPGA, not real chip
+ *
+ * This will be defined when developing in FPGA. For SOC independent codes,
+ * and it is needed to distinguish FPGA and real chip, this macro can be
+ * used.
+ */
+#cmakedefine CONFIG_RUN_ON_FPGA
+
+/**
+ * whether it is ARM CPUs
+ */
+#cmakedefine CONFIG_CPU_ARM
+
+/**
+ * whether it is ARMv7-A CPUs
+ */
+#cmakedefine CONFIG_CPU_ARMV7A
+
+/**
+ * whether it is ARM Cortex A5
+ */
+#cmakedefine CONFIG_CPU_ARM_CA5
+
+/**
+ * whether it is ARMv7-M CPUs
+ */
+#cmakedefine CONFIG_CPU_ARMV7M
+
+/**
+ * whether it is ARM Cortex M4F
+ */
+#cmakedefine CONFIG_CPU_ARM_CM4F
+
+/**
+ * whether it is ARMv8-M CPUs
+ */
+#cmakedefine CONFIG_CPU_ARMV8M
+
+/**
+ * whether it is ARM Cortex M33F
+ */
+#cmakedefine CONFIG_CPU_ARM_CM33F
+
+/**
+ * I-cache and D-cache line size
+ *
+ * It is assumed that I-cache line size is the same with D-cache line size.
+ */
+#cmakedefine CONFIG_CACHE_LINE_SIZE @CONFIG_CACHE_LINE_SIZE@
+
+/**
+ * whether there is MMU
+ */
+#cmakedefine CONFIG_HAVE_MMU
+
+/**
+ * SOC have hardware LZMA
+ */
+#cmakedefine CONFIG_HAVE_LZMA
+
+/**
+ * SOC have hardware spinlock
+ */
+#cmakedefine CONFIG_HAVE_SPINLOCK
+
+/**
+ * whether there is PSRAM
+ */
+#cmakedefine CONFIG_USE_PSRAM
+
+/**
+ * whether it is 8811 CD
+ */
+#cmakedefine CONFIG_CHIP_8811CD @CONFIG_CHIP_8811CD@
+
+/**
+ * whether it is 8821CD OPENPHONE
+ */
+#cmakedefine CONFIG_8821CD_OPENPHONE @CONFIG_8821CD_OPENPHONE@
+
+/**
+ * whether it is QPI 4bits PSRAM (8811)
+ */
+#cmakedefine CONFIG_QPI_PSRAM
+
+/**
+ * whether it is OPI 8bits PSRAM (8811)
+ */
+#cmakedefine CONFIG_OPI_PSRAM
+
+/**
+ * whether there is DDR
+ */
+#cmakedefine CONFIG_USE_DDR
+
+/**
+ * whether there is PSRAM or DDR
+ */
+#cmakedefine CONFIG_HAVE_EXT_RAM
+
+/**
+ * PSRAM or DDR size, shall match CONFIG_RAM_xx
+ */
+#cmakedefine CONFIG_RAM_SIZE @CONFIG_RAM_SIZE@
+
+/**
+ * whether NOR flash is used
+ */
+#cmakedefine CONFIG_NOR_FLASH
+
+/**
+ * NOR flash size, shall match CONFIG_FLASH_xx
+ */
+#cmakedefine CONFIG_FLASH_SIZE @CONFIG_FLASH_SIZE@
+
+/**
+ * SRAM size
+ *
+ * - 8955/8909: system SRAM size
+ * - 8811: total SRAM size
+ * - 8910: total SRAM size
+ */
+#cmakedefine CONFIG_SRAM_SIZE @CONFIG_SRAM_SIZE@
+
+/**
+ * aon SRAM size (8850)
+ */
+#cmakedefine CONFIG_AON_SRAM_SIZE @CONFIG_AON_SRAM_SIZE@
+
+/**
+ * cp SRAM size (8850)
+ */
+#cmakedefine CONFIG_CP_SRAM_SIZE @CONFIG_CP_SRAM_SIZE@
+
+/**
+ * simage header size (used in 8811)
+ */
+#cmakedefine CONFIG_SIMAGE_HEADER_SIZE @CONFIG_SIMAGE_HEADER_SIZE@
+
+/**
+ * uimage header size (used in 8910)
+ */
+#cmakedefine CONFIG_UIMAGE_HEADER_SIZE @CONFIG_UIMAGE_HEADER_SIZE@
+
+/**
+ * system ROM physical address
+ *
+ * It may be undefined when system ROM won't be accessed
+ */
+#cmakedefine CONFIG_ROM_PHY_ADDRESS @CONFIG_ROM_PHY_ADDRESS@
+
+/**
+ * NBROM physical address
+ */
+#cmakedefine CONFIG_NBROM_PHY_ADDRESS @CONFIG_NBROM_PHY_ADDRESS@
+
+/**
+ * system SRAM physical address
+ */
+#cmakedefine CONFIG_SRAM_PHY_ADDRESS @CONFIG_SRAM_PHY_ADDRESS@
+
+/**
+ * aon SRAM physical address (8850)
+ */
+#cmakedefine CONFIG_AON_SRAM_PHY_ADDRESS @CONFIG_AON_SRAM_PHY_ADDRESS@
+
+/**
+ * cp SRAM physical address (8850)
+ */
+#cmakedefine CONFIG_CP_SRAM_PHY_ADDRESS @CONFIG_CP_SRAM_PHY_ADDRESS@
+
+/**
+ * NOR flash physical address
+ */
+#cmakedefine CONFIG_NOR_PHY_ADDRESS @CONFIG_NOR_PHY_ADDRESS@
+
+/**
+ * external NOR flash physical address
+ */
+#cmakedefine CONFIG_NOR_EXT_PHY_ADDRESS @CONFIG_NOR_EXT_PHY_ADDRESS@
+
+/**
+ * PSRAM or DDR physical address
+ */
+#cmakedefine CONFIG_RAM_PHY_ADDRESS @CONFIG_RAM_PHY_ADDRESS@
+
+#cmakedefine CONFIG_RAM_HEADER_SIZE @CONFIG_RAM_HEADER_SIZE@
+
+/**
+ * GIC base address
+ */
+#cmakedefine CONFIG_GIC_BASE_ADDRESS @CONFIG_GIC_BASE_ADDRESS@
+
+/**
+ * GIC CPU interface offset
+ */
+#cmakedefine CONFIG_GIC_CPU_INTERFACE_OFFSET @CONFIG_GIC_CPU_INTERFACE_OFFSET@
+
+/**
+ * GIC priority bits, unique level is (1<<CONFIG_GIC_PRIORITY_BITS)
+ */
+#cmakedefine CONFIG_GIC_PRIORITY_BITS @CONFIG_GIC_PRIORITY_BITS@
+
+/**
+ * NVIC priority bits, unique level is (1<<CONFIG_NVIC_PRIORITY_BITS)
+ */
+#cmakedefine CONFIG_NVIC_PRIORITY_BITS @CONFIG_NVIC_PRIORITY_BITS@
+
+/**
+ * Interrupt count
+ */
+#cmakedefine CONFIG_IRQ_COUNT @CONFIG_IRQ_COUNT@
+
+/**
+ * system ROM size
+ */
+#cmakedefine CONFIG_ROM_SIZE @CONFIG_ROM_SIZE@
+
+/**
+ * NBROM size
+ */
+#cmakedefine CONFIG_NBROM_SIZE @CONFIG_NBROM_SIZE@
+
+/**
+ * whether dual bootloader is supported
+ *
+ * Dual bootloader needs system ROM support.
+ */
+#cmakedefine CONFIG_DUAL_BOOTLOADER_ENABLE
+
+/**
+ * NOR flash address of bootloader
+ *
+ * When dual bootloader is supported, it is the same as
+ * \p CONFIG_BOOT1_FLASH_ADDRESS.
+ */
+#cmakedefine CONFIG_BOOT_FLASH_ADDRESS @CONFIG_BOOT_FLASH_ADDRESS@
+
+/**
+ * NOR flash address of boot1 in dual bootloader
+ */
+#cmakedefine CONFIG_BOOT1_FLASH_ADDRESS @CONFIG_BOOT1_FLASH_ADDRESS@
+
+/**
+ * NOR flash address of boot2 in dual bootloader
+ */
+#cmakedefine CONFIG_BOOT2_FLASH_ADDRESS @CONFIG_BOOT2_FLASH_ADDRESS@
+
+/**
+ * bootloader reserved size on NOR flash
+ *
+ * When dual bootloader is supported, this is the total reserved NOR flash
+ * size for bootloader.
+ */
+#cmakedefine CONFIG_BOOT_FLASH_SIZE @CONFIG_BOOT_FLASH_SIZE@
+
+/**
+ * bootloader maximum size
+ *
+ * When dual bootloader is enabled, it is \p CONFIG_BOOT_FLASH_SIZE/2.
+ * When dual bootloader isn't enabled, it is \p CONFIG_BOOT_FLASH_SIZE.
+ *
+ * The image header size is included.
+ */
+#cmakedefine CONFIG_BOOTLOADER_SIZE @CONFIG_BOOTLOADER_SIZE@
+
+/**
+ * support switching betweend gsm and lte during runtime
+ */
+#cmakedefine CONFIG_GSM_LTE_SWITCH_SUPPORT
+
+/**
+ * support decrease the ipc dl and ul speed to 2M bps
+ */
+#cmakedefine CONFIG_DL_UL_SPEED_2MBPS
+
+/**
+ * tz support(8850)
+ */
+#cmakedefine CONFIG_TRUSTZONE_SUPPORT
+
+/**
+ * NOR flash address of spl
+ *
+ * When dual bootloader is supported, it is the same as
+ * \p CONFIG_SPL1_FLASH_ADDRESS.
+ */
+#cmakedefine CONFIG_SPL_FLASH_ADDRESS @CONFIG_SPL_FLASH_ADDRESS@
+
+/**
+ * NOR flash address of spl1 in dual bootloader
+ */
+#cmakedefine CONFIG_SPL1_FLASH_ADDRESS @CONFIG_SPL1_FLASH_ADDRESS@
+
+/**
+ * NOR flash address of spl2 in dual bootloader
+ */
+#cmakedefine CONFIG_SPL2_FLASH_ADDRESS @CONFIG_SPL2_FLASH_ADDRESS@
+
+/**
+ * spl reserved size on NOR flash
+ *
+ * When dual spl is supported, this is the total reserved NOR flash
+ * size for bootloader.
+ */
+#cmakedefine CONFIG_SPL_FLASH_SIZE @CONFIG_SPL_FLASH_SIZE@
+
+/**
+ * spl reserved size on NOR flash
+ * */
+#cmakedefine CONFIG_SPL_SIZE @CONFIG_SPL_SIZE@
+/**
+ * NOR flash physical address of sml
+ */
+
+#cmakedefine CONFIG_TZ_SML_FLASH_ADDRESS @CONFIG_TZ_SML_FLASH_ADDRESS@
+
+/**
+ * sml maximum size
+ */
+
+#cmakedefine CONFIG_TZ_SML_FLASH_SIZE @CONFIG_TZ_SML_FLASH_SIZE@
+
+/**
+ * NOR flash physical address of sml
+ */
+
+#cmakedefine CONFIG_TZ_TOS_FLASH_ADDRESS @CONFIG_TZ_TOS_FLASH_ADDRESS@
+
+/**
+ * sml maximum size
+ */
+
+#cmakedefine CONFIG_TZ_TOS_FLASH_SIZE @CONFIG_TZ_TOS_FLASH_SIZE@
+
+/**
+ * NOR flash physical address of tfm
+ */
+
+#cmakedefine CONFIG_TFM_FLASH_ADDRESS @CONFIG_TFM_FLASH_ADDRESS@
+
+/**
+ * tfm maximum size
+ */
+
+#cmakedefine CONFIG_TFM_FLASH_SIZE @CONFIG_TFM_FLASH_SIZE@
+
+
+/**
+ * NOR flash physical address of s_storage
+ */
+
+#cmakedefine CONFIG_S_STORAGE_FLASH_ADDRESS @CONFIG_S_STORAGE_FLASH_ADDRESS@
+
+
+/**
+ * reserved NOR flash size for s_storage
+ */
+
+#cmakedefine CONFIG_S_STORAGE_FLASH_SIZE @CONFIG_S_STORAGE_FLASH_SIZE@
+
+/**
+ * NOR flash physical address of application
+ */
+#cmakedefine CONFIG_APP_FLASH_ADDRESS @CONFIG_APP_FLASH_ADDRESS@
+
+/**
+ * reserved NOR flash size for application
+ */
+#cmakedefine CONFIG_APP_FLASH_SIZE @CONFIG_APP_FLASH_SIZE@
+
+/**
+ * NOR flash address of loadable app image
+ */
+#cmakedefine CONFIG_APPIMG_FLASH_ADDRESS @CONFIG_APPIMG_FLASH_ADDRESS@
+
+/**
+ * reserved NOR flash size for loadable app image
+ */
+#cmakedefine CONFIG_APPIMG_FLASH_SIZE @CONFIG_APPIMG_FLASH_SIZE@
+
+/**
+ * NOR flash address of loadable app2 image   --quectel update
+ */
+#cmakedefine CONFIG_APPIMG2_FLASH_ADDRESS @CONFIG_APPIMG2_FLASH_ADDRESS@
+
+/**
+ * reserved NOR flash size for loadable app2 image  --quectel update
+ */
+#cmakedefine CONFIG_APPIMG2_FLASH_SIZE @CONFIG_APPIMG2_FLASH_SIZE@
+
+/**
+ * NOR flash physical address of openCPU
+ */
+#cmakedefine CONFIG_OPENCPU_FLASH_ADDRESS @CONFIG_OPENCPU_FLASH_ADDRESS@
+
+/**
+ * reserved NOR flash size for openCPU
+ */
+#cmakedefine CONFIG_OPENCPU_FLASH_SIZE @CONFIG_OPENCPU_FLASH_SIZE@
+
+/**
+ * NOR flash address of system file system
+ *
+ * The mount point of system file system is \p CONFIG_FS_SYS_MOUNT_POINT.
+ */
+#cmakedefine CONFIG_FS_SYS_FLASH_ADDRESS @CONFIG_FS_SYS_FLASH_ADDRESS@
+
+/**
+ * reserved NOR flash size for system file system
+ */
+#cmakedefine CONFIG_FS_SYS_FLASH_SIZE @CONFIG_FS_SYS_FLASH_SIZE@
+
+/**
+ * NOR flash address of modem image file system
+ *
+ * The mount point of modem image file system is \p CONFIG_FS_MODEM_MOUNT_POINT.
+ */
+#cmakedefine CONFIG_FS_MODEM_FLASH_ADDRESS @CONFIG_FS_MODEM_FLASH_ADDRESS@
+
+/**
+ * reserved NOR flash size for modem image file system
+ */
+#cmakedefine CONFIG_FS_MODEM_FLASH_SIZE @CONFIG_FS_MODEM_FLASH_SIZE@
+
+/**
+ * NOR flash address of factory file system
+ *
+ * The mount point of factory file system is \p CONFIG_FS_FACTORY_MOUNT_POINT.
+ */
+#cmakedefine CONFIG_FS_FACTORY_FLASH_ADDRESS @CONFIG_FS_FACTORY_FLASH_ADDRESS@
+
+/**
+ * reserved NOR flash size for factory file system
+ */
+#cmakedefine CONFIG_FS_FACTORY_FLASH_SIZE @CONFIG_FS_FACTORY_FLASH_SIZE@
+
+/**
+ * external NOR flash physical address of application
+ */
+#cmakedefine CONFIG_APP_FLASH2_ADDRESS @CONFIG_APP_FLASH2_ADDRESS@
+
+/**
+ * reserved external NOR flash size for application
+ */
+#cmakedefine CONFIG_APP_FLASH2_SIZE @CONFIG_APP_FLASH2_SIZE@
+
+/**
+ * mount point of modem image file system
+ */
+#cmakedefine CONFIG_FS_MODEM_MOUNT_POINT "@CONFIG_FS_MODEM_MOUNT_POINT@"
+
+/**
+ * mount point of system file system
+ */
+#cmakedefine CONFIG_FS_SYS_MOUNT_POINT "@CONFIG_FS_SYS_MOUNT_POINT@"
+
+/**
+ * mount point of factory file system
+ */
+#cmakedefine CONFIG_FS_FACTORY_MOUNT_POINT "@CONFIG_FS_FACTORY_MOUNT_POINT@"
+
+/**
+ * directory for modem running NV
+ */
+#cmakedefine CONFIG_FS_MODEM_NVM_DIR "@CONFIG_FS_MODEM_NVM_DIR@"
+
+/**
+ * directory for application NV
+ */
+#cmakedefine CONFIG_FS_AP_NVM_DIR "@CONFIG_FS_AP_NVM_DIR@"
+
+/**
+ * directory for firmware update
+ *
+ * Firmware update related files will be located under this directory,
+ * including the differential pack file, and intermediate files.
+ */
+#cmakedefine CONFIG_FS_FOTA_DATA_DIR "@CONFIG_FS_FOTA_DATA_DIR@"
+
+/**
+ * whether loading app image from NOR flash is enabled
+ */
+#cmakedefine CONFIG_APPIMG_LOAD_FLASH
+
+/**
+ * whether loading app image from file is enabled
+ *
+ * When loading app image from file, the image will be loaded to RAM, and
+ * execute on RAM.
+ */
+#cmakedefine CONFIG_APPIMG_LOAD_FILE
+
+/**
+ * whether loading boot image is disabled
+ */
+#cmakedefine CONFIG_BOOT_FLASH_DISABLE
+
+/**
+ * Whether to verify app image signature when secure boot is enabled
+ */
+#cmakedefine CONFIG_APPIMG_SIGCHECK_ENABLE
+
+/**
+ * loadable app image file name
+ */
+#cmakedefine CONFIG_APPIMG_LOAD_FILE_NAME "@CONFIG_APPIMG_LOAD_FILE_NAME@"
+
+/**
+ * loadable app2 image file name     #quectel update
+ */
+#cmakedefine CONFIG_APPIMG2_LOAD_FILE_NAME "@CONFIG_APPIMG2_LOAD_FILE_NAME@"
+
+/**
+ * reserved memory size for blue screen. For ARM v7A, the size is blue screen
+ * data size plus blue screen stack size. For ARM v8M, it is just the blue
+ * screen data size.
+ */
+#cmakedefine CONFIG_BLUE_SCREEN_SIZE @CONFIG_BLUE_SCREEN_SIZE@
+
+/**
+ * whether to enable blue screen backup
+ */
+#cmakedefine CONFIG_BSCORE_ENABLE
+
+/**
+ * whether blue screen backup located on sram
+ */
+#cmakedefine CONFIG_BSCORE_ON_SRAM
+
+/**
+ * blue screen core total size
+ */
+#cmakedefine CONFIG_BSCORE_SIZE @CONFIG_BSCORE_SIZE@
+
+/**
+ * blue screen core stack dump ahead offset
+ */
+#cmakedefine CONFIG_BSCORE_STACK_EXTRA @CONFIG_BSCORE_STACK_EXTRA@
+
+/**
+ * blue screen core stack dump size
+ */
+#cmakedefine CONFIG_BSCORE_STACK_SIZE @CONFIG_BSCORE_STACK_SIZE@
+
+/**
+ * blue screen core cp stack dump size
+ */
+#cmakedefine CONFIG_BSCORE_CP_STACK_SIZE @CONFIG_BSCORE_CP_STACK_SIZE@
+
+/**
+ * blue screen core profile size
+ */
+#cmakedefine CONFIG_BSCORE_PROFILE_SIZE @CONFIG_BSCORE_PROFILE_SIZE@
+
+/**
+ * enable med encrypt data or not (8811)
+ */
+#cmakedefine CONFIG_MED_CODE_ENCRYPT
+
+/**
+ * Power down flash in low power mode (8910)
+ */
+#cmakedefine CONFIG_FLASH_LP_POWER_DOWN
+
+/**
+ * Load flash and psram infomation to share mem
+ */
+#cmakedefine CONFIG_SHAREMEM_EMMCDDR_INFO
+
+/**
+ * PSRAM enter half sleep in low power mode (8910)
+ */
+#cmakedefine CONFIG_PSRAM_LP_HALF_SLEEP
+
+/**
+ * whether to support PM2 cold boot sleep mode
+ */
+#cmakedefine CONFIG_PSM_PM2BOOT_ENABLE
+
+/**
+ * whether to support RC32k PSM sleep mode
+ */
+#cmakedefine CONFIG_RC32k_SLEEP_ENABLE
+
+/**
+ * whether to check cp images signature
+ */
+#cmakedefine CONFIG_CPBIN_SIGCHECK
+
+/**
+ * keyled power is used for RF switch (8910)
+ */
+#cmakedefine CONFIG_BOARD_KPLED_USED_FOR_RF_SWITCH
+
+/**
+ * force pull up for gpio4 in iomux (8910)
+ */
+#cmakedefine CONFIG_GPIO4_FORCE_PULL_UP
+
+/**
+ * gpio number for pmic interrupt (8910)
+ */
+#cmakedefine CONFIG_PMIC_INTR_GPIO @CONFIG_PMIC_INTR_GPIO@
+
+/**
+ * enable camera power at initialization (8910)
+ */
+#cmakedefine CONFIG_CAMA_POWER_ON_INIT @CONFIG_CAMA_POWER_ON_INIT@
+
+/**
+ * whether camera clock is needed for audio (8910)
+ */
+#cmakedefine CONFIG_CAMA_CLK_FOR_AUDIO @CONFIG_CAMA_CLK_FOR_AUDIO@
+
+/**
+ * use 26MHz DCXO, rather than VCXO (8909)
+ */
+#cmakedefine CONFIG_CRYSTAL_WITHOUT_OSCILLATOR
+
+/**
+ * RF use LDO (8909)
+ */
+#cmakedefine CONFIG_RF_LDO_MODE
+
+/**
+ * hardware supported SIM count
+ *
+ * This is not the supported SIM count of protocol stack and application.
+ */
+#cmakedefine CONFIG_HAL_SIM_COUNT @CONFIG_HAL_SIM_COUNT@
+
+/**
+ * whether GSM is supported
+ */
+#cmakedefine CONFIG_GSM_SUPPORT
+
+/**
+ * whether NBIOT is supported
+ */
+#cmakedefine CONFIG_LTE_NBIOT_SUPPORT
+
+/**
+ * whether to enter RF calibration mode by gpio
+ */
+#cmakedefine CONFIG_BOARD_ENTER_CALIB_BY_GPIO
+
+/**
+ * the gpio for detect entering RF calibration mode
+ */
+#cmakedefine CONFIG_BOARD_ENTER_CALIB_GPIO @CONFIG_BOARD_ENTER_CALIB_GPIO@
+
+/**
+ * whether to support SIM1 hot plug
+ */
+#cmakedefine CONFIG_BOARD_SUPPORT_SIM1_DETECT
+
+/**
+ * gpio for SIM1 hot plug detect
+ */
+#cmakedefine CONFIG_BOARD_SIM1_DETECT_GPIO @CONFIG_BOARD_SIM1_DETECT_GPIO@
+
+/**
+ * whether to support SIM2 hot plug
+ */
+#cmakedefine CONFIG_BOARD_SUPPORT_SIM2_DETECT
+
+/**
+ * gpio for SIM2 hot plug detect
+ */
+#cmakedefine CONFIG_BOARD_SIM2_DETECT_GPIO @CONFIG_BOARD_SIM2_DETECT_GPIO@
+
+/**
+ * whether debughost event is enabled
+ */
+#cmakedefine CONFIG_ENABLE_DEBUGHOST_EVENT
+
+/**
+ * whether power key is tied to GND
+ */
+#cmakedefine CONFIG_PWRKEY_TIE_GND
+
+/**
+ * whether power key can wakeup psm mode
+ */
+#cmakedefine CONFIG_PWRKEY_WAKEUP_PSM
+
+/**
+ * whether power key can power up after shutdown (8910)
+ */
+#cmakedefine CONFIG_PWRKEY_POWERUP
+
+/**
+ * whether wakeup pin (psm_ext_int) can power up after shutdown
+ */
+#cmakedefine CONFIG_WAKEUP_PIN_POWERUP
+
+/**
+ * whether charger can power up after shutdown
+ */
+#cmakedefine CONFIG_CHARGER_POWERUP
+
+/**
+ * whether normal power off
+ */
+#cmakedefine CONFIG_SHUTDOWN_NORMAL_POWER_OFF
+
+/**
+ * whether there is external flash on board
+ */
+#cmakedefine CONFIG_BOARD_WITH_EXT_FLASH
+
+/**
+ * external flash size
+ */
+#cmakedefine CONFIG_BOARD_EXT_FLASH_SIZE @CONFIG_BOARD_EXT_FLASH_SIZE@
+
+/**
+ * external flash frequency
+ */
+#cmakedefine CONFIG_BOARD_EXT_FLASH_FREQ @CONFIG_BOARD_EXT_FLASH_FREQ@
+
+/**
+ * whether external flash working in quad mode
+ */
+#cmakedefine CONFIG_BOARD_EXT_FLASH_QUAD_MODE
+
+/**
+ * external flash controller sample delay
+ */
+#cmakedefine CONFIG_BOARD_EXT_FLASH_SAMPLE_DELAY @CONFIG_BOARD_EXT_FLASH_SAMPLE_DELAY@
+
+/**
+ * external flash controller clk divider
+ */
+#cmakedefine CONFIG_BOARD_EXT_FLASH_CLK_DIVIDER @CONFIG_BOARD_EXT_FLASH_CLK_DIVIDER@
+
+/**
+ * external flash is connected to gpio 20-25 (8811)
+ */
+#cmakedefine CONFIG_BOARD_EXT_FLASH_GPIO20
+
+/**
+ * whether application will split into external flash
+ */
+#cmakedefine CONFIG_APP_FLASH2_ENABLED
+
+/**
+ * whether open application will split into external flash -----quectel update
+ */
+#cmakedefine CONFIG_APPIMG_FLASH2_ENABLED
+
+/**
+ * /ext mount start address -----quectel update
+ */
+#cmakedefine CONFIG_EFS_SYS_FLASH2_ADDRESS @CONFIG_EFS_SYS_FLASH2_ADDRESS@
+
+/**
+ * /ext mount reserved size on ext NOR flash -----quectel update
+ */
+#cmakedefine CONFIG_EFS_SYS_FLASH2_SIZE @CONFIG_EFS_SYS_FLASH2_SIZE@
+
+/**
+ * whether there are file system on external flash
+ */
+#cmakedefine CONFIG_FS_EXT_ENABLED
+
+/**
+ * whether support ims delta nv
+ */
+#cmakedefine CONFIG_SUPPORT_IMS_DELTA_NV
+
+/**
+ * whether support inner delta nv
+ */
+#cmakedefine CONFIG_SUPPORT_INNER_DELTA_NV
+
+/**
+ * whether gpio is used for Vbat_RF switch
+ */
+#cmakedefine CONFIG_GPIO_USED_FOR_VBAT_RF_SWITCH
+
+/**
+ * Used gpio x as Vbat_RF swtich
+ */
+#cmakedefine CONFIG_GPIO_X_USED_FOR_VBAT_RF @CONFIG_GPIO_X_USED_FOR_VBAT_RF@
+
+/**
+ * dcdc LV support (8811)
+ */
+#cmakedefine CONFIG_LV_SUPPORT
+
+/**
+ * GPIO to indicate PM2 (8811)
+ */
+#cmakedefine CONFIG_PM2_IND_GPIO @CONFIG_PM2_IND_GPIO@
+
+/**
+ * GPIO to indicate PM3 (8811)
+ */
+#cmakedefine CONFIG_PM3_IND_GPIO @CONFIG_PM3_IND_GPIO@
+
+/**
+ * sys_wdt open -----quectel update
+ */
+#cmakedefine CONFIG_SYS_WDT_ENABLE
+
+/**
+ * sys_wdt timeout
+ */
+#cmakedefine CONFIG_SYS_WDT_TIMEOUT @CONFIG_SYS_WDT_TIMEOUT@
+
+/**
+ * sys_wdt feed interval
+ */
+#cmakedefine CONFIG_SYS_WDT_FEED_INTERVAL @CONFIG_SYS_WDT_FEED_INTERVAL@
+
+/**
+ * unity output to uart
+ */
+#cmakedefine CONFIG_UNITY_OUTPUT_UART
+
+/**
+ * unity unit test uart
+ */
+#cmakedefine CONFIG_UNITY_UART_NAME @CONFIG_UNITY_UART_NAME@
+
+/**
+ * unity unit test uart baud rate
+ */
+#cmakedefine CONFIG_UNITY_UART_BAUD @CONFIG_UNITY_UART_BAUD@
+
+/**
+ * tfm support
+ */
+#cmakedefine CONFIG_TFM_SUPPORT @CONFIG_TFM_SUPPORT@
+
+/**
+ * tfm test support
+ */
+#cmakedefine CONFIG_TFM_TEST_SUPPORT @CONFIG_TFM_TEST_SUPPORT@
+
+/**
+ * tfm test secure framework
+ */
+#cmakedefine CONFIG_TEST_FRAMEWORK_S @CONFIG_TEST_FRAMEWORK_S@
+
+/**
+ * tfm test non-secure framework
+ */
+#cmakedefine CONFIG_TEST_FRAMEWORK_NS @CONFIG_TEST_FRAMEWORK_NS@
+
+#cmakedefine CONFIG_CP_SIGN_ENABLE
+
+/**
+ * ap must wakeup before bt sleeptime expire
+ */
+#cmakedefine CONFIG_AP_SLEEP_SYNC_WITH_BT_SLEEPTIME
+
+/**
+ * whether to identify 26M/32k clock by gpio and RTC mode
+ */
+#cmakedefine CONFIG_IDENTIFY_CLOCK
+
+/**
+ * trace sn space size, for sharing with tfm (8811)
+ */
+#cmakedefine CONFIG_TRACE_SN_SIZE @CONFIG_TRACE_SN_SIZE@
+
+/**
+ * trace sn address, for sharing with tfm (8811)
+ */
+#cmakedefine CONFIG_TRACE_SN_START_ADR @CONFIG_TRACE_SN_START_ADR@
+
+/**
+ * whether use 8850 V3 board
+ */
+#cmakedefine CONFIG_CHIP_8850_V3_BOARD
+
+/**
+ * whether use 8850 V4 board
+ */
+#cmakedefine CONFIG_CHIP_8850_V4_BOARD
+/**
+ * whether use 8850 V111 board
+ */
+#cmakedefine CONFIG_CHIP_8850_V111_BOARD
+
+/**
+* whether use 8850CM target
+ */
+ #cmakedefine CONFIG_8850CM_TARGET
+
+ /**
+* whether use 8850BM_C1 target
+ */
+ #cmakedefine CONFIG_8850BM_C1
+
+/**
+ * lzmar block_size (8850/8910)
+ */
+#cmakedefine CONFIG_LZMAR_BLOCK_SIZE @CONFIG_LZMAR_BLOCK_SIZE@
+
+/**
+ * lzmar dict_size (8850/8910)
+ */
+#cmakedefine CONFIG_LZMAR_DICT_SIZE @CONFIG_LZMAR_DICT_SIZE@
+
+#endif

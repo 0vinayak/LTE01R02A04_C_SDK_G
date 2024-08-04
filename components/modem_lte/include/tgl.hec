@@ -1,0 +1,760 @@
+/**************************************************************************/
+/*                                                                        */
+/*   Copyright (C) 2004 - 2011 CYIT. All rights reserved.                 */
+/*                                                                        */
+/**************************************************************************/
+/**************************************************************************/
+/* FILE NAME   tgl.hec                                                    */
+/*                                                                        */
+/* COMPONENT   PUB                                                        */
+/*                                                                        */
+/* DESCRIPTION                                                            */
+/*                                                                        */
+/* This file define the constants that used by all ps module.             */
+/*                                                                        */
+/**************************************************************************/
+#ifndef TGL_HEC
+#define TGL_HEC
+
+
+//#define MAX_MODE_NUM               2
+
+//#define MAX_LTE_CELL_NUM           64
+#define MAX_OTDOA_NCELL_NUM     24
+#define MAX_OTDOA_FREQ_LAYER   3
+#define MAX_ECID_MEAS_CELL_NUM 8
+
+#define MAX_DRX_DL_HARQ_INFO_NUM 3
+
+#define MAX_LTE_FREQ_NUM           8
+
+#define MEM_FIX_RESERVERD_LEN      4
+
+#define STRONGEST_NCELL_NUM_ENG_MODE        6
+#define MAX_NCELL_NUM_FOR_MAIN_INFO         6
+
+/* for T_NcellInfoForTrace.*/
+#define TRACE_NCELL_NUM          40
+
+
+// used in PS and PA interface, PLMN(3 octets) + ACT[3 octets, UMTS(1 octet)+gsm(1 octet)+lte(1 octet)]
+//#define MAX_PLMN_ACT_LEN           6
+
+// used by PS and PA according to 31.102, PLMN(3 octets) + ACT[2 octets, gsm(1 octet)+td&lte(1 octet)]
+#define MAX_PLMN_RAT_LEN           5
+
+//20100526
+#define MAX_IMEISV_LEN             10
+#define MAX_IMEI_LEN               9
+
+//remove macro STACK_SUPPORT_LTE, 20121123
+#define MAX_HNBNAME_LEN            48 // added for CSG
+
+// for trace in memory
+#define  FUNCTION_NAME_ARRAY_SIZE  2048
+#define  FUNCTION_NAME_LENGTH      15
+
+
+//......................................................................................
+//
+//                      CM and SPV inteferace
+//              Macro defines for "causeSelect" element
+//
+//......................................................................................
+#define CAPI_NO_CAUSE                   0x00
+#define CAPI_SPV_CAUSE                  0x10
+#define CAPI_MMI_CAUSE                  0x11
+#define CAPI_SAP_CAUSE                  0x12
+#define CAPI_SIM_CAUSE                  0x13
+
+#define CAPI_LOCAL_CAUSE                0x40
+#define CAPI_SS_ERR_CAUSE               0x41
+#define CAPI_MM_NET_CAUSE               0x42
+#define CAPI_CC_NET_CAUSE               0x43
+#define CAPI_TP_CAUSE                   0x44
+#define CAPI_RP_CAUSE                   0x45
+#define CAPI_CP_CAUSE                   0x46
+#define CAPI_SM_CAUSE                   0x47
+//remove macro STACK_SUPPORT_LTE, 20121123
+#define CAPI_ESM_CAUSE                  0x48
+#define CAPI_MM_NET_CAUSE_EMM           0x49
+#define CAPI_LOCAL_CAUSE_EMM            0x50
+
+#define CAPI_SS_REJ_GEN_CAUSE           0x80
+#define CAPI_SS_REJ_INV_CAUSE           0x81
+#define CAPI_SS_REJ_RES_CAUSE           0x82
+#define CAPI_SS_REJ_ERR_CAUSE           0x83
+
+
+//......................................................................................
+//
+//                      mobi inteferace
+// Macro defines for "cause" element when "causeSelect" is CAPI_SAP_CAUSE
+//
+//......................................................................................
+#define SAP_CS_NO_CAUSE                     0x00
+#define SAP_CS_ACCESS_UNKNOWN               0x01
+#define SAP_CS_ACCESS_NOT_ALLOWED           0x02
+#define SAP_CS_CHV1_NOT_ALLOWED             0x03
+#define SAP_CS_CHV2_NOT_ALLOWED             0x04
+#define SAP_CS_TIMER_TIMEOUT_ERROR          0x05
+#define SAP_CS_FILE_INDEX_INVALID           0x06
+#define SAP_CS_FILE_LENGTH_ERROR            0x07
+#define SAP_CS_FCP_CONTENT_CHK_ERR          0x08
+#define SAP_CS_PBR_CONTENT_CHK_ERR          0x09
+#define SAP_CS_UST_CONTENT_CHK_ERR          0x0A
+#define SAP_CS_ARR_CONTENT_CHK_ERR          0x0B
+#define SAP_CS_MFDIR_CONTENT_CHK_ERR        0x0C
+#define SAP_CS_MOBI_REQ_WRONG_PARA          0x0D
+#define SAP_CS_USIM_IS_CORRUPTED            0x0E    // usim is corrupted
+#define SAP_CS_FCP_CONTENT_ABSENT           0x0F    // fcp cann't be returned.
+#define SAP_CS_IMG_CONTENT_CHK_ERR          0x10
+
+#define SAP_CS_DRV_EXCEP_RX_PARITY_ERR      0x11    // SIM card receive parity error 
+#define SAP_CS_DRV_EXCEP_TX_PARITY_ERR      0x12    // SIM card transmit parity error 
+#define SAP_CS_DRV_EXCEP_CARD_UNRESPONSE    0x13    // SIM card un-response 
+#define SAP_CS_DRV_EXCEP_CARD_IS_OUT        0x14    // SIM card pull out
+#define SAP_CS_DRV_EXCEP_CARD_IS_IN         0x15    // SIM card insert in
+
+#define SAP_CS_DRV_EXCEP_ATR_FAILED         0x21
+#define SAP_CS_DRV_EXCEP_PTS_FAILED         0x22
+#define SAP_CS_DRV_EXCEP_PROCEDURE_BYTE_ERR 0x23
+#define SAP_CS_DRV_EXCEP_WTO                0x24
+#define SAP_CS_DRV_EXCEP_MUTE               0x25
+#define SAP_CS_DRV_EXCEP_EARLY              0x26
+#define SAP_CS_DRV_EXCEP_SUPL               0x27
+#define SAP_CS_DRV_EXCEP_PROT               0x28
+#define SAP_CS_DRV_EXCEP_OTHER              0x29
+
+#define SAP_CS_DRV_ATR_USIM_INSERTED_ERR    0x31    // A card is inserted, but the ATR process is not successful
+#define SAP_CS_DRV_ATR_INSERTED_NO_USIM     0x32    // No SIM card is inserted in
+#define SAP_CS_AUTH_CONTEXT_NOT_MATCH       0x33
+#define SAP_CS_UPIN_NOT_ALLOWED             0x34
+#define SAP_CS_USIM_IS_RETRIEVED            0x35
+
+//......................................................................................
+//
+//                      MMC_SPN inteferace
+// Macro defines for "cause" element when "causeSelect" is CAPI_MM_NET_CAUSE
+//
+//......................................................................................
+// CAPI_parameter MM_Cause (3GPP 24.008, chapter 10.5.3.6)
+#define CAPI_CS_MM_UNALLOACTED_TMSI                                   0x01
+#define CAPI_CS_MM_UNKNOWN_IMSI                                       0x02
+#define CAPI_CS_MM_ILLEGAL_MS                                         0x03
+#define CAPI_CS_MM_IMSI_UNKNOWN_IN_VLR                                0x04
+#define CAPI_CS_MM_IMEI_NOT_ACCEPTED                                  0x05
+#define CAPI_CS_MM_ILLEGAL_ME                                         0x06
+#define CAPI_PS_GMM_GPRS_SER_NOT_ALLOWED                              0x07
+#define CAPI_PS_GMM_GPRS_ALLOWED_AND_NON_GPRS_NOT_ALLOWED             0x08
+#define CAPI_PS_GMM_MS_IDENTITY_CAN_NOT_DERIVED_BY_NETWORK            0x09
+#define CAPI_PS_GMM_IMPLICITY_DETACH                                  0x0A
+#define CAPI_CS_MM_PLMN_NOT_ALLOWED                                   0x0B
+#define CAPI_CS_MM_LAI_NOT_ALLOWED                                    0x0C
+#define CAPI_CS_MM_ROAM_NOT_ALLOWED_IN_LA                             0x0D
+#define CAPI_PS_GMM_GPRS_SER_NOT_ALLOWED_IN_THIS_PLMN                 0x0E
+#define CAPI_CS_MM_NO_SUITABLE_CELL_IN_LA                             0x0F
+#define CAPI_PS_GMM_MSC_TEMP_NOT_REACHABLE                            0x10
+#define CAPI_CS_MM_NETWORK_FAILURE                                    0x11
+#define CAPI_CS_MM_MAC_FAILURE                                        0x14
+#define CAPI_CS_MM_SYNCH_FAILURE                                      0x15
+#define CAPI_CS_MM_CONGESTION                                         0x16
+#define CAPI_CS_MM_GSM_AUTH_UNACCEPTABLE                              0x17
+#define CAPI_CS_MM_SERVICE_OPTION_NOT_SUPPORTED                       0x20
+#define CAPI_CS_MM_REQUEST_SERV_OPTION_NOT_SUBSCRIBED                 0x21
+#define CAPI_CS_MM_SERVICE_OPTION_TEMPORARY_OUT_OF_ORD                0x22
+#define CAPI_CS_MM_CALL_NOT_IDENTIFIED                                0x26
+#define CAPI_PS_GMM_NO_PDP_CONTEXT_ACTIVATED                          0x28
+#define CAPI_CS_MM_SEMANTICALLY_INCORRECT_MESSAGE                     0x5F
+#define CAPI_CS_MM_INVALID_MANDATORY_INFORMATION                      0x60
+#define CAPI_CS_MM_MESSAGE_TYPE_NON_EXISTANT_OR_NOT_IMPLEMENTED       0x61
+#define CAPI_CS_MM_MESSAGE_TYPE_NOT_COMPATIBLE_WITH_PROTOCOL_STATE    0x62
+#define CAPI_CS_MM_INFO_ELEM_NON_EXISTENT_OR_NOT_IMPLEMENTED          0x63
+#define CAPI_CS_MM_CONDITIONAL_IEI_ERROR                              0x64
+#define CAPI_CS_MM_MESSAGE_NOT_COMPATIBLE_WITH_PROTOCOL_STATE         0x65
+#define CAPI_CS_MM_PROTOCOL_ERROR_UNSPECIFIED                         0x6F
+
+//......................................................................................
+//
+//                      EMM_SPN inteferace
+// Macro defines for "cause" element when "causeSelect" is CAPI_EMM_NET_CAUSE
+//
+//......................................................................................
+// CAPI_parameter EMM_Cause (3GPP 24.301, chapter 9.9.3.9)
+#define CAPI_EPS_EMM_IMSI_UNKNOWN_IN_HSS                             0x02
+#define CAPI_EPS_EMM_ILLEGAL_UE                                      0x03
+#define CAPI_EPS_EMM_IMEI_NOT_ACCEPTED                               0x05
+#define CAPI_EPS_EMM_ILLEGAL_ME                                      0x06
+#define CAPI_EPS_EMM_EPS_SERVICE_NOT_ALLOWED                         0x07
+#define CAPI_EPS_EMM_EPS_SERVICE_AND_NON_EPS_SERVICE_NOT_ALLOWED     0x08
+#define CAPI_EPS_EMM_UE_IDENTITY_CAN_NOT_DERIVED_BY_NETWORK          0x09
+#define CAPI_EPS_EMM_IMPLICITY_DETACH                                0x0A
+#define CAPI_EPS_EMM_PLMN_NOT_ALLOWED                                0x0B
+#define CAPI_EPS_EMM_TRACKING_AREA_NOT_ALLOWED                       0x0C
+#define CAPI_EPS_EMM_ROAM_NOT_ALLOWED_IN_TRACKING_AREA               0x0D
+#define CAPI_EPS_EMM_EPS_SERVICE_NOT_ALLOWED_IN_THIS_PLMN            0x0E
+#define CAPI_EPS_EMM_NO_SUITABLE_CELL_IN_TRACKING_AREA               0x0F
+#define CAPI_EPS_EMM_MSC_TEMPORARILY_NOT_REACHABLE                   0x10
+#define CAPI_EPS_EMM_NETWORK_FAILURE                                 0x11
+#define CAPI_EPS_EMM_CS_DOMAIN_NOT_AVAILABLE                         0x12
+#define CAPI_EPS_EMM_ESM_FAILURE                                     0x13
+#define CAPI_EPS_EMM_MAC_FAILURE                                     0x14
+#define CAPI_EPS_EMM_SYNCH_FAILURE                                   0x15
+#define CAPI_EPS_EMM_CONGESTION                                      0x16
+#define CAPI_EPS_EMM_UE_SECURITY_CAPABILITIES_MISMATCH               0x17
+#define CAPI_EPS_EMM_SECURITY_MODE_REJECTED_UNSPECIFIED              0x18
+#define CAPI_EPS_EMM_NOT_AUTHORIZED_FOR_THIS_CSG                     0x19
+#define CAPI_EPS_EMM_NON_EPS_AUTHENTICATION_UNACCEPTABLE             0x1A
+#define CAPI_EPS_EMM_REQUESTED_SERVICE_NOT_AHTH_IN_THIS_PLMN         0x23
+#define CAPI_EPS_EMM_CS_DOMAIN_TEMPORARILY_NOT_AVAILABLE             0x27
+#define CAPI_EPS_EMM_NO_EPS_BEARER_CONTEXT_ACTIVATED                 0x28
+#define CAPI_EPS_EMM_SERVICE_NETWORK_FAILURE                         0x2A
+#define CAPI_EPS_EMM_SEMANTICALLY_INCORRECT_MESSAGE                  0x5f
+#define CAPI_EPS_EMM_INVALID_MANDATORY_INFORMATION                   0x60
+#define CAPI_EPS_EMM_MESSAGE_TYPE_NON_EXISTENT_OR_NOT_IMPLEMENT      0x61
+#define CAPI_EPS_EMM_MESSAGE_TYPE_NON_COMP_WITH_THE_PRO_STATE        0x62
+#define CAPI_EPS_EMM_INFO_ELEMENT_NON_EXISTENT_OR_NOT_IMPLEMENTED    0x63
+#define CAPI_EPS_EMM_CONDITIONAL_IE_ERROR                            0x64
+#define CAPI_EPS_EMM_MESSAGE_NOT_CAMP_WITH_PROTOCOL_STATE            0x65
+#define CAPI_EPS_EMM_PROTOCOL_ERROR_UNSPECIFIED                      0x6f
+
+
+//......................................................................................
+//
+//                      GMS_SPM inteferace
+// Macro defines for "cause" element when "causeSelect" is CAPI_RP_CAUSE
+//
+//......................................................................................
+// CAPI_parameter RP_cause (3GPP 24.011, chapter 8.2.5.4)
+#define CAPI_CS_RP_UNALLOC_UNASSIGN_NBR                    0x01   // 1
+#define CAPI_CS_RP_OPERATOR_DET_BAR                        0x08   //8  
+#define CAPI_CS_RP_CALL_BARRED                             0x0A   //10 
+#define CAPI_CS_RP_SMS_TRANS_REJECTED                      0x15   //21 
+#define CAPI_CS_RP_MEMORY_CAPACITY_EXCEEDED                0x16   //22
+#define CAPI_CS_RP_DEST_OUT_OF_SERVICE                     0x1B   //27
+#define CAPI_CS_RP_UNIDENT_SUBSCRIBER                      0x1C   //28
+#define CAPI_CS_RP_FACILITY_REJECTED                       0x1D   //29
+#define CAPI_CS_RP_UNKNOWN_SUBSCRIBER                      0x1E   //30
+#define CAPI_CS_RP_NETWORK_OUT_OF_ORDER                    0x26   //38
+#define CAPI_CS_RP_TEMPORARY_FAILURE                       0x29   //41
+#define CAPI_CS_RP_CONGESTION                              0x2A   //42
+#define CAPI_CS_RP_RESOURCES_UNAVAILABLE                   0x2F   //47
+#define CAPI_CS_RP_REQ_FACILITY_NOT_SUBSCR                 0x32   //50
+#define CAPI_CS_RP_REQ_FACILITY_NOT_IMPL                   0x45   //69
+#define CAPI_CS_RP_INVALID_SMS_TRANS_REF_VAL               0x51   //81
+#define CAPI_CS_RP_INVALID_SHORT_MSG                       0x5F   //95
+#define CAPI_CS_RP_MANDATORY_IE_MISSING                    0x60   //96
+#define CAPI_CS_RP_MSG_TYPE_NONEXISTENT                    0x61   //97
+#define CAPI_CS_RP_INCOMPATIBLE_PROT_STATE                 0x62   //98
+#define CAPI_CS_RP_IE_NONEXISTENT_NOTIMPL                  0x63   //99
+#define CAPI_CS_RP_INVALID_IE_CONTENTS                     0x64   //100  // the cause is absent in the protocol 
+#define CAPI_CS_RP_PROTOCOL_UNSPECIFIED                    0x6F   //111
+#define CAPI_CS_RP_IWK_UNSPECIFIED                         0x7F   //127
+
+//......................................................................................
+//
+//                      GMS_SPM inteferace
+// Macro defines for "cause" element when "causeSelect" is CAPI_CP_CAUSE
+//
+//......................................................................................
+// CAPI_parameter RP_cause (3GPP 24.011, chapter 8.1.4.2)
+#define CAPI_CS_CP_NETWORK_FAILURE                         0x11   //17
+#define CAPI_CS_CP_CONGESTION                              0x16   //22
+#define CAPI_CS_CP_INVALID_TI                              0x51   //81
+#define CAPI_CS_CP_INVALID_SHORT_MSG                       0x5F   //95
+#define CAPI_CS_CP_MANDATORY_IE_MISSING                    0x60   //96
+#define CAPI_CS_CP_MSG_TYPE_NONEXISTENT                    0x61   //97
+#define CAPI_CS_CP_INCOMPATIBLE_PROT_STATE                 0x62   //98
+#define CAPI_CS_CP_IE_NONEXISTENT_NOTIMPL                  0x63   //99
+#define CAPI_CS_CP_PROTOCOL_UNSPECIFIED                    0x6F   //111
+
+
+//......................................................................................
+//
+//                      SPM_ATR inteferace
+// Macro defines for "cause" element when "causeSelect" is CAPI_TP_CAUSE
+//
+//......................................................................................
+// CAPI_parameter TP_cause (3GPP 23.040, chapter 9.2.3.22)
+#define CAPI_CS_TP_TELEMATIC_INTERWORKING_NOT_SUPPORTED        0x80
+#define CAPI_CS_TP_SHORT_MESSAGE_TYPE_0_NOT_SUPPORTED          0x81
+#define CAPI_CS_TP_CANNOT_REPLACE_SHORT_MESSAGE                0x82
+#define CAPI_CS_TP_UNSPECIFIED_TP_PID_ERROR                    0x8F
+#define CAPI_CS_TP_DATA_CODING_SCHEME_ALPHABET_NOT_SUPPORTED   0x90
+#define CAPI_CS_TP_MESSAGE_CLASS_NOT_SUPPORTED                 0x91
+#define CAPI_CS_TP_UNSPECIFIED_TP_DCS_ERROR                    0x9F
+#define CAPI_CS_TP_COMMAND_CANNOT_BE_ACTIONED                  0xA0
+#define CAPI_CS_TP_COMMAND_UNSUPPORTED                         0xA1
+#define CAPI_CS_TP_UNSPECIFIED_TP_COMMAND_ERROR                0xAF
+#define CAPI_CS_TP_TPDU_NOT_SUPPORTED                          0xB0
+#define CAPI_CS_TP_SC_BUSY                                     0xC0
+#define CAPI_CS_TP_NO_SC_SUBSCRIPTION                          0xC1
+#define CAPI_CS_TP_SC_SYSTEM_FAILURE                           0xC2
+#define CAPI_CS_TP_INVALID_SME_ADDRESS                         0xC3
+#define CAPI_CS_TP_DESTINATION_SME_BARRED                      0xC4
+#define CAPI_CS_TP_SM_REJECTED_DUPLICATE_SM                    0xC5
+#define CAPI_CS_TP_TP_VPF_NOT_SUPPORTED                        0xC6
+#define CAPI_CS_TP_TP_VP_NOT_SUPPORTED                         0xC7
+#define CAPI_CS_TP_D0_SIM_SMS_STORAGE_FULL                     0xD0
+#define CAPI_CS_TP_NO_SMS_STORAGE_CAPABILITY_IN_SIM            0xD1
+#define CAPI_CS_TP_ERROR_IN_MS                                 0xD2
+#define CAPI_CS_TP_MEMORY_CAPACITY_EXCEEDED                    0xD3
+#define CAPI_CS_TP_SIM_APPLICATION_TOOLKIT_BUSY                0xD4
+#define CAPI_CS_TP_SIM_DATA_DOWNLOAD_ERROR                     0xD5
+#define CAPI_CS_TP_UNSPECIFIED_ERROR_CAUSE                     0xFF
+
+
+//......................................................................................
+//
+//                           ESM_SSM interface
+//  Macro defines for "cause" element when "causeSelect" is CAPI_ESM_CAUSE
+//  or the Signal does not include "causeSelect" element
+//
+//......................................................................................
+// CAPI_parameter ESM_cause(3GPP 24.301, chapter 10.5.6.6)
+#define CAPI_PS_ESM_OPERATOR_DETERMINTED_BAR                0x08
+#define CAPI_PS_ESM_INSUFFICIENT_RESOURCES                  0x1A
+#define CAPI_PS_ESM_MISSING_OR_UNKNOWN_APN                  0x1B
+#define CAPI_PS_ESM_UNKNOWN_EPS_ADDR_OR_TYPE                0x1C
+#define CAPI_PS_ESM_USER_AUTHENTICATION_FAILED              0x1D
+#define CAPI_PS_ESM_REQUEST_REJECT_BY_SGW_RO_PGW            0x1E
+#define CAPI_PS_ESM_REJECTED_WITH_UNSPECIFIED               0x1F
+#define CAPI_PS_ESM_SERVICE_NOT_SUPPORTED                   0x20
+#define CAPI_PS_ESM_SERVICE_NOT_SUBSCRIBED                  0x21
+#define CAPI_PS_ESM_SERVICE_OUT_OF_ORDER                    0x22
+#define CAPI_PS_ESM_PTI_ALREADY_IN_USE                      0x23
+#define CAPI_PS_ESM_REGULAR_DEACTIVATION                    0x24
+#define CAPI_PS_ESM_QOS_NOT_ACCEPTED                        0x25
+#define CAPI_PS_ESM_NETWORK_FAILURE                         0x26
+#define CAPI_PS_ESM_REACTIVATION_REQUESTED                  0x27
+#define CAPI_PS_ESM_SEMANTIC_ERROR_IN_TFT                   0x29
+#define CAPI_PS_ESM_SYNTACTICAL_ERROR_IN_TFT                0x2A
+#define CAPI_PS_ESM_INVALID_EBI                             0x2B
+#define CAPI_PS_ESM_SEMANTIC_ERROR_IN_FILTER                0x2C
+#define CAPI_PS_ESM_SYNCTACTICAL_ERROR_IN_FILTER            0x2D
+#define CAPI_PS_ESM_EPS_WITHOUT_TFT_ACTIVATED               0x2E
+#define CAPI_PS_ESM_PTI_MISMATCH                            0x2F
+#define CAPI_PS_ESM_LAST_PDN_DISCONNECT_NOT_ALLOWED         0x31
+#define CAPI_PS_ESM_IPV4_ONLY_ALLOWED                       0x32
+#define CAPI_PS_ESM_IPV6_ONLY_ALLOWED                       0x33
+#define CAPI_PS_ESM_SIGNALE_ADDRESS_BEARERS_ONLY_ALLOWE     0x34
+#define CAPI_PS_ESM_ESM_INFO_NOT_RECEIVED                   0x35
+#define CAPI_PS_ESM_PDN_CONNECT_NOT_EXIST                   0x36
+#define CAPI_PS_ESM_MULT_PDN_FOR_GIVEN_APN_NOT_ALLOWED      0x37
+#define CAPI_PS_ESM_COLLISION_WITH_NET_INITIATED_REQUEST    0x38
+#define CAPI_PS_ESM_UNSUPPORTED_QCI_VALUE                   0x3B
+#define CAPI_PS_ESM_BEARER_HANDLING_NOT_SUPPORTED           0x3C
+#define CAPI_PS_ESM_MAX_EPS_BEARER_NUM_REACHED              0x41
+#define CAPI_PS_ESM_REQ_APN_NOT_SUPPORTED_IN_THE_RAT_PLMN   0x42
+
+
+#define CAPI_PS_ESM_INVALID_PTI_VALUE                       0x51
+#define CAPI_PS_ESM_SEMANTICALLY_INCORRECT_MESSAGE          0x5F
+#define CAPI_PS_ESM_INVALID_MANDATORY_INFORM                0x60
+#define CAPI_PS_ESM_MESSAGE_NON_EXIST_IMPLEMENTED           0x61
+#define CAPI_PS_ESM_MESSAGE_NON_COMPATIBLE_STATE            0x62
+#define CAPI_PS_ESM_IE_NOT_EXIST_OR_IMPLEMENTED             0x63
+#define CAPI_PS_ESM_CONDITIONAL_IE_ERROR                    0x64
+#define CAPI_PS_ESM_MESSAGE_NOT_COMPATIBLE_WITH_PROTOCOL_STATE 0x65
+#define CAPI_PS_ESM_PROTOCOL_ERROR_UNSPECIFIED              0x6F
+#define CAPI_PS_ESM_APN_INCOMPATIBLE_WITH_ACTIVE_BEARER     0x70
+#define CAPI_PS_ESM_MULTI_ACCESS_TO_A_PDN_NOT_ALLOWED       0x71
+
+#define CAPI_PS_ESM_REACTIVATION_REQUIRE_FOR_IMS            0xFE/*1068740*/
+
+//......................................................................................
+//
+//                           NAS_SPV interface
+// Macro defines for "cause" element when "causeSelect" is CAPI_LOCAL_CAUSE (CS Domain)
+//
+//......................................................................................
+#define CAPI_CS_LC_STATE_ERROR                             0x01  //CAPI Interface causes 
+#define CAPI_CS_LC_NO_CALL_ENTITY                          0x02
+#define CAPI_CS_LC_WRONG_TI                                0x03
+#define CAPI_CS_LC_NO_SMS_ENTITY                           0x04
+#define CAPI_CS_LC_NO_SS_ENTITY                            0x05
+#define CAPI_CS_LC_DTMF_BUF_OVERFLOW                       0x06
+#define CAPI_CS_LC_CALL_DISCONNECTED                       0x07
+#define CAPI_CS_LC_OPERATION_DENIED                        0x08
+
+#define CAPI_CS_LC_NO_CELL_AVAIL                           0x11
+#define CAPI_CS_LC_MSG_NOT_COMP_MM_STATE                   0x12
+#define CAPI_CS_LC_ABORT_BY_USER                           0x13
+#define CAPI_CS_LC_ASN1_DCD_ERROR                          0x14
+#define CAPI_CS_LC_GSM_SYNTAX_ERR                          0x15
+#define CAPI_CS_LC_SET_PLMN_MODE_REJ                       0x16
+#define CAPI_CS_LC_SIM_AUTH_FAILURE                        0x17
+#define CAPI_CS_LC_LOCAL_REJECTION                         0x20
+#define CAPI_CS_LC_PLMN_NOT_ALLOWED                        0x21
+#define CAPI_CS_LC_EMERG_CALL_NOT_POSSIBLE                 0x22
+#define CAPI_CS_LC_AUTHENTICATION_REJECTED                 0x23
+#define CAPI_CS_LC_NETWORK_REJECTION                       0x24
+#define CAPI_CS_LC_LA_NOT_ALLOWED                          0x25
+#define CAPI_CS_LC_LOCAL_TIMEOUT                           0x26
+#define CAPI_CS_LC_SERV_CONGESTION                         0x27
+#define CAPI_CS_LC_LOCAL_DATA_REJECTION                    0x28
+#define CAPI_CS_LC_REFRESH_REJECT                          0x29
+#define CAPI_CS_LC_NETWORK_FAILURE                         0x30
+#define CAPI_CS_LC_MS_DETACHED_FOR_CS                      0x31
+#define CAPI_CS_LC_WAITING_CALL_REJECTED                   0x32
+#define CAPI_CS_LC_WAITING_CALL_ACCEPTED                   0x33
+#define CAPI_CS_LC_NETWORK_TIMEOUT                         0x34
+#define CAPI_LC_BACKGROUND_PLMN_SELECT_FAIL                0x35
+#define CAPI_CS_LC_CONFLICT_WITH_OTHERCARD                 0x36
+
+//......................................................................................
+//
+//                           NAS_SPV interface
+// Macro defines for "cause" element when "causeSelect" is CAPI_LOCAL_CAUSE (PS Domain)
+//
+//......................................................................................
+#define CAPI_PS_LC_REL_LOW_LAYER_FAILURE                   0x32
+#define CAPI_PS_LC_REL_PLMN_NOT_ALLO                       0x33
+#define CAPI_PS_LC_REL_PERFORMING_REG                      0x34
+#define CAPI_PS_LC_REL_AUTH_REJ                            0x35 //(authentication reject and failure)
+#define CAPI_PS_LC_REL_IMSI_DET                            0x36
+#define CAPI_PS_LC_REL_SERV_REJ                            0x37
+#define CAPI_PS_LC_REL_NO_NET_RESP                         0x38 //T3317 timeout
+#define CAPI_PS_LC_REL_EST_NOT_ALLO                        0x39
+#define CAPI_PS_LC_REL_LA_NOT_ALLO                         0x3a
+#define CAPI_PS_LC_REL_NORMAL_RELEASE                      0x3b
+#define CAPI_PS_LC_REL_NET_ERROR                           0x3c
+#define CAPI_PS_LC_REL_TSM_LOCAL_ERROR                     0x3d //T3380 or T3381 timeout five times
+#define CAPI_PS_LC_DELETE_SM                               0x3e //used in SM_SSM interface only
+#define CAPI_PS_RECEIVE_GMM_PDP_STATUS_IND                 0x3f
+//remove macro STACK_SUPPORT_LTE, 20121123
+#define CAPI_PS_RECEIVE_EMM_EPS_STATUS_IND                 0x40   //JH,2009-11-24
+#define CAPI_PS_LC_REL_EST_NOT_ALLO_FOR_T3346              0x41
+#ifdef VOLTE_SUPPORT
+#define CAPI_PS_LC_REL_AUTH_FAIL_DEL_NON_EMC_BS            0x42
+#define CAPI_PS_LC_REL_EMM_RLS_LOCAL_DETACH                0x43
+#define CAPI_PS_LC_CELL_CHANGE_IN_RIN                      0x44
+#define CAPI_PS_LC_RESTART_EMC_ATTACH                      0x45
+#endif
+
+#define CAPI_PS_LC_REL_IMSI_PAGING                         0x50
+#define CAPI_PS_LC_REL_NORMAL_PS_RELEASE                   0x51
+#define CAPI_PS_LC_MS_DETACHED_FOR_PS                      0x52
+#define CAPI_PS_LC_NET_DETACHED_FOR_PS                     0x53
+#define CAPI_PS_LC_EPS_BEARER_NOT_EXIT                     0x54 // liuyi 20100304 24301 6.4.4.3
+#define CAPI_PS_LC_ABORT_BY_USER                           0x55 // liuyi 20100318 add for User Abort
+
+#define CAPI_PS_LC_REPORT_MMC_STATE                        0x56
+#define CAPI_PS_LC_PDP_TRIG_PS_ATTACH                      0x57
+#define CAPI_PS_LC_LOCAL_REL                               0x58 //used in SM_SSM interface only
+
+#define CAPI_PS_LC_SIM_AUTH_FAILURE                        0x59
+#define CAPI_PS_LC_REL_ESM_LOCAL_ERROR                     0x5A //liuyi 20091125
+
+#define CAPI_PS_LC_T3492_EXPIRY_FOR_5_TIMES                0x5B // liuyi 20100329 
+#define CAPI_PS_LC_EPS_LOCAL_DEACTIVE                      0x5C // liuyi 20100413
+#define CAPI_PS_LC_TRANSMISSION_ERROR                      0x5D // liuyi 20100813
+#define CAPI_PS_LC_EPS_REQUEST_DETACH                      0x5E // liuyi 20100831
+#define CAPI_PS_LC_EPS_LOCAL_DETACH                        0x5F
+#define CAPI_PS_LC_TBF_RELEASE_IND                         0x71//avoid repeat with TSM CAUSE
+#define CAPI_PS_LC_DEACT_NON_EM_PDP_BEARER                 0x72
+#define CAPI_PS_LC_EMCBS_COLLISION                         0x73
+#define CAPI_PS_LC_CONFLICT_WITH_OTHERCARD                 0x74
+#define CAPI_PS_LC_GSM_PLMN_SEARCHING                      0x61
+
+#define DBA_RESERVED_PDCP_HEADER_LEN 2
+#define DBA_RESERVED_UL_EXTRA_LEN   8
+#define DBA_IP_HEAD_LEN   60
+#define DBA_RESERVED_EXT_LEN        16
+
+#define DBA_RESERVED_UL_OFFSET     (DBA_RESERVED_UL_EXTRA_LEN+DBA_RESERVED_EXT_LEN)
+#define DBA_RESERVED_DL_OFFSET     (DBA_IP_HEAD_LEN+DBA_RESERVED_EXT_LEN)
+
+#define DBA_RESERVED_UL_LEN     (DBA_RESERVED_UL_OFFSET + DBA_IP_HEAD_LEN + DBA_RESERVED_PDCP_HEADER_LEN)
+#define DBA_RESERVED_DL_LEN     DBA_RESERVED_DL_OFFSET
+
+#define ROHC_RESERVED_UL_LEN     18
+#define ROHC_RESERVED_DL_LEN     128
+
+#define PS_UL_BUFF_RESERVED_LEN  (ROHC_RESERVED_UL_LEN + DBA_RESERVED_PDCP_HEADER_LEN)// ROHC_RESERVED_UL_LEN + pdcp header
+
+#define PS_DL_BUFF_RESERVED_LEN  ROHC_RESERVED_DL_LEN
+/* ***********  l1/l1c/EMAC/ERRC interface macro define.************ */
+#define  EAS_WB_MAX_LTE_FREQ_NUM           (MAX_LTE_FREQ_NUM+1)
+#define  EAS_WB_MAX_LTE_CELL_NUM           16
+#define  EAS_WB_MAX_DCH_BLACKCELL_NUM      32
+
+#define  EAS_WB_MAX_PCH_INFO_LENGTH        256
+#define  EAS_WB_MAX_SI_DATA_LENGTH         512
+
+#define  EAS_WB_MAX_SI_NUM                 32
+#define  EAS_WB_MAX_BLACKCELL_NUM          16
+#define  EAS_WB_MAX_N1_PUCCH_NUM           4
+#define  EAS_WB_MAX_IDL_BLACKCELL_NUM      16
+#define  EAS_WB_MAX_FREQBAND               (24)
+#define  EAS_WB_MAX_CELL_SEARCH_NUM        3
+#define  EAS_WB_MAX_FREQ_MEAS_NUM          (18)   //EAS_WB_MAX_LTE_FREQ_NUM
+#define  EAS_WB_MAX_CSI_RS_ZP_NUM          4
+#define  EAS_WB_MAX_NEIGH_CELLS_CRS_INFO_NUM  8
+
+#define MAX_TAC_NUM 2
+
+#ifdef __IRAT__
+#define MAX_REDIRECTION_GSM_CELL_NUM 32
+#endif
+
+#define EAS_WB_MAX_MBSFN_NUM               8
+#define  EAS_MAX_GGE_CELL_NUM           32
+//#define  EAS_MAX_GSM_CELL_NUM           32
+
+enum
+{
+    LTE_subframePatternFDD_r10,
+    LTE_subframeConfig0_r10,
+    LTE_subframeConfig1_5_r10,
+    LTE_subframeConfig6_r10,
+};
+
+#define MAX_UL_GRANT_RES_NUM  2
+#define MAX_UL_ACK_NACK_NUM   2
+#define MAX_RECV_RAR_BUFF     1288
+
+
+//cmac_acc_status_ind:  access status
+enum
+{
+    WB_EMAC_ACC_FAILURE,
+    WB_EMAC_ACC_SUCCESS
+};
+
+enum
+{
+    CE_PDSCH_PUSCH_EN_CFG_R14,
+
+    CE_UE_TX_ANT_SEL_CFG_R14,
+
+    PUSCH_EN_CFG_R14,
+
+    PDSCH_CFG_DED_R1430,
+
+    PUSCH_CFG_DED_R1430
+};
+
+enum
+{
+    AUTO_TEST_RAT__LTE,
+    AUTO_TEST_RAT__GGE,
+    AUTO_TEST_RAT__INVALID = 65535
+};
+
+enum
+{
+    AUTO_TEST_ACTION__ACQUIRE_MEAS_RESULT,
+    AUTO_TEST_ACTION__TRIGGER_INTRA_MEAS,
+    AUTO_TEST_ACTION__TRIGGER_INTER_MEAS,
+    AUTO_TEST_ACTION__TRIGGER_GGE_MEAS,
+    AUTO_TEST_ACTION__INITIAL_RESEL_SERVING_CELL_NOT_SUITABLE,
+    AUTO_TEST_ACTION__INITIAL_BETTER_RESEL,
+    AUTO_TEST_ACTION__INITIAL_LOSSCOVERAGE,
+    AUTO_TEST_ACTION__SET_MEAS_REPORT_TARGET_CELL,
+    AUTO_TEST_ACTION__CLR_MEAS_REPORT_TARGET_CELL,
+    AUTO_TEST_ACTION__TRIGGER_REESTABLISH,
+
+    AUTO_TEST_ACTION__MAX,
+    AUTO_TEST_ACTION__INVALID = 65535
+};
+
+enum
+{
+    AUTO_TEST_ACTION_STATUS__PRE_PROCESSING,  //预备处理中
+    AUTO_TEST_ACTION_STATUS__PROCESSING,      //正在处理过程中
+    AUTO_TEST_ACTION_STATUS__ERROR,           //异常，不能正常处理(比如设置服务小区不可用，而当前不处于小区驻留状态)
+    AUTO_TEST_ACTION_STATUS__FAIL,            //执行失败
+    AUTO_TEST_ACTION_STATUS__SUCCESS,         //成功完成指定任务
+    AUTO_TEST_ACTION_STATUS__MAX,
+    AUTO_TEST_ACTION_STATUS__INVALID = 65535
+};
+
+
+//msgid for dingli dt
+enum
+{
+    //MSGID for L1
+    OP_UE_PHY_MEAS_RPT = 0xe000,
+    OP_UE_PHY_TX_POWER_RPT,
+    OP_UE_PDSCH_RES_ALLOC_STATS_RPT,
+    OP_UE_PUSCH_RES_ALLOC_STATS_RPT,
+    OP_UE_PRACH_RES_ALLOC_STATS_RPT,
+    OP_UE_PUCCH_RES_ALLOC_STATS_RPT,
+    OP_UE_MPDCCH_RES_ALLOC_STATS_RPT,
+    OP_UE_CQI_RPT,
+    //MSGID for L2
+    OP_UE_L2_STATS_PERIOD_RPT = 0xe010,
+    OP_UE_L2_HO_INFO_RPT = 0xe015,
+    //MSGID for L3
+    OP_UE_SERVCELL_INFO_RPT =0xe020,
+    OP_UE_ERRC_MSG_RPT =0xe021,
+    OP_UE_NAS_MSG_RPT =0xe022,
+    OP_UE_GSM_MSG_RPT =0xe023,
+    //MSG for IMS
+    OP_UE_IMS_SIP_MSG_RPT = 0xe030,
+    OP_UE_IMS_RTP_PACKET_LOSS = 0xe031,
+    OP_UE_IMS_RTP_SN_AND_PAYLOAD = 0xe032
+};
+
+
+//channeltype for dingli dt
+enum
+{
+    //36.331 6.2.1
+    BCCH_BCH_DT,
+    BCCH_DL_SCH_DT,
+    BCCH_DL_SCH_BR_DT,
+    MCCH_DT,
+    PCCH_DT,
+    DL_CCCH_DT,
+    DL_DCCH_DT,
+    UL_CCCH_DT,
+    UL_DCCH_DT,
+    SC_MCCH_DT
+};
+
+#define UE_ERRC_MSG_RPT__MAX_LENTH  (1700)
+
+#define NORMAL_DATA 0
+#define VOLTE_DATA 1
+#define TC_DATA 2
+
+#define EMAC_STATISTICS_RETX_TYPE_NUM 9
+#define L2_WB_MAX_DRB_NUM 8
+
+enum
+{
+    NETINFO_STA_GSMTOGSM_RESEL,
+    NETINFO_STA_GSMTOLTE_RESEL,
+    NETINFO_STA_LTETOLTE_RESEL,
+    NETINFO_STA_LTETOGSM_RESEL,
+    NETINFO_STA_GSMTOGSM_HO,
+    NETINFO_STA_GSMTOGSM_CCO,
+    NETINFO_STA_GSMTOLTE_CCO,
+    NETINFO_STA_LTETOGSM_CCO,
+    NETINFO_STA_GSMTOLTE_HO,
+    NETINFO_STA_LTETOLTE_HO,
+    NETINFO_STA_LTETOGSM_HO,
+    NETINFO_STA_SRVCC
+};
+
+enum
+{
+    NETINFO_STA_DROP_2G,
+    NETINFO_STA_DROP_4G
+};
+
+enum
+{
+    NETINFO_STA_CAMP_2G,
+    NETINFO_STA_CAMP_4G,
+    NETINFO_STA_CAMP_VOLTE,
+    NETINFO_STA_CAMP_UNKNOW
+};
+
+#define INVALID_BAND   (65535)
+
+#define MAX_NETINFO_LTE_NCELL_NUM  (9)
+#define MAX_NETINFO_GSM_NCELL_NUM  (5)
+#define MAX_NETINFO_LTE_FREQ_NUM   (9)
+
+enum
+{
+    NETINFO_STATE__SEARCH,
+    NETINFO_STATE__LIMSERV,
+    NETINFO_STATE__NONCONN,
+    NETINFO_STATE__CONN,
+};
+
+enum
+{
+    NETINFO_CELL_TYPE__INTRA,
+    NETINFO_CELL_TYPE__INTER,
+};
+
+enum
+{
+    ALGO_OPT_FUN_ID__0,  /*自适应静态场景判断*/
+    ALGO_OPT_FUN_ID__1,  /*ID检测严格化*/
+    ALGO_OPT_FUN_ID__2,  /*异频测量AGC使用*/
+    ALGO_OPT_FUN_ID__3,  /*小区FA严格化*/
+    ALGO_OPT_FUN_ID__4,  /*SINR Based邻区任务裁剪*/
+    ALGO_OPT_FUN_ID__5,  /*取消重选/切换/快速重建*/
+    ALGO_OPT_FUN_ID__6,  /*FDD异频测量优先:SOS触发前，优先进行FDD频点测量，FDD频点之间按照带宽大小依次测量*/
+    ALGO_OPT_FUN_ID__7,  /*SOS freq-meas debug*/
+    ALGO_OPT_FUN_ID__8,  /*连接模式下信号质量加权测量*/
+    ALGO_OPT_FUN_ID__9,  /*优选驻网策略*/
+    ALGO_OPT_FUN_ID__10, /*单卡1ms唤醒压缩*/
+    ALGO_OPT_FUN_ID__11, /*IDL下SINR>-3db档位邻区任务裁剪*/
+    ALGO_OPT_FUN_ID__12, /*单卡1ms唤醒延迟*/
+    ALGO_OPT_FUN_ID__13, /*freq meas场景优化驻网机制(包含初始默认FDD驻网，重建，SOS)*/
+    ALGO_OPT_FUN_ID__14, /*触发SOS后，各频点测量调度顺序修改*/
+    ALGO_OPT_FUN_ID__15, /*重建等触发cellSync流程时(有测量关系小区驻留)，驻留小区的顺序*/
+    ALGO_OPT_FUN_ID__16, /*FDD小区信号质量加权机制修改*/
+    ALGO_OPT_FUN_ID__MAX
+};
+
+
+#define PS_DATA_TRACE_INFO_LEN      24 /* In bytes*/
+#define PS_DATA_TRACE_INTERVAL      8  /* Output in 8 times */
+#define PS_DATA_TRACE_MAX_BUFF_1    32 /* 4 buffers, 4*8 = 32 */
+
+#ifndef F8_NEW_FRAMEWORK
+#define  F8_LTE_F8      0x01
+#define  F8_LTE_F9      0x02
+#endif
+
+typedef enum E_EngEvtRpt_Tag
+{
+    ENG_EVENT_INIT_ACC_RPT,
+    ENG_EVENT_MAC_ACC_FAIL_RPT,
+    ENG_EVENT_T310_EXPIRE_RPT,
+    ENG_EVENT_RLC_MAX_NUM_RETRAN_RPT,
+    ENG_EVENT_RRC_STATUS_RPT,
+    
+    ENG_EVENT_RRC_EST_REQ_RPT,
+    ENG_EVENT_RRC_EST_FAIL_RPT,
+    
+    ENG_EVENT_INTRA_LTE_HO_REQ_RPT,
+    ENG_EVENT_INTRA_LTE_HO_FAIL_RPT,
+    ENG_EVENT_INTRA_LTE_HO_SUCC_RPT,
+    
+    ENG_EVENT_IRAT_HO_REQ_RPT,
+    ENG_EVENT_IRAT_HO_FAIL_RPT,
+    ENG_EVENT_IRAT_HO_SUCC_RPT,
+    ENG_EVENT_IRAT_CCO_REQ_RPT,
+    ENG_EVENT_IRAT_CCO_FAIL_RPT,
+    ENG_EVENT_IRAT_CCO_SUCC_RPT,
+    ENG_EVENT_IRAT_REDIREC_REQ_RPT,
+    ENG_EVENT_IRAT_REDIREC_FAIL_RPT,
+    ENG_EVENT_IRAT_REDIREC_SUCC_RPT
+}E_EngEvtRpt;
+
+typedef enum E_EventRrcEstFailCause_Tag
+{
+    ENG_EVENT_RRC_EST_FAIL_ACC_BAR,
+    ENG_EVENT_RRC_EST_FAIL_T300_EXPIRE,
+    ENG_EVENT_RRC_EST_FAIL_ABORT,
+    ENG_EVENT_RRC_EST_FAIL_REJECT
+}E_EventRrcEstFailCause;
+
+typedef enum E_EventRptModeType_Tag
+{
+    ENG_EVENT_RPT_MODE_TYPE_LTE,
+    ENG_EVENT_RPT_MODE_TYPE_GSM
+}E_EventRptModeType;
+
+typedef enum E_EventRptRrcStatus_Tag
+{
+    ENG_EVENT_RPT_RRC_RELEASED,
+    ENG_EVENT_RPT_RRC_CONNECTED
+}E_EventRptRrcStatus;
+
+typedef enum E_El2StatisRptType_Tag
+{
+    ENG_STATIS_RPT_TYPE_FIXED_PERIOD,
+    ENG_STATIS_RPT_TYPE_FIXED_KB
+}E_El2StatisRptType;
+#endif
+

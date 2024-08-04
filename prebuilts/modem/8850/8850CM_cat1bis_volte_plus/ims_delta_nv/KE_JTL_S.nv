@@ -1,0 +1,27 @@
+
+///////////////////////////////////////////// IMS /////////////////////////////////////////////
+
+// sip_regRetryMaxTime: Re-register max time interval if register failed, in seconds
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\sip_regRetryMaxTime=3600
+
+// MT call no answer timer after send 180 (Sec)
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingingTimer=90
+
+// MO call no answer timer after receive 180 (Sec)
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingbackTimer=90
+
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\USSI_Enabled=1
+
+// audioRtcpInterval: 0:Random RTCP interval; >0:Fixed RTCP interval(in seconds)
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\audioRtcpInterval=2
+
+
+///////////////////////////////////////////// GAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// LAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// WAS /////////////////////////////////////////////
+

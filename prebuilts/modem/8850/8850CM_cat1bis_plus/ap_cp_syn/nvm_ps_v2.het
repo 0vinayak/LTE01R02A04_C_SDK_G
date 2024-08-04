@@ -1,0 +1,2375 @@
+/*****************************************************************************/
+/*                                                                           */
+/*Copyright (c) 2016.06.15                                                   */
+/*                                                                           */
+/*****************************************************************************/
+/*****************************************************************************/
+/* FILE NAME   nvm_iot.het                                                   */
+/*                                                                           */
+/* COMPONENT   PUB                                                           */
+/*                                                                           */
+/* DESCRIPTION                                                               */
+/*                                                                           */
+/* This file define the data structure that used by  NVM parameters.         */
+/*                                                                           */
+/* FUNCTIONS                                                                 */
+/*                                                                           */
+/* NONE                                                                      */
+/*                                                                           */
+/* HISTORY                                                                   */
+/*                                                                           */
+/* NAME        DATE        VERSION  COMMENT                                  */
+/* limingyang  2016.07.01  v0.0.1   creation                                 */
+/*****************************************************************************/
+#ifndef NVM_PS_V2_HET
+#define NVM_PS_V2_HET
+
+/*************************************************************************/
+/*                                                                       */
+/*                       PS NVM parameters                               */
+/*                                                                       */
+/*************************************************************************/
+/*************************************************************************/
+/*               Dynamic PS NVM parameters                               */
+/*                                                                       */
+/*************************************************************************/
+
+/* nvmVersion  0x89100102 */
+
+typedef struct T_EquvPlmnList_Tag
+{
+    u8   rplmn[MAX_PLMN_LEN];
+    u8   equvPlmnList[MAX_EQU_PLMNS_NUM* MAX_PLMN_LEN + 1];
+} T_EquvPlmnList;
+
+typedef struct  T_ImsiTag
+{
+    u8      length;  //init as 0
+    u8      imsiCon[MAX_IMSI_LEN-1]; //All init as 0xFF
+    u8      fillByte;  // default value is "0xFF".
+    u16     reserved;//20100612
+} T_Imsi;
+
+#ifdef CSG_SUPPORT
+typedef struct T_MMC_PreCsgCellParam_Tag
+{
+    u8 plmn[MAX_PLMN_LEN];
+    u32 csgId;
+}T_PreCsgCellParam;
+
+typedef struct T_MMC_HnbName_Tag
+{
+    u8 length;
+    u8 hnbName[MAX_HNBNAME_LEN];
+}T_HnbName;
+
+typedef struct T_simCsgInfo_Tag
+{
+    u8      csgTypeInd;
+    u8      hnbNameInd;
+    u8      hnbNameReady;
+    u8      hnbNameLength;
+    u8      timerId;
+    u8      reserved[3];
+    u32     csgId;
+    u8      hnbName[MAX_HNBNAME_LEN];
+}T_simCsgInfo;
+
+typedef struct T_AcsgListNode_Tag
+{
+    u8                          plmn[MAX_PLMN_LEN];
+    u8                          csgInfoNum;
+    struct T_AcsgListNode_Tag   *pNextCsgNode;
+    T_simCsgInfo                csgInfo[MAX_CSG_INFO_LEN];
+}T_AcsgListNode;
+
+typedef struct T_OcsgListNode_Tag
+{
+    u8                          plmn[MAX_PLMN_LEN];
+    u8                          csgDisplayInd;
+    u8                          csgInfoNum;
+    struct T_OcsgListNode_Tag   *pNextCsgNode;
+    T_simCsgInfo                csgInfo[MAX_CSG_INFO_LEN];
+}T_OcsgListNode;
+
+typedef struct T_Whitelist_Tag
+{
+    u8              plmn[MAX_PLMN_LEN];
+    u8              reserved;
+    u32             csgId;
+}T_csgWhitelist;
+
+typedef struct T_MMC_OCSGL_Timer_Tag
+{
+    u8  state;  //is stated or not
+    u16  len;    //if started,set as 3600s
+}T_OCSGL_Timer;
+
+typedef struct
+{
+    u8 v_csgSupportFlag;
+    u8 v_mmc_csgSelMode;
+    u8 v_mmc_csgPlmnSearchFlag;
+    u8 v_csgManualStatus;
+
+  /*Read from sim*/
+    u8 v_mmc_csgDisplayCtrBit;
+    u8 v_csgWhitelistNum;
+  
+  /*CSG List length*/
+    u8 v_mmc_aCsgListLen;
+    u8 v_mmc_oCsgListLen;
+  
+  /*if the file's structure is linear*/
+    u8 v_mmc_recordIndexOfAcsgL;
+    u8 v_mmc_recordIndexOfOcsgL;
+    
+    u8 v_mmc_recordNumOfAcsgL;
+    u8 v_mmc_recordNumOfOcsgL;
+  
+  /*used for control OCSGL Timer*/
+    u8 v_periodOcsglTimer;
+
+    /*the number of invalid csg*/
+    u8 v_mmc_invalidCsgNum;
+
+    u8 v_manualCsgReportFlag;
+    u8 v_manualCsgResult;
+
+    /*used to control whether report hnbname or not*/
+    u8 v_regResultReportStatus;
+
+    /*record hnbname exist state*/
+    u8 v_hnbNameExistState;
+
+    /*used to indicate whether need update hnbName or not */
+    u8 v_hnbNameUpdateStatus;
+
+    u8 v_csgManualSelRplmnFlag;
+    u8 a_mmc_manualCsgSelectedPlmn[MAX_PLMN_LEN];
+    u32 v_manualSelectedCsgId;
+
+    T_AcsgListNode *p_mmc_aCsgList;
+    T_OcsgListNode *p_mmc_oCsgList;
+
+    T_HnbName s_hnbName;
+    T_OCSGL_Timer a_ocsglMmcTimer[MAX_CSGLIST_LEN];
+    T_csgWhitelist a_csg_whitelist[MAX_CSG_WHITELIST_LEN];
+}T_CSG_Block_nas;
+
+typedef struct T_MMC_AllowedCsgList_Tag
+{
+    u8 length;
+    u8 data[MAX_ALLOWED_CSG_LIST_LEN];
+}T_AllowedCsgList;
+
+typedef struct T_MMC_OperatorCsgList_Tag
+{
+    u8 length;
+    u8 data[MAX_OPERATOR_CSG_LIST_LEN];
+}T_OperatorCsgList;
+#endif
+
+
+typedef struct T_EpsLoci_Tag
+{
+    u8         guti[12]; // ??0xff, (0x00~0xff)
+    u8         regTai[5]; // ??0xff, (0x00~0xff)
+    u8         updateStatus; //0xff,(0x00~0xff)
+    u8         rplmnRat;
+    u8         reserved[33];
+} T_EpsLoci;
+
+typedef struct T_EpsNSC_Tag
+{
+    u8         length; // 0x00, (0x00~0xff)
+    u8         epsNsc[64]; // ??0xff, (0x00~0xff)
+    u8         reserved[67];
+} T_EpsNSC;
+
+typedef struct T_DefaultPdnCfg_tag
+{
+    u8 pdnType;
+    u8 nSlpi;
+    u8 apn[4][MAX_APN_LEN+1];//字符串格式保存
+
+    u8 reserve[2];
+} T_DefaultPdnCfg;
+
+typedef struct T_HccpCfg_tag
+{
+    u8 enable;
+    u8 profile; //bitmap: Spare|IP2|ESP2|UDP2|TCP|IP|ESP|UDP
+    u16 maxCid; //1~16383
+    u8  reserve[16];
+} T_HccpCfg;
+
+typedef struct H_PsDataOffCfg_Tag
+{
+    u8 enablePsDataOff;
+    u8 reserved;
+    u16 exempted_service_type;
+} H_PsDataOffCfg;
+
+typedef struct
+{
+    u8    plmn[MAX_PLMN_LEN];
+    u8    rat;
+}T_MMC_SwitchedBlackPlmn;
+
+//for Bugzilla-Bug 1980.
+typedef struct _T_EmmT3402Info
+{
+    u32     t3402Value;
+    u8      rejPlmn[3];
+    u8      reserved;
+} T_EmmT3402Info;
+
+typedef struct
+{
+    u32                 t3396RemainLen;
+    u8                  apnLen;
+    u8                  StartPlmn[3];
+    u8                  t3396Apn[MAX_BACKUP_APN_LEN];
+    u8                  BackOffProc;
+    u8                  lowPrioInd;
+    u8                  reserved[2];
+} T_T3396_BakupInfo;
+
+typedef struct T_NasTimerBackup_Tag
+{
+    u32                 t3245RemainLen;
+    u32                 t3346RemainLen;
+    u8                  t3346StartPlmn[3];
+    u8                  t3346ExceptionData;
+    u8                  t3346LowPriority;
+    u8                  t3396bakupNum;
+    u8                  reserved[2];
+    T_T3396_BakupInfo   t3396BakupInfo[MAX_T3396_BACKUP_NUM];
+    T_EmmT3402Info      emmT3402Info;
+
+    u8                  reserved1[128];
+} T_NasTimerBackup;
+
+typedef struct T_Dynamic_nas_Tag
+{
+    T_EquvPlmnList  mmcequvPlmn;
+    u32             mmcprevUsedLteFreq[MAX_PREV_USED_LTE_FREQ_LEN];
+    u8              ltePrevUsedBand[8]; /* For Bugzilla-Bug 1125 Save Previous used band */
+    T_EpsLoci        epsLoci;
+    T_EpsNSC         epsNsc;
+    T_NasTimerBackup nasTimer;
+    u8               GsmBaNb;
+    u8               GsmBaBandList;
+    u16              GsmBa[MAX_PREV_USED_GSM_BA_NUM];/*1026153*/
+#ifdef CSG_SUPPORT
+    T_csgWhitelist a_csg_whitelist[MAX_CSG_WHITELIST_LEN];
+    T_AllowedCsgList allowedCsgList;
+    T_OperatorCsgList operatorCsgList;
+#endif
+} T_Dynamic_nas;
+
+typedef struct T_poc_nas_Tag
+{
+    u8 workSimIndex;
+    u8 prevWorkMode;
+    u8 attachedFlag;
+}T_poc_nas;
+
+typedef struct T_Lcm_GNSS_WiFi_nas_Tag
+{
+    u8 currProcess;
+    u8 GnssCurrState;
+    u8 HotGNSSPrior;
+    u8 ColdGNSSPrior;
+    u8 WiFiPrior;
+    u8 LTESignalPrior;
+    u8 LTEDataPrior;
+}T_Lcm_GNSS_WiFi_nas;
+
+typedef struct
+{
+    u8    blackWhiteType;
+    u8    blackWhitePlmnNum;
+    u8    blackWhiteList[MAX_BLACK_WHITE_LIST_PLMN_NUM * MAX_PLMN_LEN];
+}T_MMC_BlackWhiteList;
+
+typedef struct
+{
+    u8 nMode;
+    u8 ltePlmnNum;
+    u8 ltePlmnList[MAX_BLACK_WHITE_LIST_PLMN_NUM * MAX_PLMN_LEN ];
+    u8 gsmPlmnNum;
+    u8 gsmPlmnList[MAX_BLACK_WHITE_LIST_PLMN_NUM * MAX_PLMN_LEN];
+}T_MMC_StoreBlackWhiteList;
+
+typedef struct
+{
+    u8 useSetCount;
+    u8 setMaxAttFailNumForAbnormal;
+    u8 causeList[MAX_SAVE_ATT_FAIL_CAUSE];
+    u8 causeCount;
+}T_MMC_AttachFailInfo;
+
+typedef struct
+{
+    u8 plmnNum;
+    u8 plmnList[MAX_PREFER_PLMN_NUM * MAX_PLMN_LEN];
+}T_MMC_PreferPlmnList;
+
+typedef struct T_StoredArfcnInfo_Tag
+{
+    u32  arfcn;
+    u8   plmnNum;
+    /*bit0:imsEmergencySupportFlag*/
+    u8   cellCharacterBitMap;
+    u8   plmn[MAX_STORED_PLMN_NUM * MAX_PLMN_LEN];
+} T_StoredArfcnInfo;
+
+typedef struct T_EasStoredInfo_Tag
+{
+    u8  arfcnNum;
+    u8  reserved[3];
+    T_StoredArfcnInfo arfcnInfo[MAX_STORED_EARFCN_NUM];
+} T_EasStoredInfo;
+
+#ifdef CSG_SUPPORT
+typedef struct T_ERRC_CsgServFreqInfo_Tag
+{
+    u8 bandwidth;
+    u8 neighCellConfig;
+    u8 plmnNum;
+    u8 qOffsetFreq;
+    u8 cellResPriority;
+    u8 plmn[MAX_PLMN_LEN * POSSIBLE_MAX_PLMN_NUM]; 
+    s16 qRxlevMin;
+    s16 qQualmin;
+    s16 qRxlevMinCe;
+    s16 qQualminCe;
+    s16 qRxlevMinCe1;
+    s16 qQualminCe1;
+    s16 pMax;
+    u16 tReselect;   // the used one changed by scaling
+    u16 tReselectionEurtaCe;
+    u16 presenceAntennaPort1;
+    u32 dlEarfcn;
+    u32 csgId;   
+}T_ERRC_CsgServFreqInfo;
+
+typedef struct T_ERRC_StoredCsgFreqInfo_Tag
+{
+    u8 HisCsgCellFreqNum;  // max 4
+    T_ERRC_CsgServFreqInfo CsgServFreqInfo[MAX_STORED_CSG_FREQ_NUM];
+
+} T_ERRC_StoredCsgFreqInfo;
+#endif
+
+typedef struct T_RPM_APN_NODE_Tag
+{
+    u8 used;
+    u8 currentFx;
+    u8 currentExpiryCntPerHour;
+    u8 apnLen;
+    u8 apn[MAX_BACKUP_APN_LEN];
+    u8 fxCnter[4];
+    u8 cpdpx[4];
+}T_RPM_APN_NODE;
+
+typedef enum RPM_TIMER_ID_Tag
+{
+   RPM_N1_TIMER_ID, //EMM
+   RPM_T1_TIMER_ID,  
+   RPM_LR1_TIMER_ID,
+   RPM_LR2_TIMER_ID, 
+   RPM_F1_TIMER_ID,  //CMC
+   RPM_F2_TIMER_ID,
+   RPM_F3_TIMER_ID,
+   RPM_F4_TIMER_ID,
+   RPM_LR3_TIMER_ID,
+   RPM_MAX_TIMER_ID
+}RPM_TIMER_ID;
+
+typedef struct T_RPM_Timer_Tag
+{
+    u16  start;
+    u16  lenInMimute;//MAX u16 is 65535, less than one day, so need using minute
+    u32  startRtcTime; // in Second
+}T_RPM_Timer;
+
+#define RPM_MAX_APN_NUM  4
+typedef struct T_RpmContext_Tag
+{
+    u8 rpmCustomFlag;   //rpm function switch by customized PLMN table
+
+    //N1
+    u8 rpmCBR1;    //number of requests blocked within this hour
+    u8 n1Cnter;
+    //T1
+    u8 rpmCR1;
+    u8 lastAttResult;
+    u8 LastRat;
+    u8 reserved[2];
+    T_RPM_Timer rpmMmcTimer[RPM_F1_TIMER_ID];
+    T_RPM_Timer rpmCmcTimer[RPM_MAX_TIMER_ID - RPM_F1_TIMER_ID][RPM_MAX_APN_NUM];
+    //FX
+    T_RPM_APN_NODE ApnNode[RPM_MAX_APN_NUM];
+}T_RpmContext;
+
+typedef struct T_NVM_Dynamic_PS_Tag
+{
+    T_Imsi                imsi;
+    T_Dynamic_nas         lteNas;
+    T_RpmContext          rpmContext;
+    u8                    reserved[316];
+    u32                   randSand;
+    T_EasStoredInfo       easStoredInfo;
+#ifdef CSG_SUPPORT
+    T_ERRC_StoredCsgFreqInfo StoredCsgFreqInfo;
+#endif
+} T_NVM_Dynamic_PS;
+
+/*************************************************************************/
+/*               Static PS NVM parameters                                */
+/*                                                                       */
+/*************************************************************************/
+
+typedef struct T_SecurityCapability_Tag
+{
+    //bit0: EEA0; bit1: EEA1; bit2: EEA2; bit3: EEA3; other spare or reserved
+    u16   lteCipheringAlgorithmCap;   //default:0x0f
+
+    //bit0: EIA0; bit1: EIA1; bit2: EIA2; bit3: EIA3; other spare or reserved
+    u16   lteIntegrityProtectionAlgorithmCap; //default: 0x0f
+} T_SecurityCapability;
+
+typedef struct T_featureGroupIndicator_Tag
+{
+    /*
+    function:
+    - Intra-subframe frequency hopping for PUSCH scheduled by UL grant
+    - DCI format 3a (TPC commands for PUCCH and PUSCH with single bit power adjustments)
+    - Aperiodic CQI/PMI/RI reporting on PUSCH: Mode 2-0 - UE selected subband CQI without PMI
+    - Aperiodic CQI/PMI/RI reporting on PUSCH: Mode 2-2 - UE selected subband CQI with multiple PMI
+    note:
+    - set to 1 by category M1 UE that has implemented and successfully tested "Aperiodic CQI/PMI/RI reporting on PUSCH: Mode 2-0
+    - UE selected subband CQI without PM"
+    */
+    u32  Bit1:1;
+    /*
+    function:
+    - Simultaneous CQI and ACK/NACK on PUCCH, i.e. PUCCH format 2a and 2b
+    - Absolute TPC command for PUSCH
+    - Resource allocation type 1 for PDSCH
+    - Periodic CQI/PMI/RI reporting on PUCCH: Mode 2-0 - UE selected subband CQI without PMI
+    - Periodic CQI/PMI/RI reporting on PUCCH: Mode 2-1 - UE selected subband CQI with single PMI
+    note:
+    - If a category M1 UE does not support this feature group, this bit shall be set to 0.
+    */
+    u32  Bit2:1;
+    /*
+    function:
+    - 5bit RLC UM SN
+    - 7bit PDCP SN
+    note:
+    - can only be set to 1 if the UE has set bit number 7 to 1.
+    */
+    u32  Bit3:1;
+    /*
+    function:
+    - Short DRX cycle
+    note:
+    - can only be set to 1 if the UE has set bit number 5 to 1.
+    */
+    u32  Bit4:1;
+    /*
+    function:
+    - Long DRX cycle
+    - DRX command MAC control element
+    note:
+    */
+    u32  Bit5:1;
+    /*
+    function:
+    - Prioritised bit rate
+    note:
+    */
+    u32  Bit6:1;
+    /*
+    function:
+    - RLC UM
+    note:
+    - can only be set to 0 if the UE does neither support VoLTE nor MCPTT
+    */
+    u32  Bit7:1;
+    /*
+    function:
+    - EUTRA RRC_CONNECTED to UTRA FDD or UTRA TDD CELL_DCH PS handover, if the UE supports either only UTRAN FDD or only UTRAN TDD
+    - EUTRA RRC_CONNECTED to UTRA FDD CELL_DCH PS handover, if the UE supports both UTRAN FDD and UTRAN TDD
+    note:
+    - can only be set to 1 if the UE has set bit number 22 to 1
+    */
+    u32  Bit8:1;
+    /*
+    function:
+    - EUTRA RRC_CONNECTED to GERAN GSM_Dedicated handover
+    note:
+    - related to SR-VCC
+    - can only be set to 1 if the UE has set bit number 23 to 1
+    */
+    u32  Bit9:1;
+    /*
+    function:
+    - EUTRA RRC_CONNECTED to GERAN (Packet_) Idle by Cell Change Order
+    - EUTRA RRC_CONNECTED to GERAN (Packet_) Idle by Cell Change Order with NACC (Network Assisted Cell Change)
+    note:
+    */
+    u32  Bit10:1;
+    /*
+    function:
+    - EUTRA RRC_CONNECTED to CDMA2000 1xRTT CS Active handover
+    note:
+    - related to SR-VCC
+    - can only be set to 1 if the UE has sets bit number 24 to 1
+    */
+    u32  Bit11:1;
+    /*
+    function:
+    - EUTRA RRC_CONNECTED to CDMA2000 HRPD Active handover
+    note:
+    - can only be set to 1 if the UE has set bit number 26 to 1
+    */
+    u32  Bit12:1;
+    /*
+    function:
+    - Inter-frequency handover (within FDD or TDD)
+    note:
+    - can only be set to 1 if the UE has set bit number 25 to 1
+    */
+    u32  Bit13:1;
+    /*
+    function:
+    - Measurement reporting event: Event A4 - Neighbour > threshold
+    - Measurement reporting event: Event A5 - Serving < threshold1 & Neighbour > threshold2
+    note:
+    */
+    u32  Bit14:1;
+    /*
+    function:
+    - Measurement reporting event: Event B1 - Neighbour > threshold for UTRAN FDD or UTRAN TDD, if the UE supports either only UTRAN FDD or only UTRAN TDD and has set bit number 22 to 1
+    - Measurement reporting event: Event B1 - Neighbour > threshold for UTRAN FDD or UTRAN TDD, if the UE supports both UTRAN FDD and UTRAN TDD and has set bit number 22 or 39 to 1, respectively
+    - Measurement reporting event: Event B1 - Neighbour > threshold for GERAN, 1xRTT or HRPD, if the UE has set bit number 23, 24 or 26 to 1, respectively
+    note:
+    - can only be set to 1 if the UE has set at least one of the bit number 22, 23, 24, 26 or 39 to 1.
+    - even if the UE sets bits 41, it shall still set bit 15 to 1 if measurement reporting event B1 is tested for all RATs supported by UE
+    - If a category M1 UE does not support this feature group, this bit shall be set to 0.
+    */
+    u32  Bit15:1;
+    /*
+    function:
+    - Intra-frequency periodical measurement reporting where triggerType is set to periodical and purpose is set to reportStrongestCells
+    - Inter-frequency periodical measurement reporting where triggerType is set to periodical and purpose is set to reportStrongestCells, if the UE has set bit number 25 to 1
+    - Inter-RAT periodical measurement reporting where triggerType is set to periodical and purpose is set to reportStrongestCells for UTRAN FDD or UTRAN TDD, if the UE supports either only UTRAN FDD or only UTRAN TDD and has set bit number 22 to 1
+    - Inter-RAT periodical measurement reporting where triggerType is set to periodical and purpose is set to reportStrongestCells for UTRAN FDD or UTRAN TDD, if the UE supports both UTRAN FDD and UTRAN TDD and has set bit number 22 or 39 to 1, respectively
+    - Inter-RAT periodical measurement reporting where triggerType is set to periodical and purpose is set to reportStrongestCells for GERAN, 1xRTT or HRPD, if the UE has set bit number 23, 24 or 26 to 1, respectively.
+    NOTE: Event triggered periodical reporting (i.e., with triggerType set to event and with reportAmount > 1) is a mandatory functionality of event triggered reporting and therefore not the subject of this bit.
+    note:
+    - If a category M1 UE does not support this feature group, this bit shall be set to 0.
+    */
+    u32  Bit16:1;
+    /*
+    function:
+    Intra-frequency ANR features including:
+    - Intra-frequency periodical measurement reporting where triggerType is set to periodical and purpose is set to reportStrongestCells
+    - Intra-frequency periodical measurement reporting where triggerType is set to periodical and purpose is set to reportCGI
+    note:
+    - can only be set to 1 if the UE has set bit number 5 to 1.
+    - If a category M1 UE does not support this feature group, this bit shall be set to 0.
+    */
+    u32  Bit17:1;
+    /*
+    function:
+    Inter-frequency ANR features including:
+    - Inter-frequency periodical measurement reporting where triggerType is set to periodical and purpose is set to reportStrongestCells
+    - Inter-frequency periodical measurement reporting where triggerType is set to periodical and purpose is set to reportCGI
+    note:
+    - can only be set to 1 if the UE has set bit number 5 and bit number 25 to 1.
+    - If a category M1 UE does not support this feature group, this bit shall be set to 0.
+    */
+    u32  Bit18:1;
+    /*
+    function:
+    Inter-RAT ANR features including:
+    - Inter-RAT periodical measurement reporting where triggerType is set to periodical and purpose is set to reportStrongestCells for GERAN, if the UE has set bit number 23 to 1
+    - Inter-RAT periodical measurement reporting where triggerType is set to periodical and purpose is set to reportStrongestCellsForSON for UTRAN FDD or UTRAN TDD, if the UE supports either only UTRAN FDD or only UTRAN TDD and has set bit number 22 to 1
+    - Inter-RAT periodical measurement reporting where triggerType is set to periodical and purpose is set to reportStrongestCellsForSON for UTRAN FDD or UTRAN TDD, if the UE supports both UTRAN FDD and UTRAN TDD and has set bit number 22 or 39 to 1, respectively
+    - Inter-RAT periodical measurement reporting where triggerType is set to periodical and purpose is set to reportStrongestCellsForSON for 1xRTT or HRPD, if the UE has set bit number 24 or 26 to 1, respectively
+    - Inter-RAT periodical measurement reporting where triggerType is set to periodical and purpose is set to reportCGI for UTRAN FDD or UTRAN TDD, if the UE supports either only UTRAN FDD or only UTRANTDD and has set bit number 22 to 1
+    - Inter-RAT periodical measurement reporting where triggerType is set to periodical and purpose is set to reportCGI for UTRAN FDD or UTRAN TDD, if the UE supports both UTRAN FDD and UTRAN TDD and has set bit number 22 or 39 to 1, respectively
+    - Inter-RAT periodical measurement reporting where triggerType is set to periodical and purpose is set to reportCGI for GERAN, 1xRTT or HRPD, if the UE has set bit number 23, 24 or 26 to 1, respectively
+    note:
+    - can only be set to 1 if the UE has set bit number 5 to 1 and the UE has set at least one of the bit number 22, 23, 24 or 26 to 1.
+    - even if the UE sets bits 33 to 37, it shall still set bit 19 to 1 if inter-RAT ANR features are tested for all RATs for which inter-RAT measurement reporting is indicated as tested
+    */
+    u32  Bit19:1;
+    /*
+    function:
+    If bit number 7 is set to 0:
+    - SRB1 and SRB2 for DCCH + 8x AM DRB
+    If bit number 7 is set to 1:
+    - SRB1 and SRB2 for DCCH + 8x AM DRB
+    - SRB1 and SRB2 for DCCH + 5x AM DRB + 3x UM DRB
+    NOTE: UE which indicate support for a DRB combination also support all subsets of the DRB combination. Therefore, release of DRB(s) never results in an unsupported DRB combination.
+
+    note:
+    - Regardless of what bit number 7 and bit number 20 is set to, UE shall support at least SRB1 and SRB2 for DCCH + 4x AM DRB
+    - Regardless of what bit number 20 is set to, if bit number 7 is set to 1, UE shall support at least SRB1 and SRB2 for DCCH + 4x AM DRB + 1x UM DRB
+    */
+    u32  Bit20:1;
+    /*
+    function:
+    - Predefined intra- and inter-subframe frequency hopping for PUSCH with N_sb > 1
+    - Predefined inter-subframe frequency hopping for PUSCH with N_sb > 1
+    note:
+    - If a category M1 UE does not support this feature group, this bit shall be set to 0.
+    */
+    u32  Bit21:1;
+    /*
+    function:
+    - UTRAN FDD or UTRAN TDD measurements, reporting and measurement reporting event B2 in E-UTRA connected mode, if the UE supports either only UTRAN FDD or only UTRAN TDD
+    - UTRAN FDD measurements, reporting and measurement reporting event B2 in E-UTRA connected mode, if the UE supports both UTRAN FDD and UTRAN TDD
+    note:
+    */
+    u32  Bit22:1;
+    /*
+    function:
+    - GERAN measurements, reporting and measurement reporting event B2 in E-UTRA connected mode
+    note:
+    - If a category M1 UE does not support this feature group, this bit shall be set to 0.
+    */
+    u32  Bit23:1;
+    /*
+    function:
+    - 1xRTT measurements, reporting and measurement reporting event B2 in E-UTRA connected mode
+    note:
+    - If a category M1 UE does not support this feature group, this bit shall be set to 0.
+    */
+    u32  Bit24:1;
+    /*
+    function:
+    - Inter-frequency measurements and reporting in E-UTRA connected mode
+    NOTE: The UE setting this bit to 1 and indicating support for FDD and TDD frequency bands in the UE capability signalling implements and is tested for FDD measurements while the UE is in TDD, and for TDD measurements while the UE is in FDD.
+
+    note:
+    - If a category M1 UE does not support this feature group, this bit shall be set to 0.
+    */
+    u32  Bit25:1;
+    /*
+    function:
+    - HRPD measurements, reporting and measurement reporting event B2 in E-UTRA connected mode
+    note:
+    - If a category M1 UE does not support this feature group, this bit shall be set to 0.
+    */
+    u32  Bit26:1;
+    /*
+    function:
+    - EUTRA RRC_CONNECTED to UTRA FDD or UTRA TDD CELL_DCH CS handover, if the UE supports either only UTRAN FDD or only UTRAN TDD
+    - EUTRA RRC_CONNECTED to UTRA FDD CELL_DCH CS handover, if the UE supports both UTRAN FDD and UTRAN TDD
+    note:
+    - related to SR-VCC
+    - can only be set to 1 if the UE has set bit number 8 to 1 and supports SR-VCC from EUTRA defined in TS 24.008 [49]
+    - If a category M1 UE does not support this feature group, this bit shall be set to 0.
+    */
+    u32  Bit27:1;
+    /*
+    function:
+    - TTI bundling
+    note:
+    - If a category M1 UE does not support this feature group, this bit shall be set to 0.
+    */
+    u32  Bit28:1;
+    /*
+    function:
+    - Semi-Persistent Scheduling
+    note:
+    - If a category M1 UE does not support this feature group, this bit shall be set to 0.
+    */
+    u32  Bit29:1;
+    /*
+    function:
+    - Handover between FDD and TDD
+    note:
+    - If a category M1 UE does not support this feature group, this bit shall be set to 0.
+    */
+    u32  Bit30:1;
+    /*
+    function:
+    - Indicates whether the UE supports the mechanisms defined for cells broadcasting multi band information i.e. comprehending multiBandInfoList, disregarding in RRC_CONNECTED the related system information fields and understanding the EARFCN signalling for all bands, that overlap with the bands supported by the UE, and that are defined in the earliest version of TS 36.101 [42] that includes all UE supported bands.
+    note:
+    */
+    u32  Bit31:1;
+    u32  Bit32:1; //Undefined
+} T_featureGroupIndicator;
+
+typedef struct T_featureGroupIndRel9Add_Tag
+{
+    /*
+    function:
+    Inter-RAT ANR features for UTRAN FDD including:
+    - Inter-RAT periodical measurement reporting where triggerType is set to periodical and purpose is set to reportStrongestCellsForSON
+    - Inter-RAT periodical measurement reporting where triggerType is set to periodical and purpose is set to reportCGI
+    note:
+    - can only be set to 1 if the UE has set bit number 5 and bit number 22 to 1.
+    */
+    u32  Bit33:1;
+    /*
+    function:
+    Inter-RAT ANR features for GERAN including:
+    - Inter-RAT periodical measurement reporting where triggerType is set to periodical and purpose is set to reportStrongestCells
+    - Inter-RAT periodical measurement reporting where triggerType is set to periodical and purpose is set to reportCGI
+    note:
+    - can only be set to 1 if the UE has set bit number 5 and bit number 23 to 1.
+    */
+    u32  Bit34:1;
+    /*
+    function:
+    Inter-RAT ANR features for 1xRTT including:
+    - Inter-RAT periodical measurement reporting where triggerType is set to periodical and purpose is set to reportStrongestCellsForSON
+    - Inter-RAT periodical measurement reporting where triggerType is set to periodical and purpose is set to reportCGI
+    note:
+    - can only be set to 1 if the UE has set bit number 5 and bit number 24 to 1.
+    */
+    u32  Bit35:1;
+    /*
+    function:
+    Inter-RAT ANR features for HRPD including:
+    - Inter-RAT periodical measurement reporting where triggerType is set to periodical and purpose is set to reportStrongestCellsForSON
+    - Inter-RAT periodical measurement reporting where triggerType is set to periodical and purpose is set to reportCGI
+    note:
+    - can only be set to 1 if the UE has set bit number 5 and bit number 26 to 1.
+    */
+    u32  Bit36:1;
+    /*
+    function:
+    Inter-RAT ANR features for UTRAN TDD including:
+    - Inter-RAT periodical measurement reporting where triggerType is set to periodical and purpose is set to reportStrongestCellsForSON
+    - Inter-RAT periodical measurement reporting where triggerType is set to periodical and purpose is set to reportCGI
+    note:
+    - can only be set to 1 if the UE has set bit number 5 and at least one of the bit number 22 (for UEs supporting only UTRA TDD) or the bit number 39 to 1.
+    */
+    u32  Bit37:1;
+    /*
+    function:
+    - EUTRA RRC_CONNECTED to UTRA TDD CELL_DCH PS handover, if the UE supports both UTRAN FDD and UTRAN TDD
+    note:
+    - can only be set to 1 if the UE has set bit number 39 to 1
+    */
+    u32  Bit38:1;
+    /*
+    function:
+    - UTRAN TDD measurements, reporting and measurement reporting event B2 in E-UTRA connected mode, if the UE supports both UTRAN FDD and UTRAN TDD
+    note:
+    - If a category M1 UE does not support this feature group, this bit shall be set to 0.
+    */
+    u32  Bit39:1;
+    /*
+    function:
+    - EUTRA RRC_CONNECTED to UTRA TDD CELL_DCH CS handover, if the UE supports both UTRAN FDD and UTRAN TDD
+    note:
+    - related to SR-VCC
+    - can only be set to 1 if the UE has set bit number 38 to 1
+    */
+    u32  Bit40:1;
+    /*
+    function:
+    Measurement reporting event: Event B1 - Neighbour > threshold for UTRAN FDD, if the UE supports UTRAN FDD and has set bit number 22 to 1
+    note:
+    - If a category M1 UE does not support this feature group, this bit shall be set to 0.
+    */
+    u32  Bit41:1;
+    /*
+    function:
+    - DCI format 3a (TPC commands for PUCCH and PUSCH with single bit power adjustments)
+    note:
+    */
+    u32  Bit42:1;
+    u32  Bit43:1;//Undefined
+    u32  Bit44:1;//Undefined
+    u32  Bit45:1;//Undefined
+    u32  Bit46:1;//Undefined
+    u32  Bit47:1;//Undefined
+    u32  Bit48:1;//Undefined
+    u32  Bit49:1;//Undefined
+    u32  Bit50:1;//Undefined
+    u32  Bit51:1;//Undefined
+    u32  Bit52:1;//Undefined
+    u32  Bit53:1;//Undefined
+    u32  Bit54:1;//Undefined
+    u32  Bit55:1;//Undefined
+    u32  Bit56:1;//Undefined
+    u32  Bit57:1;//Undefined
+    u32  Bit58:1;//Undefined
+    u32  Bit59:1;//Undefined
+    u32  Bit60:1;//Undefined
+    u32  Bit61:1;//Undefined
+    u32  Bit62:1;//Undefined
+    u32  Bit63:1;//Undefined
+    u32  Bit64:1;//Undefined
+} T_featureGroupIndRel9Add;
+
+typedef struct T_featureGroupIndRel10_Tag
+{
+    /*
+    function:
+    - DMRS with OCC (orthogonal cover code) and SGH (sequence group hopping) disabling
+    note:
+    - if the UE supports two or more layers for spatial multiplexing in UL, this bit shall be set to 1.
+    - If a category 0 UE does not support this feature, this bit shall be set to 0.
+    */
+    u32  Bit101:1;
+    /*
+    function:
+    - Trigger type 1 SRS (aperiodic SRS) transmission (Up to X ports)
+    NOTE: X = number of supported layers on given band
+
+    note:
+    */
+    u32  Bit102:1;
+    /*
+    function:
+    - PDSCH transmission mode 9 when up to 4 CSI reference signal ports are configured
+    note:
+    - for Category 8 UEs, this bit shall be set to 1.
+    */
+    u32  Bit103:1;
+    /*
+    function:
+    - PDSCH transmission mode 9 for TDD when 8 CSI reference signal ports are configured
+    note:
+
+    - if the UE does not support TDD, this bit is irrelevant (capability signalling exists for FDD for this feature), and this bit shall be set to 0.
+    - for Category 8 UEs, this bit shall be set to 1.
+    */
+    u32  Bit104:1;
+    /*
+    function:
+    - DCI format 3a (TPC commands for PUCCH and PUSCH with single bit power adjustments)
+    note:
+    */
+    u32  Bit105:1;
+    /*
+    function:
+    - Periodic CQI/PMI/RI reporting on PUCCH: Mode 2-0 - UE selected subband CQI without PMI, when PDSCH transmission mode 9 is configured
+    - Periodic CQI/PMI/RI reporting on PUCCH: Mode 2-1 - UE selected subband CQI with single PMI, when PDSCH transmission mode 9 and up to 4 CSI reference signal ports are configured
+
+    note:
+
+    - this bit can be set to 1 only if indices 2 (Table B.1-1) and 103 are set to 1.
+    - For UEs capable of TDD-FDD CA, this bit can be set to 1 for both FDD and TDD if index 2 is set to 1 for both FDD and TDD, and index 103 is set to 1 either for FDD and TDD.
+    */
+    u32  Bit106:1;
+    /*
+    function:
+    - Aperiodic CQI/PMI/RI reporting on PUSCH: Mode 2-0 - UE selected subband CQI without PMI, when PDSCH transmission mode 9 is configured
+    - Aperiodic CQI/PMI/RI reporting on PUSCH: Mode 2-2 - UE selected subband CQI with multiple PMI, when PDSCH transmission mode 9 and up to 4 CSI reference signal ports are configured
+
+    note:
+    - this bit can be set to 1 only if indices 1 (Table B.1-1) and 103 are set to 1.
+    */
+    u32  Bit107:1;
+    /*
+    function:
+    - Aperiodic CQI/PMI/RI reporting on PUSCH: Mode 2-2 - UE selected subband CQI with multiple PMI, when PDSCH transmission mode 9 and 8 CSI reference signal ports are configured
+    note:
+    - this bit can be set to 1 only if the UE supports PDSCH transmission mode 9 with 8 CSI reference signal ports (i.e., for TDD, if index 104 is set to 1, and for FDD, if tm9-With-8Tx-FDD-r10 is set to 'supported') and if index 1 (Table B.1-1) is set to 1.
+    */
+    u32  Bit108:1;
+    /*
+    function:
+    - Periodic CQI/PMI/RI reporting on PUCCH Mode 1-1, submode 1
+
+    note:
+
+    - this bit can be set to 1 only if the UE supports PDSCH transmission mode 9 with 8 CSI reference signal ports (i.e., for TDD, if index 104 is set to 1, and for FDD, if tm9-With-8Tx-FDD-r10 is set to 'supported').
+    - For UEs capable of TDD-FDD CA, this bit can be set to 1 for both FDD and TDD if either index 104 is set to 1 or tm9-With-8Tx-FDD-r10 is set to 'supported'.
+    */
+    u32  Bit109:1;
+    /*
+    function:
+    - Periodic CQI/PMI/RI reporting on PUCCH Mode 1-1, submode 2
+
+    note:
+
+    - this bit can be set to 1 only if the UE supports PDSCH transmission mode 9 with 8 CSI reference signal ports (i.e., for TDD, if index 104 is set to 1, and for FDD, if tm9-With-8Tx-FDD-r10 is set to 'supported').
+    - For UEs capable of TDD-FDD CA, this bit can be set to 1 for both FDD and TDD if either index 104 is set to 1 or tm9-With-8Tx-FDD-r10 is set to 'supported'.
+    */
+    u32  Bit110:1;
+    /*
+    function:
+    - Measurement reporting trigger Event A6
+    note:
+    - this bit can be set to 1 only if the UE supports carrier aggregation.
+    */
+    u32  Bit111:1;
+    /*
+    function:
+    - SCell addition within the handover to EUTRA procedure
+    note:
+    - this bit can be set to 1 only if the UE supports carrier aggregation and the handover to EUTRA procedure.
+    */
+    u32  Bit112:1;
+    /*
+    function:
+
+    - Trigger type 0 SRS (periodic SRS) transmission on X Serving Cells
+
+    NOTE: X = number of supported component carriers in a given band combination
+
+    note:
+    - this bit can be set to 1 only if the UE supports carrier aggregation in UL.
+    */
+    u32  Bit113:1;
+    /*
+    function:
+    - Reporting of both UTRA CPICH RSCP and Ec/N0 in a Measurement Report
+    note:
+    - this bit can be set to 1 only if index 22 (Table B.1-1) is set to 1.
+
+    */
+    u32  Bit114:1;
+    /*
+    function:
+    - time domain ICIC RLM/RRM measurement subframe restriction for the serving cell
+    - time domain ICIC RRM measurement subframe restriction for neighbour cells
+    - time domain ICIC CSI measurement subframe restriction
+    note:
+    - If a category M1 UE does not support this feature group, this bit shall be set to 0.
+    */
+    u32  Bit115:1;
+    /*
+    function:
+    - Relative transmit phase continuity for spatial multiplexing in UL
+
+    note:
+    - this bit can be set to 1 only if the UE supports two or more layers for spatial multiplexing in UL.
+    */
+    u32  Bit116:1;
+    u32  Bit117:1;//Undefined
+    u32  Bit118:1;//Undefined
+    u32  Bit119:1;//Undefined
+    u32  Bit120:1;//Undefined
+    u32  Bit121:1;//Undefined
+    u32  Bit122:1;//Undefined
+    u32  Bit123:1;//Undefined
+    u32  Bit124:1;//Undefined
+    u32  Bit125:1;//Undefined
+    u32  Bit126:1;//Undefined
+    u32  Bit127:1;//Undefined
+    u32  Bit128:1;//Undefined
+    u32  Bit129:1;//Undefined
+    u32  Bit130:1;//Undefined
+    u32  Bit131:1;//Undefined
+    u32  Bit132:1;//Undefined
+} T_featureGroupIndRel10;
+
+typedef struct T_featureGroupInd_Tag
+{
+    T_featureGroupIndicator    featureGroupIndicator_fdd;
+    T_featureGroupIndicator    featureGroupIndicator_tdd;
+    T_featureGroupIndRel9Add   featureGroupIndRel9Add_fdd;
+    T_featureGroupIndRel9Add   featureGroupIndRel9Add_tdd;
+    T_featureGroupIndRel10     featureGroupIndRel10_fdd;
+    T_featureGroupIndRel10     featureGroupIndRel10_tdd;
+} T_featureGroupInd;
+
+typedef struct T_PdcpParameters_Tag
+{
+    u32                  rohcProfile0001:1; //0
+    u32                  rohcProfile0002:1; //0
+    u32                  rohcProfile0003:1; //0
+    u32                  rohcProfile0004:1; //0
+    u32                  rohcProfile0006:1; //0
+    u32                  rohcProfile0101:1; //0
+    u32                  rohcProfile0102:1; //0
+    u32                  rohcProfile0103:1; //0
+    u32                  rohcProfile0104:1; //0
+    u32                  maxNumberROHC_ContextSessions:4;  //=4 {cs2, cs4, cs8, cs12, cs16, cs24, cs32,cs48, cs64, cs128, cs256, cs512, cs1024,cs16384, spare2, spare1},default cs16
+    u32                  pdcp_SN_Extension:1;//v-1130
+    u32                  supportRohcContextContinue:1;  //v-1130
+    u32                  pdcp_SN_Extension_18bits_r13:1;//v-1310
+    u32                  reserved:16;
+} T_PdcpParameters;
+
+typedef struct T_RlcParameters_Tag
+{
+
+    u32                  extendedRlcLiField_r12:1;
+    u32                  extendedRlcSnSoField_r13:1;
+    u32                  reserved:30;
+} T_RlcParameters;
+
+typedef struct T_PhysicalLayerParameters_Tag
+{
+    u32 ue_TxAntennaSelectionSupported_fdd:1;
+    u32 ue_TxAntennaSelectionSupported_tdd:1;
+    u32 ue_SpecificRefSigsSupported:1;
+
+    u32 enhancedDualLayerFDD:1;
+    u32 enhancedDualLayerTDD:1;
+    //v-1020
+    u32 two_AntennaPortsForPUCCH_r10:1;
+    u32 tm9_With_8Tx_FDD_r10:1;
+    u32 pmi_Disabling_r10_fdd:1;
+    u32 pmi_Disabling_r10_tdd:1;
+    u32 simultaneousPUCCH_PUSCH_r10_fdd:1;
+    u32 simultaneousPUCCH_PUSCH_r10_tdd:1;
+    u32 multiClusterPUSCH_WithinCC_r10_fdd:1;
+    u32 multiClusterPUSCH_WithinCC_r10_tdd:1;
+    u32 reserved1:19;
+    u32 nonContiguousUL_RA_WithinCC_Info_r10;//依次对应支持的频段：bit0对应支持的第一个频段；bit1对应支持的第二个频段；0表示不支持，1表示支持。
+
+    //v-1130
+    u32 crs_InterfHandl_r11:1;
+    u32 ePDCCH_r11_fdd:1;
+    u32 ePDCCH_r11_tdd:1;
+    u32 ss_CCH_InterfHandl_r11_fdd:1;
+    u32 ss_CCH_InterfHandl_r11_tdd:1;
+    u32 tdd_SpecialSubframe_r11:1;
+    u32 ul_CoMP_r11:1;
+    //v-9d0
+    u32 tm5_FDD:1;
+    u32 tm5_TDD:1;
+    //v-1250
+    u32 e_HARQ_Pattern_FDD_r12:1;
+    u32 csi_SubframeSet_r12:1;
+    u32 phy_TDD_ReConfig_FDD_PCell_r12:1;
+    u32 phy_TDD_ReConfig_TDD_PCell_r12:1;
+    u32 pusch_SRS_PowerControl_SubframeSet_r12:1;
+    u32 enhanced_4TxCodebook_r12:1;
+    u32 pusch_FeedbackMode_r12:1;
+    u32 noResourceRestrictionForTTIBundling_r12:1;
+    //v-1280
+    u32 alternativeTBS_Indices_r12:1;
+    //v-1310
+    u32 pucch_Format4_r13_fdd:1;
+    u32 pucch_Format4_r13_tdd:1;
+    u32 pucch_Format5_r13_fdd:1;
+    u32 pucch_Format5_r13_tdd:1;
+    u32 supportedBlindDecoding_r13:1;
+    u32 pdcch_CandidateReductions_r13:1; //supportedBlindDecoding_r13
+    u32 skipMonitoringDCI_Format0_1A_r13:1; //supportedBlindDecoding_r13
+    u32 crs_InterfMitigationTM10_r13:1;
+    u32 pdsch_CollisionHandling_r13:1;
+    u32 aperiodicCSI_Reporting_r13:2;
+    u32 spatialBundling_HARQ_ACK_r13:1;
+    u32 uci_PUSCH_Ext_r13:1;
+    //v-1330
+    u32 cch_InterfMitigation_RefRecTypeA_r13:1;
+    u32 cch_InterfMitigation_RefRecTypeB_r13:1;
+
+    //v-1430,bit2---
+    u32 ce_PUSCH_NB_MaxTBS_r14:1;
+    u32 ce_HARQ_AckBundling_r14:1;
+    u32 ce_PDSCH_TenProcesses_r14:1;
+    u32 ce_PDSCH_PUSCH_Enhancement_r14:1;
+    u32 ce_SchedulingEnhancement_r14:1;
+    u32 ce_SRS_Enhancement_r14:1;
+    u32 ce_RetuningSymbols_r14: 2;
+    u32 reserved2:23;
+
+} T_PhysicalLayerParameters;
+
+typedef struct T_supportedBandEutra_Tag
+{
+    u16                   supportedBandEutra:7; //{0x01,0x03,0x07,0x09,0x26,0x27,0x28, 0x29,0x00,0x00}
+    u16                   halfDuplex:1;         // {1,1,1,1,1}; 1:  true,mean : only half duplex operation is supported for the band.
+    //R12
+    u16                   dl_256QAM_r12:1;
+    u16                   ul_64QAM_r12:1;
+    u16                   uePowerClass:3;//class1~5
+    u16                   intraFreq_CE_NeedForGaps_r13:1;
+    u16                   multiFreqSearchSupport:1; //support multiFreqSearch
+    u16                   reserved:1;
+} T_supportedBandEutra;
+
+typedef struct T_RfParameters_Tag
+{
+    u32                        supportBandNum:7;      // 0x07   ( 1-64 )
+    u32                        freqBandPriorityAdjustment_r12:1;  //1:support; 0: not support;
+    u32                        reserved:24;
+    T_supportedBandEutra       supportedBandListEUTRA[EUTRAN_MAX_SUPPORT_BAND - EUTRAN_SUPPORT_BAND_EXTEND];
+} T_RfParameters;
+
+typedef struct T_MeasurementParameters_Tag
+{
+    u32                  interFreqNeedForGap:1;//the same to all the bands.
+    u32                  interRatNeedForGap:1; //the same to all the bands.
+    //v1130
+    u32                  rsrqMeasWideBand_fdd:1;
+    u32                  rsrqMeasWideBand_tdd:1;
+    //11a0
+    u32                  benifitFromInterruption:1;
+    //v1250
+    u32                  timerT312:1;  // = 1, (BOOLEAN)
+    u32                  alternativeTimeToTrigger:1;  // = 1, (BOOLEAN)
+    u32                  incMonEutra:1;
+    u32                  extendedMaxMeasId:1;
+    u32                  extendedRSRQLowerRange:1;  // = 0, (BOOLEAN)
+    u32                  rsrqOnAllSymbols:1;  // = 1, (BOOLEAN)
+    u32                  crsDiscoverySignalMeas:1;
+    u32                  csirsDiscoverySignalMeas:1;
+
+    //v1310
+    u32                  rsSINRMeas:1;
+    u32                  supWhiteCellList:1;//1:SUPPORT; 0: DONT SUPPORT;
+    u32                  extendedMaxObjectId:1;
+    u32                  ulPDCPDelay:1;
+    u32                  extendedFreqPriorities:1;
+    u32                  multiBandInfoReport:1;
+    u32                  rssiChanlOccupReporting:1;
+
+    //V1430
+    u32                  ceMeasurements_r14:1;
+    u32                  reserved:11;
+} T_MeasurementParameters;
+
+typedef struct T_GeneralParameters_Tag
+{
+    u32  deviceType:1;
+
+    /*ther-Parameters-r11/ue-Rx-TxTimeDiffMeasurements-r11*/
+    u32  ueRxTxTimeDiffMeasurements_r11:1;
+    u32  reserved:30;
+} T_GeneralParameters;
+
+typedef struct T_NeighCellSiAcqPara_Tag
+{
+    u32                        intraFreqSiAcqForHo_fdd:1; //0x1
+    u32                        intraFreqSiAcqForHo_tdd:1; //0x1
+    u32                        interFreqSiAcqForHo_fdd:1; //0x1
+    u32                        interFreqSiAcqForHo_tdd:1; //0x1
+    u32                        reserved:28;
+} T_NeighCellSiAcqPara;
+
+typedef struct T_SonAndUEBasedNetPerformanceMeasPara_Tag
+{
+    u32                        rachReport:1; //0x1
+    u32                        loggedMeasurementsIdle:1; //0x1
+    u32                        standAloneGNSSLocation:1; //0x1
+    u32                        loggedMBSFNMeasurements:1; //0x1
+    u32                        reserved:28;
+} T_SonAndUEBasedNetPerformanceMeasPara;
+
+typedef struct T_StoredUsrFreqInfo_Tag
+{
+    u32 arfcn;
+    u8 reserved;
+    u8 plmn[3];
+}T_StoredUsrFreqInfo;
+
+typedef struct T_UsrHisFreqInfo_Tag
+{
+    u8 arfcnNum;
+    u8 reserved[3];
+    T_StoredUsrFreqInfo storedUsrFreqInfo[MAX_STORED_USR_EARFCN_NUM];
+}T_UsrHisFreqInfo;
+
+typedef struct T_MacParameters_Tag
+{
+    u32  longDRX_Command_r12:1;
+    u32  logicalChannelSR_ProhibitTimer_r12:1;
+    u32  extendedMAC_LengthField_r13:1;
+    u32  extendedLongDRX_r13:1;
+    u32  reserved:28;
+} T_MacParameters;
+
+#if 0
+typedef struct T_MimoUeParametersPerTmR13_Tag
+{
+    u32                nonPrecodedConfig1:1;
+    u32                nonPrecodedConfig2:1;
+    u32                nonPrecodedConfig3:1;
+    u32                nonPrecodedConfig4:1;
+    u32                supBeamformed:1;
+    u32                beamformedAltCodebook:1;
+    u32                mimoBeamformedCapListNum:3;//size(1..4)
+    u32                kMax1:4;//size(1..8)
+    u32                nMaxList1BitNum:3;//size(1..7), 0 means BitStr not present
+    u32                nMaxList1BitStr:7;//size(1..7)
+    u32                kMax2:4;//size(1..8)
+    u32                nMaxList2BitNum:3;//size(1..7), 0 means BitStr not present
+    u32                nMaxList2BitStr:7;//size(1..7)
+    u32                kMax3:4;//size(1..8)
+    u32                nMaxList3BitNum:3;//size(1..7), 0 means BitStr not present
+    u32                nMaxList3BitStr:7;//size(1..7)
+    u32                kMax4:4;//size(1..8)
+    u32                nMaxList4BitNum:3;//size(1..7), 0 means BitStr not present
+    u32                nMaxList4BitStr:7;//size(1..7)
+    u32                channelMeasRestriction:1;
+    u32                dmrsEnhancements:1;
+    u32                csiRSEnhancementsTDD:1;
+} T_MimoUeParametersPerTmR13;
+
+typedef struct T_EbfFdMimoparameters_Tag
+{
+    u32  interferenceMeasRestriction_r13:1;
+    u32  srs_Enhancements_r13:1;
+    u32  srs_EnhancementsTDD_r13:1;
+    T_MimoUeParametersPerTmR13  parametersTM9;
+    T_MimoUeParametersPerTmR13  parametersTM10;
+} T_EbfFdMimoparameters;
+#endif
+
+typedef struct T_CeParameters_Tag
+{
+    u32  ce_ModeA_r13:1;
+    u32  ce_ModeB_r13:1;
+    u32  intraFreqA3_CE_ModeA_r13:1;
+    u32  intraFreqA3_CE_ModeB_r13:1;
+    u32  intraFreqHO_CE_ModeA_r13:1;
+    u32  intraFreqHO_CE_ModeB_r13:1;
+    u32  ue_CE_NeedULGaps_r13:1;
+    u32  unicastFrequencyHopping_r13:1;
+    u32  tm6_CE_ModeA_r13_tdd:1;
+    u32  tm6_CE_ModeA_r13_fdd:1;
+    u32  tm9_CE_ModeA_r13_tdd:1;
+    u32  tm9_CE_ModeA_r13_fdd:1;
+    u32  tm9_CE_ModeB_r13_tdd:1;
+    u32  tm9_CE_ModeB_r13_fdd:1;
+
+    u32  reserved:18;
+} T_CeParameters;
+
+/*defined according to 36306*/
+typedef struct T_RadioAccessCapabilityLte_Tag
+{
+    u8                         release;    //AsRelease__R13
+    u8                         ueCategory; //UECategory__1
+    u8                         ueCategoryDL;//UECategoryDL__M1 OR UECategoryDL__OneBis
+    u8                         ueCategoryUL;//UECategoryUL__M1 OR UECategoryUL__OneBis
+    T_PdcpParameters           pdcpParam;
+    T_RlcParameters            rlcParam;
+    T_PhysicalLayerParameters  physicalLayerParam;
+    T_RfParameters             rfParam;
+    T_MeasurementParameters    measurementParam;
+    T_GeneralParameters        generalParam;
+    T_NeighCellSiAcqPara       neighCellSiAcqParam;
+    T_MacParameters            macParam;
+    //T_EbfFdMimoparameters      mimoUeParaR13;
+    T_CeParameters             ceParam;
+    //featureGroupIndicator
+    T_featureGroupInd           featureGroupIndicator; //FDD/TDD Diff = YES
+} T_RadioAccessCapabilityLte;
+
+typedef struct T_InterRatCapabilty_Tag
+{
+    u32     supportGeran:1;
+    u32     interratPsHoToGeran:1;
+    u32     reserved:30;
+} T_InterRatCapabilty;
+
+typedef struct  T_ImsParam_Tag
+{
+    u32     sip_mwiExpireSec;
+    u8      sip_mwiEventEnabled;
+    u8      amr_codec_mode;
+    u8      reserved[6];
+    u16     deltaNvImsiMcc;
+    u16     deltaNvImsiMnc;
+    u8      reserved1[16];
+} T_ImsParam;
+
+/*1224583*/
+typedef struct
+{
+    /*ESM*/
+    u8      pdn_act_t3482_Len; /*In Seconds, max 8s*/
+    u8      pdn_act_retry_cnt; /*max 4 times*/
+    u8      pdn_deact_t3492_Len; /*In Seconds, max 6s*/
+    u8      pdn_deact_retry_cnt; /*max 4 times*/
+
+    /*SM*/
+    u8      pdp_Act_t3380_Len; /*In Seconds, max 30s*/
+    u8      pdp_Act_retry_cnt; /*max 4 times*/
+    u8      pdp_deact_t3390_Len; /*In Seconds, max 8s*/
+    u8      pdp_deact_retry_cnt; /*max 4 times*/
+
+    u8      reserved[8];
+} T_PdpRetryCfg;
+
+typedef struct
+{
+    u8 status;
+    u8 plmn[MAX_PLMN_LEN];
+    u8 firstFlag;
+}T_ConfigRplmn;
+
+typedef struct
+{
+    u8 status;
+    u8 plmn[MAX_PLMN_LEN];
+    u8 rat;
+}T_ConfigRplmnInfo;
+
+typedef struct T_POSTION_METHOD_SUPPORT_tag
+{
+    u8                 posMethSupport; /*按bit位取值，bit0:Ecell id, bit1: otdoa, bit2~7:reserved*/
+    u8                 idleMeasRequired;/*按bit位取值，与posMethSupport一一对应*/
+    u8                 molr_enable;
+    u8                 mtlr_notify;
+    u8                 molre_format;
+    u8                 lppAckMode;
+    u8                 reserved[2];
+}T_PosMethSupport;
+
+typedef struct
+{
+    u8 regFailMaxNum;
+    u8 supportInRoaming;
+    u8 reserved;
+    u8 plmnList[DISABLE_LTE_PLMN_LIST_MAX_NUM*MAX_PLMN_LEN + 1];
+} T_DisableLtePara;
+
+typedef struct  T_NasCapability_Tag
+{
+    u32           signallingPrioritySupport:1;//0: NOT SUPPORT 1:SUPPORT;
+    u32           attachWithImsiSupport:1;    //0: NOT SUPPORT 1:SUPPORT;
+    u32           Timer_T3245_Support:1;      //0: NOT SUPPORT 1:SUPPORT;
+    u32           eabSupported:1;             //0: NOT SUPPORT 1:SUPPORT;
+    u32           FastFirstHiPriPLMNSearch:1; //0: NOT SUPPORT 1:SUPPORT;
+    u32           cp_ciot_support:1;          //0: NOT SUPPORT 1:SUPPORT;
+    u32           up_ciot_support:1;          //0: NOT SUPPORT 1:SUPPORT;
+    u32           emmRegWithoutPdnSupport:1;  //0: NOT SUPPORT 1:SUPPORT;
+    u32           emmRegWithoutPdnSupportOnly:1;//0: NOT SUPPORT 1:SUPPORT;
+    u32           smsWithoutComAttSupport:1;  //0: NOT SUPPORT 1:SUPPORT;
+    u32           niddSupport:1;              //Non-IP Data Deliver, 0: NOT SUPPORT 1:SUPPORT;
+    u32           S1_U_DataTransferSupport:1; //0: NOT SUPPORT 1:SUPPORT;
+    u32           cp_hc_support:1;            //HC for Conotrol Plane, 0: NOT SUPPORT 1:SUPPORT;
+    u32           cp_up_prefer:2;             //00: no infor; 01: cp Prefer; 10: up Prefer; 11: reserved
+    u32           ePCObit_support:1;          //0: NOT SUPPORT 1:SUPPORT;
+    u32           ExcepDataReportAllowed:1;    //0: NOT SUPPORT 1:SUPPORT;
+    u32           psmSupport:1;               //0: NOT SUPPORT 1:SUPPORT;
+    u32           eDrxSupport:1;              //0: NOT SUPPORT 1:SUPPORT;
+    u32           lteUsageSetting:1;          //0: VoiceCentric 1:Data Centric;
+    u32           lteSmsPrefer:1;             //0: SGs Only 1: IP Prefer;
+    u32           srvccSupport:1;             //0: NOT SUPPORT 1:SUPPORT;
+    u32           overrideSignallingPrioritySupport:1; ////0: NOT SUPPORT 1:SUPPORT;
+    u32           overrideEabSupported:1;     ////0: NOT SUPPORT 1:SUPPORT;
+    u32           apnRateCtrl:1;              //0: NOT SUPPORT 1:SUPPORT;
+    u32           nonIpMTU:1;                 //0: NOT SUPPORT 1:SUPPORT;
+    u32           ipv4MTU:1;                  //0: NOT SUPPORT 1:SUPPORT;
+    u32           DataPdnAutoAct:1;               //0: NOT SUPPORT 1:SUPPORT;
+    u32           DefaultPcoControl:1;   //0: NOT SUPPORT 1:SUPPORT;*1:PDN req with Attach no set pco; 0: PDN req with Attach  no change  -this nv is only for quectel lte bug1940560*/
+    u32           TestSimCeregControl:1;  //0: NOT SUPPORT 1:SUPPORT;bug2069097 just for korea KT certification
+    u32           ControlCeregDetachCause:1;               //0: NOT SUPPORT 1:SUPPORT;
+    u32           reserv:1;                   //0: NOT SUPPORT 1:SUPPORT;
+
+    u8            lteVoicePrefer;            //LTE Voice Prefer Setting
+    u8            MinimumPeriodicSearchTimer;//Timer Length, Minites, defalt 0;
+    u8            SM_RetryWaitTime;          //Timer Length, Minites, defalt 0;
+    u8            RequiredT3412ExtendValue;  //Requried T3412 extended, default: 54 mins
+    u8            RequiredT3324Value;        //Requried T3324, default: 0
+    u8            RequiredExtendedDrx;       //Default EDRX Value;
+    u8            LteRatType;                /* 1 - eMTC, 2 - NBIoT, 3 - eMTC & NBIoT */
+    //remove from R8909nb start
+    u8                        eutranDisableForEmmCause15;
+    u8                        smRetryAtRATChange;
+    u8                          ciotReport;
+    u8                          PsDataOnlyPingAllowed;
+    u8                          drxCycleLen;
+    T_DefaultPdnCfg             defaultApnCfg;
+    T_HccpCfg                   defaultHccpCfg;
+    H_PsDataOffCfg              psdataOffCfg;
+    //remove from R8909nb end
+    T_PdpRetryCfg pdpRetryCfg; /*1224583*/
+    T_PosMethSupport            posMethSupport;
+    u8            reserved1[8];
+    T_ImsParam    imsParam;
+} T_NasCapability;
+
+typedef struct T_UeCapabilityRequenstedLte_wb_Tag
+{
+    u8                            lteEqPout;   //0x17
+    u8                            lteRatSupport;//0:TDL&LTEFDD;1:TDL;2:LTEFDD
+    u8                            reserved[2];
+    T_RadioAccessCapabilityLte         radioAccessCapability;
+    T_SecurityCapability               securityCapbility;
+} T_UeCapabilityRequenstedLte_wb;
+
+
+typedef struct T_NVM_Static_PsCap_wb_Tag
+{
+    T_UeCapabilityRequenstedLte_wb   eUtranCapability;
+    T_InterRatCapabilty              geranCapablity;
+} T_NVM_Static_PsCap_wb;
+
+
+
+/*************************************************************************/
+/*               Static ENG NVM parameters                               */
+/*                                                                       */
+/*************************************************************************/
+
+typedef struct T_LteBlindCellListInfoTag
+{
+    u16       serverCellFreq;
+    u16       serverCellId;
+    u16       cellNum;
+    u16       reserved;
+    u16       cellPhyIdList[16];
+} T_LteBlindCellListInfo;
+
+typedef struct T_LteBlindStubInfoTag
+{
+    u8                      cellListNum;
+    u8                      stubType;
+    u8                      reserved[2];
+    T_LteBlindCellListInfo  cellListInfo[12];
+} T_LteBlindStubInfo;
+
+typedef struct T_NVM_FlowCtrlPara_Tag
+{
+    u8   lteDIFlowCtrlOpen;   // :85    1-100   2012-11-30
+    u8   lteDIFlowCtrlClose;  // :60    1-100
+    u8   reserved[2];
+} T_NVM_FlowCtrlPara;
+
+typedef struct T_LocFrequencyinfoTag
+{
+    u16        freqNum;   // 0   //(0-9)
+    u16        reserved;
+    u32        freq[9];   //0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff
+} T_LocFrequencyinfo;
+
+typedef struct T_imsiSimulation_tag
+{
+    u8  imsiValidFlag;
+    u8  reserved[2];
+    u8  imsiContent[9];
+} T_imsiSimulation;
+
+typedef struct TRA_LimitStatusBfStruct
+{
+    unsigned char  msg_swt:1;
+    unsigned char  str_swt:1;
+    unsigned char  level:1;
+    unsigned char  freq:1;
+    unsigned char  reserved:4;
+}TRA_LimitStatusBf_T;
+
+typedef struct T_TraceConfigTag
+{
+    u32 traCategoryControl;   // BIT0:S1,BIT1:S2,BIT2:M1,BIT3:M2,BIT4:M3,BIT5:REVS,BIT6:RES,BIT7:BUFFER-A/B
+    u32 lteTraModuleControl;
+    u32 ggeTraModuleControl;
+    u32 pubTraModuleControl;
+    u32 phyModuleControl;
+    u32 traceFlowControl;
+    u32 tracePort;
+    u32 reserved;
+    u32 phyMsgControl[32];
+#ifdef TRACE_UART_CHANNEL_NV_CTRL
+    TRA_LimitStatusBf_T  pub_limit_status;
+    u8  pub_level_val;
+    u8  pub_freq_val;
+    TRA_LimitStatusBf_T  phy_limit_status;
+    u8  phy_level_val;
+    u8  phy_freq_val;
+    TRA_LimitStatusBf_T  ps_limit_status;
+    u8  ps_level_val;
+    u8  ps_freq_val;
+    u8  core_limit_type;
+    u8  l1cd_limit_type;
+    u8  reserved1[16];
+    u8  uartChannel;
+#else
+    u32  reserved1[7];
+#endif
+    u16 ggeTraModuleCfg[32];
+} T_TraceConfig;
+
+typedef struct T_reportEventPara_Tag
+{
+    u8                              validFlag;
+    u8                              hysteresis;
+    u16                             timeToTrigger;
+    //u8                                reserved[4];
+} T_reportEventPara;
+typedef enum T_optimizedFeatureType_Tag
+{
+    OPTIMIZED_FEATURE__PRIMAERY_CELL_RSRP_OFFSET,
+
+    OPTIMIZED_FEATURE__NEIGH_CELL_RSRP_WEIGHT,
+
+    OPTIMIZED_FEATURE__INTER_FREQ_EMERGENCY_MEAS,
+
+    OPTIMIZED_FEATURE__INTER_FREQ_TTT_RESET,
+
+    OPTIMIZED_FEATURE__FASTER_REEST,
+
+    OPTIMIZED_FEATURE__CONSIDER_SINR,
+
+    OPTIMIZED_FEATURE__RATE_FIRST,
+
+    OPTIMIZED_FEATURE__NONSTANDARD_MEAS_REPO,
+
+    OPTIMIZED_FEATURE__MAX,
+} T_optimizedFeatureType;
+
+typedef struct T_ConnOptimizedFeature_tag
+{
+    u8      pCellSinrThresold;
+    u8      betterNCellSinrOffsetThres1;
+    u8      betterNCellSinrOffsetWeight1;
+    u8      worseNCellSinrOffsetThres1;
+    u8      worseNCellSinrOffsetWeight1;
+} T_ConnOptimizedFeature;
+
+typedef struct T_optimizedFeature_Tag
+{
+    /*
+        OPTIMIZED_FEATURE__ALL_CELL_RSRP_OFFSET,//bit0
+
+        OPTIMIZED_FEATURE__NEIGH_CELL_RSRP_WEIGHT,//bit1
+
+        OPTIMIZED_FEATURE__INTER_FREQ_EMERGENCY_MEAS,//bit2
+
+        OPTIMIZED_FEATURE__INTER_FREQ_TTT_RESET,//bit3
+
+        OPTIMIZED_FEATURE__FASTER_REEST//bit4
+
+        OPTIMIZED_FEATURE__CONSIDER_SINR//bit5
+
+        OPTIMIZED_FEATURE__RATE_FIRST//bit6
+        对应BIT为1时有效
+        */
+    u8              optimizedFeatureBitMap;
+
+
+    /*OPTIMIZED_FEATURE__ALL_CELL_RSRP_OFFSET 对应bit为1时有效*/
+    s8              primaryCellRsrpOffset;//默认值3
+
+    /*OPTIMIZED_FEATURE__NEIGH_CELL_RSRP_WEIGHT 对应bit为1时有效*/
+    u8              pCellSinrThresold;//默认值47
+
+    u8              betterNCellSinrOffsetThres1;//默认值6
+    u8              betterNCellSinrOffsetWeight1;//默认值3
+
+
+    u8              worseNCellSinrOffsetThres1;//默认值6
+    u8              worseNCellSinrOffsetWeight1;//默认值8
+
+    /*OPTIMIZED_FEATURE__INTER_FREQ_EMERGENCY_MEAS 对应bit为1时有效*/
+    u8              emergencyMeasPCellSinrThresold;//默认值47
+    u8              emergencyMeasInterFreqNum;//默认值4
+
+
+    /*OPTIMIZED_FEATURE__INTER_FREQ_TTT_RESET 对应bit为1时有效*/
+    u8              interFreqTimerToTrigger;//默认值0
+
+    /*OPTIMIZED_FEATURE__INTER_FREQ_EMERGENCY_MEAS 对应bit为1时有效*/
+    u8              fasterReestPCellSinrThresold1;//默认值35
+    u8              fasterReestPCellSinrThresold2;//默认值31
+    u8              fasterReestSinrOffsetThresold1;//默认值6
+    u8              fasterReestSinrOffsetThresold2;//默认值10
+    u8              fasterReestConsecutiveEnterCounter;////默认值3
+
+
+    /*OPTIMIZED_FEATURE__CONSIDER_SINR 对应bit为1时有效*/
+
+    u8              sinrThresold;////默认值0
+
+    u8              ratePriorRelativePwrTh; //10
+    u8              ratePriorPssPeakAveTh; //12
+    u8              ratePriorM0M1PeakAveTh;//20
+    u8              ratePriorFddSinrTh;//47
+    u8              ratePriorFddRsrpTh;//-100dbm->41
+    u8              ratePriorFddPeakFactor;//10
+
+    /* OPTIMIZED_FEATURE__NONSTANDARD_MEAS_REPO */
+    u8              sinrThrsMeasRepo; //44
+    u8              numMeasRepo; //3
+} T_optimizedFeature;
+
+
+
+typedef struct T_connMeasCtrl_Tag
+{
+    T_reportEventPara           A1;
+
+    T_reportEventPara           A2;
+
+    T_reportEventPara           A3;
+
+    T_reportEventPara           A4;
+
+    T_reportEventPara           A5;
+
+    T_reportEventPara           B1Event; /*Add suffix of event for compile issue. 20210720.*/
+
+    T_reportEventPara           B2Event;
+
+    T_optimizedFeature          optimizedFeature;
+} T_connMeasCtrl;
+
+#define    IDL_OPTIMIZED_FEATURE_BIT__BETTER_SINR_THRESHOLD_ENABLE    (0x01 << 0)
+#define    IDL_OPTIMIZED_FEATURE_BIT__EMERGENCY_STATE_ENABLE          (0x01 << 1)
+#define    IDL_OPTIMIZED_FEATURE_BIT__AMEND_MEAS_RESULT_ENABLE        (0x01 << 2)
+#define    IDL_OPTIMIZED_FEATURE_BIT__SINR_CTR_MEAS_ENABLE                           (0x01 << 3)
+#define    IDL_OPTIMIZED_FEATURE_BIT__FREQ_PRI_ABNORMAL_DETECT_ENABLE                (0x01 << 4)
+#define    IDL_OPTIMIZED_FEATURE_BIT__DEFAULT_Q_QUALMIN_ENABLE                       (0x01 << 5)
+#define    IDL_OPTIMIZED_FEATURE_BIT__USING_EQUAL_CRI_FOR_LOWER_ENABLE               (0x01 << 6)
+#define    IDL_OPTIMIZED_FEATURE_BIT__HIGH_FREQ_SINR_THRESHOLD_ENABLE                (0x01 << 7)
+
+
+typedef struct T_IdleOptimizedFeature_Tag
+{
+    /*
+    IDL_OPTIMIZED_FEATURE_BIT__BETTER_SINR_THRESHOLD_ENABLE
+    IDL_OPTIMIZED_FEATURE_BIT__EMERGENCY_STATE_ENABLE
+    IDL_OPTIMIZED_FEATURE_BIT__AMEND_MEAS_RESULT_ENABLE
+    IDL_OPTIMIZED_FEATURE_BIT__SINR_CTR_MEAS_ENABLE
+    IDL_OPTIMIZED_FEATURE_BIT__FREQ_PRI_ABNORMAL_DETECT_ENABLE
+    IDL_OPTIMIZED_FEATURE_BIT__DEFAULT_Q_QUALMIN_ENABLE
+    IDL_OPTIMIZED_FEATURE_BIT__USING_EQUAL_CRI_FOR_LOWER_ENABLE
+    IDL_OPTIMIZED_FEATURE_BIT__HIGH_FREQ_SINR_THRESHOLD_ENABLE
+    */
+    u8  optimizedFeatureBitMap;
+    u8  betterSinrThreshold;
+    u8  emergencyStateSinrThreshold1;
+    u8  emergencyStateSinrThreshold2;
+    u8  emergencyStateFastIddetWaitWin;
+    u8  emergencyStatePenaltyTime;
+    u8  amendMeasResultSinrThreshold1;
+    u8  amendMeasResultSinrThreshold2;
+    u8  amendMeasResultSinrOffSet1;
+    u8  amendMeasResultSinrOffSet2;
+    u8  sinrIntraSearchThsd;
+    u8  sinrInterSearchThsd;
+    u8  interMeasThsd;
+    u8  interSinrDis;
+    u8  reserved[2];
+} T_IdleOptimizedFeature;
+
+typedef struct T_crystalTempCompParam_Tag
+{
+    /*晶体老化温补方案中C0修正相关参数.*/
+    u8   tempCompEnable;
+    u8   threshold0;   /*单位:db.*/
+    u16  threshold1;   /*Reselection or handover times threshold.*/
+    u32  mInMsec;      /*Shoulde check whether SCell's SINR > threshold0 in continuous mInMsec millisecond. */
+    u32  nInMsec;      /*Ue enters high/medium speed state if reselection or handover times exceeds threshold1 during nInMsec millisecond.*/
+} T_crystalTempCompParam;
+
+typedef struct T_LocBandInfo_Tag
+{
+    u8          lockBandNum;   // 0   //(0-5)
+    u8          reserved;
+    u16         bandInfo[MAX_LOCK_BAND_NUM];   // MAX_LOCK_BAND_NUM:5
+} T_LocBandInfo;
+typedef struct T_SpecialRequirementsIndiction_tag
+{
+    u32                 blackCellListEnable:1;
+    u32                 videoSurveillance:1;
+    u32                 staticScene:1;
+    u32                 lowPowerFirst:1;
+    u32                 pocProduct:1;
+    u32                 signalQuatityFirst:1;
+    u32                 l1cdAbnormalResume:1;
+    u32                 cdrxSpecialControl:1;
+    u32                 keepLastDataPdn:1;
+    u32                 enhancePwrSweepNonCE:1;
+    u32                 cdrxNoSleepEnable:1;
+    u32                 periodTauAftLocalRel:1;
+    u32                 disableElecFenceCell:1;
+    u32                 supportDisableIdLte:1;/*is support disable Indonesia Lte when ue rejected by network with cause #15*/
+    u32                 weakSignalSearchPlmnOpti:1;
+    u32                 esmInfoTransFlagSupport:1;//bug 2049457:ESM info flag present in Attach request message even if not config default APN
+    u32                 skipRplmn:1;
+    u32                 noMeasRepoWhileLocalRel:1;
+    u32                 disableUpdateCsDomainPara:1;
+    u32                 gcfFtGea1:1;
+    u32                 gcfFtGea2:1;
+    u32                 csgSupportFlag:1;
+    u32                 isDisableForbidHplmn:1;
+    u32                 TestCardAutoPdnControl:1;
+    u32                 combineDetachFlag:1;
+    u32                 useNvRplmnRatFlag:1;
+    u32                 reserved:4;
+    u32                 gcfRemoveR13Cap:1;//gcf test remove R13 capability report for case 31.121 5.1.6
+    u32                 gcfFgi30_103:1;//bug1742797 FGI30 report for case 36.523-1 8.5.4.1
+}T_SpecialRequirementsIndiction;
+
+typedef struct T_SlideWinMobDetect_Tag
+{
+    u8            slideWinMobDetectEnable; //default:1
+    u8            analyTimeLenOfConn;     //default:8 realValue=8*320=2560ms
+    u8            analyTimeLenOfIdl;      //default:4 realValue=4*drxcycle
+    u8            rsrpGapThreshold;       //default:3
+} T_SlideWinMobDetect;
+
+typedef struct T_PocPara_Tag
+{
+    u8            Bitmap;
+    u8            reserved;
+    u16           Treselection;
+    u16           TreselectionB;
+    u8            ThreshAQ;
+    u8            ThreshAP;
+    u8            ThreshASINR;
+    u8            ThreshBQ;
+    u8            ThreshBP;
+    u8            ThreshBSINR;
+    u16           n;
+    u16           reserved2;
+} T_PocPara;
+
+typedef struct T_LTimer_Tag
+{
+    u8            loopCout;
+    u8            maxLen;/*unit: minutes*/
+    u16           reserved;
+} T_LTimer;/*losscover Timer & limited Timer*/
+
+typedef struct T_cdrxPara_Tag
+{
+    u8            cdrxSpecialControl;
+    u8            useCdrxSpecialPeriod;
+    u16           reserved;
+} T_cdrxPara;
+
+typedef struct T_cdrxPeriodPara_tag
+{
+    u32                 validFlag:1;
+    u32                 M1_1:4;
+    u32                 M1_2:4;
+    u32                 M2:4;
+    u32                 D1_1:4;
+    u32                 D1_2:5; 
+    u32                 D2_1:4;
+    u32                 D2_2:5;
+    u32                 reserved:1;
+}T_cdrxPeriodPara;
+
+typedef struct T_pagespy_cfg_Tag
+{
+	u8 classify;
+	u8 hit_mode;
+	u8 obj[6];
+	u32 base_addr;
+	u32 length;
+}T_pagespy_cfg;
+
+enum
+{
+	E_EMM_USER_CONFIG_T3402,
+	E_EMM_USER_CONFIG_T3417ext,
+	E_EMM_USER_CONFIG_T3410,
+	E_EMM_USER_CONFIG_T3411,
+	E_EMM_USER_CONFIG_T3421,
+	E_EMM_USER_CONFIG_T3440,
+	E_EMM_USER_CONFIG_T3412,
+	E_EMM_USER_CONFIG_T3430,
+	E_EMM_USER_CONFIG_T3346,
+	E_EMM_USER_CONFIG_MAX_TIMERID
+};
+
+enum
+{
+	E_ESM_USER_CONFIG_T3480,
+	E_ESM_USER_CONFIG_T3481,
+	E_ESM_USER_CONFIG_T3482,
+	E_ESM_USER_CONFIG_T3492,
+	E_ESM_USER_CONFIG_MAX_TIMERID
+};
+
+enum
+{
+	E_GSM_USER_CONFIG_T3302,
+	E_GSM_USER_CONFIG_T3311,
+	E_GSM_USER_CONFIG_T3211,
+	E_GSM_USER_CONFIG_T3240,
+	E_GSM_USER_CONFIG_T3380,
+	E_GSM_USER_CONFIG_T3390,
+	E_GSM_USER_CONFIG_MAX_TIMERID
+};
+
+typedef struct T_NVM_Static_Eng_Tag
+{
+    u8                    versionControl;          // 0          // (0-2)
+    u8                    sleepFlag;                  // 0          // (0-1)
+    u8                    comprehensFlag;      // 0          // (0-1)
+    u8                    securityUsedFlag;
+    T_NVM_FlowCtrlPara    flowCtrlPara;
+    u8                    ceSearchEnable;
+    u8                    assertBitmap;
+    u16                   lockLteCell;
+    u8                    resetFlag;         //0  0:debug assert  1:release reset
+    u8                    barCellWhenSIFail;
+    u16                   PsFlowCtrlThresh;
+    u32                   atUartControl;
+    u8                    cSelUsingOperatorInfo;
+    u8                    stackAutoStart;
+    u8                    defaultRat;
+    u8                    audioPath;        // 0 speaker
+    u32                   sleepControl;
+    T_LocFrequencyinfo    lockLteFreqInfo;
+    T_LocBandInfo         lockLteBandInfo;
+    T_imsiSimulation      imsiSimulation;
+    u16                   emm[E_EMM_USER_CONFIG_MAX_TIMERID];
+    u16                   reserved_for_emm;
+    u16                   esm[E_ESM_USER_CONFIG_MAX_TIMERID];
+    u16                   gsm[E_GSM_USER_CONFIG_MAX_TIMERID];
+    u8                    priorityBandNum;    //Number of Priotity Bands stored in List
+    u8                    priorityBandList[MAX_PRIORITY_BAND_NUM];  //List store priority band, Max Size 20, Change reserved size 76 if this changed
+    u8                    dchInterSosMeasWheelNum;/*bug2067337*/
+    u8                    plmnSearchReuseTimerLen;
+    u8                    eleFenceCellTimer;
+    u32                   privateT3412Len;
+    u16                   privatePsm;
+    u16                   privateT3324Len;
+    u32                   phygd_symbol_dword;
+    s16                   abisCtrDetal;   // default value : -3dB
+    u8                    dchScellPeriod;  // dch scell meas period
+    u8                    idlDetectPeriod;
+    T_connMeasCtrl        connMeasCtrl;
+    u16                   subBandSupBitmap; //BIT0:band28A  BIT1:band28B BIT2:band41N
+    u8                    baRoundCnt;   //BA表FREQ MEAS的尝试次数
+    u8                    highSpeedDetectPeriod;
+    T_IdleOptimizedFeature  idleOptimizedFeature;
+    T_TraceConfig           traceConfig;
+
+    T_crystalTempCompParam  crystalTempCompParam; /*Crystal temperature compensation parameters. */
+
+    u8                      gcfTest;  /*1:GCF Test; 0:Not GCF Test. */
+    s8                      multiCtrDetalPagingRsrp;      // default value : -5
+    u8                      multiCtrDetalPagingSnrThrd;   // default value : 35
+    u8                      inactiveTimer; /*Local release timer. The step is 0.5s, default value is 0.*/
+    T_SpecialRequirementsIndiction  specialRequirementsIndiction;
+    u8                      dtPort;
+    u8                      lockedPlmn[3];
+    T_SlideWinMobDetect     slideWindowMobDetect;
+    u8                      gsmGprsOnly;
+    u8                      losscoverTimer;
+    u8                      limiteTimer;
+    u8                      writeNvAfterPwrOnFlag;
+    T_PocPara               pocPara;
+    T_LTimer                lossCoverTiParam;/*bug 1522780*/
+    T_LTimer                limitedTiParam;/*bug 1522780*/
+    T_cdrxPeriodPara        cdrxPeriodPara;
+    u8                      maxSlpLenForGnssTimerAdjust;
+    u8                      lcmPrior;
+    u8                      testPoint;
+    u8                      paddingPduThreshold;
+    T_pagespy_cfg	        pagespy_cfg[8];
+    
+} T_NVM_Static_Eng;
+
+
+typedef struct T_RpmConfig_Tag
+{
+    u8 rpmFlag;
+    u8 rpmN1;
+    u8 rpmT1;
+    u8 rpmF1;
+    u8 rpmF2;
+    u8 rpmF3;
+    u8 rpmF4;
+
+    u8 rpmLR1; 
+    u8 rpmLR2;
+    u8 rpmLR3;
+    u8 reserved1[2];
+}T_RpmConfig;
+
+typedef struct T_NVM_Static_PsCap_Ex_Tag
+{
+    T_RpmConfig rpmConfig;
+    T_SonAndUEBasedNetPerformanceMeasPara SonAndUEBasedNetPerformanceMeasPara;
+    T_UsrHisFreqInfo usrHisFreqInfo;
+    u8 ueCapabPorxmityInd;
+    u8 reserved[59];
+    T_supportedBandEutra supportedBandListEUTRA[EUTRAN_SUPPORT_BAND_EXTEND];/*跟1.5RLS对齐*/
+    u8 speedDetecPerio;    //高速重建策略，检测周期90s
+    u8 speedHighThre;    //高速重建策略，高速门限7
+    u8 speedMediuThre;    //高速重建策略，中速门限2
+    u8 t300ExpTimes;     //range 0~60;default 0; bug2284708
+    u8 barTime;         //range:0~60(unit: min);default 0; bug2284708
+    u8 reserved1[47];
+}T_NVM_Static_PsCap_Ex;
+
+
+/*************************************************************************/
+/*                                                                       */
+/*                     NVM  static  parameters                           */
+/*                                                                       */
+/*************************************************************************/
+typedef struct T_NVM_Static_Tag//cant be changed frequently.
+{
+    u16                                 crcdata;
+    u16                                 len;
+    u32                                 nvmVersion;
+    T_NasCapability         nasCapability;
+    T_NVM_Static_PsCap_wb   nvmStaticPsCap_wb;
+    T_NVM_Static_Eng        nvmStaticEng;
+    T_NVM_Static_PsCap_Ex   nvmStaticPsCap;
+    u8                      scrambleMode;
+    s8                      rsrpOffset;/*AT命令控制rsrp加大或减小的一个offset，-50~50*/
+    u8                      rrcRlsTimer10;
+    u8                      pm;/*power mode, 取值同NL1C_POWERSAVE_OPMODE_E*/
+    u8                      cpReestab;/*0 不支持CP重建，1 支持CP重建*/
+    u8                      reserved[3];
+} T_NVM_Static;
+
+
+/*************************************************************************/
+/*                                                                       */
+/*                     NVM  dyanmic  parameters                          */
+/*                                                                       */
+/*************************************************************************/
+typedef struct T_NVM_Dynamic_Tag
+{
+    u16                 crcdata;
+    u16                 len;
+    T_NVM_Dynamic_PS    nvmDynamicPs;//ps param,that can be changed frequently.
+} T_NVM_Dynamic;
+
+
+typedef struct  T_EpsQos_Tag
+{
+    u8        Length   ;
+    u8        reserved[2];
+    u8        EpsQoS[MAX_EPS_QOS_LEN];
+} T_EpsQos;
+
+typedef struct  T_PdnAddressTAG
+{
+    u8             pdnType;
+    u8             addressLen;
+    u8             reserved[2];
+    u8             addressInfor[MAX_ADDRESSINFOR_LEN];
+} T_PdnAddress;
+
+#if defined __PROCESS_INFO_IN_FLASH
+typedef struct
+{
+    /*Timer Length*/
+    u32                 T3324_Len;
+    u32                 T3402_Len;
+    u32                 T3412_Len;
+    u32                 lossCov_Len;
+    u32                 hplmnTimer_Len;
+    /*NAS Timer Remain Length*/
+    u32                 t3324RemainLen;
+    u32                 t3346RemainLen;
+    u32                 t3245RemainLen;
+    u32                 t3247RemainLen;
+    u32                 hplmnTimerRemainLen;
+    u32                 lossCovRemainLen;
+    u32                 t3402RemainLen;
+    TIMER_TYPE          t3412RemainLen;
+    u32                 TeDrxRemainLen;
+    T_T3396_BakupInfo   t3396BakupInfo[4];
+    u8                  t3396bakupNum; /*Max Num 4*/
+} T_Timer_BakupInfo;
+
+typedef struct
+{
+    u8              inst;
+    u8              ebi;
+    u8              pti;
+    u8              establishStatus;
+    u8              cpOnlyInd;
+    u8              apnLen;
+    u8              apn[MAX_APN_LEN];
+    u16             pcoLen;
+    u8              pco[MAX_PCO_LEN];
+    u8              linkedEbi;
+    u8              lowPriInd;
+    u8              origApnLen;
+    //u8              tfaFlag;
+    //T_Tft           tfa;
+    u8              epsQosFlag;
+    T_EpsQos        epsQos;
+    T_PdnAddress    pdnAddress;
+    u8              activeProcess;
+    u8              currentState;
+    u8              previousState;
+    u8              SmIndex;
+    u8              nCid;
+    u8              SetPdnType;
+    u8              esmMsgLowPrioInd;
+    u16             pcoLenOrig;
+} T_ESM_BakupInfo;
+
+
+typedef struct T_ERRC_SI_BackupInfo_Tag
+{
+    u8    siVer;  //BR or Normal
+    u16   siRawDataLen[MAX_BACK_UP_SI_NUM];
+    u8    siRawData[MAX_BACK_UP_SI_NUM][MAX_BACK_UP_SI_DATA_LENGTH];
+} T_ERRC_SI_BackupInfo;
+
+#define ERRC_AS_CONFIG_DATA_LEN 5000
+typedef struct T_ERRC_BackupInfo_wb_Tag
+{
+    u32        servFreq;
+    u16        servCellId;
+    u16        servCellCp;
+    BOOL       siModification;
+    u32        siModifyCellIdentity;
+    TIMER_TYPE TSIModRemainLen;
+    T_ERRC_SI_BackupInfo siBackupInfo;
+#ifdef __UP_CIOT_PSM__
+    u8         asConfigInfo[ERRC_AS_CONFIG_DATA_LEN];
+#endif
+} T_ERRC_BackupInfo_wb;
+
+typedef struct
+{
+    u8  v_mmc_shutdownTypes;
+    u16 v_mmc_currentState;
+
+    u16 v_mmc_previousState;
+
+    /*PS Power On Status*/
+    u16 v_mmc_PowerOnStatus;
+    /*indicates CS domain invalid by net cause , auth fail*/
+    u8 v_mmc_csInvalidFlag;
+    /*indicates ps domain invalid by net cause , auth fail*/
+    u8 v_mmc_psInvalidFlag;
+    /* Power On RAT Info*/
+    u32 a_mmc_apiStartInfo[54];
+    /*attach type from pa*/
+    u8 v_mmc_mmiAttachType;
+    u8 v_mmc_mmiAttachTypeBak;
+    /*indication cs domain updata succeed or not,when lau,combine attach,combine rau suceed,set to 1*/
+    u8 v_mmc_csUpdatedFlag;
+    /*indication ps domain updata succeed or not,when ps attach, rau suceed,set to 1*/
+    u8 v_mmc_psUpdatedFlag;
+
+    /* negotiated Result: CP-CIOT Support*/
+    u8 v_mmc_cp_ciot_support;
+    /* negotiated Result: UP-CIOT Support*/
+    u8 v_mmc_up_ciot_support;
+    /* negotiated Result: S1_U_DataTransferSupport*/
+    u8 v_mmc_S1_U_DataTransferSupport;
+    /* negotiated Result: ERw/oPDN*/
+    u8 v_mmc_emmRegWithoutPdnSupport;
+    /* negotiated Result: HC for CP*/
+    u8 v_mmc_cp_hc_support;
+    /* negotiated Result: Extended PCO*/
+    u8 v_mmc_ePco_support;
+    /* negotiated Extended DRX Parameters*/
+    u8 v_mmc_negExtendedDrx;
+    /* negotiated eps lcs*/
+    u8 v_mmc_eps_lcs;
+    /*plmn mode select,auto or manual*/
+    u8 v_mmc_plmnSelMode;
+    /*user selected plmn with aceess technology in manual mode*/
+    u8 a_mmc_manualSelectedPlmn[MAX_PLMN_LEN];
+    u8 v_mmc_manualSelFplmn;
+
+    u8 a_mmc_psNotAllowedPlmnList[MAX_PLMN_NOT_ALLOWED_GPRS_LEN];
+    u8 a_mmc_serviceNotAllowedTaList[MAX_LAI_NOT_ALLOWED_LEN];
+    u8 a_mmc_roamingNotAllowedTaList[MAX_ROAMING_NOT_ALLOWED_LEN];
+
+    /*NAS Configuration Recv from USIM or NVM*/
+    /*NAS Signaling Low Priority Indicator*/
+    u8 v_mmc_nasSigLowPri;
+
+    /*Attach with IMSI indicator*/
+    u8 v_mmc_attachWithImsi;
+
+    /*Hplmn Priority Search Min Length*/
+    u8 v_mmc_minPeriodicSearchLen;
+
+    /*T3245 Support Indicator*/
+    u8 v_mmc_t3245Behaviour;
+
+    /*EAB Indicator*/
+    u8 v_mmc_eabSupport;
+
+    /*ESM retry Wait Time Value*/
+    u8 v_mmc_smRetryWaitTimerValue;
+
+    /* Power Saving Mode Support or not*/
+    u8 v_mmc_uePsmSupport;
+
+    /* Extended DRX support or not*/
+    u8 v_mmc_ueExtendedDrxSupport;
+
+    /*User Requested T3412 Extended value*/
+    u8 v_mmc_reqT3412ExtLength;
+
+    /*User Requested T3324 value*/
+    u8 v_mmc_reqT3324Length;
+
+    /*User Requested eDRX value*/
+    u8 v_mmc_reqExtendedDrx;
+
+    /* SIM or USIM*/
+    u8 v_mmc_simType;
+    /*MNC Length in IMSI*/
+    u8 v_mmc_mncLength;
+    /*Operation Mode*/
+    u8 v_mmc_SimOperMode;
+
+    /*hplmn derive imsi*/
+    u8 a_mmc_simHplmnBak[MAX_PLMN_LEN];
+
+    /* sim/usim is exist or not*/
+    u8 v_mmc_simExistFlagBak;
+
+    /*current selected plmn with aceess technology*/
+    u8 a_mmc_selectedPlmn[MAX_PLMN_LEN];
+
+    /*save current imsi*/
+    T_Imsi         s_mmc_imsiBak;
+
+    /*lte operate mode*/
+    u8 v_mmc_lteOperateMode;
+
+    /*cs domain not available list*/
+    u8 a_mmc_plmnCsDomainNotAvailable[16];
+
+    /*this variable record which mode is supported*/
+    u8 v_mmc_modeBitmap;
+
+    /*E-UTRAN LTE Voice Preference*/
+    u8 v_mmc_lteVoicePerfer;
+
+    /*E-UTRAN LTE SMS Preference*/
+    u8 v_mmc_lteSmsPrefer;
+
+    /*E-UTRAN LTE Usage Setting*/
+    u8 v_mmc_lteUsageSet;
+
+    u8 v_mmc_dualPriority;
+
+    u8 v_mmc_AsDeacted;
+
+    /*LteRat eMTC:0x01;NB-IoT:0x02*/
+    u8 v_mmc_LteRatTypeBak;
+
+    u8 v_mmc_DataPdnAutoAct;
+    u32 v_mmc_delayUpSimBitFlag;
+
+    /* LOCI &EPS NSC */
+    u8 a_mmc_CSLOCI[11];
+    u8 a_mmc_EPSLOCI[18];
+    u8 a_mmc_EPSNSC[54];
+    u8 a_mmc_regCellId[4];
+    u8 a_mmc_lockedPlmn[MAX_PLMN_LEN];
+    u8 v_mmc_plmnLocked;
+    u8 v_mmc_errSearchCell;
+    T_poc_nas s_mmc_poc;
+    u8 v_mmc_vsimFlag;
+    u32 v_mmc_fnCountInSleep;
+    u32 v_mmc_tickWhenWakeup;    
+    T_Lcm_GNSS_WiFi_nas s_mmc_lcmInfo;
+    /*Extended DRX active flag*/
+    u8 v_mmc_eDRXActiveFlag;
+
+    /*IMS Voice Available status*/
+    u8 v_mmc_imsVoiceAvailStatus;
+
+    /*IMS SMS Available status, This information is received from Upper Layer*/
+    u8 v_mmc_imsSmsAvailStatus;
+
+    T_MMC_BlackWhiteList s_mmc_gsmBlackWhiteList;
+    T_MMC_BlackWhiteList s_mmc_lteBlackWhiteList;
+    T_MMC_StoreBlackWhiteList s_mmc_storeBlackWhiteList;
+    T_MMC_SwitchedBlackPlmn s_mmc_switchedBlackPlmn;
+
+    /*1798320*/
+    u8 v_mmc_skipRplmn;
+    u8 v_mmc_skipRplmnFlag;
+
+    u8 v_mmc_disableElecFenceCell;
+    /*1866786*/
+    u8 v_mmc_eleFenceCellTimerLen;
+
+    u8 v_mmc_userSetAttFailMaxCountForIrat;
+
+#ifdef VOLTE_SUPPORT
+    /*1899497*/
+    u8 v_iniSecCtxForEmcAtt;
+#endif
+
+#ifdef CSG_SUPPORT
+    u8 v_csgSupportFlag;
+    u8 v_mmc_csgSelMode;
+    u8 v_mmc_csgPlmnSearchFlag;
+    u8 v_csgManualStatus;
+
+    /*Read from sim*/
+    u8 v_mmc_csgDisplayCtrBit;
+    u8 v_csgWhitelistNum;
+
+    /*CSG List length*/
+    u8 v_mmc_aCsgListLen;
+    u8 v_mmc_oCsgListLen;
+
+    /*if the file's structure is linear*/
+    u8 v_mmc_recordIndexOfAcsgL;
+    u8 v_mmc_recordIndexOfOcsgL;
+
+    u8 v_mmc_recordNumOfAcsgL;
+    u8 v_mmc_recordNumOfOcsgL;
+
+    /*used for control OCSGL Timer*/
+    u8 v_periodOcsglTimer;
+
+    u8 v_mmc_invalidCsgNum;
+
+    u8 v_manualCsgReportFlag;
+    u8 v_manualCsgResult;
+
+    /*used to control whether report hnbname or not*/
+    u8 v_regResultReportStatus;
+
+    /*record hnbname exist state*/
+    u8 v_hnbNameExistState;
+
+    /*used to indicate whether need update hnbName or not */
+    u8 v_hnbNameUpdateStatus;
+
+    u8 v_csgManualSelRplmnFlag;
+    u8 a_mmc_manualCsgSelectedPlmn[MAX_PLMN_LEN];
+    u32 v_manualSelectedCsgId;
+
+    T_AcsgListNode *p_mmc_aCsgList;
+    T_OcsgListNode *p_mmc_oCsgList;
+
+    T_HnbName s_hnbName;
+    T_OCSGL_Timer a_ocsglMmcTimer[MAX_CSGLIST_LEN];
+    T_csgWhitelist a_csg_whitelist[MAX_CSG_WHITELIST_LEN];
+#endif
+    u8 v_isSupportDisableIdLte;
+
+    /*bug 2049457:Is support ESM info flag present in Attach request message even if not config default APN*/
+    u8 v_esmInfoTransFlagSupport;
+
+    u8 v_mmc_writeNvRealTimeFlag;
+
+    u8 v_isDisableForbidHplmn;
+
+    u8 v_mmc_setMaxAttFailNumForAbnormal;
+
+    T_MMC_PreferPlmnList s_mmc_preferPlmnList;
+    T_MMC_PreferPlmnList s_mmc_storePreferPlmnList;
+
+    u8 v_mmc_weakSignalSearchPlmnOpti;
+
+    T_ConfigRplmn s_mmc_configLteRplmn;
+    T_ConfigRplmn s_mmc_configGsmRplmn;
+    T_ConfigRplmnInfo s_mmc_storeConfigRplmn;
+
+#ifdef __IRAT__
+    u8 v_attachRejNumFor15;
+    u8 v_disableLteFor15Flag;
+    T_DisableLtePara s_disableLtePara;
+#endif
+
+    /*Bug 2417191*/
+    u8 v_mmc_combineDetachFlag;
+    /*Bug 2417794*/
+    u8 v_mmc_useNvRplmnRatFlag;
+} T_MMC_BakupInfo;
+
+typedef struct
+{
+    u16 v_emm_currentState;
+    u16 v_emm_previousState;
+    u16 v_emm_waitPreviousState;
+    u8  v_emm_psSigConnectFlag;
+    /*Save the Addition Update Result in ATTACH/TAU Accept*/
+    u8  v_emm_addUpdateResult;
+
+    u8  v_emm_ESR_PS;
+    /*the camped PLMN when T3346 Started*/
+    u8  a_emm_t3346StartPlmn[MAX_PLMN_LEN];
+    u8  v_emm_t3346StartLowPrioInd;
+
+    u8 v_emm_eUtranNotAllowed;
+    u8 v_emm_nasMsgLowPriInd;
+    u8 v_emm_eabSupport;
+    u8 v_emm_t3324TimeByte;
+    u8 v_emm_periodicTauByte;
+    u8 v_emm_IMS_VoPS;
+    /*Emergency Bearer Service, received in ATTACH ACCEPT or TRACKING AREA UPDATE ACCEPT*/
+    u8 v_emm_EMC_BS;
+    u8 v_emm_tauRequestedByEsm;
+#ifdef CSG_SUPPORT
+    u8 v_csgManualSyncStatus;
+#endif
+} T_EMM_BakupInfo;
+
+typedef struct T_TRA_BakupInfo_Tag
+{
+    u32 log_sn; //PSM睡眠模式前LOG SN号
+    u32 psm_sleep_befor_times;  // PSM睡眠模式前时间戳，单位：(1/16K)s
+    u32 psm_sleep_times; //PSM睡眠时间，单位: 10ms
+} T_TRA_BakupInfo;
+
+
+typedef struct T_NVM_ProcessInfo_Tag
+{
+    u16                 crcdata;
+    u16                 len;
+
+    /*================MMC========================*/
+    T_MMC_BakupInfo     s_mmcBakupInfo;
+
+    /*================EMM=================*/
+    T_EMM_BakupInfo     s_emmBakupInfo;
+
+    /*================CMC=================*/
+    /* Defalut APN/PCO/PDN type configed by API*/
+    u8                  v_defaultPdnType;
+    u8                  v_defaultApnLen;
+    u8                  a_defaultApn[MAX_APN_LEN];
+    u16                 v_defaultPcoLen;
+    u8                  a_defaultPco[MAX_PCO_LEN];
+
+    /*================PS PUB=================*/
+    u8                  a_glo_simPlmnList[SIM_FILE_MAX_PLMN_SEL_LEN];/*Bug 973994*/
+    u8                  a_glo_simForbiddenPlmnList[SIM_FILE_MAX_FPLMN_LEN];
+    u8                  a_glo_simEhplmnList[SIM_FILE_MAX_EHPLMN_LEN];
+
+    /*================ESM=================*/
+    T_ESM_BakupInfo     a_esmBakupInfo[2];
+
+    /*================Timer Info==========*/
+    T_Timer_BakupInfo   s_timerBakupInfo;
+
+    /*================ERRC Info===============*/
+    T_ERRC_BackupInfo_wb   errcBackupInfo;
+
+    /*================SIM Info================*/
+    u8                     a_SimBakupInfo[8];
+    /*================API Info================*/
+    u8                     a_apiBakupInfo[4];
+    /*================AT Info=============*/
+    u8                     a_AtBakupInfo[MAX_AT_BAKUP_LEN];
+    /*================CSW Info=============*/
+    u8                     a_CswBakupInfo[MAX_CSW_BAKUP_LEN];
+    /*For PSM Shutdown*/
+    u32                    DurationBeforeShutdown;
+    T_TRA_BakupInfo s_traBakupInfo;
+    
+	/*================DS PSM SimFlag=============*/
+    u32                      psm_simflag;
+
+	
+    /*================RF Info=============*/
+    u8                     a_RfBakupInfo[MAX_RF_BAKUP_LEN];
+    
+} T_NVM_ProcessInfo;
+#endif
+
+#endif
+
+
+
+

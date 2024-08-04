@@ -1,0 +1,877 @@
+# Copyright (C) 2018 RDA Technologies Limited and/or its affiliates("RDA").
+# All rights reserved.
+#
+# This software is supplied "AS IS" without any warranties.
+# RDA assumes no responsibility or liability for the use of the software,
+# conveys no license or title under any patent, copyright, or mask work
+# right to the product. RDA reserves the right to make changes in the
+# software without notification.  RDA also make no representation or
+# warranty that such application will be suitable for the specified use
+# without further testing or modification.
+
+menu "Chip configuration"
+
+choice
+    prompt "CHIP"
+    optional
+
+config CHIP_8910_NOR16M_DDR32M
+    bool "8910A, NOR flash 16M, DDR 32M"
+    imply SOC_8910
+    imply NOR_FLASH
+    imply USE_DDR
+    imply FLASH_16M
+    imply RAM_32M
+
+config CHIP_8910_NOR16M_DDR64M
+    bool "8910B, NOR flash 16M, DDR 64M"
+    imply SOC_8910
+    imply NOR_FLASH
+    imply USE_DDR
+    imply FLASH_16M
+    imply RAM_64M
+
+config CHIP_8910_NOR16M_PSRAM16M
+    bool "8910C, NOR flash 16M, PSRAM 16M"
+    imply SOC_8910
+    imply NOR_FLASH
+    imply USE_PSRAM
+    imply FLASH_16M
+    imply RAM_16M
+
+config CHIP_8910_NOR8M_PSRAM16M
+    bool "8910DM, NOR flash 8M, PSRAM 16M"
+    imply SOC_8910
+    imply NOR_FLASH
+    imply USE_PSRAM
+    imply FLASH_8M
+    imply RAM_16M
+
+config CHIP_8910_NOR8M_PSRAM8M
+    bool "8910DM, NOR flash 8M, PSRAM 8M"
+    imply SOC_8910
+    imply NOR_FLASH
+    imply USE_PSRAM
+    imply FLASH_8M
+    imply RAM_8M
+
+config CHIP_8910_NOR4M_PSRAM8M
+    bool "8910DM, NOR flash 4M, PSRAM 8M"
+    imply SOC_8910
+    imply NOR_FLASH
+    imply USE_PSRAM
+    imply FLASH_4M
+    imply RAM_8M
+
+config CHIP_8910_NOR16M8M_DDR32M
+    bool "8910GF, NOR flash 16M+8M, DDR32M"
+    imply SOC_8910
+    imply NOR_FLASH
+    imply USE_DDR
+    imply FLASH_16M
+    imply RAM_32M
+
+config CHIP_8850_NOR2M_PSRAM8M
+    bool "8850BM_C1, NOR flash 2M, PSRAM 8M"
+    imply SOC_8850
+    imply NOR_FLASH
+    imply USE_PSRAM
+    imply FLASH_2M
+    imply RAM_8M
+
+config CHIP_8850_NOR4M_PSRAM8M
+    bool "8850BM, NOR flash 4M, PSRAM 8M"
+    imply SOC_8850
+    imply NOR_FLASH
+    imply USE_PSRAM
+    imply FLASH_4M
+    imply RAM_8M
+
+config CHIP_8850_NOR4M_PSRAM16M
+    bool "8850EM, NOR flash 4M, PSRAM 16M"
+    imply SOC_8850
+    imply NOR_FLASH
+    imply USE_PSRAM
+    imply FLASH_4M
+    imply RAM_16M
+
+config CHIP_8850_NOR8M_PSRAM8M
+    bool "8850CM, NOR flash 8M, PSRAM 8M"
+    imply SOC_8850
+    imply NOR_FLASH
+    imply USE_PSRAM
+    imply FLASH_8M
+    imply RAM_8M
+
+config CHIP_8850_NOR8M_PSRAM16M
+    bool "8850DM, NOR flash 8M, PSRAM 16M"
+    imply SOC_8850
+    imply NOR_FLASH
+    imply USE_PSRAM
+    imply FLASH_8M
+    imply RAM_16M
+
+config CHIP_8850_NOR8M_PSRAM8M_TZ
+    bool "8850CM, NOR flash 8M, PSRAM 8M"
+    imply SOC_8850
+    imply NOR_FLASH
+    imply USE_PSRAM
+    imply FLASH_8M
+    imply RAM_8M
+    imply USE_TRUSTY
+
+config CHIP_8850_NOR8M_PSRAM16M_TZ
+    bool "8850DM, NOR flash 8M, PSRAM 16M"
+    imply SOC_8850
+    imply NOR_FLASH
+    imply USE_PSRAM
+    imply FLASH_8M
+    imply RAM_16M
+    imply USE_TRUSTY
+
+config CHIP_8850_NOR16M_PSRAM16M
+    bool "8850EM, NOR flash 16M, PSRAM 16M"
+    imply SOC_8850
+    imply NOR_FLASH
+    imply USE_PSRAM
+    imply FLASH_16M
+    imply RAM_16M
+    imply USE_TRUSTY
+
+config CHIP_8811CD
+    bool "8811CD, NOR flash 2M, no PSRAM"
+    imply SOC_8811
+    imply NOR_FLASH
+    imply FLASH_2M
+	
+config CHIP_8821AB
+    bool "8821AB, NOR flash 2M, no PSRAM"
+    imply SOC_8821
+    imply NOR_FLASH
+    imply FLASH_2M
+
+config CHIP_8821AC
+    bool "8821AC, NOR flash 2M, no PSRAM"
+    imply SOC_8821
+    imply NOR_FLASH
+    imply FLASH_2M
+
+config CHIP_8821JD
+    bool "8821JD, NOR flash 4M, PSRAM 4M"
+    imply SOC_8821
+    imply NOR_FLASH
+    imply FLASH_4M
+    imply USE_PSRAM
+    imply RAM_4M
+
+config CHIP_8821CD
+    bool "8821CD, NOR flash 2M, no PSRAM"
+    imply SOC_8821
+    imply NOR_FLASH
+    imply FLASH_2M
+
+config CHIP_8811JD
+    bool "8811JD, NOR flash 4M, PSRAM 4M"
+    imply SOC_8811
+    imply NOR_FLASH
+    imply FLASH_4M
+    imply USE_PSRAM
+    imply OPI_PSRAM
+    imply RAM_4M
+
+config CHIP_8811JD_1618
+    bool "8811JD_1618, NOR flash 4M, no PSRAM"
+    imply SOC_8811
+    imply NOR_FLASH
+    imply FLASH_4M
+
+config CHIP_8811JD_1618_PSRAM
+    bool "8811JD_1618_PSRAM, NOR flash 4M, PSRAM 4M"
+    imply SOC_8811
+    imply NOR_FLASH
+    imply FLASH_4M
+    imply USE_PSRAM
+    imply RAM_4M
+
+config CHIP_8850_FPGA
+    bool "8850 FPGA"
+    imply SOC_8850
+    imply RUN_ON_FPGA
+    imply NOR_FLASH
+    imply USE_PSRAM
+    imply FLASH_8M
+    imply RAM_16M
+
+endchoice
+
+config SOC
+    string
+    default "8910" if SOC_8910
+    default "8811" if SOC_8811
+	default "8821" if SOC_8821
+    default "8850" if SOC_8850
+
+config RUN_ON_FPGA
+    bool
+config SOC_8910
+    bool
+    imply CPU_ARM
+    imply CPU_ARMV7A
+    imply CPU_ARM_CA5
+    imply HAVE_MMU
+    imply HAVE_LZMA
+    imply HAVE_SPINLOCK
+config SOC_8811
+    bool
+    imply CPU_ARM
+    imply CPU_ARMV8M
+    imply CPU_ARM_CM33F
+config SOC_8821
+    bool
+    imply CPU_ARM
+    imply CPU_ARMV8M
+    imply CPU_ARM_CM33F
+config SOC_8850
+    bool
+    imply CPU_ARM
+    imply CPU_ARMV7A
+    imply CPU_ARM_CA5
+    imply HAVE_MMU
+    imply HAVE_LZMA
+    imply HAVE_SPINLOCK
+config CPU_ARM
+    bool
+config CPU_ARMV7A
+    bool
+config CPU_ARMV7M
+    bool
+config CPU_ARMV8M
+    bool
+config CPU_ARM_CA5
+    bool
+config CPU_ARM_CM4F
+    bool
+config CPU_ARM_CM33F
+    bool
+config HAVE_MMU
+    bool
+config HAVE_LZMA
+    bool
+config HAVE_SPINLOCK
+    bool
+config NOR_FLASH
+    bool
+config NAND_FLASH
+    bool
+config USE_PSRAM
+    bool
+    imply HAVE_EXT_RAM
+config QPI_PSRAM
+    bool
+config OPI_PSRAM
+    bool
+config USE_DDR
+    bool
+    imply HAVE_EXT_RAM
+config HAVE_EXT_RAM
+    bool
+config RAM_4M
+    bool
+config RAM_8M
+    bool
+config RAM_16M
+    bool
+config RAM_32M
+    bool
+config RAM_64M
+    bool
+config FLASH_2M
+    bool
+config FLASH_4M
+    bool
+config FLASH_8M
+    bool
+config FLASH_16M
+    bool
+config FLASH_SIZE
+    hex
+    default 0x200000 if FLASH_2M
+    default 0x400000 if FLASH_4M
+    default 0x800000 if FLASH_8M
+    default 0x1000000 if FLASH_16M
+config RAM_SIZE
+    hex
+    default 0x400000 if RAM_4M
+    default 0x800000 if RAM_8M
+    default 0x1000000 if RAM_16M
+    default 0x2000000 if RAM_32M
+    default 0x4000000 if RAM_64M
+config USE_TRUSTY
+    bool
+
+if SOC_8811 || SOC_8821
+config 8811_BUILD_NBROM
+    bool "Build NBROM from source codes"
+    default n
+    help
+        When enabled, NBROM will be built from source codes. In
+        production, the prebuilt elf matching the chip will be used.
+endif
+
+if SOC_8910
+config FLASH_LP_POWER_DOWN
+    bool "Power down flash in low power mode"
+    default y
+    help
+        Power down flash in low power mode.
+
+config PSRAM_LP_HALF_SLEEP
+    bool "PSRAM enter half sleep in low power mode"
+    default n
+    help
+        PSRAM enter half sleep in low power mode.
+
+config CPBIN_SIGCHECK
+    bool "Whether to check cp images signature"
+    default y
+    help
+        When enabled, cp code bins signature will be checked.
+endif
+
+if SOC_8850
+config PSRAM_LP_HALF_SLEEP
+    bool "PSRAM enter half sleep in low power mode"
+    default y
+    help
+        PSRAM enter half sleep in low power mode.
+
+config FLASH_LP_POWER_DOWN
+    bool "Power down flash in low power mode"
+    default y
+    help
+        Power down flash in low power mode.
+
+config SHAREMEM_EMMCDDR_INFO
+    bool "suppor flash and psram infomation"
+    default y
+    help
+        load flash and psram infomation to share memory
+
+endif
+
+menu "Frequency"
+
+if SOC_8910
+    config DEFAULT_CPUPLL_FREQ
+        int "CPUPLL frequency"
+        default 1000000000
+
+    config DEFAULT_MEMPLL_FREQ
+        int "MEMPLL frequency"
+        default 800000000
+
+    config DEFAULT_MEMBUS_FREQ
+        int "default PSRAM/DDR frequency"
+        default 200000000
+
+    config DEFAULT_CPU_FREQ
+        int "default CPU frequency"
+        default 500000000
+
+    config DEFAULT_SYSAXI_FREQ
+        int "default sysaxi frequency"
+        default 400000000
+
+    config MAX_SYSAXI_FREQ
+        int "maximum sysaxi frequency"
+        default 400000000
+
+    config DEFAULT_SYSAHB_FREQ
+        int "default sysahb frequency"
+        default 200000000
+
+    config DEFAULT_SPIFLASH_CTRL_FREQ
+        int "FLASH controller frequency"
+        default 200000000
+
+    config DEFAULT_SPIFLASH_DEV_FREQ
+        int "FLASH device frequency"
+        default 200000000
+
+    config DEFAULT_SPIFLASH_INTF_FREQ
+        int "FLASH interface frequency"
+        default 100000000
+
+    config SHAREMEM_EMMCDDR_INFO
+        bool "suppor flash and psram infomation"
+        default y
+        help
+            load flash and psram infomation to share memory
+endif
+
+if SOC_8811 || SOC_8821
+    config DEFAULT_MCUPLL_FREQ
+        int "MCU PLL frequency"
+        default 525000000
+
+    config DEFAULT_SYS_CLK_FREQ
+        int "default sys_clk frequency"
+        default 262500000
+        help
+            It is divided from MCUPLL. Only limited divider can be supported.
+
+    config MAX_SYS_CLK_FREQ
+        int "maximum sys_clk frequency"
+        default 262500000
+        help
+            The maximum sys_clk frequency. It will be used to check request
+            sys_clk frequency.
+
+    config WFI_SLOW_SYS_CLK_FREQ
+        int "sys_clk slow frequency in WFI"
+        default 26000000
+        help
+            In WFI and it is permitted to decrease clk_sys, clk_sys frequency
+            will be decreased.
+
+    config DEFAULT_SPIFLASH_INTF_FREQ
+        int "FLASH frequency"
+        default 105000000
+        help
+            It is divided from MCUPLL. Only limited divider can be supported.
+
+            It is FLASH frequency. When flash controller clk_divider is 2,
+            the clock after cfg_clk_spiflash should be 2x of this frequency.
+
+    config DEFAULT_SPIFLASH_EXT_INTF_FREQ
+        int "External FLASH frequency"
+        default 105000000
+        help
+            It is divided from MCUPLL. Only limited divider can be supported.
+
+            It is FLASH frequency. When flash controller clk_divider is 2,
+            the clock after cfg_clk_spiflash should be 2x of this frequency.
+
+    config DEFAULT_PSRAM_INTF_FREQ
+        int "PSRAM frequency"
+        default 175000000
+        help
+            It is divided from MCUPLL. Only limited divider can be supported.
+
+            It is PSRAM frequency. The clock after cfg_clk_psram should be 2x
+            of this frequency.
+
+    config DEFAULT_NBIOT_FAST_FREQ
+        int "clk_nbiot_fast frequency"
+        default 175000000
+
+    config RC26M_CALIB_FIXED_FREQ
+        int "rc26m calib fixed frequency"
+        default 14745600
+        help
+            When it is not 0, rc26m_calib will be fixed frequency. This
+            frequency can't be larger than the rc26m real frequency.
+
+            When it is 0, rc26m_calib is not fixed frequency. Rather, it
+            will be 80% of the initial measured rc26m real frequency.
+
+    config PMIC_TIMER_FREQ
+        int "pmic timer frequency"
+        default 1024
+        help
+            The clock source of PMIC timer should select xtal 32K. The timer
+            will use lower frequency to save power. This frequency will be
+            used for RTC and alarm.
+
+    config SHAREMEM_EMMCDDR_INFO
+        bool "suppor flash and psram infomation"
+        default y
+        help
+            load flash and psram infomation to share memory
+endif
+
+if SOC_8850
+    config DEFAULT_APPLL_FREQ
+        int "APPLL frequency"
+        default 1000000000
+
+    config DEFAULT_APA5_FREQ
+        int "APA5 frequency"
+        default 500000000
+
+    config RC26M_CALIB_FIXED_FREQ
+        int "rc26m calib fixed frequency"
+        default 14745600
+        help
+            When it is not 0, rc26m_calib will be fixed frequency. This
+            frequency can't be larger than the rc26m real frequency.
+
+            When it is 0, rc26m_calib is not fixed frequency. Rather, it
+            will be 80% of the initial measured rc26m real frequency.
+
+    config DEFAULT_AP_BUS_FREQ
+        int "default AP_BUS frequency"
+        default 250000000
+        help
+            It is divided from APA5. Only limited divider can be supported.
+
+    config MAX_AP_BUS_FREQ
+        int "maximum ap_bus frequency"
+        default 250000000
+        help
+            The maximum ap_bus frequency. It will be used to check request
+            ap_bus frequency.
+
+    config DEFAULT_SYSAHB_FREQ
+        int "default sysahb frequency"
+        default 200000000
+endif
+endmenu
+
+menu "RAM layout"
+if SOC_8910
+    config CP_RAM_SIZE
+        hex "CP RAM size"
+        help
+            This is the size for CP, including memory list and shared memory.
+            There may exist multiple configuration for CP RAM size, so there
+            are no default value.
+
+    config APP_FLASHIMG_RAM_SIZE
+        hex "Reserved RAM size for application image from flash"
+        default 0x0 if !APPIMG_LOAD_FLASH
+        default 0x10000
+        help
+            It will be located from the end of application RAM.
+
+    config APP_FILEIMG_RAM_SIZE
+        hex "Reserved RAM size for application image from file"
+        default 0x0 if !APPIMG_LOAD_FILE
+        default 0x40000
+        help
+            It will be located from the end of reserved RAM for application
+            image from FLASH.
+
+    config APP_TRUSTZONE_RAM_SIZE
+        hex "Reserved RAM size for trust zone firmware"
+        default 0x0 if !TRUSTZONE_SUPPORT
+        default 0x110000
+        help
+            Reserved RAM for trust zone firmware
+
+    config APP_BTFW_RAM_SIZE
+        hex "Reserved RAM size for BT controller"
+        default 0x0 if !BT_NEED_FIRMWARE
+        default 0x40000
+        help
+            Reserved RAM for BT firmware.
+endif
+
+if SOC_8811 || SOC_8821
+    config TFM_SRAM_SIZE
+        hex "TFM reserved SRAM size"
+        default 0x0
+        help
+            When TFM is not enabled, usually application SRAM will start from
+            the beginning. When TFM is enabled, TFM SRAM will be located at
+            the beginning.
+
+    config OPENCPU_SRAM_SIZE
+        hex "Reserved SRAM size for openCPU image"
+        default 0x0 if !OPENCPU_ENABLED
+        default 0x10000
+        help
+            It will be located from the end of application SRAM.
+
+    config APP_FLASHIMG_RAM_SIZE
+        hex "Reserved RAM size for application image from flash"
+        default 0x0 if !APPIMG_LOAD_FLASH
+        default 0x10000
+        help
+            It will be located from the end of application RAM.
+
+    config APP_FILEIMG_RAM_SIZE
+        hex "Reserved RAM size for application image from file"
+        default 0x0 if !APPIMG_LOAD_FILE
+        default 0x40000
+        help
+            It will be located from the end of reserved RAM for application
+            image from FLASH.
+endif
+
+if SOC_8850
+    config CP_RAM_SIZE
+        hex "CP RAM size"
+        help
+            This is the size for CP, including memory list and shared memory.
+            There may exist multiple configuration for CP RAM size, so there
+            are no default value.
+
+    config APP_FLASHIMG_RAM_SIZE
+        hex "Reserved RAM size for application image from flash"
+        default 0x0 if !APPIMG_LOAD_FLASH
+        default 0x10000
+        help
+            It will be located from the end of application RAM.
+			
+    config APP2_FLASHIMG_RAM_SIZE                #quectel update
+        hex "Reserved RAM size for application2 image from flash"
+        default 0x0 if !APPIMG_LOAD_FLASH
+        default 0x0   #0x10000, need to modify the size as required 
+        help
+            It will be located from the end of application RAM.
+
+    config APP_FILEIMG_RAM_SIZE
+        hex "Reserved RAM size for application image from file"
+        default 0x0 if !APPIMG_LOAD_FILE
+        default 0x10000
+        help
+            It will be located from the end of reserved RAM for application
+            image from FLASH.
+
+    config OPENCPU_RAM_SIZE
+        hex "Reserved RAM size for openCPU image"
+        default 0x0 if !OPENCPU_ENABLED
+        default 0x10000
+        help
+            Reserved RAM size for openCPU image
+	    
+    config APP2_FILEIMG_RAM_SIZE                #quectel update
+        hex "Reserved RAM size for application2 image from file"
+        default 0x0 if !APPIMG_LOAD_FILE
+        default 0x0   #0x10000, need to modify the size as required
+        help
+            It will be located from the end of reserved RAM for application
+            image from FLASH.
+
+    config GNSS_RAM_SIZE
+        hex "Reserved RAM size for GNSS"
+        default 0x0 if !SUPPORT_GNSS
+        default 0x1c000
+        help
+            Reserved RAM for gnss zone
+
+    config APP_TRUSTZONE_SML_RAM_SIZE
+        hex "Reserved RAM size for trust zone sml firmware"
+        default 0x0 if !TRUSTZONE_SUPPORT
+        default 0x40000
+        help
+            Reserved RAM for trust zone sml firmware
+
+    config APP_TRUSTZONE_TOS_RAM_SIZE
+        hex "Reserved RAM size for trust zone tos firmware"
+        default 0x0 if !TRUSTZONE_SUPPORT
+        default 0x300000
+        help
+            Reserved RAM for trust zone tos firmware
+
+    config CHIP_8850_V3_BOARD
+        bool "8850 V3 board"
+        default n
+        help
+            Whether board is 8850 V3
+
+    config CHIP_8850_V4_BOARD
+        bool "8850 V4 board"
+        default n
+        help
+            Whether board is 8850 V4
+
+    config CHIP_8850_V111_BOARD
+        bool "8850 V111 board"
+        default n
+        help
+            Whether board is 8850 V111
+endif
+
+config BSCORE_ENABLE
+    bool "enable blue screen backup"
+    default y
+    help
+        When enabled, a block of memory will be reserved for blue screen
+        backup. At reset, this block of memory can be saved to file system or
+        upload to server through network, for basic blue screen analysis.
+
+if BSCORE_ENABLE
+config BSCORE_ON_SRAM
+    bool "blue screen backup on sram"
+    default y if SOC_8811
+	default y if SOC_8821
+    default n
+    help
+        Whether blue screen backup is located on sram. In this case, the reset
+        method should take care not to power off sram during reset.
+
+config BSCORE_SIZE
+    hex "size for blue screen backup"
+    default 0x2000 if SOC_8910
+    default 0x2000 if SOC_8850
+    default 0x800 if SOC_8811
+	default 0x800 if SOC_8821
+    help
+        When it is not zero, a block of memory will be reserved for blue screen
+        backup. At reset, this block of memory can be saved to file system or
+        upload to server through network, for basic blue screen analysis.
+
+config BSCORE_STACK_SIZE
+    hex "stack size in blue screen backup"
+    default 0xE00 if SOC_8910
+    default 0xE00 if SOC_8850
+    default 0x400 if SOC_8811
+	default 0x400 if SOC_8821
+    help
+        In blue screen backup, the stack will be saved. This is the total saved
+        stack size, even if BSCORE_STACK_EXTRA is not 0.
+
+if SOC_8910 || SOC_8850
+config BSCORE_CP_STACK_SIZE
+    hex "cp stack size in blue screen backup"
+    default 0x600
+    help
+        In blue screen backup, the stack will be saved. This is the total saved
+        stack size, even if BSCORE_STACK_EXTRA is not 0.
+endif
+
+config BSCORE_STACK_EXTRA
+    hex "extra stack size in blue screen backup"
+    depends on BSCORE_SIZE != 0x0
+    default 0x200 if SOC_8910
+    default 0x200 if SOC_8850
+    default 0x80 if (SOC_8811) || (SOC_8821)
+    help
+        At save stack in blue screen backup, extra memory may be saved.
+
+config BSCORE_PROFILE_SIZE
+    hex "profile size in blue screen backup"
+    depends on BSCORE_SIZE != 0x0
+    default 0x400 if SOC_8910
+    default 0x400 if SOC_8850
+    default 0x100 if (SOC_8811) || (SOC_8821)
+    help
+        Size of latest profile data in blue screen backup.
+endif
+endmenu
+
+menu "Compile options"
+config ENABLE_GCC_LTO
+    bool "Enable GCC LTO"
+    default n
+    help
+        GCC LTO will optimize at link time. It is possible to generate faster
+        and smaller codes. However, it will increase building time, and makes
+        debugging more difficult. It should be enabled only when code size
+        is really an issue, and thorough testing is needed.
+endmenu
+
+endmenu
+
+menu "Board configuration"
+
+config BOARD_ENTER_CALIB_BY_GPIO
+    bool "enter calibration mode by detect GPIO"
+    depends on SOC_8910
+    default n
+    help
+        When enabled, GPIO will be checked at the beginning of system boot.
+        System will enter calibration mode when the specified GPIO is high.
+
+        The standard method to enter calibration mode is SIMBA enter mode
+        feature. So, this feature is not enabled by default.
+
+config BOARD_ENTER_CALIB_GPIO
+    int "enter calibration mode GPIO number"
+    depends on BOARD_ENTER_CALIB_BY_GPIO
+    default 13
+    help
+        When the feature of detect GPIO to enter calibration mode is enabled,
+        this configures the GPIO.
+
+config BOARD_SUPPORT_SIM1_DETECT
+    bool "sim 1 hot plug support"
+    default n
+    help
+        Then board support sim hot plug detect by GPIO.
+
+config BOARD_SIM1_DETECT_GPIO
+    int "sim 1 detect GPIO number"
+    depends on BOARD_SUPPORT_SIM1_DETECT
+    default 4
+    help
+        Then GPIO to use to detect SIM1 hot plug.
+
+config BOARD_SUPPORT_SIM2_DETECT
+    bool "sim 2 hot plug support"
+    default n
+    help
+        Then board support sim hot plug detect by GPIO.
+
+config BOARD_SIM2_DETECT_GPIO
+    int "sim 2 detect GPIO number"
+    depends on BOARD_SUPPORT_SIM2_DETECT
+    help
+        Then GPIO to use to detect SIM2 hot plug.
+
+config BOARD_KPLED_USED_FOR_RF_SWITCH
+    bool "pmic kpled used for rf switch"
+    default n
+    help
+        Then board set Kpled used for rf switch.
+
+config BOARD_WITH_EXT_FLASH
+    bool "external flash on board"
+    default n
+    help
+        Whether there are external flash on board.
+
+if BOARD_WITH_EXT_FLASH
+config BOARD_EXT_FLASH_SIZE
+    hex "external flash size"
+
+config BOARD_EXT_FLASH_FREQ
+    int "external flash frequency"
+    default 52000000 if SOC_8811
+	default 52000000 if SOC_8821
+    default 83000000 if SOC_8910
+    default 83000000 if SOC_8850
+    help
+        External flash frequency
+
+config BOARD_EXT_FLASH_QUAD_MODE
+    bool "external flash in quad mode"
+    default y
+
+config BOARD_EXT_FLASH_SAMPLE_DELAY
+    int "external flash controller sample delay"
+    default 1
+
+config BOARD_EXT_FLASH_CLK_DIVIDER
+    int "external flash controller clk divider"
+    default 2
+
+if SOC_8811 || SOC_8821
+choice
+    prompt "external flash io"
+    optional
+
+    config BOARD_EXT_FLASH_GPIO20
+    bool "gpio 20/21/22/23/24/25"
+    help
+        External flash is connected to gpio 20-25.
+endchoice
+endif
+endif
+
+config CP_SIGN_ENABLE
+    bool "support cp sign & check"
+    default y if CONFIG_SOC_8850
+    default n
+
+config IDENTIFY_CLOCK
+    bool "identify clock by GPIO and RTC mode"
+    default y if SOC_8850
+    default n
+    help
+        Identify hardware clock use GPIO and RTC mode, it's better to choose
+        GPIO in the same power domain.
+
+endmenu

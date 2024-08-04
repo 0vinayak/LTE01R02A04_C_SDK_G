@@ -1,0 +1,29 @@
+
+///////////////////////////////////////////// IMS /////////////////////////////////////////////
+
+// audioRtpTimeout: Seconds. Call will be disconnected if not receive audio RTP before expire
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\audioRtpTimeout=20
+
+// audioRtcpTimeout: Seconds. Call will be disconnected if not receive audio RTCP before expire
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\audioRtcpTimeout=20
+
+// MT call no answer timer after send 180 (Sec)
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingingTimer=30
+
+// MO call no answer timer after receive 180 (Sec)
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingbackTimer=90
+
+//The Conference server URI.
+//If not set, UE will generate one according to TS23.003 with format:
+//  sip:mmtel@conf-factory.[domain]
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\conf_uri="sip:conf.mnc004.mcc420.3gppnetwork.org"
+
+
+///////////////////////////////////////////// GAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// LAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// WAS /////////////////////////////////////////////
+

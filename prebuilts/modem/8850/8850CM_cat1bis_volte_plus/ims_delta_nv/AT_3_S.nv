@@ -1,0 +1,30 @@
+
+///////////////////////////////////////////// IMS /////////////////////////////////////////////
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\USSI_Enabled=1
+
+// sip_regExpireSec: Register expire time send to server in register request header
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\sip_regExpireSec=3600
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingingTimer=60
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingbackTimer=60
+
+// Value in Session-Expire (Sec)
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\sip_sessionTimer=250
+
+// audioRtpTimeout: Seconds. Call will be disconnected if not receive audio RTP before expire
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\audioRtpTimeout=15
+
+
+///////////////////////////////////////////// GAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// LAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// WAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// MN //////////////////////////////////////////////
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\mn_sim_nvinfo\forbid_activate_ims_pdn_when_roaming=0x1

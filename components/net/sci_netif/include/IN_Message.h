@@ -1,0 +1,566 @@
+/******************************************************************************
+ ** File Name:      IN_Message.h                                              *
+ ** Author:         Liu Xiangyu                                               *
+ ** DATE:           11/01/2022                                                *
+ ** Copyright:      2022 Spreadtrum, Incorporated. All Rights Reserved.       *
+ ** Description:    DAPS module messages
+ ******************************************************************************
+
+ ******************************************************************************
+ **                        Edit History                                       *
+ ** ------------------------------------------------------------------------- *
+ ** DATE           NAME             DESCRIPTION                               *
+ ** 11/01/2022     Liu Xiangyu       Create.                                  *
+ ** 11/04/2022     Liu Xiangyu      Add wchar fucntion                        *
+ ******************************************************************************/
+
+#ifndef _IN_MESSAGE_H
+#define _IN_MESSAGE_H
+
+/**--------------------------------------------------------------------------*
+ **                         Include Files                                    *
+ **--------------------------------------------------------------------------*/
+//#include "sig_code.h"
+
+/**--------------------------------------------------------------------------*
+ **                         Compiler Flag                                    *
+ **--------------------------------------------------------------------------*/
+#ifdef __cplusplus
+    extern   "C"
+    {
+#endif
+
+/**--------------------------------------------------------------------------*
+ **                         MACRO DEFINITION                                 *
+ **--------------------------------------------------------------------------*/
+
+
+#undef POC_MSG
+#define POC_MSG(x) x
+
+#undef SIP_MSG
+#define SIP_MSG(x) x
+
+#undef RTP_RTCP_MSG
+#define RTP_RTCP_MSG(x) x
+
+#undef PUA_MSG
+#define PUA_MSG(x) x
+
+#define POC_SAP_MSGS \
+    POC_MSG(POC_START_REQ),\
+    POC_MSG(POC_START_CNF),\
+    POC_MSG(POC_CONFIG_REQ),\
+    POC_MSG(POC_CONFIG_CNF),\
+    POC_MSG(POC_REGISTRATION_REQ),\
+    POC_MSG(POC_REGISTRATION_CNF),\
+    POC_MSG(POC_DEREGISTRATION_REQ),\
+    POC_MSG(POC_DEREGISTRATION_CNF),\
+    POC_MSG(POC_REGISTRATION_STATE_IND),\
+    POC_MSG(POC_PUBLISH_SETTING_REQ),\
+    POC_MSG(POC_PUBLISH_SETTING_CNF),\
+    POC_MSG(POC_MOCALL_INIT_REQ),\
+    POC_MSG(POC_MOCALL_INIT_CNF),\
+    POC_MSG(POC_MOCALL_REQ),\
+    POC_MSG(POC_MOCALL_PROCESSING_IND),\
+    POC_MSG(POC_MOCALL_RINGING_IND),\
+    POC_MSG(POC_MOCALL_ESTABLISH_CNF),\
+    POC_MSG(POC_MOCALL_ESTABLISH_FAIL_IND),\
+    POC_MSG(POC_CALL_DISCONNECT_IND),\
+    POC_MSG(POC_MOCALL_CANCEL_REQ),\
+    POC_MSG(POC_MOCALL_CANCEL_CNF),\
+    POC_MSG(POC_LEAVE_CALL_REQ),\
+    POC_MSG(POC_LEAVE_CALL_CNF),\
+    POC_MSG(POC_MTCALL_IND),\
+    POC_MSG(POC_ANSWER_MTCALL_RSP),\
+    POC_MSG(POC_REJECT_MTCALL_RSP),\
+    POC_MSG(POC_MTCALL_ESTABLISH_IND),\
+    POC_MSG(POC_MTCALL_ESTABLISH_FAIL_IND),\
+    POC_MSG(POC_LEAVE_CALL_IND),\
+    POC_MSG(POC_IPA_IND),\
+    POC_MSG(POC_CONFERENCE_NOTIFY_IND),\
+    POC_MSG(POC_FLOOR_REQUEST_REQ),\
+    POC_MSG(POC_FLOOR_RELEASE_REQ),\
+    POC_MSG(POC_FLOOR_GRANTED_IND),\
+    POC_MSG(POC_FLOOR_DENY_IND),\
+    POC_MSG(POC_FLOOR_IDLE_IND), \
+    POC_MSG(POC_FLOOR_TAKEN_IND), \
+    POC_MSG(POC_FLOOR_REVOKE_IND), \
+    POC_MSG(POC_SPEECH_PLAYER_SET_PARAM_REQ),\
+    POC_MSG(POC_SPEECH_PLAYER_SET_PARAM_CNF)
+
+#define SIP_SAP_MSGS \
+    SIP_MSG(SIP_REG_SESS_INIT_REQ),\
+    SIP_MSG(SIP_REG_SESS_INIT_CNF),\
+    SIP_MSG(SIP_REG_REGISTER_REQ),\
+    SIP_MSG(SIP_REG_REDIRECTED_IND),\
+    SIP_MSG(SIP_REG_REGISTER_CNF),\
+    SIP_MSG(SIP_REG_DEREGISTER_REQ),\
+    SIP_MSG(SIP_REG_DEREGISTER_CNF),\
+    SIP_MSG(SIP_REG_REF_START_IND), \
+    SIP_MSG(SIP_REG_REF_END_IND),\
+    SIP_MSG(SIP_REG_TERMINATE_REQ),\
+    SIP_MSG(SIP_REG_TERMINATE_CNF),\
+    SIP_MSG(SIP_REG_ERROR_IND),\
+    SIP_MSG(SIP_CALL_SESS_INIT_REQ),\
+    SIP_MSG(SIP_CALL_SESS_INIT_CNF),\
+    SIP_MSG(SIP_CALL_INVITE_REQ),\
+    SIP_MSG(SIP_CALL_INVITE_IND),\
+    SIP_MSG(SIP_CALL_INVITE_RSP),\
+    SIP_MSG(SIP_CALL_INVITE_CNF),\
+    SIP_MSG(SIP_CALL_UPDATE_REQ),\
+    SIP_MSG(SIP_CALL_UPDATE_IND),\
+    SIP_MSG(SIP_CALL_UPDATE_RSP),\
+    SIP_MSG(SIP_CALL_UPDATE_CNF),\
+    SIP_MSG(SIP_CALL_REDIRECTED_IND),\
+    SIP_MSG(SIP_CALL_PROCEEDING_IND),\
+    SIP_MSG(SIP_CALL_PRACK_REQ),\
+    SIP_MSG(SIP_CALL_PRACK_IND),\
+    SIP_MSG(SIP_CALL_PRACK_RSP),\
+    SIP_MSG(SIP_CALL_PRACK_CNF),\
+    SIP_MSG(SIP_CALL_CANCEL_REQ),\
+    SIP_MSG(SIP_CALL_CANCEL_IND), \
+    SIP_MSG(SIP_CALL_CANCEL_RSP), \
+    SIP_MSG(SIP_CALL_CANCEL_CNF), \
+    SIP_MSG(SIP_CALL_ACK_REQ),\
+    SIP_MSG(SIP_CALL_ACK_IND),\
+    SIP_MSG(SIP_CALL_PROCEEDING_TIMEOUT_IND),\
+    SIP_MSG(SIP_CALL_DISCONNECT_REQ),\
+    SIP_MSG(SIP_CALL_DISCONNECT_IND),\
+    SIP_MSG(SIP_CALL_DISCONNECT_RSP),\
+    SIP_MSG(SIP_CALL_DISCONNECT_CNF),\
+    SIP_MSG(SIP_CALL_TERMINATE_REQ),\
+    SIP_MSG(SIP_CALL_TERMINATE_CNF),\
+    SIP_MSG(SIP_CALL_ERROR_IND),\
+    SIP_MSG(SIP_PUB_SESS_INIT_REQ), \
+    SIP_MSG(SIP_PUB_SESS_INIT_CNF), \
+    SIP_MSG(SIP_PUB_PUBLISH_REQ), \
+    SIP_MSG(SIP_PUB_REDIRECTED_IND),\
+    SIP_MSG(SIP_PUB_PUBLISH_CNF),\
+    SIP_MSG(SIP_PUB_REMOVE_REQ),\
+    SIP_MSG(SIP_PUB_REMOVE_CNF), \
+    SIP_MSG(SIP_PUB_REFRESH_REQ),\
+    SIP_MSG(SIP_PUB_REFRESH_CNF),\
+    SIP_MSG(SIP_PUB_REF_START_IND), \
+    SIP_MSG(SIP_PUB_REF_END_IND),\
+    SIP_MSG(SIP_PUB_TERMINATE_REQ),\
+    SIP_MSG(SIP_PUB_TERMINATE_CNF), \
+    SIP_MSG(SIP_PUB_ERROR_IND),\
+    SIP_MSG(SIP_SUBS_SESS_INIT_REQ), \
+    SIP_MSG(SIP_SUBS_SESS_INIT_CNF), \
+    SIP_MSG(SIP_SUBS_SUBSCRIBE_REQ), \
+    SIP_MSG(SIP_SUBS_REDIRECTED_IND),\
+    SIP_MSG(SIP_SUBS_SUBSCRIBE_CNF),\
+    SIP_MSG(SIP_SUBS_NOTIFY_IND),\
+    SIP_MSG(SIP_SUBS_UNSUBSCRIBE_REQ),\
+    SIP_MSG(SIP_SUBS_UNSUBSCRIBE_CNF),\
+    SIP_MSG(SIP_SUBS_REF_START_IND),\
+    SIP_MSG(SIP_SUBS_REF_END_IND), \
+    SIP_MSG(SIP_SUBS_TERMINATE_REQ),\
+    SIP_MSG(SIP_SUBS_TERMINATE_CNF), \
+    SIP_MSG(SIP_SUBS_ERROR_IND)
+
+#define RTP_RTCP_SAP_MSGS \
+    RTP_RTCP_MSG(RTP_SIG_RTCP_SRRR_SEND_REQ),\
+    RTP_RTCP_MSG(RTP_SIG_RTCP_SRRR_SEND_CNF),\
+    RTP_RTCP_MSG(RTP_SIG_RTCP_DATA_SEND_REQ),\
+    RTP_RTCP_MSG(RTP_SIG_RTCP_DATA_SEND_CNF),\
+    RTP_RTCP_MSG(RTP_SIG_RTCP_SRRR_SEND_IND),\
+    RTP_RTCP_MSG(RTP_SIG_RTCP_DATA_RCVD_IND),\
+    RTP_RTCP_MSG(RTP_SIG_RTCP_SRRR_RCVD_IND),\
+    RTP_RTCP_MSG(RTP_SIG_RTCP_TIMEOUT_IND),\
+    RTP_RTCP_MSG(RTP_SIG_RTCP_BYE_RCVD_IND)
+
+#define PUA_SAP_MSGS \
+    PUA_MSG(PUA_PRES_SRC_CREATE_REQ),\
+    PUA_MSG(PUA_PRES_SRC_CREATE_CNF),\
+    PUA_MSG(PUA_PRES_SRC_CLOSE_REQ),\
+    PUA_MSG(PUA_PRES_SRC_CLOSE_CNF),\
+    PUA_MSG(PUA_PRES_SRC_PUB_REQ),\
+    PUA_MSG(PUA_PRES_SRC_PUB_CNF),\
+    PUA_MSG(PUA_PRES_SRC_UNPUB_REQ),\
+    PUA_MSG(PUA_PRES_SRC_UNPUB_CNF),\
+    PUA_MSG(PUA_PRES_SRC_AUTH_IND),\
+    PUA_MSG(PUA_PRES_SRC_AUTH_RSP),\
+    PUA_MSG(PUA_PRES_SRC_PUBLISHING_IND),\
+    PUA_MSG(PUA_PRES_SRC_REDIRECTED_IND),\
+    PUA_MSG(PUA_PRES_SRC_ERROR_IND),\
+    PUA_MSG(PUA_PRES_SRC_REF_IND),\
+    PUA_MSG(PUA_PRES_SRC_TERMINATED_IND),\
+    PUA_MSG(PUA_WATCHER_CREATE_REQ),\
+    PUA_MSG(PUA_WATCHER_CREATE_CNF),\
+    PUA_MSG(PUA_WATCHER_CLOSE_REQ),\
+    PUA_MSG(PUA_WATCHER_CLOSE_CNF),\
+    PUA_MSG(PUA_WATCHER_SUBSCRIBE_REQ),\
+    PUA_MSG(PUA_WATCHER_SUBSCRIBE_CNF),\
+    PUA_MSG(PUA_WATCHER_UNSUB_REQ),\
+    PUA_MSG(PUA_WATCHER_UNSUB_CNF),\
+    PUA_MSG(PUA_WATCHER_AUTH_IND),\
+    PUA_MSG(PUA_WATCHER_AUTH_RSP),\
+    PUA_MSG(PUA_WATCHER_NOTIFY_IND),\
+    PUA_MSG(PUA_WATCHER_REDIRECTED_IND),\
+    PUA_MSG(PUA_WATCHER_ERROR_IND),\
+    PUA_MSG(PUA_WATCHER_TERMINATED_IND),\
+    PUA_MSG(PUA_WINFO_CREATE_REQ),\
+    PUA_MSG(PUA_WINFO_CREATE_CNF),\
+    PUA_MSG(PUA_WINFO_CLOSE_REQ),\
+    PUA_MSG(PUA_WINFO_CLOSE_CNF),\
+    PUA_MSG(PUA_WINFO_SUBSCRIBE_REQ),\
+    PUA_MSG(PUA_WINFO_SUBSCRIBE_CNF),\
+    PUA_MSG(PUA_WINFO_UNSUB_REQ),\
+    PUA_MSG(PUA_WINFO_UNSUB_CNF),\
+    PUA_MSG(PUA_WINFO_AUTH_IND),\
+    PUA_MSG(PUA_WINFO_AUTH_RSP),\
+    PUA_MSG(PUA_WINFO_NOTIFY_IND),\
+    PUA_MSG(PUA_WINFO_REDIRECTED_IND),\
+    PUA_MSG(PUA_WINFO_ERROR_IND),\
+    PUA_MSG(PUA_WINFO_TERMINATED_IND)
+
+#define DAPS_MEESAGE_GROUP 0xA0            // linker stub
+
+typedef enum _DAPS_SIGNAL
+{
+    //for async select msg begin
+    SOCKET_SIG_BEGIN= (( DAPS_MEESAGE_GROUP << 8 ) | 1 ),
+    SOCKET_READ_EVENT_IND,
+    SOCKET_READ_BUFFER_STATUS_EVENT_IND,
+    SOCKET_WRITE_EVENT_IND,
+    SOCKET_CONNECT_EVENT_IND,
+    SOCKET_CONNECTION_CLOSE_EVENT_IND,
+    SOCKET_ACCEPT_EVENT_IND,
+    SOCKET_FULL_CLOSED_EVENT_IND,
+    SOCKET_ASYNC_GETHOSTBYNAME_CNF,
+    TCPIP_PING_RESULT_IND,
+    TCPIP_DHCP_RESULT_IND,
+    TCPIP_IPCONFLICT_RESULT_IND,
+    SOCKET_SIG_END,
+    //for async select msg end
+    HTTP_SIGNAL_BEG,
+    HTTP_SIG_INIT_REQ,
+    HTTP_SIG_CLOSE_REQ,
+    HTTP_SIG_INIT_CNF,
+    HTTP_SIG_CLOSE_CNF,
+    HTTP_SIG_GET_REQ,
+    HTTP_SIG_GET_CNF,
+    HTTP_SIG_PUT_REQ,
+    HTTP_SIG_PUT_CNF,
+    HTTP_SIG_DELETE_REQ,
+    HTTP_SIG_DELETE_CNF,
+    HTTP_SIG_ERROR_IND,
+    HTTP_SIG_NEED_AUTH_IND,
+    HTTP_SIG_NEED_AUTH_RSP,
+    HTTP_SIG_HEADER_IND,
+    HTTP_SIG_HEADER_RSP,
+    HTTP_SIG_DATA_IND,
+    HTTP_SIG_CANCEL_REQ,
+    HTTP_SIG_CANCEL_CNF,
+    HTTP_SIG_POST_REQ,
+    HTTP_SIG_POST_CNF,
+    HTTP_SIG_HEAD_REQ,
+    HTTP_SIG_HEAD_CNF,
+    HTTP_SIG_NET_PROG_IND,
+    HTTP_SIG_REDIRECT_IND,
+    HTTP_SIG_REQUEST_ID_IND,
+    HTTP_SIG_SSL_CERT_UNTRUST_IND,
+    HTTP_SIG_SSL_CERT_UNTRUST_RSP,
+    HTTP_SIG_SSL_GET_CERT_REQ,
+    HTTP_SIG_SSL_GET_CERT_CNF,
+    HTTP_SIG_TIMEOUT_IND,
+    HTTP_SIG_RECV_PROGRESS_TIMEOUT_IND,
+    HTTP_SIG_HANDSHAKE_TIMEOUT_IND,
+    HTTP_SIG_READ_CACHE_SUCC,
+    HTTP_SIG_READ_CACHE_FAIL,
+    HTTP_SIG_COOKIE_CLEAR_REQ,
+    HTTP_SIG_COOKIE_CLEAR_CNF,
+    HTTP_SIG_CACHE_DELETE_REQ,
+    HTTP_SIG_CACHE_DELETE_CNF,
+    HTTP_SIG_COOKIE_SET_REQ,
+    HTTP_SIG_COOKIE_SET_CNF,
+    HTTP_SIG_CACHE_CLEAR_REQ,
+    HTTP_SIG_CACHE_CLEAR_CNF,
+    HTTP_SIG_OPTIONS_REQ,
+    HTTP_SIG_OPTIONS_CNF,
+    HTTP_SIGNAL_END,
+
+    //poc
+    POC_SIG_BEGIN,
+    POC_SAP_MSGS,
+    POC_SIG_END,
+
+    // start a new session
+    ODM_SIGNAL_START,
+    ODM_START_DOWNLOAD_REQ,
+    ODM_START_DOWNLOAD_CNF,
+    // Cancel a session
+    ODM_CANCEL_DOWNLOAD_REQ,
+    ODM_CANCEL_DOWNLOAD_CNF,
+    // download confirmation indication to user
+    ODM_DOWNLOAD_CONFIRMATION_IND,
+    ODM_DOWNLOAD_CONFIRMATION_RSP,
+    // network need auth
+    ODM_DOWNLOAD_AUTH_IND,
+    ODM_DOWNLOAD_AUTH_RSP,
+    // indication to user
+    ODM_DOWNLOAD_PROGRESS_IND,        // report session progress indication
+    ODM_DOWNLOAD_SUCCESS_IND,        // report session success information to upper layer
+    ODM_DOWNLOAD_ERROR_IND,            // report session error indication to upper layer
+    ODM_DOWNLOAD_HEADER_IND,        // report session header indication to upper layer
+    // session manager
+    ODM_DOWNLOAD_GET_SESSION_LIST_REQ,        // get session list request
+    ODM_DOWNLOAD_GET_SESSION_LIST_CNF,
+    ODM_DOWNLOAD_GET_SESSION_INFO_REQ,        // get a session detail information
+    ODM_DOWNLOAD_GET_SESSION_INFO_CNF,
+    ODM_SUBSCRIBE_INDICATION_REQ,            // subscribe state change indication, success indication and error indication, as above
+    ODM_SUBSCRIBE_INDICATION_CNF,
+    ODM_DESUBSCRIBE_INDICATION_REQ,            // desubscribe state change indication, success indication and error indication, as above
+    ODM_DESUBSCRIBE_INDICATION_CNF,
+    ODM_MANAGER_PROGRESS_IND,
+    ODM_MANAGER_SUCCESS_IND,
+    ODM_MANAGER_ERROR_IND,
+    ODM_SIGNAL_END,
+
+    DUA_SIGNAL_START,
+    DUA_START_DOWNLOAD_REQ,
+    DUA_START_DOWNLOAD_CNF,
+    DUA_CANCEL_DOWNLOAD_REQ,
+    DUA_CANCEL_DOWNLOAD_CNF,
+    DUA_DOWNLOAD_PROGRESS_IND,
+    DUA_DOWNLOAD_CONFIRMATION_IND,
+    DUA_DOWNLOAD_CONFIRMATION_RSP,
+    DUA_DOWNLOAD_AUTH_IND,
+    DUA_DOWNLOAD_HEADER_IND,
+    DUA_DOWNLOAD_AUTH_RSP,
+    DUA_DOWNLOAD_SUCCESS_IND,
+    DUA_DOWNLOAD_ERROR_IND,
+    DUA_CI_INIT_CNF,
+    DUA_CI_DOWNLOAD_CNF,
+    DUA_CI_ERROR_IND,
+    DUA_CI_HEADER_IND,
+    DUA_CI_AUTH_IND,
+    DUA_CI_NET_PROG_IND,
+    DUA_CI_CANCEL_CNF,
+    DUA_INSTALL_RESULT_CNF,
+    DUA_TASK_EXIT,
+    DUA_SIGNAL_END,
+//For wsp
+    WSP_SIGNAL_BEG,
+    WSP_SIG_INIT_REQ,
+    WSP_SIG_CLOSE_REQ,
+    WSP_SIG_INIT_CNF,
+    WSP_SIG_CLOSE_CNF,
+    WSP_SIG_GET_REQ,
+    WSP_SIG_GET_CNF,
+    WSP_SIG_ERROR_IND,
+    WSP_SIG_NEED_AUTH_IND,
+    WSP_SIG_NEED_AUTH_RSP,
+    WSP_SIG_HEADER_IND,
+    WSP_SIG_DATA_IND,
+    WSP_SIG_CANCEL_REQ,
+    WSP_SIG_CANCEL_CNF,
+    WSP_SIG_POST_REQ,
+    WSP_SIG_POST_CNF,
+    WSP_SIG_NET_PROG_IND,
+    WSP_SIG_REDIRECT_IND,
+    WSP_SIG_REQUEST_ID_IND,
+    WSP_SIG_WTLS_UNTRUST_IND,
+    WSP_SIG_WTLS_UNTRUST_RSP,
+    WSP_SIG_R_TIMEOUT_IND,
+    WSP_SIG_COOKIE_CLEAR_REQ,
+    WSP_SIG_COOKIE_CLEAR_CNF,
+    WSP_SIG_HANDSHAKE_TIMEOUT_IND,
+    WSP_SIGNAL_END,
+//for wsp end
+    NETMGR_SIGNAL_START,
+    NETMGR_TRANS_TIMER_IND,
+    NETMGR_KEEP_ALIVE_TIMER_IND,
+    NETMGR_SIGNAL_END,
+
+    //wifi start
+    WIFISUPP_SIG_START,
+    WIFISUPP_SIG_ON_REQ,
+    WIFISUPP_SIG_ON_CNF,
+    WIFISUPP_SIG_OFF_REQ,
+    WIFISUPP_SIG_OFF_CNF,
+    WIFISUPP_SIG_SCAN_REQ,
+    WIFISUPP_SIG_SCAN_IND,
+    WIFISUPP_SIG_SCAN_CNF,
+    WIFISUPP_SIG_CONNECT_REQ,
+    WIFISUPP_SIG_CONNECT_CNF,
+    WIFISUPP_SIG_DISCONNECT_REQ,
+    WIFISUPP_SIG_DISCONNECT_CNF,
+    WIFISUPP_SIG_DISCONNECT_IND,
+    WIFISUPP_SIG_BSSID_CHANGED_IND,
+    WIFISUPP_SIG_RSSI_CHANGED_IND,
+    WIFISUPP_SIG_DEEPSLEEP_CMD,
+    WIFISUPP_SIG_AUTOSCAN_REQ,
+    WIFISUPP_SIG_AUTOSCAN_CNF,
+    WIFISUPP_SIG_SCAN_BEGIN_IND,
+    WIFISUPP_SIG_CUSTOM_START,
+    WIFISUPP_SIG_CUSTOM_END = WIFISUPP_SIG_CUSTOM_START + 50,
+    WIFISUPP_SIG_END,
+    //wifi end
+
+
+    //sip
+    SIP_SIG_BEGIN,
+    //SIP_CALL_ACK_SEND_REQ,
+    //SIP_CALL_ACK_SEND_CNF,
+    //SIP_CALL_ACK_IND,
+    SIP_SAP_MSGS,
+    SIP_SIG_END,
+
+    //rtp rtcp
+    RTP_RTCP_SIG_BEGIN,
+    //RTCP_RR_AUTO_SEND_SET_REQ,
+    //RTCP_RR_AUTO_SEND_SET_CNF,
+    RTP_RTCP_SAP_MSGS,
+    RTP_RTCP_SIG_END,
+
+//rtp test signal begin
+    RTPTEST_SEND_DATA,
+    RTPTEST_SEND_RTCP,
+    RTPTEST_SEND_RTCP_APP,
+    RTPTEST_SEND_CLOSE,
+    RTP_TO_RTSP_SESSION_IND,
+//rtp test signal end
+
+    // OMA Presence User Agent
+    PUA_SIG_BEGIN,
+    PUA_SAP_MSGS,
+    PUA_SIG_END,
+
+    //streaming
+    STRM_SIG_BEGIN,
+    STRM_INIT_REQ,
+    STRM_INIT_CNF,
+    STRM_PLAY_REQ,
+    STRM_PLAY_CNF,
+    STRM_PAUSE_REQ,
+    STRM_PAUSE_CNF,
+    STRM_RESUME_REQ,
+    STRM_RESUME_CNF,
+    STRM_SEEK_REQ,
+    STRM_SEEK_CNF,
+    STRM_STOP_REQ,
+    STRM_STOP_CNF,
+    STRM_GOODBYE_IND,
+    STRM_CLOSE_REQ,
+    STRM_CLOSE_CNF,
+    STRM_DESCRIBE_AUTH_IND,
+    STRM_DESCRIBE_AUTH_RSP,
+    STRM_SETUP_AUTH_IND,
+    STRM_SETUP_AUTH_RSP,
+    STRM_PLAY_AUTH_IND,
+    STRM_PLAY_AUTH_RSP,
+    STRM_BUFFERING_IND,
+    STRM_BUFFER_END_IND,
+    STRM_BUFFERING_PROGRESS_IND,
+    STRM_DATA_TIMEOUT_IND,
+    //streaming internal signal s
+    STRM_BUFFER_EMPTY_IND,
+    STRM_BUFFER_FULL_IND,
+    STRM_BUFFERING_PRO_TIMER_IND,
+    STRM_TEARDOWN_PRO_TIMER_IND,
+    STRM_MEDIAHEARD_TIMER_IND,
+    STRM_RTP_SSRC_SET_IND,
+    UNIT_TEST_DEC_CNF,
+    //streaming internal signal e
+    STRM_RTSP_INIT_CNF,
+    STRM_RTSP_DESCRIBE_CNF,
+    STRM_RTSP_SETPARAM_CNF,
+    STRM_RTSP_SETUP_CNF,
+    STRM_RTSP_PLAY_CNF,
+    STRM_RTSP_PAUSE_CNF,
+    STRM_RTSP_TEARDOWN_CNF,
+    STRM_RTSP_CLOSE_CNF,
+    STRM_RTSP_DESCRIBE_AUTH_IND,
+    STRM_RTSP_SETUP_AUTH_IND,
+    STRM_RTSP_PLAY_AUTH_IND,
+    STRM_RTSP_SERVER_CLOSE_IND,
+    STRM_RTP_SRRR_SEND_IND,
+    STRM_RTP_GOODBYE_IND,
+    STRM_SIG_END,
+
+    //rtsp begin
+    RTSP_SIG_BEGIN,
+    RTSP_SIG_INIT_SESSION_REQ,
+    RTSP_SIG_INIT_SESSION_CNF,
+    RTSP_SIG_OPTIONS_REQ,
+    RTSP_SIG_OPTIONS_CNF,
+    RTSP_SIG_OPTIONS_AUTH_IND,
+    RTSP_SIG_OPTIONS_AUTH_RSP,
+    RTSP_SIG_DESCRIBE_REQ,
+    RTSP_SIG_DESCRIBE_CNF,
+    RTSP_SIG_DESCRIBE_AUTH_IND,
+    RTSP_SIG_DESCRIBE_AUTH_RSP,
+    RTSP_SIG_PLAY_REQ,
+    RTSP_SIG_PLAY_CNF,
+    RTSP_SIG_PLAY_AUTH_IND,
+    RTSP_SIG_PLAY_AUTH_RSP,
+    RTSP_SIG_PAUSE_REQ,
+    RTSP_SIG_PAUSE_CNF,
+    RTSP_SIG_SETUP_REQ,
+    RTSP_SIG_SETUP_CNF,
+    RTSP_SIG_SETUP_AUTH_IND,
+    RTSP_SIG_SETUP_AUTH_RSP,
+    RTSP_SIG_TEARDOWN_REQ,
+    RTSP_SIG_TEARDOWN_CNF,
+    RTSP_SIG_ANNOUNCE_REQ,
+    RTSP_SIG_ANNOUNCE_CNF,
+    RTSP_SIG_RECORD_REQ,
+    RTSP_SIG_RECORD_CNF,
+    RTSP_SIG_SET_PARAM_REQ,
+    RTSP_SIG_SET_PARAM_CNF,
+    RTSP_SIG_SET_PARAM_AUTH_IND,
+    RTSP_SIG_SET_PARAM_AUTH_RSP,
+    RTSP_SIG_CLOSE_SESSION_REQ,
+    RTSP_SIG_CLOSE_SESSION_CNF,
+    RTSP_SIG_SERVER_CLOSE_IND,
+    RTSP_SIG_SELF_OPTIONS_REQ,
+    RTSP_SIG_SELF_SETUP_REQ,
+    RTSP_SIG_SELF_TEARDOWN_REQ,
+    RTSP_SIG_STOP_REQ,
+    RTSP_SIG_SELF_STOP_REQ,
+    RTSP_SIG_TIMEOUT_IND,
+    RTSP_SIG_PERIOD_OPTIONS_TIMEOUT_IND,
+    RTSP_SIG_END,
+    //rtsp end
+
+    DRM_SIG_BEGIN,
+    DRM_SIG_IO_CREATE_FILE,     // create file
+    DRM_SIG_IO_READ_FILE,       // read file
+    DRM_SIG_IO_CLOSE_FILE,      // close file
+    DRM_SIG_IO_DELETE_FILE,      // delete file
+    DRM_SIG_IO_SET_FILE_POINTER,    // Set file pointer
+    DRM_SIG_IO_GET_FILE_POINTER,    // Get file pointer
+    DRM_SIG_IO_GET_FILE_SIZE,       // Get file size
+    DRM_SIG_IO_CONSUME_FILE_RIGHTS, //Consume rights
+    DRM_SIG_IO_SET_SD_ENCRYPT,      //encrpt read sd file
+    DRM_SIG_DH_INSTALL_FILE_REQ,       // DRM INSTALL FILE
+    DRM_SIG_DH_INSTALL_FILE_CNF,       // DRM INSTALL FILE
+    DRM_SIG_GET_FILE_MIME_REQ,      //get mime type req
+    DRM_SIG_GET_FILE_MIME_CNF,      // get mime type cnf
+    DRM_SIG_END
+
+} DAPS_SIGNAL_E;
+
+/**---------------------------------------------------------------------------*
+ **                         Global Variables                                  *
+ **---------------------------------------------------------------------------*/
+
+/**---------------------------------------------------------------------------*
+ **                         Constant Variables                                *
+ **---------------------------------------------------------------------------*/
+
+/**---------------------------------------------------------------------------*
+ **                         Function Prototypes                               *
+ **---------------------------------------------------------------------------*/
+
+/**---------------------------------------------------------------------------*
+ **                         Compiler Flag                                     *
+ **---------------------------------------------------------------------------*/
+#ifdef __cplusplus
+}
+#endif
+
+#endif  // _IN_MESSAGE_H

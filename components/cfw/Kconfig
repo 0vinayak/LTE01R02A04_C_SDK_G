@@ -1,0 +1,170 @@
+# Copyright (C) 2018 RDA Technologies Limited and/or its affiliates("RDA").
+# All rights reserved.
+#
+# This software is supplied "AS IS" without any warranties.
+# RDA assumes no responsibility or liability for the use of the software,
+# conveys no license or title under any patent, copyright, or mask work
+# right to the product. RDA reserves the right to make changes in the
+# software without notification.  RDA also make no representation or
+# warranty that such application will be suitable for the specified use
+# without further testing or modification.
+
+menu "CFW"
+
+config GSM_SUPPORT
+    bool "Support GSM"
+    default n if (SOC_8811) || (SOC_8821)
+    default n if SOC_8850
+    default y
+
+config CFW_VOLTE_SUPPORT
+    bool "Support VOLTE"
+    depends on QUEC_PROJECT_FEATURE_VOLTE #quectel add
+    default n if (SOC_8811) || (SOC_8821)
+#   default n if SOC_8850 quectel modify
+    default y
+
+config VOLTE_SUPPORT
+    bool "Support VOLTE"
+    depends on QUEC_PROJECT_FEATURE_VOLTE #quectel add
+    default n if (SOC_8811) || (SOC_8821)
+#    default n if SOC_8850 quectel modify
+    default y
+
+config CFW_CC_SUPPORT
+    bool "Support CC"
+    default n if (SOC_8811) || (SOC_8821)
+    default y
+
+config CFW_SS_SUPPORT
+    bool "Support SS"
+    default n if (SOC_8811) || (SOC_8821)
+    default y
+
+config DEDICATED_BEARER_SUPPORT
+    bool "Use Support Dedicated bearer"
+    default n if (SOC_8811) || (SOC_8821)
+    default y
+
+config LTE_NBIOT_SUPPORT
+    bool "Support NBIOT"
+    default y if (SOC_8811) || (SOC_8821)
+    default n
+
+config LTE_SUPPORT
+    bool "Support LTE"
+    default n if (SOC_8811) || (SOC_8821)
+    default y
+
+config NUMBER_OF_SIM
+    int "Number of sim supported"
+    default 2
+    help
+        Number of sum supported.
+
+config EVENT_NAME_ENABLED
+    bool "Provide function to convert event ID to name"
+    default x
+    help
+        At debugging, it is convenient to show event name rather than
+        event ID. However, the conversion will take code spaces. Unless
+        when code size is critical, it is recommended to enable it.
+
+config CFW_PENDING_UTI_COUNT
+    int "Maximum CFW waiting count"
+    default 64
+    help
+        For each pending UTI, CFW dispatch shall record the response
+        task, and static memory is used to record this.
+
+config CFW_SKIP_NV_SAVE_RESTORE
+    bool "Skip CFW NV save and restore"
+    default n
+    help
+        It is for debug only.
+
+        When it is defined, CFW NV save and restore are skipped.
+
+config CFW_CALL_WITH_RPC
+    bool "Use RPC to call CFW API"
+    default y if SOC_8910
+    default n
+    help
+        When CFW is implemented on other CPU, it is needed to use RPC
+        to call CFW APIs. In this case, it is needed to enable this.
+
+config CFW_DEBUG_IPFILTER
+    bool "CFW simple IP filter (debug only)"
+    default y if (SOC_8811) || (SOC_8821)
+    default n
+    help
+        When enabled, uplink IP packet will be filtered inside CFW.
+        Only certain IP packets for debug purpose (such as ICMP, iperf,
+        DNS and etc) will be sent to stack.
+
+        This is for debug only. Don't enable it in real products.
+
+config RPM_SUPPORT
+    bool "Support RPM"
+    default n
+
+config CSG_SUPPORT
+    bool "Support CSG"
+    default y if SOC_8910
+    default n
+
+config CFW_CM_SRV_SUPPORT
+    bool "CFW CM"
+    default y
+
+config CFW_SS_SRV_SUPPORT
+    bool "CFW SS"
+    default y
+
+config CFW_PBK_SRV_SUPPORT
+    bool "CFW PBK"
+    default y
+
+config CFW_CB_SRV_SUPPORT
+    bool "CFW CB"
+    default y
+
+config CFW_SUPPORT_GLOBAL_APN
+    bool "The switch for global APN"
+    default n
+
+config DUAL_SIM_SUPPORT
+    bool "Support dual sim"
+    default n
+    default n if (SOC_8811) || (SOC_8821)
+
+config FUNC_SUPPORT_SIMLOCK
+    bool "cp support write simlock data"
+    default y if SOC_8850
+    default n
+
+config FUNC_SUPPORT_SIMLOCK_CP
+    bool "cp support write simlock data"
+    default n
+
+config FUNC_SUPPORT_SIMLOCK_AP
+    bool "AP support write simlock data"
+    default y if 8850CM_TARGET && CFW_VOLTE_SUPPORT
+    default n
+
+config CFW_SMS_ME_SUPPORT
+    bool "SMS ME SUPPORT"
+    default n if (SOC_8811) || (SOC_8821)
+    default y
+
+config CFW_ON_AP
+    bool "CFW ON AP"
+    default n
+
+config CFW_STK_SUPPORT
+    bool "AP CFW support STK"
+    default y if (SOC_8811) || (SOC_8821)
+    #default n
+	default y #adjusted by quectel
+
+endmenu

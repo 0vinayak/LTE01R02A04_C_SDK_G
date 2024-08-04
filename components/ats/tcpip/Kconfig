@@ -1,0 +1,70 @@
+# Copyright (C) 2018 RDA Technologies Limited and/or its affiliates("RDA").
+# All rights reserved.
+#
+# This software is supplied "AS IS" without any warranties.
+# RDA assumes no responsibility or liability for the use of the software,
+# conveys no license or title under any patent, copyright, or mask work
+# right to the product. RDA reserves the right to make changes in the
+# software without notification.  RDA also make no representation or
+# warranty that such application will be suitable for the specified use
+# without further testing or modification.
+
+menu "at_tcpip"
+
+config AT_TCPIP_SUPPORT
+    bool "AT_TCPIP_SUPPORT enabled"
+    default y
+    depends on NET_LWIP_TCP_ON
+    help
+        When enabled, AT_TCPIP_SUPPORT will be defined
+
+config AT_UDP_SUPPORT
+    bool "AT_UDP_SUPPORT enabled"
+    default n if (SOC_8811) || (SOC_8821)
+    default n if SOC_8910
+    default n
+    depends on NET_LWIP_TCP_ON
+    help
+        When enabled, AT_UDP_SUPPORT will be defined
+
+config AT_MYNET_TCPIP_SUPPORT
+    bool "AT_MYNET_TCPIP_SUPPORT enabled"
+	default y if SOC_8910
+    default n
+    depends on NET_LWIP_TCP_ON
+    help
+        When enabled, AT_MYNET_TCPIP_SUPPORT will be defined
+
+config AT_MBEDTLS_TCPIP_SUPPORT
+    bool "AT_MBEDTLS_TCPIP_SUPPORT enabled"
+    default y if SOC_8910
+    default y if SOC_8850
+    default n
+    depends on MBEDTLS_TCPIP_SUPPORT
+    help
+        When enabled, AT_MBEDTLS_TCPIP_SUPPORT will be defined
+
+config AT_USSL_SUPPORT
+    bool "AT_USSL_SUPPORT enabled"
+    default n if SOC_8910
+    default n
+    depends on NET_USSL_SUPPORT
+    help
+        When enabled, AT_USSL_SUPPORT will be defined
+
+config AT_TCPIP_FULL_FUNC_SUPPORT
+    bool "AT_TCPIP_FULL_FUNC_SUPPORT enabled"
+    default y
+    depends on NET_LWIP_TCP_ON
+    help
+        When enabled, AT_TCPIP_FULL_FUNC_SUPPORT will be defined
+
+ config AT_TCPCTWING_SUPPORT
+    bool "AT_TCPCTWING_SUPPORT enabled"
+    default n if SOC_8910
+    default n if SOC_8850
+    default n
+    depends on NET_LWIP_TCP_ON
+    help
+        When enabled, AT_TCPCTWING_SUPPORT will be defined
+endmenu

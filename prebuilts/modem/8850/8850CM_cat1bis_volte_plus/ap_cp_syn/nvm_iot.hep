@@ -1,0 +1,38 @@
+/*****************************************************************************/
+/*                                                                           */
+/*Copyright (c) 2016.06.15                                                   */
+/*                                                                           */
+/*****************************************************************************/
+/*****************************************************************************/
+/* FILE NAME   nvm.hep                                                       */
+/*                                                                           */
+/* COMPONENT   PUB                                                           */
+/*                                                                           */
+/* DESCRIPTION                                                               */
+/*                                                                           */
+/* This file is used to describe the NVM function used by other module.      */
+/*                                                                           */
+/* FUNCTIONS                                                                 */
+/*                                                                           */
+/* NONE                                                                      */
+/*                                                                           */
+/* HISTORY                                                                   */
+/*                                                                           */
+/* NAME        DATE        VERSION  COMMENT                                  */
+/* yongluo     2016.07.01  v1.0.0   creation                                 */
+/*****************************************************************************/
+#ifndef NVM_IOT_HEP
+#define NVM_IOT_HEP
+
+extern int  nvmWriteStatic(u8 nSim);
+extern int  nvmWriteDynamic(u8 nSim);
+extern int  nvmWritePhy(u8 nSim);
+
+#if defined __PROCESS_INFO_IN_FLASH
+extern int  nvmWriteProcessInfo(void);
+#endif
+extern void *nvm_GetPhyStaticNv(u8 nSim);
+
+
+#endif
+

@@ -1,0 +1,367 @@
+# Copyright (C) 2018 RDA Technologies Limited and/or its affiliates("RDA").
+# All rights reserved.
+#
+# This software is supplied "AS IS" without any warranties.
+# RDA assumes no responsibility or liability for the use of the software,
+# conveys no license or title under any patent, copyright, or mask work
+# right to the product. RDA reserves the right to make changes in the
+# software without notification.  RDA also make no representation or
+# warranty that such application will be suitable for the specified use
+# without further testing or modification.
+
+menu "net"
+
+config NET_LWIP_DEBUG
+    bool "enable lwip debug"
+    default y
+    help
+        when enabled, LWIP_DEBUG will be defined to 1.
+
+config NET_TCPIP_SUPPORT
+    bool "tcpip enabled"
+    default y
+    help
+        When enabled, CONFIG_NET_TCPIP_SUPPORT will be defined
+
+config NET_LOG_BUF_COUNT
+    int "Log buffer count"
+    default 2
+
+config NET_LOG_BUF_SIZE
+    int "Log buffer size"
+    default 8192
+
+config NET_LWIP_IPV4_ON
+    bool "Ipv4 enabled"
+    default y
+    help
+        When enabled, CONFIG_NET_LWIP_IPV4_ON will be defined
+
+config NET_LWIP_IPV6_ON
+    bool "Ipv6 enabled"
+    default y
+    help
+        When enabled, CONFIG_NET_LWIP_IPV6_ON will be defined
+
+config NET_LWIP_RFACK_ON
+    bool "rfack enabled"
+    default n
+    help
+        When enabled, CONFIG_NET_LWIP_RFACK_ON will be defined
+
+config NET_LWIP_TCP_ON
+    bool "TCP enabled"
+    default y
+    help
+        When enabled, CONFIG_NET_LWIP_TCP_ON will be defined
+
+config LWIP_TCP_SACK_SUPPORT
+    bool "lwip_sack enabled"
+    default y if SOC_8850
+    default y if SOC_8910
+	default n
+    help
+        When enabled, CONFIG_LWIP_TCP_SACK_SUPPORT will be defined
+
+config NET_LWIP_PPP_ON
+    bool "ppp enabled"
+    default y if (SOC_8811) || (SOC_8821)
+	default y
+    help
+        When enabled, CONFIG_NET_LWIP_PPP_ON will be defined
+
+config NET_LWIP_ALTCP_SUPPORT
+    bool "altcp enabled"
+    default n
+    help
+        When enabled, CONFIG_NET_LWIP_ALTCP_SUPPORT will be defined
+
+config NET_LWIP_ARP_SUPPORT
+    bool "arp enabled"
+    default y if QUEC_PROJECT_FEATURE_WIFI #quectel add
+	default y if QUEC_PROJECT_FEATURE_ETHERNET #quectel add
+    default n
+    help
+        When enabled, CONFIG_NET_LWIP_ARP_SUPPORT will be defined
+
+config NET_TRACE_IP_PACKET
+    bool "trace IP packet identify"
+    default y if SOC_8910
+    default y if SOC_8850
+    default n
+    help
+        When enabled, identify of IP packet will be show in trace.
+
+        It is just for debug, and usually not needed in produciton.
+
+config NET_LWM2M_SUPPORT
+    bool "NET_LWM2M_SUPPORT enabled"
+    default y
+    help
+        When enabled, NET_LWM2M_SUPPORT will be defined
+
+config NET_PAHO_MQTT_SUPPORT
+    bool "NET_PAHO_MQTT_SUPPORT enabled"
+    default n
+    depends on NET_LWIP_TCP_ON
+    help
+        When enabled, NET_PAHO_MQTT_SUPPORT will be defined
+
+config NET_ALI_SDK_SUPPORT
+    default y if SOC_8910
+    bool "NET_ALI_SDK_SUPPORT enabled"
+    default n
+    help
+        When enabled, NET_ALI_SDK_SUPPORT will be defined
+
+config NET_ALI_SDK_DYNAMIC_LOAD
+    bool "NET_ALI_SDK_DYNAMIC_LOAD enabled"
+    default n
+    help
+        When enabled, NET_ALI_SDK_DYNAMIC_LOAD will be defined
+
+config NET_CIS_SDK_SUPPORT
+    bool "NET_CIS_SDK_SUPPORT enabled"
+    default n
+    help
+        When enabled, NET_CIS_SDK_SUPPORT will be defined
+
+config NET_LIBCOAP_SUPPORT
+    bool "NET_LIBCOAP_SUPPORT enabled"
+    default n
+    help
+        When enabled, NET_LIBCOAP_SUPPORT will be defined
+		
+config NET_NAT_SUPPORT
+    bool "NET_NAT_SUPPORT enabled"
+    default y if SOC_8910
+    default y if SOC_8850
+    default n
+    help
+        When enabled, NET_NAT_SUPPORT will be defined
+
+config MBEDTLS_LIB_SUPPORT
+    bool "MBEDTLS_LIB_SUPPORT enabled"
+    default y
+    help
+        When enabled, MBEDTLS_LIB_SUPPORT will be defined
+
+config MBEDTLS_TCPIP_SUPPORT
+    bool "MBEDTLS_TCPIP_SUPPORT enabled"
+    depends on MBEDTLS_SSL_TLS
+    default y if SOC_8910
+    default y if SOC_8850
+    default n
+    depends on NET_LWIP_TCP_ON
+    help
+        When enabled, MBEDTLS_TCPIP_SUPPORT will be defined
+
+# quectel add
+config MBEDTLS_FUNCTIONAL_CUTTING
+    bool "CONFIG_MBEDTLS_FUNCTIONAL_CUTTING enabled"
+    default n
+    help
+        When enabled, CONFIG_MBEDTLS_FUNCTIONAL_CUTTING will be defined
+
+config NET_USSL_SUPPORT
+    bool "NET_USSL_SUPPORT enabled"
+    default n if SOC_8910
+    default n
+    depends on NET_LWIP_TCP_ON
+    help
+        When enabled, NET_USSL_SUPPORT will be defined
+
+config NET_SELF_REGISTE_SUPPORT
+    bool "NET_SELF_REGISTE_SUPPORT enabled"
+    default y if SOC_8910 || SOC_8850
+    default n
+    depends on NET_LWIP_TCP_ON
+    help
+        When enabled, NET_SELF_REGISTE_SUPPORT will be defined
+
+config TINYDTLS_LIB_SUPPORT
+    bool "TINYDTLS_LIB_SUPPORT enabled"
+    default n
+    help
+        When enabled, TINYDTLS_LIB_SUPPORT will be defined
+
+config MBEDTLS_USE_CE_CRYPTO
+    bool "MBEDTLS_USE_CE_CRYPTO enabled"
+    depends on MBEDTLS_LIB_SUPPORT
+    default y if SOC_8850
+    default n
+    help
+        When enabled, MBEDTLS_USE_CE_CRYPTO will be defined
+
+config NET_NBSELFREG_HTTP_SUPPORT
+    bool "NET_NBSELFREG_HTTP_SUPPORT enabled"
+    default n
+    help
+        When enabled, NET_SELFREG_COAP_SUPPORT will be defined
+config NET_SELFREG_COAP_SUPPORT
+    bool "NET_SELFREG_COAP_SUPPORT enabled"
+    default n if (SOC_8811) || (SOC_8821)
+    default n
+    help
+        When enabled, NET_SELFREG_COAP_SUPPORT will be defined
+
+config NBSELFREG_CUS_SUPPORT
+    bool "NBSELFREG_CUS_SUPPORT enabled"
+    default y if AT_CUS_SUPPORT
+    default n
+    help
+        When enabled, NBSELFREG_CUS_SUPPORT will be defined
+
+config NET_CTWING_SELFREG_SUPPORT
+    bool "NET_CTWING_SELFREG_SUPPORT enabled"
+    default n
+    help
+        When enabled, NET_CTWING_SELFREG_SUPPORT will be defined
+
+choice
+    prompt "select dm module"
+    default NET_DM_CUS_SUPPORT if AT_CUS_SUPPORT
+    default NET_DM_LWM2M_SUPPORT if SOC_8811 || SOC_8850 || SOC_8821
+    default NET_DM_CISSDK_SUPPORT
+
+config NET_DM_CISSDK_SUPPORT
+    bool "DM Module based on cissdk"
+    select NET_CIS_SDK_SUPPORT
+
+config NET_DM_LWM2M_SUPPORT
+    bool "DM Module based on liblwm2m"
+    select NET_LWM2M_SUPPORT
+    select LWM2M_ONENET_SUPPORT
+    select LWM2M_ONENET_DM_SUPPORT
+
+config NET_DM_CUS_SUPPORT
+    bool "DM Customized Module based on liblwm2m"
+    select NET_LWM2M_SUPPORT
+    select LWM2M_ONENET_SUPPORT
+    select LWM2M_ONENET_DM_SUPPORT
+
+config NET_DM_NO_SUPPORT
+    bool "DM Module not support"
+endchoice
+
+config NET_IDS_SUPPORT
+    bool "IDS support"
+    default y if SOC_8910 || SOC_8850
+    default n
+    help
+        when enabled, IDS feature is supported
+
+config NET_SCI_NETIF_SUPPORT
+    bool "SCI_NETIF support"
+    default y if SOC_8850
+    default n
+    depends on QUEC_PROJECT_FEATURE_VOLTE
+    help
+        when enabled, SCI_NETIF feature is supported
+
+config NET_DNS_SERVER_SUPPORT
+    bool "NET_DNS_SERVER_SUPPORT enabled"
+    default y if SOC_8910
+    default n
+    help
+        When enabled, NET_DNS_SERVER_SUPPORT will be defined
+
+config NET_CTIOTSM_SUPPORT
+    bool "NET_CTIOTSM_SUPPORT enabled"
+    default n
+    help
+        When enabled, NET_CTIOTSM_SUPPORT will be defined
+
+config NET_LIBDMP_SDK_SUPPORT
+    bool "NET_LIBDMP_SDK_SUPPORT enabled"
+    #default y if SOC_8910 || SOC_8850  === adjusted by kevin.wang: default not enable self register
+    default n
+    help
+        When enabled, NET_LIBDMP_SDK_SUPPORT will be defined
+
+config NET_CTIOT_AEP_SUPPORT
+    bool "NET_CTIOT_AEP_SUPPORT enabled"
+    default n
+    help
+        When enabled, NET_CTIOT_AEP_SUPPORT will be defined
+
+config NET_LTE_PSPACKET_SUPPORT
+    bool "enable lte ps packet"
+    default n
+    help
+        when enabled, NET_LTE_PSPACKET_SUPPORT will be defined to 1.
+
+config NET_CTWING_MQTT_SUPPORT
+    bool "NET_CTWING_MQTT_SUPPORT enabled"
+    default n if SOC_8910
+    default n if SOC_8850
+    default n
+    depends on NET_PAHO_MQTT_SUPPORT
+    help
+        When enabled, NET_CTWING_MQTT_SUPPORT will be defined
+
+config MATRIX_SSL_API_SUPPORT
+    bool "MATRIX_SSL_API_SUPPORT enabled"
+    default y if SOC_8850
+    default n
+    depends on QUEC_PROJECT_FEATURE_SSL #quectel modify
+    depends on QUEC_PROJECT_FEATURE_VOLTE
+    select MBEDTLS_SSL_VERSION_SSL3
+    help
+        When enabled, MATRIX_SSL_API_SUPPORT will be defined
+
+config LWIP_IPSEC_SUPPORT
+    bool "lwip_ipsec enabled"
+    default y if SOC_8850
+    default n
+    depends on QUEC_PROJECT_FEATURE_VOLTE
+    help
+        When enabled, CONFIG_LWIP_IPSEC_SUPPORT will be defined
+
+config LWIP_IMS_SUPPORT
+    bool "lwip_ims enabled"
+    default y if SOC_8850
+    default n
+    depends on QUEC_PROJECT_FEATURE_VOLTE
+    help
+        When enabled, CONFIG_LWIP_IMS_SUPPORT will be defined
+
+config NET_LTE_SUPPORT
+    bool "enable net lte device"
+    default y
+    help
+        when enabled, NET_LTE_SUPPORT will be defined to 1.
+
+config LWIP_DROP_OVER_RCV_WND
+    bool "lwip_drop_over_rcv_wnd"
+    default n
+    help
+        when enabled, LWIP_DROP_OVER_RCV_WND will be defined to 1.
+
+config NET_LWIP_SAMPLE_ASSERT
+    bool "lwip_sample_assert, enable assert message"
+    default n
+    help
+        when enabled, CONFIG_NET_LWIP_SAMPLE_ASSERT will be defined to 1.
+
+config NET_NONIP_SUPPORT
+    bool "enable net NonIP"
+    default y
+    help
+        when enabled, CONFIG_NET_NONIP_SUPPORT will be defined to 1.
+
+config NET_LWIP_MLD_SUPPORT
+    bool "enable lwip ipv6 MLD"
+    default y
+    help
+        when enabled, CONFIG_NET_LWIP_MLD_SUPPORT will be defined to 1.
+
+orsource "mupnp/Kconfig"
+orsource "http/Kconfig"
+orsource "mbedtls/Kconfig"
+orsource "liblwm2m/Kconfig"
+orsource "ftp/Kconfig"
+orsource "ctwing/Kconfig"
+orsource "http2/Kconfig"
+orsource "lwip/Kconfig"
+endmenu

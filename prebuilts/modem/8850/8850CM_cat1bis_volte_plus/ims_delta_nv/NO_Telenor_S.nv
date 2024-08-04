@@ -1,0 +1,27 @@
+
+///////////////////////////////////////////// IMS /////////////////////////////////////////////
+// sip_regRetryBaseTime: Re-register base time interval if register failed, in seconds
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\sip_regRetryBaseTime=60
+
+// MT call no answer timer after send 180 (Sec)
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingingTimer=120
+
+// MO call no answer timer after receive 180 (Sec)
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingbackTimer=120
+
+// audioRtpTimeout: Seconds. Call will be disconnected if not receive audio RTP before expire
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\audioRtpTimeout=20
+
+// audioRtcpTimeout: Seconds. Call will be disconnected if not receive audio RTCP before expire
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\audioRtcpTimeout=20
+
+///////////////////////////////////////////// GAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// LAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// WAS /////////////////////////////////////////////
+
+///////////////////////////////////////////// MN //////////////////////////////////////////////
+

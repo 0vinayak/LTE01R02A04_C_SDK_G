@@ -1,0 +1,123 @@
+<bsdump>
+   <regions name="8811">
+      <region title="scs" base="0xe000e000" size="0x1000" skip="0"/>
+      <region title="uart1" base="0x41800000" size="0x8" skip="0"/>
+      <region title="uart1" base="0x4180000c" size="0x20" skip="0"/>
+      <region title="uart2" base="0x41801000" size="0x8" skip="0"/>
+      <region title="uart2" base="0x4180100c" size="0x20" skip="0"/>
+      <region title="gpio1" base="0x41802000" size="0x70" skip="0"/>
+      <region title="gpt1" base="0x41803000" size="0x44" skip="0"/>
+      <region title="spi1" base="0x41a01000" size="0x8" skip="0"/>
+      <region title="spi1" base="0x41a0100c" size="0x14" skip="0"/>
+      <region title="spi2" base="0x41a02000" size="0x8" skip="0"/>
+      <region title="spi2" base="0x41a0200c" size="0x14" skip="0"/>
+      <region title="uart3" base="0x41a04000" size="0x8" skip="0"/>
+      <region title="uart3" base="0x41a0400c" size="0x20" skip="0"/>
+      <region title="uart4" base="0x41a05000" size="0x8" skip="0"/>
+      <region title="uart4" base="0x41a0500c" size="0x20" skip="0"/>
+      <region title="uart5" base="0x41a06000" size="0x8" skip="0"/>
+      <region title="uart5" base="0x41a0600c" size="0x20" skip="0"/>
+      <region title="sdmmc2" base="0x41a07000" size="0x4" skip="0"/>
+      <region title="sdmmc2" base="0x41a07800" size="0x44" skip="0"/>
+      <region title="i2s" base="0x41a08000" size="0x20" skip="0"/>
+      <region title="gpio2" base="0x41a10000" size="0x90" skip="0"/>
+      <region title="gpt2" base="0x41a11000" size="0x54" skip="0"/>
+      <region title="keypad" base="0x41a12000" size="0x1c" skip="0"/>
+      <region title="seg_lcd" base="0x41a13000" size="0x9c" skip="0"/>
+      <region title="i2c1" base="0x41a14000" size="0x8" skip="0"/>
+      <region title="i2c1" base="0x41a1400c" size="0x8" skip="0"/>
+      <region title="i2c2" base="0x41a15000" size="0x8" skip="0"/>
+      <region title="i2c2" base="0x41a1500c" size="0x8" skip="0"/>
+      <region title="i2c3" base="0x41a16000" size="0x8" skip="0"/>
+      <region title="i2c3" base="0x41a1600c" size="0x8" skip="0"/>
+      <region title="adi_if" base="0x41a40000" size="0x60" skip="0"/>
+      <region title="pwr_ctrl" base="0x41804000" size="0xa4" skip="0"/>
+      <region title="sys_irom" base="0x00000000" size="0x0" skip="1"/>
+      <region title="flash" base="0x08000000" size="0x0" skip="1"/>
+      <region title="flash_ext" base="0x0a000000" size="0x0" skip="1"/>
+      <region title="sys_drom" base="0x20000000" size="0x0" skip="1"/>
+      <region title="nb_ram" base="0x21d80000" size="0x10000" skip="0"/>
+      <region title="timer1" base="0x41806000" size="0x2c" skip="0"/>
+      <region title="iomux1" base="0x41807000" size="0x20" skip="0"/>
+      <region title="iomux2" base="0x41808000" size="0xd4" skip="0"/>
+      <region title="sys_wdt" base="0x41809000" size="0x18" skip="0"/>
+      <region title="sys_ifc1" base="0x4180e004" size="0x5c" skip="0"/>
+      <region title="bb_ctrl" base="0x41910000" size="0x3c" skip="0"/>
+      <region title="debug_uart" base="0x41a03000" size="0x1c" skip="0"/>
+      <region title="sys_ifc2" base="0x41a0e004" size="0x124" skip="0"/>
+      <region title="timer2" base="0x41a17000" size="0x2c" skip="0"/>
+      <region title="sys_dma" base="0x41a18004" size="0x2c" skip="0"/>
+      <region title="sys_ctrl" base="0x41a19000" size="0x108" skip="0"/>
+      <region title="psram8_ctrl" base="0x41a1c000" size="0x100" skip="0"/>
+      <region title="spi_flash" base="0x41a3e000" size="0x48" skip="0"/>
+      <region title="spi_flash_ext" base="0x41a3f000" size="0x48" skip="0"/>
+      <region title="psram" base="0x62000000" size="0x0" skip="1"/>
+      <region title="rf_if" base="0x41903000" size="0xb0" skip="0"/>
+      <region title="dfe" base="0x4190a000" size="0x750" skip="0"/>
+      <region title="debug_host" base="0x41a0f000" size="0x1c" skip="0"/>
+      <region title="bb_ifc" base="0x4190e004" size="0x48" skip="0"/>
+      <region title="cipher_f8" base="0x41930000" size="0x1c" skip="0"/>
+      <region title="nb_lps" base="0x41805000" size="0x2c" skip="0"/>
+      <region title="sci1" base="0x41900000" size="0x3c" skip="0"/>
+      <region title="nb_rf_spi" base="0x41901000" size="0x30" skip="0"/>
+      <region title="nb_tcu" base="0x41902000" size="0x1f0" skip="0"/>
+      <region title="sci2" base="0x41a00000" size="0x3c" skip="0"/>
+      <region title="nb_ctrl" base="0x41920000" size="260" skip="0">
+         <require addr="0x41804038" mask="0x80000" value="0x80000"/>
+      </region>
+      <region title="nb_common" base="0x41921000" size="548" skip="0">
+         <require addr="0x41804038" mask="0x80000" value="0x80000"/>
+      </region>
+      <region title="nb_intc" base="0x41922000" size="36" skip="0">
+         <require addr="0x41804038" mask="0x80000" value="0x80000"/>
+      </region>
+      <region title="nb_cs" base="0x41923000" size="2612" skip="0">
+         <require addr="0x41804038" mask="0x80000" value="0x80000"/>
+      </region>
+      <region title="nb_fft_rsrp" base="0x41924000" size="96" skip="0">
+         <require addr="0x41804038" mask="0x80000" value="0x80000"/>
+      </region>
+      <region title="nb_ca_rx_dump" base="0x41924200" size="56" skip="0">
+         <require addr="0x41804038" mask="0x80000" value="0x80000"/>
+      </region>
+      <region title="nb_acc" base="0x41924400" size="96" skip="0">
+         <require addr="0x41804038" mask="0x80000" value="0x80000"/>
+      </region>
+      <region title="nb_viterbi" base="0x41925000" size="84" skip="0">
+         <require addr="0x41804038" mask="0x80000" value="0x80000"/>
+      </region>
+      <region title="nb_meas" base="0x41926000" size="792" skip="0">
+         <require addr="0x41804038" mask="0x80000" value="0x80000"/>
+      </region>
+      <region title="nb_locseq_gen" base="0x41926400" size="60" skip="0">
+         <require addr="0x41804038" mask="0x80000" value="0x80000"/>
+      </region>
+      <region title="nb_ds_bsel" base="0x41927000" size="72" skip="0">
+         <require addr="0x41804038" mask="0x80000" value="0x80000"/>
+      </region>
+      <region title="nb_sp" base="0x41927100" size="52" skip="0">
+         <require addr="0x41804038" mask="0x80000" value="0x80000"/>
+      </region>
+      <region title="nb_tx_pusch" base="0x41928000" size="32" skip="0">
+         <require addr="0x41804038" mask="0x80000" value="0x80000"/>
+      </region>
+      <region title="nb_tx_chsc" base="0x41929000" size="44" skip="0">
+         <require addr="0x41804038" mask="0x80000" value="0x80000"/>
+      </region>
+      <region title="nb_tx_mdd" base="0x41929100" size="32" skip="0">
+         <require addr="0x41804038" mask="0x80000" value="0x80000"/>
+      </region>
+      <region title="nb_tx_frontend" base="0x4192a000" size="196" skip="0">
+         <require addr="0x41804038" mask="0x80000" value="0x80000"/>
+      </region>
+      <region title="nb_ca_tx_dump" base="0x4192a200" size="324" skip="0">
+         <require addr="0x41804038" mask="0x80000" value="0x80000"/>
+      </region>
+   </regions>
+
+   <profile name="8811">
+      <cpu name="ap" elf="ap.elf" sw="8811" bsstart="by_blue_screen_end"/>
+      <region title="sram" base="0x21c00000" size="0xf0000" skip="0"/>
+      <include_regions name="8811"/>
+   </profile>
+</bsdump>

@@ -1,0 +1,634 @@
+# Copyright (C) 2018 RDA Technologies Limited and/or its affiliates("RDA").
+# All rights reserved.
+#
+# This software is supplied "AS IS" without any warranties.
+# RDA assumes no responsibility or liability for the use of the software,
+# conveys no license or title under any patent, copyright, or mask work
+# right to the product. RDA reserves the right to make changes in the
+# software without notification.  RDA also make no representation or
+# warranty that such application will be suitable for the specified use
+# without further testing or modification.
+
+menu "Driver configuration"
+
+config USB_HOST_SUPPORT
+    bool "support usb host function"
+    default y if (SOC_8850) && (!FLASH_4M) && (!FLASH_2M)
+    default n
+    help
+        when is defined, will support usb host function.
+
+config USB_DEVICE_SUPPORT
+    bool "support usb device function"
+    default y if (SOC_8910) || ((SOC_8850) && (!FLASH_4M)) && (!FLASH_2M)
+    default n
+    help
+        when is defined, will support usb device function.
+
+config USB_NETCARD_ADAPTION_SUPPORT
+    bool "support usb netcard adaption function"
+    default n
+    help
+        when is defined, will support usb netcard adaption function.
+
+config USB_MSG_SUPPORT
+    bool "support usb device msg function"
+    default y
+    help
+        when is defined, will support usb msg device function.
+
+config USB_ACM_SUPPORT
+    bool "support usb device acm function"
+    default y
+    help
+        when is defined, will support usb acm device function.
+
+config USB_MTP_SUPPORT
+    bool "support usb device mtp function"
+    default y
+    help
+        when is defined, will support usb mtp device function.
+
+config USB_RNDIS_SUPPORT
+    bool "support usb device rndis function"
+    default y
+    help
+        when is defined, will support usb rndis device function.
+
+config DEBUGHOST_RX_BUF_SIZE
+    hex "Debughost rx buffer size"
+    default 0x200
+    help
+        Debughost RX buffer size.
+
+config HOST_CMD_ENGINE_MAX_PACKET_SIZE
+    hex "Host command engine packet size"
+    default 0x2020
+    help
+        The maximum packet size of host command engine.
+
+config UART_AUTOMODE_DEFAULT_BAUD
+    int "Default baud rate of adaptive mode"
+    default 115200
+    help
+        It is suggested to set a baud rate when UART in adaptive baud rate mode.
+        UART Tx can send data througt the baud rate.
+
+config SUPPORT_GENERAL_SPI
+    bool "support general spi"
+    default n if SOC_8910
+    help
+        enable general spi
+
+config SUPPORT_BATTERY_CHARGER
+    bool "support battery charge"
+    default n if (SOC_8811) || (SOC_8821)
+    default y
+    help
+        enable charger.
+
+config WCN_WIFI_SCAN_SUPPORT
+    bool "wcn wifi scan support"
+    default y if SOC_8910
+    default n
+
+config USB_SUPPORT
+    bool "support usb"
+    default y if SOC_8910
+    default y if SOC_8850
+    default n
+
+config USB_ETHER_SUPPORT
+    bool "support usb ether rndis/ecm"
+    default y if SOC_8910
+    default y if SOC_8850
+    default n
+
+if USB_SUPPORT
+config USB_CONNECT_TIMEOUT
+    int "usb connect timeout"
+    default 10000
+    help
+        After charger on interrupt triggered, we should enable the usb controller,
+        if there is not a usb host but a pure charger, we should close the controller
+        to save power.
+        The software judge there is a pure charger or usb host by set address command,
+        if more than this <USB_CONNECT_TIMEOUT> milliseconds did not receive set address,
+        the software close the usb controller.
+
+config USB_DETECT_DEBOUNCE_TIME
+    int "usb debounce time in milliseconds before eumerating"
+    default 600
+    help
+        Debuouce a little milliseconds before start enumerating.
+
+#quectel update: change default value 0xE0 to 0x1E0 enable usb remote wakeup (SPCSS01043651)
+config USB_DEVICE_CONTROLLER_FEATURE
+    hex "udc feature"
+    default 0x1E0
+    help
+        Lower 8 bits for config descriptor -> bmAttributes, higher are software defined
+
+if USB_ETHER_SUPPORT
+#quectel update: first byte set as 0x02
+config USB_ETHER_HOST_MAC
+    string "usb ether host mac address"
+    default "\\x02\\x4b\\xb3\\xb9\\xeb\\xe5"     #quectel update to 0x02
+
+config USB_ETHER_DEV_MAC
+    string "usb ether dev mac address"
+    default "\\xfa\\x32\\x47\\x15\\xe1\\x88"
+
+#quectel update: default y. STUNISOC8850-311:此处必须设置为Y才能在linux下使用rndis正常上网.
+config USB_ETHER_DYNAMIC_HOST_MAC_SUPPORT
+    bool "usb ether support dynamic host mac"
+    default y
+endif
+endif
+
+if SOC_8850
+config 8850_FPGA_BOARD
+    bool "support 8850 fpga board"
+    default n
+    help
+        open some config for 8850 fpga debug
+
+config IPC_PLAT_8850CM_V2
+    bool "support 8850 ipc V2 for 8850CM V1.1"
+    default n
+    help
+        support 8850 ipc V2 for 8850CM V1.1.lte stack code will be run at ap
+endif
+
+if SOC_8850
+config 8850_BM
+    bool "support 8850 BM board"
+    default n
+    help
+        open some config for 8850 BM
+endif
+
+config CAMERA_SUPPORT
+    bool "support camera"
+    default y if SOC_8910
+    default n
+    help
+        Whether CAMERA is supported
+
+if CAMERA_SUPPORT
+
+config CAMERA_SINGLE_BUFFER
+    bool "camera single buffer"
+    default n
+    help
+        nable sinable buffer,mipi camera gc2145 used.
+
+config CAMERA_GC032A_SUPPORT
+    bool "select camera gc032a"
+    default y
+    help
+        support spi camera sensor gc032a.
+
+config CAMERA_GC0310_SUPPORT
+    bool "select camera gc0310"
+    default n
+    help
+        support camera sensor gc0310.
+
+config CAMERA_BF30A2_SUPPORT
+    bool "select camera bf30a2"
+    default n
+    help
+        support spi camera sensor bf30a2.
+
+config CAMERA_GC2145_SUPPORT
+    bool "select camera gc2145"
+    default n
+    help
+        support mipi camera sensor gc2145.
+
+config CAMERA_GC0406_SUPPORT
+    bool "select camera gc0406"
+    default n
+    help
+        support mipi raw8 camera sensor gc0406.
+
+if SOC_8850
+    choice
+    prompt "CAM_MCLK_CONFIG"
+    default 8850_CAM_MCLK_SRC5_FREQ500M
+
+config 8850_CAM_MCLK_SRC2_FREQ78M
+    bool "CAM_MCLK_SRC_2,CAM_MCLK_SRC_FREQ_78M"
+    imply CAM_MCLK_SRC_2
+    imply CAM_MCLK_SRC_FREQ_78M
+
+config 8850_CAM_MCLK_SRC3_FREQ57M
+    bool "CAM_MCLK_SRC_3,CAM_MCLK_SRC_FREQ_57M"
+    imply CAM_MCLK_SRC_3
+    imply CAM_MCLK_SRC_FREQ_57M
+
+config 8850_CAM_MCLK_SRC4_FREQ62.5M
+    bool "CAM_MCLK_SRC_4,CAM_MCLK_SRC_FREQ_62.5M"
+    imply CAM_MCLK_SRC_4
+    imply CAM_MCLK_SRC_FREQ_62.5M
+
+config 8850_CAM_MCLK_SRC5_FREQ500M
+    bool "CAM_MCLK_SRC_5,CAM_MCLK_SRC_FREQ_500M"
+    imply CAM_MCLK_SRC_5
+    imply CAM_MCLK_SRC_FREQ_500M
+
+endchoice
+
+choice
+    prompt "CAM_PIX_CLK_CONFIG"
+    default 8850_CAM_PCLK_SRC5_FREQ500M
+
+config 8850_CAM_PCLK_SRC2_FREQ78M
+    bool "CAM_PCLK_SRC_2,CAM_PCLK_SRC_FREQ_78M"
+    imply CAM_PCLK_SRC_2
+    imply CAM_PCLK_SRC_FREQ_78M
+
+config 8850_CAM_PCLK_SRC3_FREQ57M
+    bool "CAM_PCLK_SRC_3,CAM_PCLK_SRC_FREQ_57M"
+    imply CAM_PCLK_SRC_3
+    imply CAM_PCLK_SRC_FREQ_57M
+
+config 8850_CAM_PCLK_SRC4_FREQ62M
+    bool "CAM_PCLK_SRC_4,CAM_PCLK_SRC_FREQ_62M"
+    imply CAM_PCLK_SRC_4
+    imply CAM_PCLK_SRC_FREQ_62M
+
+config 8850_CAM_PCLK_SRC5_FREQ500M
+    bool "CAM_PCLK_SRC_5,CAM_PCLK_SRC_FREQ_500M"
+    imply CAM_PCLK_SRC_5
+    imply CAM_PCLK_SRC_FREQ_500M
+
+endchoice
+
+choice
+    prompt "CAM_CSI_CLK_CONFIG"
+    default 8850_CAM_CCLK_SRC5_FREQ500M
+
+config 8850_CAM_CCLK_SRC2_FREQ78M
+    bool "CAM_CCLK_SRC_2,CAM_CCLK_SRC_FREQ_78M"
+    imply CAM_CCLK_SRC_2
+    imply CAM_CCLK_SRC_FREQ_78M
+
+config 8850_CAM_CCLK_SRC3_FREQ57M
+    bool "CAM_CCLK_SRC_3,CAM_CCLK_SRC_FREQ_57M"
+    imply CAM_CCLK_SRC_3
+    imply CAM_CCLK_SRC_FREQ_57M
+
+config 8850_CAM_CCLK_SRC4_FREQ62.5M
+    bool "CAM_CCLK_SRC_4,CAM_CCLK_SRC_FREQ_62.5M"
+    imply CAM_CCLK_SRC_4
+    imply CAM_CCLK_SRC_FREQ_62.5M
+
+config 8850_CAM_CCLK_SRC5_FREQ500M
+    bool "CAM_CCLK_SRC_5,CAM_CCLK_SRC_FREQ_500M"
+    imply CAM_CCLK_SRC_5
+    imply CAM_CCLK_SRC_FREQ_500M
+
+endchoice
+
+config DEFAULT_CAM_MCLK_FREQ
+    int "cam mclk frequency"
+    default 15000000
+    help
+        Camera MCLK config
+
+config DEFAULT_CAM_PCLK_FREQ
+    int "cam pclk frequency"
+    default 39000000
+    help
+        Camera PCLK config
+
+config DEFAULT_CAM_CCLK_FREQ
+    int "cam cclk frequency"
+    default 125000000
+    help
+        Camera CCLK config.
+
+config CAM_MCLK_SRC_2
+    bool
+config CAM_MCLK_SRC_3
+    bool
+config CAM_MCLK_SRC_4
+    bool
+config CAM_MCLK_SRC_5
+    bool
+
+config CAM_MCLK_SRC_FREQ_78M
+    bool
+config CAM_MCLK_SRC_FREQ_57M
+    bool
+config CAM_MCLK_SRC_FREQ_62.5M
+    bool
+config CAM_MCLK_SRC_FREQ_500M
+    bool
+config DEFAULT_CAM_MCLK_SRC_FREQ
+    int
+    default 78000000 if CAM_MCLK_SRC_FREQ_78M
+    default 57000000 if CAM_MCLK_SRC_FREQ_57M
+    default 62500000 if CAM_MCLK_SRC_FREQ_62.5M
+    default 500000000 if CAM_MCLK_SRC_FREQ_500M
+
+config CAM_MCLK_SRC_NUM
+    int
+    default 2 if CAM_MCLK_SRC_2
+    default 3 if CAM_MCLK_SRC_3
+    default 4 if CAM_MCLK_SRC_4
+    default 5 if CAM_MCLK_SRC_5
+
+config CAM_PCLK_SRC_2
+    bool
+config CAM_PCLK_SRC_3
+    bool
+config CAM_PCLK_SRC_4
+    bool
+config CAM_PCLK_SRC_5
+    bool
+
+config CAM_PCLK_SRC_FREQ_78M
+    bool
+config CAM_PCLK_SRC_FREQ_57M
+    bool
+config CAM_PCLK_SRC_FREQ_62.5M
+    bool
+config CAM_PCLK_SRC_FREQ_500M
+    bool
+config DEFAULT_CAM_PCLK_SRC_FREQ
+    int
+    default 78000000 if CAM_PCLK_SRC_FREQ_78M
+    default 57000000 if CAM_PCLK_SRC_FREQ_57M
+    default 62500000 if CAM_PCLK_SRC_FREQ_62.5M
+    default 500000000 if CAM_PCLK_SRC_FREQ_500M
+
+config CAM_PCLK_SRC_NUM
+    int
+    default 2 if CAM_PCLK_SRC_2
+    default 3 if CAM_PCLK_SRC_3
+    default 4 if CAM_PCLK_SRC_4
+    default 5 if CAM_PCLK_SRC_5
+
+config CAM_CCLK_SRC_2
+    bool
+config CAM_CCLK_SRC_3
+    bool
+config CAM_CCLK_SRC_4
+    bool
+config CAM_CCLK_SRC_5
+    bool
+
+config CAM_CCLK_SRC_FREQ_78M
+    bool
+config CAM_CCLK_SRC_FREQ_57M
+    bool
+config CAM_CCLK_SRC_FREQ_62.5M
+    bool
+config CAM_CCLK_SRC_FREQ_500M
+    bool
+
+config DEFAULT_CAM_CCLK_SRC_FREQ
+    int
+    default 78000000 if CAM_CCLK_SRC_FREQ_78M
+    default 57000000 if CAM_CCLK_SRC_FREQ_57M
+    default 62500000 if CAM_CCLK_SRC_FREQ_62.5M
+    default 500000000 if CAM_CCLK_SRC_FREQ_500M
+
+config CAM_CCLK_SRC_NUM
+    int
+    default 2 if CAM_CCLK_SRC_2
+    default 3 if CAM_CCLK_SRC_3
+    default 4 if CAM_CCLK_SRC_4
+    default 5 if CAM_CCLK_SRC_5
+endif
+
+config MIPI_SUPPORT
+    bool "camera MIPI"
+    default y
+    help
+        support mipi.
+
+if MIPI_SUPPORT
+
+if SOC_8850
+
+
+config DEFAULT_CAM_MIPI_MCLK_FREQ
+    int "cam mipi mclk frequency"
+    default 26000000
+    help
+        mipi Camera MCLK config.
+endif
+endif
+endif
+
+config LCD_SUPPORT
+    bool "support lcd"
+    default y if SOC_8910
+    default n
+    help
+        Whether LCD is supported.
+
+if LCD_SUPPORT
+config SUPPORT_LCD_GC9305
+    bool "support GC9305 panel"
+    default y
+    help
+        Support GC9305 LCD panel
+
+config SUPPORT_LCD_GC9306
+    bool "support GC9306 panel"
+    default y
+    help
+        Support GC9306 LCD panel
+
+config SUPPORT_LCD_ST7735S
+    bool "support ST7735S panel"
+    default n
+    help
+        Support ST7735S LCD panel
+
+config SUPPORT_LCD_ST7789h2
+    bool "support ST7789h2 panel"
+    default n
+    help
+        Support ST7789h2 LCD panel
+
+config MIPI_LCD_SUPPORT
+    bool "support mipi lcd"
+    default n
+    help
+        Support MIPI LCD
+
+endif
+
+config HEADSET_DETECT_SUPPORT
+    bool "support headset detect"
+    default y if SOC_8910
+    default n
+    help
+        enable headset detect.
+
+config BOARD_SUPPORT_SDCARD1_DETECT
+    bool "support SDCard1 detect"
+    default y if SOC_8850
+    default n
+    help
+        enable sdcard1 detect.
+
+config BOARD_SDCARD1_ID
+    int "sdcard1 ID number"
+    depends on BOARD_SUPPORT_SDCARD1_DETECT
+    default 1
+    help
+        select sdcard1 ID number.
+
+config BOARD_SDCARD1_DETECT_GPIO
+    int "sdcard1 detect GPIO number"
+    depends on BOARD_SUPPORT_SDCARD1_DETECT
+    default 3
+    help
+        Then GPIO to use to detect sdcard1 hot plug.
+
+config BOARD_SUPPORT_SDCARD2_DETECT
+    bool "support SDCard2 detect"
+    default n if SOC_8850
+    default n
+    help
+        enable sdcard2 detect.
+
+config BOARD_SDCARD2_ID
+    int "sdcard2 ID number"
+    depends on BOARD_SUPPORT_SDCARD2_DETECT
+    default 2
+    help
+        select sdcard2 ID number.
+
+config BOARD_SDCARD2_DETECT_GPIO
+    int "sdcard2 detect GPIO number"
+    depends on BOARD_SUPPORT_SDCARD2_DETECT
+    help
+        Then GPIO to use to detect sdcard2 hot plug.
+
+if HEADSET_DETECT_SUPPORT
+config HEADSET_STACK_SIZE
+    int "headset thread stack size"
+    default 16384
+    help
+        headset detect will run in separated thread. The stack size in bytes
+        shall be determined by the used status.
+endif
+
+
+config SDIO_SUPPORT
+    bool "support sdio Driver function"
+    default y if (SOC_8850) || (SOC_8910) || (SOC_8811) || (SOC_8821)
+    default n
+    help
+        when is defined, will support sdio function.
+
+config SDIO2_SDMMC_SUPPORT
+    bool "support EMMC_SDIO2_SDMMC_DRIVER"
+    default n if SOC_8850
+    default n
+    help
+        Whether EMMC API SDIO2 SDMMC Driver is supported.
+
+if SDIO_SUPPORT
+
+config SDMMC_SUPPORT
+    bool "support SDMMC"
+    default y if (SOC_8910) || (SOC_8811) || (SOC_8821)
+    default n
+    help
+        Whether SDMMC Driver is supported.
+if SDMMC_SUPPORT
+config SDMMC_CLK_FREQ_SD
+    int "SDMMC clock frequency for SD"
+    default 25000000
+    help
+        SDMMC clock frequency for SD.
+
+config SDMMC_CLK_FREQ_SDHC
+    int "SDMMC clock frequency for SDHC"
+    default 50000000
+    help
+        SDMMC clock frequency for SDHC.
+endif
+
+config EMMC_SUPPORT
+    bool "support EMMC"
+    default y if SOC_8850
+    default n
+    help
+        Whether EMMC Driver is supported.
+if  EMMC_SUPPORT
+config SDMMC_CLK_FREQ_SD
+    int "SDMMC clock frequency for SD"
+    default 25000000
+    help
+        SDMMC clock frequency for SD.
+
+config SDMMC_CLK_FREQ_SDHC
+    int "SDMMC clock frequency for SDHC"
+    default 50000000
+    help
+        SDMMC clock frequency for SDHC.
+
+endif
+endif
+
+
+
+config TEE_SUPPORT
+    bool "support trusted execution environment"
+    default y if (SOC_8850) && USE_TRUSTY
+    default n
+    help
+        Whether TEE is supported
+
+config SUPPORT_EMMC
+    bool "emmcDRIVER_EMMC"
+    default n
+    help
+        Support emmc Driver
+
+config 8910_EMMC_SUPPORT
+    bool "support_8910_EMMC"
+    default n
+    help
+        Whether 8910 eMMC is supported
+
+config SUPPORT_SD2
+    bool "SUPPORT_SD2"
+    default n
+    help
+        Support SD2
+
+config SUPPORT_LC_FLASH
+    bool "SUPPORT_LC_FLASH"
+    default n
+    help
+        Support large capacity flash
+
+config GENERAL_SPI_LC_FLASH
+    bool "support larger than 16MB General spi  flash"
+    default n
+    help
+        Support larger than 16MB general spi interface  flash
+
+config FILEX_NAME_LOCAL_CHSET
+    bool "Support file name local chset"
+    default y
+    help
+        Support file name local chset.
+
+config SPI_NAND_DRIVER_SUPPORT
+    bool "SPI NAND DRIVER SUPPORT"
+    default n
+    help
+       When enabled, NAND DRIVER will be support.
+endmenu

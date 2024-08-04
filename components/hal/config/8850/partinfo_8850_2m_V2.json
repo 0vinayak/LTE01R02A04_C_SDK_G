@@ -1,0 +1,69 @@
+{
+    "version": "0x100",
+    "descriptions": [
+        {
+            "type": "FBD2",
+            "flash": "SFL1",
+            "name": "FSYS",
+            "offset": "0x31000",
+            "size": "0x57000",
+            "erase_block": "0x1000",
+            "logic_block": "0x200"
+        },
+        {
+            "type": "FBD2",
+            "flash": "SFL1",
+            "name": "FMOD",
+            "offset": "0x88000",
+            "size": "0x16c000",
+            "erase_block": "0x4000",
+            "logic_block": "0x200"
+        },
+        {
+            "type": "FBD2",
+            "flash": "SFL1",
+            "name": "FFAC",
+            "offset": "0x1f4000",
+            "size": "0xc000",
+            "erase_block": "0x1000",
+            "logic_block": "0x100"
+        },
+        {
+            "type": "SFFS",
+            "device": "FSYS",
+            "mount": "/",
+            "reserve_block": "16"
+        },
+        {
+            "type": "SFFS",
+            "device": "FMOD",
+            "mount": "/modem",
+            "application_ro": true
+        },
+        {
+            "type": "SFFS",
+            "device": "FFAC",
+            "mount": "/factory",
+            "application_ro": true
+        }
+    ],
+	"macros": {
+	"CONFIG_SPL_FLASH_ADDRESS": "0x60000000",
+	"CONFIG_SPL_FLASH_SIZE": "0x11000",
+	"CONFIG_APP_FLASH_ADDRESS": "0x60011000",
+	"CONFIG_APP_FLASH_SIZE": "0x20000",
+	"CONFIG_FS_SYS_FLASH_ADDRESS": "0x60031000",
+	"CONFIG_FS_SYS_FLASH_SIZE": "0x57000",
+	"CONFIG_FS_MODEM_FLASH_ADDRESS": "0x60088000",
+	"CONFIG_FS_MODEM_FLASH_SIZE": "0x16c000",
+	"CONFIG_FS_FACTORY_FLASH_ADDRESS": "0x601f4000",
+	"CONFIG_FS_FACTORY_FLASH_SIZE": "0xC000",
+	"CONFIG_FS_SYS_MOUNT_POINT": "/",
+	"CONFIG_FS_MODEM_MOUNT_POINT": "/modem",
+	"CONFIG_FS_FACTORY_MOUNT_POINT": "/factory",
+	"CONFIG_FS_MODEM_NVM_DIR": "/runningnv",
+	"CONFIG_FS_AP_NVM_DIR": "/nvm",
+	"CONFIG_FS_FOTA_DATA_DIR": "/fota",
+	"CONFIG_BOOT_FLASH_DISABLE": "on"
+	}
+}

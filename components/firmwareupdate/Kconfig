@@ -1,0 +1,100 @@
+# Copyright (C) 2018 RDA Technologies Limited and/or its affiliates("RDA").
+# All rights reserved.
+#
+# This software is supplied "AS IS" without any warranties.
+# RDA assumes no responsibility or liability for the use of the software,
+# conveys no license or title under any patent, copyright, or mask work
+# right to the product. RDA reserves the right to make changes in the
+# software without notification.  RDA also make no representation or
+# warranty that such application will be suitable for the specified use
+# without further testing or modification.
+
+menu "firmware update"
+
+config FUPDATE_PACK_FILE_NAME
+    string "update pack file name"
+    default "fota.pack"
+    help
+        This is the file name of firmware upgrade pack file name. It is
+        located under CONFIG_FS_FOTA_DATA_DIR. The configuration should
+        be the same in application and bootloader.
+
+        Don't change it unless you know what you are doing.
+
+config FUPDATE_STAGE_FILE_NAME
+    string "update stage file name"
+    default "fota.stage"
+    help
+        This file will record firmware updata stage. It is located under
+        CONFIG_FS_FOTA_DATA_DIR. The configuration should be the same in
+        application and bootloader.
+
+        Don't change it unless you know what you are doing.
+
+config FUPDATE_TEMP_FILE_NAME
+    string "update temporal file name"
+    default "fota.tmp"
+    help
+        This is temporal file create during update in bootloader.
+
+        Don't change it unless you know what you are doing.
+
+config FUPDATE_SUPPORT_FLASH_PATCH
+    bool "support flash differential update"
+    default y
+    help
+        Support differential update of flash regions.
+
+config FUPDATE_SUPPORT_FS_PATCH
+    bool "support file system differential update"
+    default y if SOC_8910
+    default n
+    help
+        Support differential update of file system. Only SFFS is supported.
+
+config FUPDATE_SUPPORT_BLOCKED_FILE
+    bool "support blocked file"
+    default y if SOC_8910
+    default y if SOC_8850
+    default n
+
+config FUPDATE_SUPPORT_SIGNATURE_CHECK
+    bool "support fota signature check"
+    default n if SOC_8850   #quectel updtae
+    default y if SOC_8910
+    default n
+
+config FUPDATE_SIGN_FILE_NAME
+    string "update signature file name"
+    default "fota.sign"
+    help
+        This is signature file name of the firmware update pack file.
+        It contains the signature of the update pack file. 
+
+        Don't change it unless you know what you are doing.
+
+config FUPDATE_SUPPORT_VERSION_CHECK
+    bool "support fota package old/new version check"
+    default y if SOC_8910
+    default n
+    help
+        If this option is enabled, it will check the versions of
+        new & old firmwares before upgrading the fota package. Forbid new
+        version being updated to old version by default.
+
+config FUPDATE_CHECK_SECURE_VERSION
+    bool "fota check secure version"
+    default n if SOC_8850
+    default n
+    help
+        If secure boot is enabled, fota will check the secure version of the new pac.
+        If the version < secure version in Efuse, fota upgrade process will be stoped.   
+config FUPDATE_SUPPORT_CHECK_TMP_SPACE
+    bool "support fota check tmp space"
+    default y if SOC_8910
+    default n if SOC_8850  #quectel updtae
+    default n
+    help
+        If this option is enabled, it will check unused flash size, if
+        flash size is not enough for fota, the update process will quit. 
+endmenu

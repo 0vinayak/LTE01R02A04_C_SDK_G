@@ -1,0 +1,311 @@
+# Copyright (C) 2018 RDA Technologies Limited and/or its affiliates("RDA").
+# All rights reserved.
+#
+# This software is supplied "AS IS" without any warranties.
+# RDA assumes no responsibility or liability for the use of the software,
+# conveys no license or title under any patent, copyright, or mask work
+# right to the product. RDA reserves the right to make changes in the
+# software without notification.  RDA also make no representation or
+# warranty that such application will be suitable for the specified use
+# without further testing or modification.
+
+menu "HAL Configurations"
+
+config NVM_VARIANTS
+    string "NVM variants"
+    default ""
+    help
+        For each target, multiple nvm variants are supported. For each nvm
+        variant, a separated pac file will be created.
+
+        NVM variant is just a name, and the definitions are located in
+        another configuration file. For 8910, each nvm variant will
+        configure modem bin path and nvm prj file.
+
+config MODEM_LTE_LIB_VARINTS
+    string "modem LTE lib variants"
+    default NVM_VARIANTS
+    help
+        modem lte lib path, For 8850, when CONFIG_MODEM_LTE_LIB open and
+        NVM variants are set more than one, MODEM_LTE_LIB_VARINTS should
+        set one value.
+
+config PARTINFO_JSON_PATH
+    string "partition infomation json file path"
+    default ""
+    help
+        Partition information is stored as a json file. This json file
+        will be converted into binary file, and embedded into bootloader.
+
+        There are no default value, each target should specify the
+        partition information file.
+
+config PINMUX_JSON_PATH
+    string "pinfunc defination json file path"
+    default ""
+
+config PACKAGE_FILE_JSON_PATH
+    string "package raw file config path"
+    default "components/nvitem/8910/default/prepack/prepack.json" if SOC_8910
+    default "components/nvitem/8811/default/prepack/prepack.json" if SOC_8811
+    default "components/nvitem/8850/default/prepack/prepack.json" if SOC_8850
+    default "components/nvitem/8821/default/prepack/prepack.json" if SOC_8821
+
+config PACKAGE_FILE_APPIMG_JSON_PATH
+    string "package raw file config path for appimg example"
+    default ""
+    help
+        default "components/nvitem/8910/default/prepack/prepack_appimg.json" if SOC_8910
+        default "components/nvitem/8811/default/prepack/prepack_appimg.json" if SOC_8811
+        default "components/nvitem/8850/default/prepack/prepack_appimg.json" if SOC_8850  #adjusted by quectel
+        default "components/nvitem/8821/default/prepack/prepack_appimg.json" if SOC_8821
+
+config SUPPORT_IMS_DELTA_NV
+    bool "ims delta nv enable"
+    depends on QUEC_PROJECT_FEATURE_VOLTE #quectel add
+    default n
+
+config SUPPORT_INNER_DELTA_NV
+    bool "inner delta nv enable"
+    default y if SOC_8850
+    default y if SOC_8910
+    default n
+
+config ENABLE_DEBUGHOST_EVENT
+    bool "enable debughost event"
+    default y if SOC_8910
+    default y if SOC_8850
+    default n
+
+config PWRKEY_POWERUP
+    bool "power key power up enable"
+    default y
+
+config WAKEUP_PIN_POWERUP
+    bool "wakeup pin (psm_ext_int) power up enable"
+    default n
+
+config SHUTDOWN_NORMAL_POWER_OFF
+    bool "shutdown normal power off"
+    default n
+    help
+        This is a normal power off mode in pmic 2720,
+        more power consupmtion than PSM mode.
+
+config KEYPAD_CSV_PATH
+    string "keypad defination csv file path"
+    default "components/hal/include/8811/keypad_map_8811.csv" if SOC_8811
+    default "components/hal/include/8910/keypad_map_8910.csv" if SOC_8910
+    default "components/hal/include/8821/keypad_map_8821.csv" if SOC_8821
+
+config PWRKEY_TIE_GND
+    bool "power key tied to GND"
+    default y
+    help
+        When power key is tied to GND, this should be selected. In this
+        case, PWRKEY_WAKEUP_PSM should be deselected. Otherwise, PSM sleep
+        will be wakeup immediately.
+
+config PWRKEY_WAKEUP_PSM
+    bool "power key wakeup psm"
+    depends on !PWRKEY_TIE_GND
+    default n
+    help
+        When selected, power key will wakeup system from PSN sleep.
+
+config CHARGER_POWERUP
+    bool "charger powerup the chip"
+    default y
+
+if SOC_8850
+    config MED_CODE_ENCRYPT
+        bool "enable med encrypt code"
+        default n
+
+    config 8850CM_TARGET
+    bool "8850CM target"
+        default n        
+    config 8850BM_C1
+        bool "8850BM_C1 target"
+        default n
+
+endif
+
+if SOC_8811 || SOC_8821
+    config MED_CODE_ENCRYPT
+        bool "enable med encrypt code"
+        default n
+
+    config LV_SUPPORT
+        bool "support dcdc lower vol set"
+        default n
+        help
+            Whether LV is supported
+
+    config PM2_IND_GPIO
+        int "gpio to indicate pm2 sleep"
+        default -1
+        help
+            It is a GPIO to indicate PM2 sleep. At PM2 sleep, the GPIO will
+            output low, and the GPIO will output high at PM0. When it is
+            connected with a LED, the LED can indicate PM2 sleep.
+
+            When it is negative, this feature is disabled.
+
+    config PM3_IND_GPIO
+        int "gpio to indicate pm3 sleep"
+        default -1
+        help
+            It is a GPIO to indicate PM3 sleep. At PM3 sleep, the GPIO will
+            output low, and the GPIO will output high at PM0 or PM2. When it
+            is connected with a LED, the LED can indicate PM3 sleep.
+
+            When it is negative, this feature is disabled.
+
+    config 8821CD_OPENPHONE
+        bool "whether it is 8821CD OPENPHONE"
+        default n
+endif
+
+if SOC_8910
+    config PMIC_INTR_GPIO
+        int "GPIO for PMIC interrupt"
+        default 6
+
+    config SLEEP32K_GPIO
+        int "GPIO for sleep 32K wakeup"
+        default 7
+
+    config TST_H_GROUND
+        bool "tst_h to the ground"
+        default n
+
+    config CP_LTE_NBIOT_SUPPORT
+        bool "CP Support Nbiot"
+        default n
+
+    config GPIO4_FORCE_PULL_UP
+        bool "gpio4 (for sim detect) force pull up"
+        default n
+
+    config CAMA_POWER_ON_INIT
+        bool "open CAMA power when init"
+        default n
+
+    config CAMA_CLK_FOR_AUDIO
+        bool "open camera clock for audio"
+        default n
+
+    config GPIO_X_USED_FOR_VBAT_RF
+        int "GPIO x is used for Vbat_RF switch"
+        default 8
+        help
+            Then set gpio used for Vbat_RF switch.
+
+    config GPIO_USED_FOR_VBAT_RF_SWITCH
+        bool "Whether GPIO x is used for Vbat_RF switch"
+#Edit by quectel.Vbat_RF is no used.
+#        default y
+		default n
+        help
+            Then set gpio used for Vbat_RF switch.
+
+    config GSM_LTE_SWITCH_SUPPORT
+        bool "gsm lte switch support"
+        default n
+        help
+            Support switching betweend gsm and lte during runtime.
+
+    config DL_UL_SPEED_2MBPS
+        bool "ipc dl ul speed reduce to 2M bps"
+        default n
+        help
+            Support decrease the ipc dl and ul speed to 2M bps
+
+endif
+
+config TRUSTZONE_SUPPORT
+        bool "trust zone support"
+        default n
+        help
+            Support trust zone feature or not, if support the
+            partition layout must have corresponding region.
+
+
+if TRUSTZONE_SUPPORT
+config TRUSTZONE_SML_TOS_DIR
+    string "trust zone sml and tos bin file dir"
+    default ""
+
+endif
+
+config SYS_WDT_TIMEOUT
+    int "sys_wdt timeout"
+    default 10000
+    help
+        sys_wdt will always be enabled to trigger blue screen on system hang.
+        This is the watchdog timeout.
+
+        The default strategy of watchdog feed is in low priority thread. So,
+        this timeout should be relative large, not to hit by system busy.
+
+config SYS_WDT_FEED_INTERVAL
+    int "sys_wdt feed interval"
+    default 5000
+    help
+        This is the interval to feed sys_wdt.
+
+config UNITY_OUTPUT_UART
+    bool "unity output to uart"
+    default y
+    help
+        Send unity output to uart. When unselected, unity output will be
+        mixed into log.
+
+if UNITY_OUTPUT_UART
+choice
+    prompt "unity unit test uart"
+    default UNITY_UART1
+
+config UNITY_UART1
+    bool "UART1"
+config UNITY_UART2
+    bool "UART2"
+config UNITY_UART3
+    bool "UART3"
+config UNITY_UART4
+    bool "UART4"
+config UNITY_UART5
+    bool "UART5"
+endchoice
+
+config UNITY_UART_NAME
+    string
+    default "DRV_NAME_UART1" if UNITY_UART1
+    default "DRV_NAME_UART2" if UNITY_UART2
+    default "DRV_NAME_UART3" if UNITY_UART3
+    default "DRV_NAME_UART4" if UNITY_UART4
+    default "DRV_NAME_UART5" if UNITY_UART5
+    default ""
+
+config UNITY_UART_BAUD
+    int "unity unit test uart baud rate"
+    default 115200
+endif
+
+if BT_SLEEPTIME_SYNC_WITH_AP
+config AP_SLEEP_SYNC_WITH_BT_SLEEPTIME
+    bool "ap must wakeup before bt sleeptime expire"
+    default y
+endif
+
+    
+#quectel update
+config SYS_WDT_ENABLE
+    bool "whether to enable sys_wdt"
+    default y
+    help
+        sys_wdt is a mechanism to trigger blue screen when system is not
+        responsibile. Typically, it is implemented by NMI interrupt or FIQ.
+
+endmenu

@@ -1,0 +1,33 @@
+
+///////////////////////////////////////////// IMS /////////////////////////////////////////////
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\sip_sessionTimer=1800
+
+// sip_sessionTimerRefresher: 0:NONE; 1:UAC; 2:UAS
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\sip_sessionTimerRefresher=1
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\USSI_Enabled=1
+
+// compactSipHdr: Use compact sip header
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\compactSipHdr=1
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingingTimer=90
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingbackTimer=90
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\ss_BsfPort=7080
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\ss_XcapUri="nafxjktm001.ims.mnc009.mcc510.pub.3gppnetwork.org"
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\ss_BsfUri="bsf.ims.mnc009.mcc510.pub.3gppnetwork.org"
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\ss_XcapPort=7077
+
+///////////////////////////////////////////// GAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// LAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// WAS /////////////////////////////////////////////
+
+///////////////////////////////////////////// MN //////////////////////////////////////////////
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\mn_sim_nvinfo\ss_domain=1

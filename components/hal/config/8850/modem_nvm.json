@@ -1,0 +1,44 @@
+{
+    "_comment": [
+        "It is the central description about 8850 modem and nvm.",
+        "",
+        "Multiple sets of 'cpfilelist' can be defined. For each set of",
+        "cpfilelist, 'copy_only' means the file will be only copied to",
+        "modemgen directory, for debug puepose. It won't be included in",
+        "modem.cpio, and it is not an error that the specified file doesn't",
+        "exist. Otherwise, it is an error. So, when the file list in modem.cpio",
+        "is different, an independent set should be defined.",
+        "",
+        "'lzma3' means that the file will be stored in blocked compressed",
+        "files. 'file' is the path in modem.cpio, must be relative path, and",
+        "related to modem mount point. When target file name is not the",
+        "same with file name in target, 'local_file' can be specifed. On host,",
+        "path is related to CP directory."
+    ],
+    "lzma_block_size": "0x10000",
+    "lzma_dict_size": "0x400",
+    "cpfilelist": {
+        "default": [
+            {
+                "file": "mem_index_list",
+                "local_file": "memory_index_list.bin"
+            },
+            {
+                "file": "cp.bin",
+                "lzma3": true
+            },
+            {
+                "file": "riscV.bin",
+                "lzma3": true
+            },
+            {
+                "file": "rev_info.txt",
+                "copy_only": true
+            },
+            {
+                "file": "cp.axf",
+                "copy_only": true
+            }
+        ]
+    }
+}

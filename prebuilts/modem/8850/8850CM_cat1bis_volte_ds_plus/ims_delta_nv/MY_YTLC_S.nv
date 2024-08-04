@@ -1,0 +1,33 @@
+
+///////////////////////////////////////////// IMS /////////////////////////////////////////////
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\sip_sessionTimer=900
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\conf_uri="sip:conference-factory@yes.my"
+
+//the Bsf Service PORT
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\ss_BsfPort=8080
+
+//Support Activate CFNL when activated CFNRC according  IR92,0:not support ,1: support,default:0
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\ss_ActCFNLEnable=1
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\USSI_Enabled=1
+
+// MT call no answer timer after send 180 (Sec)
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingingTimer=90
+
+// MO call no answer timer after receive 180 (Sec)
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingbackTimer=90
+
+
+///////////////////////////////////////////// GAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// LAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// WAS /////////////////////////////////////////////
+
+///////////////////////////////////////////// MN //////////////////////////////////////////////
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\mn_sim_nvinfo\ss_domain=1
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\mn_sim_nvinfo\cw_strategy=0x1

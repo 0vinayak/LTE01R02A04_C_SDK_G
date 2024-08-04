@@ -1,0 +1,73 @@
+# Copyright (C) 2018 RDA Technologies Limited and/or its affiliates("RDA").
+# All rights reserved.
+#
+# This software is supplied "AS IS" without any warranties.
+# RDA assumes no responsibility or liability for the use of the software,
+# conveys no license or title under any patent, copyright, or mask work
+# right to the product. RDA reserves the right to make changes in the
+# software without notification.  RDA also make no representation or
+# warranty that such application will be suitable for the specified use
+# without further testing or modification.
+
+menu "at_lwm2m"
+
+choice
+	prompt "AT_MIPL_SUPPORT"
+	default AT_CUS_MIPL_SUPPORT if AT_CUS_SUPPORT
+	default AT_LWM2M_MIPL_SUPPORT if SOC_8811 || SOC_8850 || SOC_8821
+	default AT_CISSDK_MIPL_SUPPORT
+config AT_CISSDK_MIPL_SUPPORT
+	bool "AT_CISSDK_MIPL_SUPPORT enabled"
+	select NET_CIS_SDK_SUPPORT
+config AT_LWM2M_MIPL_SUPPORT
+	bool "AT_LWM2M_MIPL_SUPPORT enabled"
+	select NET_LWM2M_SUPPORT
+	select LWM2M_ONENET_SUPPORT
+config AT_LWM2M_MIPL_SOTA_SUPPORT
+	bool "AT_LWM2M_MIPL_SOTA_SUPPORT enabled"
+	depends on AT_LWM2M_MIPL_SUPPORT
+	default y if SOC_8811 || SOC_8821
+	select LWM2M_ONENET_UPDATE
+	select LWM2M_ONENET_SOTA
+config AT_CUS_MIPL_SUPPORT
+	bool "AT_CUS_MIPL_SUPPORT enabled"
+	select NET_LWM2M_SUPPORT
+	select LWM2M_ONENET_SUPPORT
+config AT_NO_MIPL_SUPPORT
+	bool "AT_NO_MIPL_SUPPORT enabled"
+
+endchoice
+
+config AT_OCEANCONNECT_SUPPORT
+    bool "AT_OCEANCONNECT_SUPPORT enabled"
+    default y
+    select NET_LWM2M_SUPPORT
+    help
+        When enabled, AT_OCEANCONNECT_SUPPORT will be defined
+
+config AT_CTWING_SUPPORT
+    bool "AT_CTWING_SUPPORT enabled"
+    default n if SOC_8910
+    default y
+    select NET_LWM2M_SUPPORT
+	select LWM2M_CTWING_SUPPORT
+    help
+        When enabled, AT_AEP_SUPPORT will be defined
+
+config AT_CTWING_SELFREG_SUPPORT
+    bool "AT_CTWING_SELFREG_SUPPORT enabled"
+    depends on AT_CTWING_SUPPORT
+    default y if SOC_8811 || SOC_8821
+    select NET_CTWING_SELFREG_SUPPORT
+    help
+        When enabled, AT_CTWING_SELFREG_SUPPORT will be defined
+		
+config AT_CTWING_NEW_STANDARD
+    bool "AT_CTWING_NEW_STANDARD enabled"
+    default n
+	depends on AT_CTWING_SUPPORT
+	select LWM2M_CTWING_NEW_STANDARD
+    help
+        When enabled, AT_CTWING_NEW_STANDARD will be defined
+
+endmenu

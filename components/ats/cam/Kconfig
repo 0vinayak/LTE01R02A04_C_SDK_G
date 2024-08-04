@@ -1,0 +1,54 @@
+# Copyright (C) 2018 RDA Technologies Limited and/or its affiliates("RDA").
+# All rights reserved.
+#
+# This software is supplied "AS IS" without any warranties.
+# RDA assumes no responsibility or liability for the use of the software,
+# conveys no license or title under any patent, copyright, or mask work
+# right to the product. RDA reserves the right to make changes in the
+# software without notification.  RDA also make no representation or
+# warranty that such application will be suitable for the specified use
+# without further testing or modification.
+
+menu "at_camera"
+
+if CAMERA_SUPPORT
+config AT_CAMERA_SUPPORT
+    bool "Support AT CAM command"
+    default n
+    help
+        When defined, AT CAM command will be used.
+
+if AT_CAMERA_SUPPORT
+
+config AT_CAMERA_PREV_WRITEFILE
+    bool "Support AT camera prev write file"
+    default y
+    help
+        When defined, will not lcd show.
+
+config AT_CAMERA_PREV_DISPLAY_LCD
+    bool "Support AT CAM lcd display"
+    default y
+    help
+        When defined, AT CAM will be lcd display.
+
+config AT_CAMERA_TEST_MODE
+    bool "Support AT CAM Test mode"
+    default y
+    help
+        When defined, AT CAM will use test mode.
+
+endif
+endif
+
+if SOC_8850
+
+config AT_BACKLIGHT
+    bool "Support AT BACKLIGHT"
+    default y
+    help
+        When defined, AT command will open backlight.
+
+endif
+
+endmenu

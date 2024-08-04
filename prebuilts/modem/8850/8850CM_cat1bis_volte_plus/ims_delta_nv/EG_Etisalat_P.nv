@@ -1,0 +1,19 @@
+
+///////////////////////////////////////////// IMS /////////////////////////////////////////////
+
+// sip_preconditionEnabled: Control the precondition of all cases.
+PS_NV_PARAMS\NV_PARAM_TYPE_PLMN_DELTA_NV\ims_plmn_nvinfo\sip_preconditionEnabled=1
+
+// sip_imsiEnabled: Contact header with userinfo
+PS_NV_PARAMS\NV_PARAM_TYPE_PLMN_DELTA_NV\ims_plmn_nvinfo\sip_imsiEnabled=0
+
+// sip_reliableAlert: Send 180 reliably
+PS_NV_PARAMS\NV_PARAM_TYPE_PLMN_DELTA_NV\ims_plmn_nvinfo\sip_reliableAlert=1
+
+// resourceAlwaysReady: When use precondition, not check resource status, resource is ready by default
+PS_NV_PARAMS\NV_PARAM_TYPE_PLMN_DELTA_NV\ims_plmn_nvinfo\resourceAlwaysReady=1
+
+// Max PDU size can be transfered by UDP, use TCP if bigger than it;
+// If set to 0, use UDP. Set to a small value to use TCP always;
+PS_NV_PARAMS\NV_PARAM_TYPE_PLMN_DELTA_NV\ims_plmn_nvinfo\sip_mtu=1230
+

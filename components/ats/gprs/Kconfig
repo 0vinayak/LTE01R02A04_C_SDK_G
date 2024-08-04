@@ -1,0 +1,36 @@
+# Copyright (C) 2018 RDA Technologies Limited and/or its affiliates("RDA").
+# All rights reserved.
+#
+# This software is supplied "AS IS" without any warranties.
+# RDA assumes no responsibility or liability for the use of the software,
+# conveys no license or title under any patent, copyright, or mask work
+# right to the product. RDA reserves the right to make changes in the
+# software without notification.  RDA also make no representation or
+# warranty that such application will be suitable for the specified use
+# without further testing or modification.
+
+menu "at_gprs"
+
+config AT_GPRS_COMMAND_SUPPORT
+    bool "AT_GPRS_COMMAND_SUPPORT enabled"
+    default y
+    select GPRS_COMMAND_SUPPORT
+    help
+        When enabled, some at command can be used, ie CFGDFTPDN
+
+config AT_MAL_SUPPORT
+    bool "AT_MAL_SUPPORT enabled"
+    default n if (SOC_8811) || (SOC_8821)
+    default y
+    select MAL_SUPPORT
+    help
+        When enabled, AT_MAL_SUPPORT will be defined
+
+config AT_GPRS_DEFAULT_LTE_CID
+    int "default LTE CID"
+    default 5
+    help
+        Default LTE cid for AT command. default value is 5, range 1-7.
+
+endmenu
+

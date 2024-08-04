@@ -1,0 +1,28 @@
+
+///////////////////////////////////////////// IMS /////////////////////////////////////////////
+
+// sip_timerTcall: INVITE no response (100) expire time, in ms
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\sip_timerTcall=6000
+
+// audioRtpTimeout: Seconds. Call will be disconnected if not receive audio RTP before expire
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\audioRtpTimeout=10
+
+// audioRtcpTimeout: Seconds. Call will be disconnected if not receive audio RTCP before expire
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\audioRtcpTimeout=10
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingingTimer=90
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingbackTimer=90
+
+
+///////////////////////////////////////////// GAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// LAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// WAS /////////////////////////////////////////////
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\mn_sim_nvinfo\cw_strategy=1
+//0: ps prefer; 1:ps only; 2:cs only
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\mn_sim_nvinfo\ss_domain=2
+

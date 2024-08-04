@@ -1,0 +1,12 @@
+========shell script========
+shell_8850CM_cat1bis_volte_plus
+
+========svn info==========
+URL: http://shsvn05/svn/prj_src/modem_iot/branches/Integration/2022/ivykit_modem_rls
+Repository Root: http://shsvn05/svn/prj_src
+Last Changed Rev: 60817
+
+========nvitem info==========
+nvitem dir is Module/8850cm_ab
+
+========end==========

@@ -1,0 +1,373 @@
+/* Copyright (C) 2018 RDA Technologies Limited and/or its affiliates("RDA").
+ * All rights reserved.
+ *
+ * This software is supplied "AS IS" without any warranties.
+ * RDA assumes no responsibility or liability for the use of the software,
+ * conveys no license or title under any patent, copyright, or mask work
+ * right to the product. RDA reserves the right to make changes in the
+ * software without notification.  RDA also make no representation or
+ * warranty that such application will be suitable for the specified use
+ * without further testing or modification.
+ */
+
+#ifndef _DRV_CONFIG_H_
+#define _DRV_CONFIG_H_
+
+// @AUTO_GENERATION_NOTICE@
+
+/**
+ * debughost rx buffer size in bytes
+ *
+ * This is the buffer before parsing host packet format.
+ */
+#cmakedefine CONFIG_DEBUGHOST_RX_BUF_SIZE @CONFIG_DEBUGHOST_RX_BUF_SIZE@
+
+/**
+ * whether to support charger
+ */
+#cmakedefine CONFIG_SUPPORT_BATTERY_CHARGER
+
+/**
+ * whether to support general spi
+ */
+#cmakedefine CONFIG_SUPPORT_GENERAL_SPI
+
+
+/**
+ * host command engine packet size
+ */
+#cmakedefine CONFIG_HOST_CMD_ENGINE_MAX_PACKET_SIZE @CONFIG_HOST_CMD_ENGINE_MAX_PACKET_SIZE@
+
+/**
+ * uart TX baud rate at adaptive mode, before baud rate is detected
+ */
+#cmakedefine CONFIG_UART_AUTOMODE_DEFAULT_BAUD @CONFIG_UART_AUTOMODE_DEFAULT_BAUD@
+
+/**
+ * enable wcn wifi scan or not
+ */
+#cmakedefine CONFIG_WCN_WIFI_SCAN_SUPPORT
+
+/**
+ * whether USB is supported
+ */
+#cmakedefine CONFIG_USB_SUPPORT
+
+/**
+ * whether USB MSG is supported
+ */
+#cmakedefine CONFIG_USB_MSG_SUPPORT
+
+/**
+ * whether USB ACM is supported
+ */
+#cmakedefine CONFIG_USB_ACM_SUPPORT
+
+/**
+ * whether USB RNDIS is supported
+ */
+#cmakedefine CONFIG_USB_RNDIS_SUPPORT
+
+/**
+ * whether USB MTP is supported
+ */
+#cmakedefine CONFIG_USB_MTP_SUPPORT
+
+/**
+ * whether USB ETHER is supported
+ */
+#cmakedefine CONFIG_USB_ETHER_SUPPORT
+
+#ifdef CONFIG_USB_SUPPORT
+
+/**
+ * usb connect timeout
+ */
+#cmakedefine CONFIG_USB_CONNECT_TIMEOUT @CONFIG_USB_CONNECT_TIMEOUT@
+
+/**
+ * usb debounce time in milliseconds before enumarating
+ */
+#cmakedefine CONFIG_USB_DETECT_DEBOUNCE_TIME @CONFIG_USB_DETECT_DEBOUNCE_TIME@
+
+/**
+ * udc features, lower 8 bits for config->bmAttributes, higher are software defined
+ */
+#cmakedefine CONFIG_USB_DEVICE_CONTROLLER_FEATURE @CONFIG_USB_DEVICE_CONTROLLER_FEATURE@
+
+#ifdef CONFIG_USB_ETHER_SUPPORT
+/**
+ * usb ether host mac address
+ */
+#cmakedefine CONFIG_USB_ETHER_HOST_MAC "@CONFIG_USB_ETHER_HOST_MAC@"
+
+/**
+ * usb ether dev mac address
+ */
+#cmakedefine CONFIG_USB_ETHER_DEV_MAC "@CONFIG_USB_ETHER_DEV_MAC@"
+
+/**
+ * usb ether support dynamic change host mac address
+ */
+#cmakedefine CONFIG_USB_ETHER_DYNAMIC_HOST_MAC_SUPPORT @CONFIG_USB_ETHER_DYNAMIC_HOST_MAC_SUPPORT@
+#endif
+
+#endif
+
+/**
+ * support 8850 fpga board driver
+ */
+#cmakedefine CONFIG_8850_FPGA_BOARD
+
+/**
+ * support 8850 ipc V2 for 8850CM V1.1
+ */
+#cmakedefine CONFIG_IPC_PLAT_8850CM_V2
+
+/**
+ * support 8850 bm board driver
+ */
+#cmakedefine CONFIG_8850_BM
+
+/**
+ * support CAMERA driver
+ */
+#cmakedefine CONFIG_CAMERA_SUPPORT
+
+/**
+ * support CAMERA GC032A
+ */
+#cmakedefine CONFIG_CAMERA_GC032A_SUPPORT
+
+/**
+ * support CAMERA GC0310
+ */
+#cmakedefine CONFIG_CAMERA_GC0310_SUPPORT
+
+/**
+ * support CAMERA BF30A2
+ */
+#cmakedefine CONFIG_CAMERA_BF30A2_SUPPORT
+
+/**
+ * support CAMERA GC2145
+ */
+#cmakedefine CONFIG_CAMERA_GC2145_SUPPORT
+
+/**
+ * support CAMERA GC0406
+ */
+#cmakedefine CONFIG_CAMERA_GC0406_SUPPORT
+
+/**
+ * whether to support camera single buffer
+ */
+#cmakedefine CONFIG_CAMERA_SINGLE_BUFFER
+
+/**
+ * whether to support camera mipi
+ */
+#cmakedefine CONFIG_MIPI_SUPPORT
+
+/**
+ * 8850 spi camera Mclk
+ */
+#cmakedefine CONFIG_DEFAULT_CAM_MCLK_FREQ @CONFIG_DEFAULT_CAM_MCLK_FREQ@
+
+/**
+ * 8850 camera Mclk src freq
+ */
+#cmakedefine CONFIG_DEFAULT_CAM_MCLK_SRC_FREQ @CONFIG_DEFAULT_CAM_MCLK_SRC_FREQ@
+
+/**
+ * 8850 camera Mclk src num
+ */
+#cmakedefine CONFIG_CAM_MCLK_SRC_NUM @CONFIG_CAM_MCLK_SRC_NUM@
+
+/**
+ * 8850 camera pix clk src freq
+ */
+#cmakedefine CONFIG_DEFAULT_CAM_PCLK_SRC_FREQ @CONFIG_DEFAULT_CAM_PCLK_SRC_FREQ@
+
+/**
+ * 8850 camera pix clk src num
+ */
+#cmakedefine CONFIG_CAM_PCLK_SRC_NUM @CONFIG_CAM_PCLK_SRC_NUM@
+
+/**
+ * 8850 camera csi clk src freq
+ */
+#cmakedefine CONFIG_DEFAULT_CAM_CCLK_SRC_FREQ @CONFIG_DEFAULT_CAM_CCLK_SRC_FREQ@
+
+/**
+ * 8850 camera csi clk src num
+ */
+#cmakedefine CONFIG_CAM_CCLK_SRC_NUM @CONFIG_CAM_CCLK_SRC_NUM@
+
+/**
+ * 8850 camera pix clk freq
+ */
+#cmakedefine CONFIG_DEFAULT_CAM_PCLK_FREQ @CONFIG_DEFAULT_CAM_PCLK_FREQ@
+
+/**
+ * 8850 camera csi clk freq
+ */
+#cmakedefine CONFIG_DEFAULT_CAM_CCLK_FREQ @CONFIG_DEFAULT_CAM_CCLK_FREQ@
+
+/**
+ * 8850 camera csi Mclk freq
+ */
+#cmakedefine CONFIG_DEFAULT_CAM_MIPI_MCLK_FREQ @CONFIG_DEFAULT_CAM_MIPI_MCLK_FREQ@
+
+/**
+ * support LCD driver
+ */
+#cmakedefine CONFIG_LCD_SUPPORT
+
+/**
+ * support GC9305 panel
+ */
+#cmakedefine CONFIG_SUPPORT_LCD_GC9305
+
+/**
+ * support GC9306 panel
+ */
+#cmakedefine CONFIG_SUPPORT_LCD_GC9306
+
+/**
+ * support ST7735S panel
+ */
+#cmakedefine CONFIG_SUPPORT_LCD_ST7735S
+
+/**
+ * support ST7789h2 panel
+ */
+#cmakedefine CONFIG_SUPPORT_LCD_ST7789h2
+
+/**
+ * support support MIPI LCD driver
+ */
+#cmakedefine CONFIG_MIPI_LCD_SUPPORT
+
+/**
+ * whether headset detect is supported
+ */
+#cmakedefine CONFIG_HEADSET_DETECT_SUPPORT
+
+/**
+ * whether sdcard1 detect is supported
+ */
+#cmakedefine CONFIG_BOARD_SUPPORT_SDCARD1_DETECT
+
+/**
+ * id for SDCARD1 hot plug detect
+ */
+#cmakedefine CONFIG_BOARD_SDCARD1_ID @CONFIG_BOARD_SDCARD1_ID@
+
+/**
+ * gpio for SDCARD1 hot plug detect
+ */
+#cmakedefine CONFIG_BOARD_SDCARD1_DETECT_GPIO @CONFIG_BOARD_SDCARD1_DETECT_GPIO@
+
+/**
+ * whether sdcard2 detect is supported
+ */
+#cmakedefine CONFIG_BOARD_SUPPORT_SDCARD2_DETECT
+
+/**
+ * id for SDCARD2 hot plug detect
+ */
+#cmakedefine CONFIG_BOARD_SDCARD2_ID @CONFIG_BOARD_SDCARD2_ID@
+
+/**
+ * gpio for SDCARD2 hot plug detect
+ */
+#cmakedefine CONFIG_BOARD_SDCARD2_DETECT_GPIO @CONFIG_BOARD_SDCARD2_DETECT_GPIO@
+
+
+/**
+ * headset thread stack size in bytes
+ */
+#cmakedefine CONFIG_HEADSET_STACK_SIZE @CONFIG_HEADSET_STACK_SIZE@
+
+/**
+ * support SDMMC driver
+ */
+#cmakedefine CONFIG_SDMMC_SUPPORT
+
+/**
+ * support EMMC driver
+ */
+#cmakedefine CONFIG_EMMC_SUPPORT
+
+/**
+ * SDMMC clock frequency for SD
+ */
+#cmakedefine CONFIG_SDMMC_CLK_FREQ_SD @CONFIG_SDMMC_CLK_FREQ_SD@
+
+/**
+ * SDMMC clock frequency for SDHC
+ */
+#cmakedefine CONFIG_SDMMC_CLK_FREQ_SDHC @CONFIG_SDMMC_CLK_FREQ_SDHC@
+
+/**
+ * support usb host function
+ */
+#cmakedefine CONFIG_USB_HOST_SUPPORT
+
+/**
+ * support usb device function
+ */
+#cmakedefine CONFIG_USB_DEVICE_SUPPORT
+
+/**
+ * support usb netcard adaption function
+ */
+#cmakedefine CONFIG_USB_NETCARD_ADAPTION_SUPPORT
+
+/**
+ * support SDMMC/EMMC DRIVER
+ */
+#cmakedefine CONFIG_SDIO_SUPPORT
+
+/**
+ * support SDMMC/EMMC DRIVER
+ */
+#cmakedefine CONFIG_SDIO2_SDMMC_SUPPORT
+
+/**
+ * support TEE
+ */
+#cmakedefine CONFIG_TEE_SUPPORT
+
+/**
+ * spport emmc
+ */
+#cmakedefine CONFIG_SUPPORT_EMMC
+
+/**
+ * 8910 EMMC
+ */
+#cmakedefine CONFIG_8910_EMMC_SUPPORT
+
+
+/**
+ * spport SD2
+ */
+#cmakedefine CONFIG_SUPPORT_SD2
+
+/**
+ * Support large capacity flash
+ */
+#cmakedefine CONFIG_SUPPORT_LC_FLASH
+
+/**
+ * Support larger than 16MB General spi flash
+ */
+#cmakedefine CONFIG_GENERAL_SPI_LC_FLASH
+
+/**
+ * whether support SPI NAND DRIVER
+ */
+#cmakedefine CONFIG_SPI_NAND_DRIVER_SUPPORT
+#endif

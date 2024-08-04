@@ -1,0 +1,96 @@
+/* Copyright (C) 2018 RDA Technologies Limited and/or its affiliates("RDA").
+ * All rights reserved.
+ *
+ * This software is supplied "AS IS" without any warranties.
+ * RDA assumes no responsibility or liability for the use of the software,
+ * conveys no license or title under any patent, copyright, or mask work
+ * right to the product. RDA reserves the right to make changes in the
+ * software without notification.  RDA also make no representation or
+ * warranty that such application will be suitable for the specified use
+ * without further testing or modification.
+ */
+
+#ifndef _GNSS_CONFIG_H_
+#define _GNSS_CONFIG_H_
+
+// Auto generated. Don't edit it manually!
+#cmakedefine CONFIG_SUPPORT_GNSS
+
+#cmakedefine CONFIG_GPS_CHIP_VER_GREENEYE2
+#cmakedefine CONFIG_GPS_CHIP_VER_NONE
+
+#cmakedefine CONFIG_GPS_MODE_GPS_BD
+#cmakedefine CONFIG_GPS_MODE_GPS_GLONASS
+
+#cmakedefine CONFIG_GPS_TCARD_LOG_SUPPORT
+
+#cmakedefine CONFIG_GPS_MINI_LOG_SUPPORT
+
+#cmakedefine CONFIG_GPS_AGPS_SUPPORT_NONE
+#cmakedefine CONFIG_GPS_AGPS_SUPPORT_QX
+#cmakedefine CONFIG_GPS_AGPS_SUPPORT_SPRD_AGPS
+
+#cmakedefine CONFIG_GPS_TRANS_VIA_SIPC
+#cmakedefine CONFIG_GPS_TRANS_VIA_UART
+
+#cmakedefine CONFIG_GPS_SPREAD_ORBIT_SUPPORT
+#cmakedefine CONFIG_SPREAD_ORBIT_MODE_GPS
+#cmakedefine CONFIG_SPREAD_ORBIT_PRED_DAYS1
+#ifdef CONFIG_SUPPORT_GNSS
+#define GPS_SUPPORT
+#endif
+
+#ifdef CONFIG_GPS_CHIP_VER_GREENEYE2
+#define GPS_CHIP_VER_GREENEYE2
+#endif
+
+#ifdef CONFIG_GPS_MODE_GPS_BD
+#define GPS_MODE_GPS_BD
+#else 
+#define GPS_MODE_GPS_GLONASS
+#endif
+
+#ifdef CONFIG_GPS_TCARD_LOG_SUPPORT
+#define GPS_TCARD_LOG_SUPPORT
+#endif
+
+#ifdef CONFIG_GPS_MINI_LOG_SUPPORT
+#define GPS_MINI_LOG_SUPPORT
+#endif
+
+#ifdef CONFIG_GPS_AGPS_SUPPORT_QX
+#define GPS_AGPS_SUPPORT_QX
+#endif
+
+#ifdef CONFIG_GPS_TRANS_VIA_SIPC
+#define GPS_TRANS_VIA_SIPC
+#else 
+#define GPS_TRANS_VIA_UART
+#endif
+
+#ifdef CONFIG_GPS_SPREAD_ORBIT_SUPPORT
+#define GPS_SPREAD_ORBIT_SUPPORT
+#endif
+
+#ifdef CONFIG_SPREAD_ORBIT_MODE_GPS
+#define SPREAD_ORBIT_MODE_GPS
+#else
+#define BDS
+#endif
+
+#ifdef CONFIG_SPREAD_ORBIT_PRED_DAYS1
+#define SPREAD_ORBIT_PRED_DAYS1
+#else
+#define SPREAD_ORBIT_PRED_DAYS2
+#endif
+
+#define LOG_TAG_GNSS OSI_MAKE_LOG_TAG('G', 'N', 'S', 'S')
+
+#define GNSS_BASE_PATH 		"/gnss/"
+#define GNSS_TSXDAT_PATH	GNSS_BASE_PATH"tsx.dat"
+#define GNSS_TXTXT_PATH		GNSS_BASE_PATH"txdata.txt"
+#define FLASHCFG_GPS_PATH	GNSS_BASE_PATH"FlashCfg_GPS.cg"
+#define FLASHCFG_GLO_PATH	GNSS_BASE_PATH"FlashCfg_GLO.cg"
+#define FLASHCFG_BDS_PATH	GNSS_BASE_PATH"FlashCfg_BDS.cg"
+
+#endif

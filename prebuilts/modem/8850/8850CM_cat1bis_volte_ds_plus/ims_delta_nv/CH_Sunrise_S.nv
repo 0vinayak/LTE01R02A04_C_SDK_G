@@ -1,0 +1,32 @@
+
+///////////////////////////////////////////// IMS /////////////////////////////////////////////
+
+// service_natUrlFmt: National URL format: 0:TEL; 1:SIP
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\service_natUrlFmt=1
+
+// service_intUrlFmt: International URL format: 0:TEL; 1:SIP
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\service_intUrlFmt=1
+
+// Value in Session-Expire (Sec)
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\sip_sessionTimer=1800
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\USSI_Enabled=1
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\ss_XcapUri="xcap.ims.mnc020.mcc228.pub.3gppnetwork.org"
+
+//AUID: Vendor defined XCAP header prefix
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\ss_XcapAuid="simservs.ngn.etsi.org"
+
+
+///////////////////////////////////////////// GAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// LAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// WAS /////////////////////////////////////////////
+
+
+///////////////////////////////////////////// L4 //////////////////////////////////////////////
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\mn_sim_nvinfo\forbid_activate_ims_pdn_when_roaming=1
+

@@ -1,0 +1,1571 @@
+# SpreadTrum NVEditor NV Module File, Format Version 1.0
+# WARNING: DO NOT EDIT OR DELETE THIS NV Module FILE!
+
+###############################################################################
+  MODULE      = GPS_nv
+  DESCRIPTION = 
+
+################################################################################
+
+# Begin Module Item
+  BEGIN_ITEM
+    ITEM_NAME    = gps_configure
+    ITEM_ID      = 403
+    ITEM_TYPE    = 7 (STRUCT)
+    ITEM_CONTENT = 
+    ITEM_INDEX   = 0
+    ITEM_PARENT  = -1
+    ITEM_DESC    = gps configure
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn
+    ITEM_ID      = 403
+    ITEM_TYPE    = 5 (ARRAY)
+    ITEM_SIZE    = 24
+    ITEM_CONTENT = 
+    ITEM_INDEX   = 1
+    ITEM_PARENT  = 0
+    ITEM_DESC    = sn
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[0]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 2
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[1]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 3
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[2]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 4
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[3]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 5
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[4]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 6
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[5]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 7
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[6]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 8
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[7]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 9
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[8]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 10
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[9]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 11
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[10]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 12
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[11]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 13
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[12]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 14
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[13]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 15
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[14]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 16
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[15]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 17
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[16]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 18
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[17]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 19
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[18]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 20
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[19]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 21
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[20]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 22
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[21]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 23
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[22]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 24
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sn[23]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 25
+    ITEM_PARENT  = 1
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = cap_config
+    ITEM_ID      = 403
+    ITEM_TYPE    = 5 (ARRAY)
+    ITEM_SIZE    = 4
+    ITEM_CONTENT = 
+    ITEM_INDEX   = 26
+    ITEM_PARENT  = 0
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = cap_config[0]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 27
+    ITEM_PARENT  = 26
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = cap_config[1]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 28
+    ITEM_PARENT  = 26
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = cap_config[2]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 29
+    ITEM_PARENT  = 26
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = cap_config[3]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 30
+    ITEM_PARENT  = 26
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = ac_code
+    ITEM_ID      = 403
+    ITEM_TYPE    = 5 (ARRAY)
+    ITEM_SIZE    = 16
+    ITEM_CONTENT = 
+    ITEM_INDEX   = 31
+    ITEM_PARENT  = 0
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = ac_code[0]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 32
+    ITEM_PARENT  = 31
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = ac_code[1]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 33
+    ITEM_PARENT  = 31
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = ac_code[2]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 34
+    ITEM_PARENT  = 31
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = ac_code[3]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 35
+    ITEM_PARENT  = 31
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = ac_code[4]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 36
+    ITEM_PARENT  = 31
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = ac_code[5]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 37
+    ITEM_PARENT  = 31
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = ac_code[6]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 38
+    ITEM_PARENT  = 31
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = ac_code[7]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 39
+    ITEM_PARENT  = 31
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = ac_code[8]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 40
+    ITEM_PARENT  = 31
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = ac_code[9]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 41
+    ITEM_PARENT  = 31
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = ac_code[10]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 42
+    ITEM_PARENT  = 31
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = ac_code[11]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 43
+    ITEM_PARENT  = 31
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = ac_code[12]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 44
+    ITEM_PARENT  = 31
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = ac_code[13]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 45
+    ITEM_PARENT  = 31
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = ac_code[14]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 46
+    ITEM_PARENT  = 31
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = ac_code[15]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 47
+    ITEM_PARENT  = 31
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = img_string
+    ITEM_ID      = 403
+    ITEM_TYPE    = 5 (ARRAY)
+    ITEM_SIZE    = 16
+    ITEM_CONTENT = 
+    ITEM_INDEX   = 48
+    ITEM_PARENT  = 0
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = img_string[0]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x47
+    ITEM_INDEX   = 49
+    ITEM_PARENT  = 48
+    ITEM_DESC    = G
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = img_string[1]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x4E
+    ITEM_INDEX   = 50
+    ITEM_PARENT  = 48
+    ITEM_DESC    = N
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = img_string[2]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x53
+    ITEM_INDEX   = 51
+    ITEM_PARENT  = 48
+    ITEM_DESC    = S
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = img_string[3]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x53
+    ITEM_INDEX   = 52
+    ITEM_PARENT  = 48
+    ITEM_DESC    = S
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = img_string[4]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x4D
+    ITEM_INDEX   = 53
+    ITEM_PARENT  = 48
+    ITEM_DESC    = M
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = img_string[5]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x4F
+    ITEM_INDEX   = 54
+    ITEM_PARENT  = 48
+    ITEM_DESC    = O
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = img_string[6]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x44
+    ITEM_INDEX   = 55
+    ITEM_PARENT  = 48
+    ITEM_DESC    = D
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = img_string[7]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x45
+    ITEM_INDEX   = 56
+    ITEM_PARENT  = 48
+    ITEM_DESC    = E
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = img_string[8]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x4D
+    ITEM_INDEX   = 57
+    ITEM_PARENT  = 48
+    ITEM_DESC    = M
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = img_string[9]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 58
+    ITEM_PARENT  = 48
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = img_string[10]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 59
+    ITEM_PARENT  = 48
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = img_string[11]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 60
+    ITEM_PARENT  = 48
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = img_string[12]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 61
+    ITEM_PARENT  = 48
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = img_string[13]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 62
+    ITEM_PARENT  = 48
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = img_string[14]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 63
+    ITEM_PARENT  = 48
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = img_string[15]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 64
+    ITEM_PARENT  = 48
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = lte_enable
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x1
+    ITEM_INDEX   = 65
+    ITEM_PARENT  = 0
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = cp_mode
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x13
+    ITEM_INDEX   = 66
+    ITEM_PARENT  = 0
+    ITEM_DESC    = cp mode
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName
+    ITEM_ID      = 403
+    ITEM_TYPE    = 5 (ARRAY)
+    ITEM_SIZE    = 22
+    ITEM_CONTENT = 
+    ITEM_INDEX   = 67
+    ITEM_PARENT  = 0
+    ITEM_DESC    = uartName
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName[0]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 68
+    ITEM_PARENT  = 67
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName[1]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 69
+    ITEM_PARENT  = 67
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName[2]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 70
+    ITEM_PARENT  = 67
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName[3]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 71
+    ITEM_PARENT  = 67
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName[4]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 72
+    ITEM_PARENT  = 67
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName[5]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 73
+    ITEM_PARENT  = 67
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName[6]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 74
+    ITEM_PARENT  = 67
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName[7]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 75
+    ITEM_PARENT  = 67
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName[8]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 76
+    ITEM_PARENT  = 67
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName[9]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 77
+    ITEM_PARENT  = 67
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName[10]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 78
+    ITEM_PARENT  = 67
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName[11]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 79
+    ITEM_PARENT  = 67
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName[12]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 80
+    ITEM_PARENT  = 67
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName[13]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 81
+    ITEM_PARENT  = 67
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName[14]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 82
+    ITEM_PARENT  = 67
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName[15]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 83
+    ITEM_PARENT  = 67
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName[16]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 84
+    ITEM_PARENT  = 67
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName[17]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 85
+    ITEM_PARENT  = 67
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName[18]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 86
+    ITEM_PARENT  = 67
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName[19]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 87
+    ITEM_PARENT  = 67
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName[20]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 88
+    ITEM_PARENT  = 67
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartName[21]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 89
+    ITEM_PARENT  = 67
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed
+    ITEM_ID      = 403
+    ITEM_TYPE    = 5 (ARRAY)
+    ITEM_SIZE    = 32
+    ITEM_CONTENT = 
+    ITEM_INDEX   = 90
+    ITEM_PARENT  = 0
+    ITEM_DESC    = uartSpeed
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[0]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 91
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[1]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 92
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[2]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 93
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[3]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 94
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[4]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 95
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[5]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 96
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[6]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 97
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[7]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 98
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[8]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 99
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[9]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 100
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[10]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 101
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[11]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 102
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[12]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 103
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[13]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 104
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[14]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 105
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[15]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 106
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[16]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 107
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[17]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 108
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[18]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 109
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[19]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 110
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[20]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 111
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[21]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 112
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[22]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 113
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[23]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 114
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[24]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 115
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[25]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 116
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[26]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 117
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[27]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 118
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[28]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 119
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[29]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 120
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[30]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 121
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = uartSpeed[31]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 122
+    ITEM_PARENT  = 90
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName
+    ITEM_ID      = 403
+    ITEM_TYPE    = 5 (ARRAY)
+    ITEM_SIZE    = 30
+    ITEM_CONTENT = 
+    ITEM_INDEX   = 123
+    ITEM_PARENT  = 0
+    ITEM_DESC    = sttyName
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[0]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 124
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[1]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 125
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[2]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 126
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[3]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 127
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[4]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 128
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[5]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 129
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[6]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 130
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[7]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 131
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[8]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 132
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[9]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 133
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[10]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 134
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[11]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 135
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[12]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 136
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[13]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 137
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[14]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 138
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[15]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 139
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[16]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 140
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[17]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 141
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[18]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 142
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[19]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 143
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[20]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 144
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[21]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 145
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[22]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 146
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[23]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 147
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[24]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 148
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[25]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 149
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[26]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 150
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[27]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 151
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[28]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 152
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = sttyName[29]
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x0
+    ITEM_INDEX   = 153
+    ITEM_PARENT  = 123
+    ITEM_DESC    =  
+  END_ITEM
+
+  BEGIN_ITEM
+    ITEM_NAME    = platform
+    ITEM_ID      = 403
+    ITEM_TYPE    = 1 (CHAR)
+    ITEM_CONTENT = 0x2
+    ITEM_INDEX   = 154
+    ITEM_PARENT  = 0
+    ITEM_DESC    = cp platform
+  END_ITEM
+
+
+# End Module Item
+
+################################################################################

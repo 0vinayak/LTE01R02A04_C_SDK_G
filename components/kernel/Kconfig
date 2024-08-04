@@ -1,0 +1,346 @@
+# Copyright (C) 2018 RDA Technologies Limited and/or its affiliates("RDA").
+# All rights reserved.
+#
+# This software is supplied "AS IS" without any warranties.
+# RDA assumes no responsibility or liability for the use of the software,
+# conveys no license or title under any patent, copyright, or mask work
+# right to the product. RDA reserves the right to make changes in the
+# software without notification.  RDA also make no representation or
+# warranty that such application will be suitable for the specified use
+# without further testing or modification.
+
+menu "kernel"
+
+config KERNEL_SYSNV_ENABLED
+    bool "Enable system NV"
+    default y
+    help
+        System NV is a mechanism to change compiler time options
+        to changeable options.
+
+        When it is enabled, code size may be increased.
+
+config KERNEL_TICK_HZ
+    int "Tick per second"
+    default 100 if (SOC_8811) || (SOC_8821)
+    default 50
+    help
+        Tick frequency. It should be chosen that 1000 (milliseconds per
+        second) can be divided by this exactly.
+
+# adjust by quectel === default y ===> n 
+config KERNEL_MUTEX_IN_ISR_PANIC
+    bool "panic when mutex API is called in ISR"
+    default n
+    help
+        Mutex API shouldn't be called in ISR. When it is called, it will
+        return directly. And this behavior will break resource protection,
+        and will cause subtle issues.
+
+        It is suggested to enable it, and clean up illegal mutex calls.
+
+config KERNEL_ASSERT_ENABLED
+    bool "Assert enabled"
+    default y
+    help
+        When enabled, OSI_ASSERT will call osiPanic on fail. Otherwise,
+        OSI_ASSERT will be expanded into a trace.
+
+        At not sure, select "y"
+
+config KERNEL_HIGH_PRECISION_TIMER
+    bool "Enable high precision timer"
+    default y
+    help
+        When enabled, OSI timer will be implemented on hardware high precision
+        timer. It doesn't depend on RTOS tick.
+
+        When disabled, OSI timer will be implemented based on RTOS timer.
+
+config KERNEL_OSTICK_RELAXED_TIME
+    int "OS tick relaxed time"
+    default 0
+    help
+        This is the relaxed time for OS tick based timeout, such as
+        osiThreadSleep, osiMutexTryLock and etc. When this is 0, that means
+        OS tick based timeout will wakeup system if system will suspend. When
+        this is set to -1, that means OS tick based timeout will never wakeup
+        system if system will suspend. When it is a positive value, OS tick
+        based timeout will wakeup system, with possibly the configured delay.
+
+        The default is 0, and user application shall take care of power
+        consumption optimization. Other values will change the meaning of OS
+        tick based timeout, and should only be used when there are no
+        opportunities to optimize application, and it is confirmed that the
+        API meaning change is acceptable.
+
+config KERNEL_TIMER_WQ_STACKSIZE
+    int "stack size of timer service work queue"
+    default 4096
+    help
+        Stack size of timer work queue. For thread callback timer, the timer
+        callback event will be sent inside timer service work queue. Also,
+        there is API to invoke callback inside timer service work queue.
+        Usually, the callback should be as simple as possible, and it
+        shouldn't consume too many stack spaces.
+
+config KERNEL_PERIODIC_TIMER_MIN_PERIOD
+    int "minimum periodic timer period"
+    default 10
+    help
+        When periodic timer period is too small, it will have impact to the
+        system. In worst case, a periodic timer with period 0 will occupy all
+        CPU resources. To avoid this case, when periodic timer period is small
+        than this configuration, the real period will be changed to it
+        silently.
+
+        It can't be larger than period of KERNEL_TICK_HZ, that is one RTOS tick.
+
+config KERNEL_HIGH_PRIO_WQ_ENABLED
+    bool "Enable high priority system work queue"
+    default y
+    help
+        When enabled, work queue with priority OSI_PRIORITY_HIGH will be
+        created.
+
+        At not sure, select "y"
+
+config KERNEL_LOW_PRIO_WQ_ENABLED
+    bool "Enable low priority system work queue"
+    default y
+    help
+        When enabled, work queue with priority OSI_PRIORITY_LOW will be
+        created.
+
+        At not sure, select "y"
+
+config KERNEL_FILE_WRITE_WQ_ENABLED
+    bool "Enable file write system work queue"
+    default y
+    help
+        When enabled, work queue with priority OSI_PRIORITY_BELOW_NORMAL
+        will be created, for asynchronuous file write.
+
+        At not sure, select "y"
+
+config KERNEL_MIN_UTC_SECOND
+    int "system minimum utc time in second"
+    default 946684800
+
+config KERNEL_MAX_UTC_SECOND
+    int "system maximum utc time in second"
+    default 4102444800
+
+config KERNEL_IDLE_THREAD_STACK_SIZE
+    int "idle thread stack size"
+    default 4096 if SOC_8910
+    default 2048
+    help
+        Stack size of idle thread in bytes.
+
+if KERNEL_HIGH_PRIO_WQ_ENABLED
+config KERNEL_HIGH_PRIO_WQ_STACKSIZE
+    int "High priority system work queue stack size in bytes"
+    default 4096
+    help
+        The stack size in bytes of the high priority work queue thread.
+
+endif
+
+if KERNEL_LOW_PRIO_WQ_ENABLED
+config KERNEL_LOW_PRIO_WQ_STACKSIZE
+    int "Low priority system work queue stack size in bytes"
+    default 8192
+    help
+        The stack size in bytes of the low priority work queue thread.
+endif
+
+if KERNEL_FILE_WRITE_WQ_ENABLED
+config KERNEL_FILE_WRITE_WQ_STACKSIZE
+    int "File write system work queue stack size in bytes"
+    default 2048
+    help
+        The stack size in bytes of the asynchronous file write work queue
+        thread.
+endif
+
+if SOC_8910
+choice
+    prompt "Profile clock source"
+    default KERNEL_PROFILE_CLOCK2M
+    help
+        When 2M clock is chosen, it will provide higher precision. However,
+        the clock will be discontinued at sleep. When 32K clock is chosen,
+        the precision is lower, and it may be continuous at sleep.
+
+        By default, 32K clock will be chosen to make the profile data easier
+        to be understood. When detailed timing or performance is needed, 2M
+        clock can be chosen.
+
+config KERNEL_PROFILE_CLOCK32K
+    bool "32768 Hz clock"
+
+config KERNEL_PROFILE_CLOCK2M
+    bool "2000000 Hz clock"
+
+endchoice
+endif
+
+config KERNEL_PROFILE_BUF_SIZE
+    hex "Profile buffer size"
+    default 0x1000 if (SOC_8811) || (SOC_8821)
+    default 0xc000
+    help
+        Profile buffer size. Each profile record will use 4 bytes. So, the
+        profile record count is buffer size divided by 4.
+
+        When it is 0, profile will be disabled, though the profile related
+        APIs still exist.
+
+choice
+    prompt "Trace packet format"
+    default KERNEL_HOST_TRACE if SOC_8910
+    default KERNEL_DIAG_TRACE
+
+config KERNEL_HOST_TRACE
+    bool "Host packet"
+
+config KERNEL_DIAG_TRACE
+    bool "Diag packet"
+
+endchoice
+
+config KERNEL_TRACE_BUF_SIZE
+    hex "trace buffer size"
+    default 0x1000 if (SOC_8811) || (SOC_8821)
+    default 0x2000
+    help
+        Trace will use multiple buffers. And this is the size of each buffer.
+
+config KERNEL_TRACE_BUF_COUNT
+    int "trace buffer count"
+    default 8 if (SOC_8811) || (SOC_8821)
+    default 24
+    help
+        Trace will use multiple buffers. And this is the buffer count.
+
+config KERNEL_TRACE_EXTERNAL_BUF_COUNT
+    int "external trace buffer count"
+    default 8
+    help
+        For each external buffer, there is only a small management overhead.
+
+config KERNEL_DISABLE_TRACEID
+    bool "Disable trace ID"
+    default n
+    help
+        By default, in OSI_LOG macors, when the trace ID is not zero, trace
+        ID will be used, otherwise the trace string will be used.
+        When selected, the trace string will be used forcedly.
+
+config KERNEL_MEM_RECORD_COUNT
+    int "Memory record count"
+    default 128 if (SOC_8811) || (SOC_8821)
+    default 1024
+    help
+        A piece of memory will be reserved to record memory allocation and
+        free. The record memory is recycled, that is only the latest actions
+        are recorded.
+
+        It is helpful for debug memory issues. So, this feature can't be
+        disabled, just the count can be configured.
+
+config KERNEL_MEM_STATISTICS_SUPPORT
+    bool "Memory statistics for alloc and free"
+    default y if (SOC_8811) || (SOC_8821)
+    default n
+    help
+        After enable the marco, the memory management will provide the API
+        to get the count of alloc and free.
+
+config KERNEL_MEM_RECORD_TRACE
+    bool "Memory alloc and free record by trace"
+    default n
+    help
+        After enable the marco, the memory management will print the Malloc,
+        Calloc, Memalign, and free record by trace.
+
+config KERNEL_BLUE_SCREEN_HANDLER_COUNT
+    int "blue screen handler maximum count"
+    default 12
+    help
+        Callbacks can be registered to be called when entering and during
+        blue screen mode. This is the maximum count.
+
+config KERNEL_32K_SLEEP_ENABLE
+    bool "whether 32k sleep is enabled"
+    default y if SOC_8910
+    default n
+    help
+        32K sleep is a special sleep mode. It shall only be enabled in 8910
+        for USB suspend and resume.
+
+config KERNEL_PSM_ENABLE
+    bool "whether psm is enabled"
+    default y if (SOC_8811) || (SOC_8910) || (SOC_8821) || (SOC_8850)
+    default n
+    help
+        Whether PSM is enabled. Even it is enabled, it is controlled by
+        sysnv.
+
+if KERNEL_PSM_ENABLE
+config KERNEL_PSM_DEFAULT_ENABLE
+    bool "whether psm is enabled by default"
+    default y if (SOC_8811) || (SOC_8821)
+    default n
+    help
+        Whether PSM is enabled by default.
+
+config KERNEL_PSM_DATA_BUF_SIZE
+    hex "psm data buffer size"
+    default 0x7000 if SOC_8850
+    default 0x5000 if SOC_8910
+    default 0x5000 if (SOC_8811) || (SOC_8821)
+    help
+        This is the reserved buffer size for PSM data.
+
+config KERNEL_PM2_SRAM_BLOCK_POWER
+    hex "pm2 sram block power"
+    default 0x0 if (SOC_8811) || (SOC_8821)
+    default 0x0
+    help
+        This is set power for sram block in pm2, bit0/1/2 can not pd.
+
+config PSM_PM2BOOT_ENABLE
+    bool "enable PSM PM2 boot sleep mode"
+    default y if (SOC_8811) || (SOC_8821)
+    default n
+    help
+        When enabled, PSM will enter PM2 and most likely with SRAM switched
+        off. It will increase power consumption of PSM mode, but LPUART can
+        work normally.
+
+config RC32k_SLEEP_ENABLE
+    bool "enable RC32k PSM sleep mode"
+    default y if (SOC_8811) || (SOC_8821)
+    default n
+    help
+        When enabled, system clk will be switched to rc32k, because RC32k
+        is slow, the system and rtc time need to be calibrated and compensated.
+endif
+
+config KERNEL_MONITOR_ENABLE
+    bool "Enable kernel monitor"
+    default n
+    help
+         1. Count the read and write command and data access of the 5 masters
+           (A5, CE, EMMC, LZMA, USB)
+         2. Monitoring the memory writing operation in specified address ranges
+         3. Only support SOC8850
+
+config ANTIREG_LICENSE_ENABLE
+    bool "UNISOC LICENSE"
+    default y if SOC_8850
+    default n
+
+endmenu

@@ -1,0 +1,33 @@
+#ifndef _OSI_SYMDEF_H_
+#define _OSI_SYMDEF_H_
+// Auto generated. Don't edit it manually!
+#define SCI_CreateThread osi_SCI_CreateThread
+#define SCI_TerminateThread osi_SCI_TerminateThread
+#define SCI_DeleteThread osi_SCI_DeleteThread
+#define SCI_ThreadExit osi_SCI_ThreadExit
+#define SCI_IdentifyThread osi_SCI_IdentifyThread
+#define SCI_CreateTimer osi_SCI_CreateTimer
+#define SCI_CreatePeriodTimer osi_SCI_CreatePeriodTimer
+#define SCI_DeleteTimer osi_SCI_DeleteTimer
+#define SCI_IsTimerActive osi_SCI_IsTimerActive
+#define SCI_ActiveTimer osi_SCI_ActiveTimer
+#define SCI_DeactiveTimer osi_SCI_DeactiveTimer
+#define SCI_CreateMutex osi_SCI_CreateMutex
+#define SCI_DeleteMutex osi_SCI_DeleteMutex
+#define SCI_GetMutex osi_SCI_GetMutex
+#define SCI_PutMutex osi_SCI_PutMutex
+#define SCI_CreateSemaphore osi_SCI_CreateSemaphore
+#define SCI_PutSemaphore osi_SCI_PutSemaphore
+#define SCI_GetSemaphore osi_SCI_GetSemaphore
+#define SCI_SendSignal osi_SCI_SendSignal
+#define SCI_GetSignal osi_SCI_GetSignal
+#define SCI_PeekSignal osi_SCI_PeekSignal
+#define SCI_CreateAppThread osi_SCI_CreateAppThread
+#define SCI_IsThreadQueueAvilable osi_SCI_IsThreadQueueAvilable
+#define SCI_SuspendThread osi_SCI_SuspendThread
+#define SCI_ResumeThread osi_SCI_ResumeThread
+#define SCI_ChangeThreadPriority osi_SCI_ChangeThreadPriority
+#define SCI_GetThreadIdFromBlock osi_SCI_GetThreadIdFromBlock
+#define SCI_DeleteSemaphore osi_SCI_DeleteSemaphore
+#define SCI_GetTickCount osi_SCI_GetTickCount
+#endif

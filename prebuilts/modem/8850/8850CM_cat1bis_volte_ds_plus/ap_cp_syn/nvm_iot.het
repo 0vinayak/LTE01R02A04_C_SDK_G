@@ -1,0 +1,53 @@
+/*****************************************************************************/
+/*                                                                           */
+/*Copyright (c) 2016.06.15                                                   */
+/*                                                                           */
+/*****************************************************************************/
+/*****************************************************************************/
+/* FILE NAME   nvm_iot.het                                                   */
+/*                                                                           */
+/* COMPONENT   PUB                                                           */
+/*                                                                           */
+/* DESCRIPTION                                                               */
+/*                                                                           */
+/* This file define the data structure that used by  NVM parameters.         */
+/*                                                                           */
+/* FUNCTIONS                                                                 */
+/*                                                                           */
+/* NONE                                                                      */
+/*                                                                           */
+/* HISTORY                                                                   */
+/*                                                                           */
+/* NAME        DATE        VERSION  COMMENT                                  */
+/* limingyang  2016.07.01  v0.0.1   creation                                 */
+/*****************************************************************************/
+#ifndef NVM_IOT_HET
+#define NVM_IOT_HET
+
+#ifdef LTE_PHY_V4
+#ifdef LTE_CATM_SUPPORT
+#include "nvm_phy_catm_v4.het"
+#else
+#include "nvm_phy_cat1bis_v4.het"
+#endif
+#else
+#ifdef LTE_CATM_SUPPORT
+#include "nvm_phy.het"
+#else
+#include "nvm_phy_cat1bis.het"
+#endif
+#endif
+
+#if defined (CONFIG_SOC_8910)
+#include "nvm_ps_v1.het"
+#elif defined (CONFIG_SOC_8850)
+#include "nvm_ps_v2.het"
+#else
+// NONE
+#endif
+
+#endif
+
+
+
+

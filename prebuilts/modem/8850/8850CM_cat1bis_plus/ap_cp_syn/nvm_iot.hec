@@ -1,0 +1,252 @@
+/*****************************************************************************/
+/*                                                                           */
+/*Copyright (c) 2016.06.15                                                   */
+/*                                                                           */
+/*****************************************************************************/
+/*****************************************************************************/
+/* FILE NAME   nvm_iot.hec                                                   */
+/*                                                                           */
+/* COMPONENT   PUB                                                           */
+/*                                                                           */
+/* DESCRIPTION                                                               */
+/*                                                                           */
+/* This file define the constants that used by NVM parameters.               */
+/*                                                                           */
+/* FUNCTIONS                                                                 */
+/*                                                                           */
+/* NONE                                                                      */
+/*                                                                           */
+/* HISTORY                                                                   */
+/*                                                                           */
+/* NAME        DATE        VERSION  COMMENT                                  */
+/* yongluo     2016.07.01  v1.0.0   creation                                 */
+/*****************************************************************************/
+#ifndef NVM_IOT_HEC
+#define NVM_IOT_HEC
+
+#define MAX_PLMN_LEN                  3
+#define MAX_IMSI_LEN                  9
+
+#ifdef CSG_SUPPORT
+#define MAX_HNBNAME_LEN               48
+#define MAX_CSGLIST_LEN               10
+#define MAX_CSG_INFO_LEN              10
+#define MAX_CSG_WHITELIST_LEN         20
+#define PLMN_OFFSET                   4
+#define CSG_INFO_TAG_OFFSET           7
+#define CSG_TYPE_IND_OFFSET           2
+#define CSG_HNB_NAME_IND_OFFSET       3
+#define CSG_ID_OFFSET                 4
+#define CSG_SUPPORT_PROXIMITY_IND_INTRAFREQ 1
+#define CSG_SUPPORT_PROXIMITY_IND_INTERFREQ 2
+#define CSG_SUPPORT_PROXIMITY_IND_UTRAN 4
+#define CSG_PROXIMITY_IND_FREQ_LIMIT_LOW 65536
+#define CSG_PROXIMITY_IND_FREQ_LIMIT_HIGH 262143
+#define MAX_ALLOWED_CSG_LIST_LEN      255
+#define MAX_OPERATOR_CSG_LIST_LEN     255
+#endif
+
+#define MAX_EQU_PLMNS_NUM             20
+
+//optimize  process for sim and nv
+#define MAX_PREV_USED_LTE_FREQ_LEN    10
+#define MAX_PREV_USED_LTE_BAND_NUM    5
+#define MAX_PREV_USED_NB_FREQ_NUM     10
+#define MAX_PREV_USED_GSM_BA_NUM      33/*1026153*/
+
+// for nb-iot
+#define MAX_BAINFO_LEN                300
+#define MAX_POWER_ON_FREQ_LEN         10
+
+#define MAX_EPS_QOS_LEN                13
+#define MAX_APN_LEN                    100
+#define MAX_PCO_LEN                    512 /* ePCO max size: 65535 */
+#define MAX_ADDRESSINFOR_LEN           20
+#define MAX_PACKETFILTERLIST_LEN       254
+
+#define MAX_FORBIDDEN_TAI_NUM           40 //ref TS24.301 5.3.2
+
+#define MAX_PLMN_NOT_ALLOWED_GPRS_LEN  13 
+#define MAX_LAI_NOT_ALLOWED_LEN        26
+#define MAX_ROAMING_NOT_ALLOWED_LEN    ((MAX_FORBIDDEN_TAI_NUM * 5) + 1)
+
+ //moved from tgl_ps.hec
+#ifdef __IRAT__
+#define MAX_PLMN_NUM_MULTIMODE          32
+#else
+#define MAX_PLMN_NUM_MULTIMODE          16
+#endif
+#define MAX_TAILIST_LEN                 16
+#define MAX_SEC_KEY_LEN                 16
+#define MAX_TAI_LEN                     5
+
+#define MAX_NSAPI_NUM                   16 
+#define MAX_EBI_NUM                     16
+#define MAX_LOCK_BAND_NUM               5
+
+#define MAX_EHPLMN_NUM                 10   //20100823     
+
+#define SIM_FILE_MAX_PLMN_SEL_LEN       253 // 63 * 4 + 1 /*Bug 973994*/
+#define SIM_FILE_MAX_FPLMN_LEN          253 /*Bug 949637,bug 1494502 ref birary_cnf*/
+#define SIM_FILE_MAX_EHPLMN_LEN         ((MAX_EHPLMN_NUM * MAX_PLMN_LEN) + 1)
+
+#define WHITE_BLACK_PLMN_NUM  5          //API_WHITE_BLACK_PLMN_NUM
+#define MAX_BLACK_WHITE_LIST_PLMN_NUM    (WHITE_BLACK_PLMN_NUM + 1)
+
+#define MAX_SAVE_ATT_FAIL_CAUSE          5
+
+#define MAX_PREFER_PLMN_NUM         5
+#define DISABLE_LTE_PLMN_LIST_MAX_NUM 16
+#define DISABLE_LTE_IN_ALL_PLMN 0xFF
+
+//20101124
+enum
+{
+  NVM_VERSION_CTR_IN_STOREROOM = 0,   
+  NVM_VERSION_CTR_NETWORK_TEST,               
+};
+
+
+//2017/02/08
+/*物理层at的ie参数索引值*/
+enum
+{
+    NVM_PHY_AT_L1CC_LTE_DL_CTRL_PARA                = 100,     /* =0x64  下行数据处理控制参数的IE索引值*/            
+    NVM_PHY_AT_L1CC_LTE_UL_CTRL_PARA                = 101,     /* =0x65  上行行数据处理控制参数的IE索引值*/   
+    NVM_PHY_AT_L1CC_LTE_FREQMEAS_CTRL_FREQ_PARA_0   = 102,     /* =0x66 （同频，异频）测量数据处理控制参数,指定freq频点[0]的相关频点参数信息的IE索引值*/   
+    NVM_PHY_AT_L1CC_LTE_FREQMEAS_CTRL_FREQ_PARA_1   = 103,     /* =0x67 （同频，异频）测量数据处理控制参数,指定freq频点[1]的相关频点参数信息的IE索引值*/   
+    NVM_PHY_AT_L1CC_LTE_FREQMEAS_CTRL_FREQ_PARA_2   = 104,     /* =0x68 （同频，异频）测量数据处理控制参数,指定freq频点[2]的相关频点参数信息的IE索引值*/   
+    NVM_PHY_AT_L1CC_LTE_FREQMEAS_CTRL_FREQ_PARA_3   = 105,     /* =0x69 （同频，异频）测量数据处理控制参数,指定freq频点[3]的相关频点参数信息的IE索引值*/   
+    NVM_PHY_AT_L1CC_LTE_FREQMEAS_CTRL_FREQ_PARA_4   = 106,     /* =0x6A （同频，异频）测量数据处理控制参数,指定freq频点[4]的相关频点参数信息的IE索引值*/   
+    NVM_PHY_AT_L1CC_LTE_FREQMEAS_CTRL_FREQ_PARA_5   = 107,     /* =0x6B （同频，异频）测量数据处理控制参数,指定freq频点[5]的相关频点参数信息的IE索引值*/   
+    NVM_PHY_AT_L1CC_LTE_FREQMEAS_CTRL_FREQ_PARA_6   = 108,     /* =0x6C （同频，异频）测量数据处理控制参数,指定freq频点[6]的相关频点参数信息的IE索引值*/   
+    NVM_PHY_AT_L1CC_LTE_FREQMEAS_CTRL_FREQ_PARA_7   = 109,     /* =0x6D （同频，异频）测量数据处理控制参数,指定freq频点[7]的相关频点参数信息的IE索引值*/   
+    NVM_PHY_AT_L1CC_LTE_FREQMEAS_CTRL_FREQ_PARA_8   = 110,     /* =0x6E （同频，异频）测量数据处理控制参数,指定freq频点[8]的相关频点参数信息的IE索引值*/   
+    NVM_PHY_AT_L1CC_LTE_FREQMEAS_CTRL_CELL_PARA_0   = 111,     /* =0x6F （同频，异频）测量数据处理控制参数,指定freq频点[0]的相关小区参数信息的IE索引值*/   
+    NVM_PHY_AT_L1CC_LTE_FREQMEAS_CTRL_CELL_PARA_1   = 112,     /* =0x70 （同频，异频）测量数据处理控制参数,指定freq频点[1]的相关小区参数信息的IE索引值*/   
+    NVM_PHY_AT_L1CC_LTE_FREQMEAS_CTRL_CELL_PARA_2   = 113,     /* =0x71 （同频，异频）测量数据处理控制参数,指定freq频点[2]的相关小区参数信息的IE索引值*/   
+    NVM_PHY_AT_L1CC_LTE_FREQMEAS_CTRL_CELL_PARA_3   = 114,     /* =0x72 （同频，异频）测量数据处理控制参数,指定freq频点[3]的相关小区参数信息的IE索引值*/   
+    NVM_PHY_AT_L1CC_LTE_FREQMEAS_CTRL_CELL_PARA_4   = 115,     /* =0x73 （同频，异频）测量数据处理控制参数,指定freq频点[4]的相关小区参数信息的IE索引值*/   
+    NVM_PHY_AT_L1CC_LTE_FREQMEAS_CTRL_CELL_PARA_5   = 116,     /* =0x74 （同频，异频）测量数据处理控制参数,指定freq频点[5]的相关小区参数信息的IE索引值*/   
+    NVM_PHY_AT_L1CC_LTE_FREQMEAS_CTRL_CELL_PARA_6   = 117,     /* =0x75 （同频，异频）测量数据处理控制参数,指定freq频点[6]的相关小区参数信息的IE索引值*/   
+    NVM_PHY_AT_L1CC_LTE_FREQMEAS_CTRL_CELL_PARA_7   = 118,     /* =0x76 （同频，异频）测量数据处理控制参数,指定freq频点[7]的相关小区参数信息的IE索引值*/   
+    NVM_PHY_AT_L1CC_LTE_FREQMEAS_CTRL_CELL_PARA_8   = 119,     /* =0x77 （同频，异频）测量数据处理控制参数,指定freq频点[8]的相关小区参数信息的IE索引值*/   
+    NVM_PHY_AT_L1CC_LTE_SYNC_CTRL_PARA              = 120,     /* =0x78  同步数据处理控制参数的IE索引值*/
+    NVM_PHY_AT_L1CC_LTE_SERVERCELL_MEAS_CTRL_PARA   = 121,     /* =0x79  服务小区测控数据处理控制参数的IE索引值*/     
+    NVM_PHY_AT_L1CC_LTE_TARGETCELL_MEAS_CTRL_PARA   = 122,     /* =0x7A  目标小区（bg或者cgi小区）测控数据处理控制参数的IE索引值*/  
+    NVM_PHY_AT_L1CC_LTE_GET_DATA_CTRL_PARA          = 123,     /* =0x7B  抓数控制参数的IE索引值*/  
+    NVM_PHY_AT_L1CC_LTE_TEST_LINE_CTRL_PARA         = 124,     /* =0x7C  测试信号线控制参数的IE索引值*/  
+    NVM_PHY_AT_L1CC_LTE_REG_CTRL_PARA               = 125,     /* =0x7D  寄存器参数获取和配置参数的IE索引值*/  
+    NVM_PHY_AT_L1CC_LTE_RF_CTRL_PARA                = 126,     /* =0x7E  rf出来控制参数的IE索引值*/  
+    NVM_PHY_AT_L1CC_LTE_PLATFORM_CTRL_PARA          = 127,     /* =0x7F  平台相关的控制参数（编译控制）的IE索引值*/  
+    NVM_PHY_AT_L1CC_LTE_PMI_CTRL_PARA               = 128,     /* =0x80  pmi上报的控制参数的IE索引值*/  
+    NVM_PHY_AT_L1CC_LTE_CQI_CTRL_PARA               = 129      /* =0x81  cqi上报的控制参数的IE索引值*/  
+};
+
+#define EUTRAN_MAX_SUPPORT_BAND (24)
+#define MAX_PRIORITY_BAND_NUM (20)
+#define EUTRAN_SUPPORT_BAND_EXTEND (4)
+
+enum
+{
+    AsRelease__R8 = 0,
+    AsRelease__R9 = 1,
+    AsRelease__R10 = 2,
+    AsRelease__R11 = 3,
+    AsRelease__R12 = 4,
+    AsRelease__R13 = 5,
+    AsRelease__R14 = 6,
+    AsRelease__Spare2 = 7,
+    AsRelease__Spare1 = 8,
+} ;
+
+enum
+{
+    UECategory__0 = 0,
+    UECategory__1,
+    UECategory__2,
+    UECategory__3,
+    UECategory__4,
+    UECategory__5,
+    UECategory__6,
+    UECategory__7,
+    UECategory__8,
+    UECategory__9,
+    UECategory__10,
+    UECategory__11,
+    UECategory__12,
+};
+
+
+/*The field ue-CategoryDL is set to values m1, 0, oneBis, 6, 7, 9 to 16, n17, 18, 19 in this version of the specification*/
+enum
+{
+    UECategoryDL__0 = 0,
+    UECategoryDL__1,
+    UECategoryDL__2,
+    UECategoryDL__3,
+    UECategoryDL__4,
+    UECategoryDL__5,
+    UECategoryDL__6,
+    UECategoryDL__7,
+    UECategoryDL__8,
+    UECategoryDL__9,
+    UECategoryDL__10,
+    UECategoryDL__11,
+    UECategoryDL__12,
+    UECategoryDL__13,
+    UECategoryDL__14,
+    UECategoryDL__15,
+    UECategoryDL__16,
+    UECategoryDL__N17, //n17
+    UECategoryDL__18,
+    UECategoryDL__19,
+    UECategoryDL__M1,
+    UECategoryDL__OneBis,
+};
+
+/*The field ue-CategoryUL is set to values m1, 0, oneBis, 3, 5, 7, 8, 13, n14 or 15 in this version of the specification.*/
+enum
+{
+    UECategoryUL__0 = 0,
+    UECategoryUL__1,
+    UECategoryUL__2,
+    UECategoryUL__3,
+    UECategoryUL__4,
+    UECategoryUL__5,
+    UECategoryUL__6,
+    UECategoryUL__7,
+    UECategoryUL__8,
+    UECategoryUL__9,
+    UECategoryUL__10,
+    UECategoryUL__11,
+    UECategoryUL__12,
+    UECategoryUL__13,
+    UECategoryUL__N14, //n14
+    UECategoryUL__15, 
+    UECategoryUL__M1,
+    UECategoryUL__OneBis,
+};
+
+#define MAX_BACK_UP_SI_NUM      5
+#define MAX_BACK_UP_SI_DATA_LENGTH 280
+
+#define MAX_BACKUP_APN_LEN 32   //因为存储限制，目前APN只能截断了
+#define MAX_T3396_BACKUP_NUM 4
+
+
+#define MAX_AT_BAKUP_LEN    320
+#define MAX_CSW_BAKUP_LEN   2000 //640 /*1269732*/
+#if (CHIP_ASIC_ID==CHIP_ASIC_ID_8850CM)
+#define MAX_RF_BAKUP_LEN   8192 
+#else
+#define MAX_RF_BAKUP_LEN   3000 
+#endif
+#define MAX_STORED_PLMN_NUM   (6)
+#define MAX_STORED_EARFCN_NUM (30)
+#define MAX_STORED_CSG_FREQ_NUM (4)
+#define POSSIBLE_MAX_PLMN_NUM (6)
+#define MAX_STORED_USR_EARFCN_NUM (16)
+#endif
+
+

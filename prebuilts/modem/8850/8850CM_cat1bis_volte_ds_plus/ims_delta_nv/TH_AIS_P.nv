@@ -1,0 +1,15 @@
+
+///////////////////////////////////////////// IMS /////////////////////////////////////////////
+
+// TCP MTU; If set to 0, use UDP.
+PS_NV_PARAMS\NV_PARAM_TYPE_PLMN_DELTA_NV\ims_plmn_nvinfo\sip_mtu=1500
+
+// sip_preconditionEnabled: Control the precondition of all cases.
+PS_NV_PARAMS\NV_PARAM_TYPE_PLMN_DELTA_NV\ims_plmn_nvinfo\sip_preconditionEnabled=1
+
+// sip_ipsecIntegrAlgo: BIT0:hmac-sha-1-96; BIT1:hmac-md5-96;
+//PS_NV_PARAMS\NV_PARAM_TYPE_PLMN_DELTA_NV\ims_plmn_nvinfo\sip_ipsecIntegrAlgo=1
+
+// sip_ipsecCipherAlgo: BIT0:null;  BIT1:aes-cbc;  BIT2:des-ede3-sbc
+//PS_NV_PARAMS\NV_PARAM_TYPE_PLMN_DELTA_NV\ims_plmn_nvinfo\sip_ipsecCipherAlgo=1
+

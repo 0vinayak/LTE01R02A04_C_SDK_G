@@ -1,0 +1,828 @@
+/*****************************************************************************/
+/*                                                                           */
+/*Copyright (c) 2016.06.15                                                   */
+/*                                                                           */
+/*****************************************************************************/
+/*****************************************************************************/
+/* FILE NAME   nvm_phy.het                                                   */
+/*                                                                           */
+/* COMPONENT   PUB                                                           */
+/*                                                                           */
+/* DESCRIPTION                                                               */
+/*                                                                           */
+/* This file define the data structure that used by PHY NVM parameters.      */
+/*                                                                           */
+/* FUNCTIONS                                                                 */
+/*                                                                           */
+/* NONE                                                                      */
+/*                                                                           */
+/* HISTORY                                                                   */
+/*                                                                           */
+/* NAME        DATE        VERSION  COMMENT                                  */
+/* limingyang  2016.07.01  v0.0.1   creation                                 */
+/*****************************************************************************/
+#ifndef NVM_PHY_HET
+#define NVM_PHY_HET
+
+
+/*************************************************************************/
+/*                PHY NVM parameters                                     */
+/*                                                                       */
+/*************************************************************************/
+
+/*AT下发下行数据处理控制参数*/  
+typedef struct st_at_l1cc_lte_dl_ctrl_tag
+{
+  u16  u16_mib_ant_blind_start;    /*mib天线盲检场景，指定盲检天线起始位置，=0:1天线；=1:2天线；=2:4天线；=0xFFFF：无效值；*/
+  u16  u16_sib1_uldl_cfg_blind_start;  /*sib1的上下行配比盲检场景，指定sib1盲检的上下行配置起始位置，=0：上下行配置比1-5；=1：上下行配置比0；=2：上下行配比6；=0xFFFF：无效值；*/
+  u16  u16_pdsch_countine_crc_err_num;   /*pdsch连续译码错块数，用于pdsch稳定性调试,=0xFFFF:无效值，取值一般3-30*/ 
+  u16  u16_reseaved;   /*保留*/ 
+}st_at_l1cc_lte_dl_ctrl_t;
+
+/*AT下发上行数据处理控制参数*/   
+typedef struct st_at_l1cc_lte_ul_ctrl_tag
+{
+    u16  u16_prach_preamble_id;  /*固定preamble ID号（0~63）*/
+    u16  u16_ul_apc;             /*固定APC（0~69）*/
+    u16  u16_ul_ta;              /*固定TA（0~20512）*/
+    u16  b_srs_mask_flag;        /*屏蔽SRS（true/false）*/ 
+    s16  s16_ul_apc_adjust;      /*APC修正值，0表示不修正*/
+    u16  u16_apc_set_chn;        /*APC修正信道：0xFFFF：所有信道，1：PUSCH，2：PUCCH，3：PRACH*/ 
+}st_at_l1cc_lte_ul_ctrl_t;
+
+/*AT下发上行数据处理控制参数*/
+typedef struct st_at_l1cc_lte_ul_ctrl_1_tag
+{
+    s16  s16_ul_ta_a;            /*TA相对调整值（~24）*/
+    u16  u16_powerboost_bler;    /*基于bler调整上行发送功率的门限*/ 
+    u16  u16_ra_ta_step;         /*prach ta每次调整的步长*/ 
+    u16  u16_ra_ta_start;        /*prach ta调整的初始值*/
+    u16  u16_reserved3;          /*(已占用，用于设置CDRX预同步触发最近两次irt偏差门限)*/ 
+    u16  u16_reserved4;          /*(已占用，用于设置CDRX预同步触发当前睡眠irt门限)*/ 
+    u16  u16_reserved5;          /*(已占用，用于设置CDRX预同步触发sinr门限)*/
+    u16  u16_reserved6;          /*(已占用，用于设置DL tbsize max)*/ 
+    u32  u32_powerboost_db1;     /*AT指令控制每个band提升发送功率*/ 
+    u32  u32_powerboost_db2;     /*AT指令控制每个band提升发送功率*/
+}st_at_l1cc_lte_ul_ctrl_t_1;
+
+
+
+/*AT下发（同频，异频）测量数据处理控制频点级参数*/
+typedef struct st_at_l1cc_lte_freqmeas_freqpara_ctrl_tag
+{
+    u16  u16_lte_freq;   /*固定测量频点*/
+    u16  u16_meas_agc;   /*固定测量频点的AGC（0~95）*/
+    u16  u16_meas_type;  /*固定小区测量类型，0x1:测量，0x2：检测，0x3：即测量也盲检*/
+    u16  u16_meas_bw;    /*固定小区测量带宽(6PRB、 15PRB、 25PRB、 50PRB、 75PRB、 100PRB)*/
+    u16  u16_meas_cell_num;  /*固定小区测量个数(1~16)*/
+    u16  u16_reseaved[3];   /*保留*/
+}st_at_l1cc_lte_freqmeas_freqpara_ctrl_t;
+
+/*小区配置参数*/    
+typedef struct st_at_meas_cell_cfg_tag
+{
+    u16  u16_cell_id;    /*固定测量小区的ID，取值0-503*/
+    u16  u16_cp_type;    /*固定测量小区的CP类型，0：常规CP，1：扩展CP*/
+    u32  u32_sync_offset;    /*固定测量小的的syncoffset值，取值0-307200*/
+}st_at_meas_cell_cfg_t;
+
+/*AT下发（同频，异频）测量数据处理控制小区级参数*/
+typedef struct st_at_l1cc_lte_freqmeas_cellpara_ctrl_tag
+{
+    st_at_meas_cell_cfg_t   st_meas_cell_cfg[8];    /*固定小区测量配置参数*/
+}st_at_l1cc_lte_freqmeas_cellpara_ctrl_t;
+
+/*AT下发同步数据处理控制参数*/    
+typedef struct st_at_l1cc_lte_sync_ctrl_tag
+{
+    u16  b_cellsearch_blind_id_enalbe_flag;  /*搜网中是否开启ID检测（true/false）,=1：开启；=0：关闭；*/
+    u16  b_cellsearch_fix_freq_enalbe_flag;  /*是否开启固定频点搜网功能，（true/false）,=1：开启；=0：关闭；*/
+    u16  u16_cellsearch_fix_freq;    /*指定频点的搜网（频点信息U16）*/
+    u16  b_cellsearch_fix_cell_id_enalbe_flag;   /*是否开启固定小区id搜网功能，（true/false）,=1：开启；=0：关闭；*/
+    u16  u16_cellsearch_fix_cell_id; /*指定小区的搜网（小区ID 0~503）*/
+    u16  u16_reseaved[3];   /*保留*/
+}st_at_l1cc_lte_sync_ctrl_t;
+
+/*测控参数配置，指示信息的位域结构体*/
+typedef union
+{
+    u16 v;
+    struct
+    {
+        u16 b16_agc_set_flag                :1 ;  /*0, agc_set_flag*/
+        u16 b16_coeff_sinr_set_flag         :1 ;  /*1, coeff_sinr_set_flag*/
+        u16 b16_trms_set_flag               :1 ;  /*2, trms_set_flag*/
+        u16 b16_dopple_set_flag             :1 ;  /*3, dopple_set_flag*/
+        u16 b16_sigma_set_flag              :1 ;  /*4, sigma_set_flag*/
+        u16 b16_irt_set_flag                :1 ;  /*5, irt_set_flag, 用于初始itr调整设置*/
+        u16 b16_afc_set_flag                :1 ;  /*6, afc_set_flag, 用于初始afc调整设置*/
+        u16 b16_irt_afc_close_set_flag      :1 ;  /*7, irt_afc_close_set_flag,用于初始值调整后，测控过程关闭irt，afc调整*/
+        u16 b16_timing_jitter_set_flag      :1 ;  /*8, timing_jitter_set_flag, 定时抖动设置开关*/
+        u16 b16_freq_jitter_set_flag        :1 ;  /*9, freq_jitter_set_flag, 频偏抖动设置开关 */
+        u16 b16_meas_out_para_ctrl_reseaved :6 ;  /*15:10 ,reseverd*/
+    } b;
+} l1cc_lte_meas_ctrl_set_bit_t;
+
+
+/*AT下发服务小区测控数据处理控制参数*/      
+typedef struct st_at_l1cc_lte_server_cellmeas_ctrl_tag
+{
+    /*配置测控参数打桩时间*/
+    u16  u16_start_req_type;
+    u16  u16_start_req_num;
+    u16  u16_start_delay_sf_num;
+
+    /*配置测控参数打桩小区类型*/
+    u16  u16_targetcell_type;   /*=0:服务小区，=1:cgi/bg小区*/
+
+    /*配置测控打桩参数类型和各自的取值*/
+    l1cc_lte_meas_ctrl_set_bit_t  un_measpwr_ctrl_bitmap;   /*小区测控参数bitmap 指示*/
+    
+    u16  u16_agc;                       /*指定的AGC(0~95)，更新到rf参数中*/
+    u16  u16_coeff_qf_sinr_linevalue;   /*coeff qf sinr 线性值(0~1000)*/ 
+    u16  u16_coeff_qt_sinr_linevalue;   /*coeff qt sinr 线性值(0~1000)*/ 
+    u16  u16_trms_index;                /*指定的trms类型索引，=0：EPA；=1：EVA；=2：ETU；更新到软件参数中*/
+    u16  u16_dopple_index;              /*指定的doppler类型索引，=0：5Hz，=1：70Hz，=2：300Hz；*/
+    u16  u16_sigma_agc;                 /*指定的sigma_agc（0~95），更新到软件参数中*/
+    s16  s16_afc_set;                   /*指定的afc(-3276~32767)，触发rf的afc设置函数*/
+    u32  u32_sigma;                     /*指定的sigma（U32），更新到软件参数中*/
+    s32  s32_irt_set;                   /*指定的irt(-30719~307200)，触发rf的sync设置函数*/
+    u16  u16_jitter_period;             /*指定的定时和/或频率抖动周期(测控次数)，即每隔多少次测控人为引入一次定时或频偏的抖动*/
+    s16  s16_timing_jitter_val;         /*指定的定时抖动值*/
+    s16  s16_freq_jitter_val;           /*指定的频率抖动值*/
+    BL_U16  b_idl_sinr_outofsync_en;     /* 服务小区IDL下通过SINR控制失步使能 */
+    u16  u16_idl_sinr_outofsync_th;     /* 服务小区IDL下SINR失步门限 */
+    u16  u16_idl_outofsync_drx_num;     /* 服务小区IDL下判断失步的连续drx个数 */
+    u16  u16_idl_irt_invalid_sinr_th;   /* 服务小区IDL下判断irt无效的SINR门限 */
+    u16   u16_idl_irt_limit_sinr_th;   /* 服务小区IDL下限制irt调整范围的SINR门限 */
+    u16   u16_idl_irt_limit_value;   /* 服务小区IDL下限制irt调整范围的SINR门限 */
+    
+    u16    u16_drx_inactive_len_th;  /* DRX低功耗非激活期长度门限 */
+    u16    u16_drx_lowpwr_sinr_th;   /* DRX低功耗sinr门限 */
+    u16    u16_no_scell_meas_time_th;   /* 无服务小区测量结果的时间(ms)门限 */
+    u16    u16_pa_ctrl;   /*idl下pa值控制*/
+
+    u16  u16_reserved[7]; 
+}st_at_l1cc_lte_server_cellmeas_ctrl_t;
+
+/*测控参数配置，指示信息的位域结构体*/
+typedef union
+{
+    u16 v;
+    struct
+    {
+        u16 b16_subframe0     : 1;    /* subframe id 0  */
+        u16 b16_subframe1     : 1;    /* subframe id 1  */
+        u16 b16_subframe2     : 1;    /* subframe id 2  */
+        u16 b16_subframe3     : 1;    /* subframe id 3  */
+        u16 b16_subframe4     : 1;    /* subframe id 4  */
+        u16 b16_subframe5     : 1;    /* subframe id 5  */
+        u16 b16_subframe6     : 1;    /* subframe id 6  */
+        u16 b16_subframe7     : 1;    /* subframe id 7  */
+        u16 b16_subframe8     : 1;    /* subframe id 8  */
+        u16 b16_subframe9     : 1;    /* subframe id 9  */
+        u16 b16_mpdcch_subframe_bit_reseaved   :6;  /*15:10 ,reseverd*/
+    } b;
+} l1cc_lte_nv_judge_subframe_bit_t;
+
+
+/*AT下发条件断言控制参数，可用于定位ldtc虚检，错检等时序流程的异常*/     
+typedef struct st_at_l1cc_lte_condition_assert_tag
+{    
+    /*配置assert条件判断起效时间*/
+    u16  u16_start_req_type;     /*原语类型，配置为0xffff，表示立即起效*/
+    u16  u16_start_req_num;      /*第x次原语类型,取值1-0xFFFF*/
+    u16  u16_start_delay_sf_num; /*延迟起效子帧数，取值1-0xFFFF*/
+
+    l1cc_lte_nv_judge_subframe_bit_t  un_mpdcch_subframe_bitmap; /*mpdcch条件判断子帧的bitmap指示,bit0:子帧0；bit1:子帧1，依次类推,识别该子帧未检测到dci，断言*/
+    u16  u16_mpdcch_crc_ind;    /*mpdcch子帧识别类型 =1: crc 正确(dci虚检); =0:crc 错误(dci漏检)*/
+    l1cc_lte_nv_judge_subframe_bit_t  un_pdsch_subframe_bitmap; /*pdsch条件判断子帧的bitmap指示,bit0:子帧0；bit1:子帧1，依次类推,识别该子帧未检测到dci，断言*/
+    u16  u16_pdsch_crc_ind; /*pdsch子帧识别类型 =1: crc 正确(dci虚检); =0:crc 错误(dci漏检)*/
+    u16  u16_reseaved;      /*保留*/
+}st_at_l1cc_lte_condition_assert_t;
+
+
+/*测试信号线配置参数*/ 
+typedef struct st_at_monitor_cfg_tag
+{
+    u16  u16_monitor_mon_sel;    /*测试信号线索引值，取值0-32767*/
+    u16  u16_monitor_mon_con;    /*测试信号类型，取值0-32767*/
+}st_at_monitor_cfg_t;
+
+
+/*AT下发测试信号线控制参数*/ 
+typedef struct st_at_l1cc_lte_test_line_ctrl_tag
+{
+    st_at_monitor_cfg_t st_monitor_cfg[8];  /*测试信号线配置参数*/
+    u16  u16_monotor_enable; /*测试开关，=1：开启测试信号线；=0：关闭测试信号线*/
+    u16  u16_reseaved[3];   /*保留*/
+}st_at_l1cc_lte_test_line_ctrl_t;
+
+/*写寄存器或者mem的控制参数*/  
+typedef struct st_at_write_reg_tag
+{
+    u32  u32_reg_addr;   /*写数据(寄存器）的地址*/
+    u32  u32_reg_value;  /*写数据（寄存器）的值*/
+}st_at_write_reg_t;
+
+/*读寄存器或者mem的控制参数*/  
+typedef struct st_at_read_reg_tag
+{
+    u32  u32_reg_addr;   /*读取数据（寄存器或者MEM）的起始地址*/
+    u32  u32_reg_len;    /*读取数据（寄存器或者MEM）的长度，单位u32*/
+}st_at_read_reg_t;
+
+/*AT下发寄存器参数获取和配置参数*/  
+typedef struct st_at_l1cc_lte_reg_ctrl_tag
+{
+    st_at_write_reg_t   st_write_reg[4];    /*写寄存器或者mem的配置参数*/
+    st_at_read_reg_t    st_read_reg[4]; /*读寄存器或者mem的配置参数*/
+}st_at_l1cc_lte_reg_ctrl_t;
+
+/*AT下发rf出来控制参数（IQBOX,拉n倍帧长等）*/   
+typedef struct st_at_l1cc_lte_rf_ctrl_tag
+{    
+    u16  b_rf_iqbox_flag;    /*IQ还是RF（true/false）,=1:IQBOX；=0：RF*/
+    u16  b_rf_frame_extend_flag; /*是否拉帧长标识，=1：拉帧长；=0：不拉帧长；*/
+    u16  u16_rf_frame_extend_len;    /*几倍帧长（1,2,4,8），在b_rf_frame_extend_flag=1时，有效*/
+    u16  b_rf_wideband_flag; /*宽带还是窄带接收（true/false），=1：宽带；=0：窄带；*/
+    u16  u16_reseaved[4];   /*保留*/
+}st_at_l1cc_lte_rf_ctrl_t;
+
+/*AT下发平台相关的控制参数（编译控制）*/    
+typedef struct st_at_l1cc_lte_platform_ctrl_tag
+{
+    u16  u16_rx_mpdcch_period_fix_flag; /*=1:采用周期固定方案接收mpdcch(华为方案)*/
+    u16  u16_sib1_cemodeb_rep_max_value; /*sib1最大重复次数*/
+    u16  u16_startsymbol_d60_flag;  /*特殊子帧mpdcch和pdsch的起始符号位置，采用D60标准标识*/
+    u16  u16_rf_broken_flag;  /*RF断窗标识*/
+    u16  u16_close_uldft_err_flag;  /*ULDFT ERR蓝屏标识，初始值为FALSE*/
+    u16  u16_ldtc_2_int_flag;  /*ldtc双中断方案标识, =1:双中断，=0:单中断*/    
+    u16  u16_reseaved[2];   /*保留*/ 
+}st_at_l1cc_lte_platform_ctrl_t;
+
+
+/*AT下发pmi上报的控制参数*/ 
+typedef struct st_at_l1cc_lte_pmi_ctrl_tag
+{
+    u16  b_pmi_fix_report_flag;  /*是否使用固定值上报pmi标识，=1：使用固定值上报；=0：不使用*/
+    u16  u16_pmi_report_type;    /*pmi上报类型；=0:带宽；=1：优选子带；=2：所有子带；*/
+    u16  u16_wideband_pmi;   /*宽带pmi*/
+    u16  u16_mband_pmi;  /*优选子带pmi*/
+    u16  u16_subband_pmi[25];    /*各个子带的pmi*/
+    u16  u16_reseaved[3];    /*保留*/
+}st_at_l1cc_lte_pmi_ctrl_t;
+
+/*AT下发cqi上报的控制参数*/  
+typedef struct st_at_l1cc_lte_cqi_ctrl_tag
+{
+    u16  b_cqi_fix_report_flag;  /*是否使用固定值上报cqi标识，=1：使用固定值上报；=0：不使用*/
+    u16  u16_cqi_report_type;    /*cqi上报类型；=0:带宽；=1：优选子带；=2：所有子带；*/
+    u16  u16_wideband_cqi;   /*宽带cqi*/
+    u16  u16_mband_cqi;  /*优选子带cqi*/
+    u16  u16_subband_cqi[25];    /*各个子带的cqi*/
+    SINT16  s16_wideband_cqi_adj;   /*宽带CQI调整值*/
+    UINT16  u16_ber_adjust_en;      /* 是否使能通过ber调整CQI */
+    UINT16  u16_threshold_singular_filtering;  /*sinr奇异值过滤阈值*/
+}st_at_l1cc_lte_cqi_ctrl_t;
+
+
+/*si抓数控制变量*/
+typedef struct st_at_l1cc_lte_si_get_data_cfg_para_tag
+{
+    /*si_read_req场景，根据si_bitmap识别mib，sib1，othersib类型；分别在mib_data_ind, sib1_data_ind和si_stop停止抓数*/
+    /*cgi_meas_req场景，在cgi_meas_ind停止抓数*/
+    UINT16 u16_si_req_type; /* si抓数原语类型指示， =1:si_read_req; =2:cgi_meas_req;*/
+    UINT16 u16_si_bitmap;   /* si原语类型为si_read_req时，si类型的bitmap指示， bit0=1:mib; bit1=1:sib1;bit2=1:othersib;*/
+    UINT16 u16_si_req_cnt;  /*si原语类型抓数控制， 第x次si_read_req开始抓数*/
+}st_at_l1cc_lte_si_get_data_cfg_para_t;
+
+/*rar抓数控制变量*/
+typedef struct st_at_l1cc_lte_rar_get_data_cfg_para_tag
+{
+    UINT16 u16_start_prach_cnt;  /*rar抓数，起始控制参数，第x次prach_send_req原语开始抓数*/
+    UINT16 u16_end_prach_cnt;    /*rar抓数，结束控制参数，第y次prach_send_req原语结束抓数*/
+}st_at_l1cc_lte_rar_get_data_cfg_para_t;
+
+
+/*msg4抓数控制变量*/
+typedef struct st_at_l1cc_lte_msg4_get_data_cfg_para_tag
+{   /*msg4 在接收到msg3_send_req原语时，开始抓数*/
+    /*msg4 在接收到ded_cfg_req原语时，结束抓数*/
+    UINT16 u16_msg4_pdsch_crc_num;    /*msg4抓数，结束控制参数，第x次pdsch错误，结束抓数*/ 
+}st_at_l1cc_lte_msg4_get_data_cfg_para_t;
+
+
+/*dlcnnt抓数控制变量*/
+typedef struct st_at_l1cc_lte_dlcnnt_get_data_cfg_para_tag
+{
+    UINT16 u16_start_ded_cnt;    /*dlcnnt抓数，起始控制参数1，第几次ded_cfg_req原语开始抓数*/
+    UINT16 u16_end_cfg_type;     /*dlcnnt抓数，结束控制参数1, 结束抓数类型，=1:dci end;=2:pdsch end; =3:计数到n帧end*/
+    UINT16 u16_end_dci_right_cnt; /*dlcnnt抓数，dci译码正确计数到n，结束抓数，一般用于虚检抓数*/
+    UINT16 u16_end_pdsch_crc_err_cnt; /*dlcnnt抓数，pdsch错误计数到n，结束抓数，一般用于pdsch错误抓数*/
+    UINT16 u16_end_sf_cnt;            /*dlcnnt抓数，抓数开始，计数到n帧，结束抓数,一般用于没有检测到dci抓数*/
+    UINT16 u16_end_pdsch_crc_rate_max;  /*dlcnnt抓数，计算到误块计数为x，结束抓数，与crc_rate_base,配套使用*/
+    UINT16 u16_end_pdsch_crc_rate_base; /*dlcnnt抓数，统计误块率的基数，>=100,与crc_rate_max配套使用，eg:crc_rate_base=10000且crc_rate_max=100时，表示统计的总数为10000，误块个数为100,误块率为10%*/
+}st_at_l1cc_lte_dlcnnt_get_data_cfg_para_t;
+
+/*paging抓数控制变量*/
+typedef struct st_at_l1cc_lte_paging_get_data_cfg_para_tag
+{   /*TODO: 待邹旭补充*/
+    UINT16 u16_reserved;
+}st_at_l1cc_lte_paging_get_data_cfg_para_t;
+
+/*prach抓数控制变量*/
+/*prach暂定不使用平台抓数，断言后读取tx_mem数据，只抓取一次prach的数据*/
+typedef struct st_at_l1cc_lte_prach_get_data_cfg_para_tag
+{
+    UINT16 u16_get_prach_send_req_cnt;    /*抓取第x次prach_send_req发送数据*/
+    UINT16 u16_preamble_id;               /*PreambleID号打桩，如果为0xFFFF表示不需要打桩*/
+    UINT16 u16_get_prach_rep_cnt;         /*抓取第y次prach重复的数据*/
+}st_at_l1cc_lte_prach_get_data_cfg_para_t;
+
+/*msg3抓数控制变量*/
+/*msg3抓取一次SEND_MSG3_REQ原语对应的所有重复次数的数据*/
+typedef struct st_at_l1cc_lte_msg3_get_data_cfg_para_tag
+{
+    UINT16 u16_get_msg3_send_req_cnt;    /*抓取第x次send_msg3_req发送数据*/
+}st_at_l1cc_lte_msg3_get_data_cfg_para_t;
+
+/*pusch抓数控制变量*/
+typedef struct st_at_l1cc_lte_pusch_get_data_cfg_para_tag
+{
+    UINT16 u16_get_pusch_send_req_cnt;  /*从第x次pusch_send_req发送开始抓数*/
+    UINT16 u16_get_pusch_cnt;           /*抓取y次pusch发送的数据(每次重复计为一次发送)*/
+}st_at_l1cc_lte_pusch_get_data_cfg_para_t;
+
+/*pucch抓数控制变量*/
+/*pucch按照携带的UCI类型抓数*/
+typedef struct st_at_l1cc_lte_pucch_get_data_cfg_para_tag
+{
+    UINT16 u16_uci_type;               /*PUCCH需要携带的UCI信息,1:SR,2:ACK;3:CSI*/
+    UINT16 u16_get_pucch_cnt;          /*抓取y次pucch发送的数据(每次重复计为一次发送，不区分pucch格式)*/
+    UINT16 u16_get_sr_send_req_cnt;    /*从第x次sr_send_req开始抓数*/
+    UINT16 u16_get_ack_csi_cnt;        /*从第x次ACK/CSI发送开始抓数(每次重复记为一次发送)*/
+}st_at_l1cc_lte_pucch_get_data_cfg_para_t;
+
+/*srs抓数控制变量*/
+/*srs抓取从第x次SRS发送开始，连续抓取y个包含SRS的子帧*/
+typedef struct st_at_l1cc_lte_srs_get_data_cfg_para_tag
+{
+    UINT16 u16_start_srs_sf_cnt;       /*从第x个包含SRS的上行子帧开始抓数*/
+    UINT16 u16_get_srs_sf_cnt;         /*抓取连续y个包含SRS的上行子帧的数据*/  
+}st_at_l1cc_lte_srs_get_data_cfg_para_t;
+
+/*上行抓数控制变量*/
+typedef union
+{
+    st_at_l1cc_lte_pucch_get_data_cfg_para_t  st_pucch_get_data_cfg_para;    /*pucch抓数控制参数*/
+    st_at_l1cc_lte_pusch_get_data_cfg_para_t  st_pusch_get_data_cfg_para;    /*pusch抓数控制参数*/
+    st_at_l1cc_lte_prach_get_data_cfg_para_t  st_prach_get_data_cfg_para;    /*prach抓数控制参数*/
+    st_at_l1cc_lte_msg3_get_data_cfg_para_t   st_msg3_get_data_cfg_para;     /*msg3抓数控制参数*/
+    st_at_l1cc_lte_srs_get_data_cfg_para_t    st_srs_get_data_cfg_para;      /*srs抓数控制参数*/
+}st_at_l1cc_lte_ul_get_data_cfg_para_t;
+
+
+/*下行抓数控制变量*/
+typedef struct st_at_l1cc_lte_dl_get_data_cfg_req_tag
+{
+   /*dl 抓数*/
+   UINT16 b_dl_get_data_flag;    /*=TRUE:开启dl抓数功能*/  
+   UINT16 u16_com_start_req_type;  /*抓取起始原语类型，结合该原语类型次数条件，开始抓数*/
+   UINT16 u16_com_start_req_num;   /*接收到第x次原语，开始抓数*/
+   UINT16 u16_com_end_cfg_type;    /*抓数停止类型,=1:计算到n帧，结束抓数; =2:长抓，直到出现断言为止；=3:指定的原语*/
+   UINT16 u16_com_end_sf_num;      /*计数到n帧，结束抓数*/
+   UINT16 u16_com_end_req_type;    /*从抓数开始，满足结束条件的原语类型*/
+   UINT16 u16_com_end_req_num;     /*接收到第y次，结束类型原语，停止抓数*/  
+   UINT16 u16_reserved[2];         /*u16_reserved[0]抓数类型，=1：普通抓数；=2：RxCapture抓数；=3：HSDL抓数；0xFFFF：无效抓数类型；u16_reserved[1]已被用于控制EL1自复位功能，0xABAB：关闭自复位，其他值：默认开启*/   
+   UINT16 u16_busmon_pagespy_scene_bitmap;  /*总线监控场景(bit0&1可以共存，bit2&3可以共存)，bit0:PO_AHEAD_AGC，bit1:PO_OFFLINE，bit2:FRAME1_INT，bit3:FRAME2_INT*/
+}st_at_l1cc_lte_dl_get_data_cfg_req_t;
+
+
+/*上行抓数控制变量*/
+typedef struct st_at_l1cc_lte_ul_get_data_cfg_req_tag
+{
+   /*ul 抓数*/
+   UINT16 u16_ul_get_data_flag;  /*=0:不开启ul抓数功能,=1:抓TX_IN,=2:抓TX_OUT,=3：HDSL抓数*/
+   UINT16 u16_ul_chn_id;         /*=1:PRACH,=2:MSG3,=3:PUSCH,=4:PUCCH,=5:SRS*/
+   st_at_l1cc_lte_ul_get_data_cfg_para_t un_ul_get_data_para;
+}st_at_l1cc_lte_ul_get_data_cfg_req_t;
+
+
+/*抓数控制变量*/
+typedef struct st_at_l1cc_lte_cat1bis_get_data_cfg_req_tag
+{
+   /*dl 抓数*/
+   st_at_l1cc_lte_dl_get_data_cfg_req_t st_dl_get_data_para_req;
+   /*ul 抓数*/
+   st_at_l1cc_lte_ul_get_data_cfg_req_t st_ul_get_data_para_req;
+   /*服务小区meas抓数*/   
+   
+   /*异频或同频小区meas抓数*/
+   //st_at_l1cc_lte_freqmeas_get_data_cfg_req_t st_freqmeas_get_data_para_req;
+   /*小区搜索抓数*/
+}st_at_l1cc_lte_cat1bis_get_data_cfg_req_t;
+
+
+typedef struct st_measpwr_irt_scaleth_para_tag
+{
+    u32 u32_scaleth_1          ;  /*取值范围:0-0x7FFFFFFF, 1个子帧IRT SCALE门限  */    
+    u32 u32_scaleth_2          ;  /*取值范围:0-0x7FFFFFFF, 2个子帧IRT SCALE门限  */    
+    u32 u32_scaleth_4          ;  /*取值范围:0-0x7FFFFFFF, 4个子帧IRT SCALE门限  */    
+    u32 u32_scaleth_8          ;  /*取值范围:0-0x7FFFFFFF, 8个子帧IRT SCALE门限  */            
+    u32 u32_scaleth_16         ;  /*取值范围:0-0x7FFFFFFF, 16个子帧IRT SCALE门限  */  
+    u32 u32_scaleth_32         ;  /*取值范围:0-0x7FFFFFFF, 32个子帧IRT SCALE门限  */    
+    u32 u32_scaleth_64         ;  /*取值范围:0-0x7FFFFFFF, 64个子帧IRT SCALE门限  */     
+    u32 u32_scaleth_128        ;  /*取值范围:0-0x7FFFFFFF, 128个子帧IRT SCALE门限  */   
+    u32 u32_scaleth_256        ;  /*取值范围:0-0x7FFFFFFF, 256个子帧IRT SCALE门限  */    
+    u32 u32_scaleth_512        ;  /*取值范围:0-0x7FFFFFFF, 512个子帧IRT SCALE门限  */    
+}st_measpwr_irt_scaleth_para_t;
+
+/*MeasPwr调优参数*/
+typedef struct st_at_algo_lte_cat1bis_measpwr_req_tag
+{
+    u16 u16_sync_subfnum       ;  /*取值范围:0~511, IRT/AFC总子帧个数：u16_sync_subfnum+1                                                 */                                                                                                                           
+    u16 u16_qf_mem_sel         ;  /*取值范围:0~1, QF MEM选择, 0:固定QF MEM, 1:动态QF MEM                                                  */                                                                                                                           
+    u16 u16_irt_scale_disable  ;  /*取值范围:0~1, IRT scale门限不使能控制, 0:使能，自适应样本数, 1:不使能  固定样本数                                            */                                                                                                                           
+    u16 u16_pow_data_sel       ;  /*取值范围:0~3, AFC\POW数据输入选择, 0:hls, 1:hmmse, 2u16:freqfirst, 3:hls                              */                                                                                                                           
+    u16 u16_fh_wl_ind          ;  /*取值范围:0~1, 频域估计窗长指示, 0:频域估计窗长为PRB, 1:频域估计窗长为PRB                            */                                                                                                                           
+    u16 u16_meas_wb_Index      ;  /*取值范围:0-5, 测量带宽索引                                                                           */                                                                                                                           
+    u16 u16_soft_irt_en        ;  /*取值范围:0,1, SOFT IRT使能标志                                                                       */                                                                                                                           
+    u16 u16_soft_afc_en        ;  /*取值范围:0,1, SOFT AFC使能标志                                                                       */                                                                                                                           
+    s16 s16_soft_afc_value     ;  /*取值范围:-32768~32767, SOFT AFC调整值                                                                */                                                                                                                           
+    u16 u16_afc_related_flag   ;  /*取值范围:0,1, 0-子帧间不相关，-子帧间相关                                                           */                                                                                                                           
+    u16 u16_afc_renum          ;  /*取值范围:0~5,  AFC计算频域相关个数,=000：;=001：;=010：;=011：;=100:06:00;=101:12:00;=Other:1;    */                                                                                                                           
+    u16 u16_afc_sigma_factor   ;  /*取值范围:0-32767,与sigma合并时，Sigma的因子，取值-1之间的Q15的数据                                  */                                                                                                                           
+    u16 u16_sigma_alpha        ;  /*取值范围:0~32768, 默认值, SIGMA 阿尔法滤波当前值权值系数                                        */                                                                                                                       
+    u16 u16_sigma_win          ;  /*取值范围:1-80,  SIGMA计算滑动窗长                                                                    */                                                                                                                          
+    u16 u16_sigpwr_ofdmnum     ;  /*取值范围:0,1,3, SIGPWR计算时域相关个数,=0:01;=1:02;=11:04;=Other：;                                  */                                                                                                                           
+    u16 u16_sigpwr_alpha       ;  /*取值范围:0~32768, 默认值, SIGPWR 阿尔法滤波当前值权值系数                                       */                                                                                                                       
+    u16 u16_sigpwr_renum       ;  /*取值范围:1~100, SIGPWR计算频域相关个数（按实际数据个数配置）                                         */                                                                                                                           
+    u16 u16_doppler_alpha      ;  /*取值范围:0~32768, Id1-2 Doppler alpha filter当前值权值系数                                           */                                                                                                                       
+    s16 s16_doppler_scale      ;  /*取值范围:-6~6, Noise的移位因子，整数表示左移，负数表示右移                                           */                                                                                                                           
+    u16 u16_doppler_win        ;  /*取值范围:1-80,  DOPPLER计算滑动窗长                                                                  */                                                                                                                          
+    u16 u16_trms_t_th          ;  /*取值范围:1-90,  TRMS选径门限                                                                         */                                                                                                                          
+    u16 u16_trms_noise_sel     ;  /*取值范围:0-1, 默认值, 噪声区域选择, 0:使用TRMS的Dis_Limit去计算噪声, 1:使用RSRP的Dis_Limit去计算噪声*/                                                                                                                           
+    u16 u16_trms_d_flag        ;  /*取值范围:0-1, TRMS抽取标志，0-连续抽取，1-按表间隔抽取  测量带宽大于等于3时，设置为0，否则，设置为1                                             */                                                                                                                           
+    u16 u16_trms_dis_limit     ;  /*取值范围:1-63, 信号区域                                                                              */                                                                                                                          
+    u16 u16_trms_s_th          ;  /*取值范围:0~65535,Trms的信号门限，Q20,1/100                                                            */                                                                                                                       
+    u16 u16_trms_n_th          ;  /*取值范围:0~65535,Trms的信号门限，Q10,3                                                                */                                                                                                                        
+    u16 u16_trmsf_space        ;  /*取值范围:0-2NRB-2,默认值，频域Trms计算时频域的间隔位置                                              */                                                                                                                           
+    s16 s16_trmsf_scale        ;  /*取值范围:-6:6, 默认值, 移位因子，整数表示左移，负数表示右移                                         */                                                                                                                           
+    u16 u16_trmsf_alpha        ;  /*取值范围:0~32768, 默认值,频域Trms Alpha滤波的Alpha因子                                          */                                                                                                                       
+    u16 u16_rsrp_d_flag        ;  /*取值范围:0-1, RSRP抽取标志，0-连续抽取，1-按表间隔抽取  测量带宽大于等于3时，设置为0，否则，设置为1                                             */                                                                                                                           
+    u16 u16_rsrp_beta          ;  /*取值范围:0~65535,RSRP的噪声门限值，Q10,3                                                              */                                                                                                                        
+    u16 u16_rsrp_dis_limit     ;  /*取值范围:1-63, 信号区域                                                                              */                                                                                                                          
+    s16 s16_rsrp_compensate    ;  /*取值范围:3*log2(Factor)-3*(7+log2(2048./Factor))+12 = [-18 -24 -30 -36 -42 -42],RSRP补偿值                                                                   */                                                                                                                         
+    u16 u16_rsrp_agcadjust     ;  /*取值范围:30                                                                                           */                                                                                                                          
+    u16 u16_rsrp_s_th          ;  /*取值范围:0~65535, 默认值0.01 * 2 ^ 15=327;, 信号门限因子                                                          */                                                                                                            
+    u16 u16_rsrp_rssi_q        ;  /*取值范围:2*QIndata                                                                                    */                                                                                                                          
+    u16 u16_rsrp_pow_q         ;  /*取值范围:2*QIndata                                                                                    */                                                                                                                          
+    u16 u16_rsrp_pow_pa        ;  /*取值范围:0,14-18, 经过FFT和IFFT的放大倍数                                                            */                                                                                                                           
+    u16 u16_rssi_compensate    ;  /*取值范围:0,3,6,9,12, RSSI补偿值                                                                      */                                                                                                                           
+    u16 u16_irt_val_sel        ;  /*取值范围:0-1,  默认值, IRT有效数据范围选择                                                          */                                                                                                                           
+    u16 u16_irt_pow_max_num    ;  /*取值范围:0-15, 默认值, pow最大值个数                                                                */                                                                                                                           
+    u16 u16_irt_n_scale        ;  /*取值范围:0-15, 默认值, 计算Scale时信号功率用最大值和其左右各N_Scale条径叠加                         */                                                                                                                           
+    u16 u16_irt_dis_limit      ;  /*取值范围:1-63,  信号区域                                                                             */                                                                                                                          
+    u16 u16_irt_ofdmnum        ;  /*取值范围:0,1,3,IRT计算时域单次累加样本个数,=0:01;=1:02;=11:04;                                        */                                                                                                                           
+    u16 u16_irt_s_th           ;  /*取值范围:0,1,3,IRT的信号门限，Q15的数，参考值0.95 * 2 ^ 15=31129;                                           */                                                                                                                 
+    u16 u16_irt_n_th           ;  /*取值范围:0~65535,   16bit的Q12的数，参考值LowSNR，* 2^10;HighSNR,4*2^10                             */       
+    u16 u16_agc_compare        ;  /*取值范围:0-0x3FF,默认值,前后两个样本子帧AGC最大差值门限                                           */   
+    u16 u16_pos_delay_sel      ;  /*取值范围:0/1,默认值1,pos/delay判决标志, 0-pos,1- delay*/
+    u16 u16_jump_flag          ;  /*取值范围:0-3,默认值0,目标门限选择标志，0-IRT_Scale，1-RSRP_Scale，2-SINR，3-Powmax_Scale*/
+    u16 u16_decision_flag      ;  /*取值范围:0-3,默认值0,排序目标选择标志，0-IRT_Scale，1-RSRP_Scale，2-SINR，3-Powmax_Scale*/                     
+    s16 s16_decision_para1     ;  /*取值范围:0-127,默认值-160                            */
+    u16 u16_decision_para2     ;  /*取值范围:0-127,默认值160                             */
+    s16 s16_decision_para3     ;  /*取值范围:0-127,默认值-5                              */
+    u16 u16_rbis_en            ;  /*取值范围:0-1,RBIS使能,默认值1*/
+    u16 u16_rbis_posen         ;  /*取值范围:0-1,RBIS使用直接位置指示，默认值0*/
+    u16 u16_rbis_dipos         ;  /*取值范围:0-99,RBIS直接位置，默认值0*/
+    u16 u16_hst_pow_data_sel   ;  /*取值范围:0~3, 高速移动场景AFC\POW数据输入选择, 0:hls, 1:hmmse, 2u16:freqfirst, 3:hls */
+    u16 b_high_speed_fixed     ;  /*取值范围:0~1, 高速移动场景打桩标志，默认值0， 0：FALSE, 1：TRUE*/
+    u32 u32_offline_th         ;  /*取值范围:0-0x7FFFFFFF,offline门限寄存器                   */     
+    st_measpwr_irt_scaleth_para_t   st_measpwr_irt_scaleth_para[3];  /*结构体0--hls irt scaleth, 结构体1--hmmse irt scaleth, 结构体2--freqfirst irt scaleth*/   
+}st_at_algo_lte_cat1bis_measpwr_req_t;
+
+/*coeff调优参数*/
+typedef struct st_at_algo_lte_cat1bis_coeff_req_tag
+{
+    u16 u16_chan_type  ;   /*取值范围:0~2 ,信道类型：=0:EPA/AWGN; =1:EVA;=2:ETU;     */
+    u16 u16_fd_index   ;   /*取值范围:0~2 ,多普勒频偏值, =0:5Hz, =1:70Hz;=2:300Hz,   */
+    u16 u16_qf_sinr    ;   /*取值范围:0-32767,Qf的SNR值                           */
+    u16 u16_qt_sinr    ;   /*取值范围:0-32767,Qt的SNR值                           */
+}st_at_algo_lte_cat1bis_coeff_req_t;
+
+/*PDCCH FA 调忧参数*/
+typedef struct st_at_algo_lte_cat1bis_pdcch_fa_req_tag
+{
+    u16 u16_fa_th;   /*  取值范围:0~127 ,FA门限：初始值 127;     */
+    u16 u16_fa_test_en;   /*  取值范围:0    */
+    u16 u16_false_alarm_test;   /*  取值范围:0不是虚检测试，1虚检测试*/
+    u16 u16_reseaved;           /*  取值范围:0    */
+    u16 u16_dldci_bitmap;   /*取值范围:0-1023,子帧0~子帧9是否存在下行DCI，                              */
+    u16 u16_uldci_bitmap;   /*取值范围:0-1023, 子帧0~子帧9是否存在上行DCI                              */
+    u32 u32_dldci_bit[20]    ;  /*取值范围:0-0xffffffff, 各下行子帧DCIbit流，2个32bit存放一个子帧的，u32_dldci_bit[0]和u32_dldci_bitp[1]存放子帧0的下行DCI比特流   */ 
+    u32 u32_uldci_bit[20]    ;  /*取值范围:0-0xffffffff, 各上行子帧DCIbit流，2个32bit存放一个子帧的，u32_dldci_bit[0]和u32_dldci_bitp[1]存放子帧0的上行DCI比特流   */ 
+    u16 u16_dldci_type[10]   ;  /*取值范围:DCI1:10,DCI1A:11,DCI1B:12,DCI1C:13,DCI1D:14,DCI2:20,DCI2A:21,DCI2B:22,DCI2C:23,DCI3:30,DCI3A:31;各下行子帧的DCI类型*/
+}st_at_algo_lte_cat1bis_pdcch_fa_req_t;
+
+/*测控输出参数检查配置，指示信息的位域结构体*/
+typedef union
+{
+    u16 v;
+    struct
+    {
+        u16 b16_subfnum_check_flag        :1 ;  /*0, subfnum_check_flag*/
+        u16 b16_afc_check_flag            :1 ;  /*1, afc_check_flag*/
+        u16 b16_irt_check_flag            :1 ;  /*2, irt_check_flag*/
+        u16 b16_sinr_check_flag           :1 ;  /*3, sinr_check_flag*/
+        u16 b16_rsrp_check_flag           :1 ;  /*4, rsrp_check_flag*/
+        u16 b16_reserved                  :10;  /*14:5 ,reseverd*/
+        u16 b16_target_card_id            :1 ;  /*15:15 ,target card id*/
+    } b;
+} l1cc_lte_measpwr_outpara_check_bit_t;
+
+
+/*测控输出参数异常检测设置*/
+typedef struct st_at_algo_lte_measpwr_outpara_check_tag
+{
+    l1cc_lte_measpwr_outpara_check_bit_t  un_measpwr_outpara_check_bitmap;   /*默认值0,测控参数bitmap 指示 */    
+    u16 u16_subfnum_thr   ;   /*取值范围0-511,默认值511, 产生中断时id1累计子帧样本数门限值，大于该门限时主动断言 */
+    u16 u16_afc_thr       ;   /*取值范围0-65535,默认值1000,产生中断时id1输出频偏的绝对值门限，大于该门限值主动断言 */
+    u16 u16_irt_thr       ;   /*取值范围0-65535,默认值200,产生中断时id1输出定时偏差绝对值门限，大于该门限值主动断言 */
+    s16 s16_sinr_low_thr  ;   /*取值范围-32768-32767,默认值-20, sinr低门限，小于该门限值主动断言*/
+    s16 s16_sinr_high_thr ;   /*取值范围-32768-32767,默认值30, sinr高门限，大于该门限值主动断言*/
+    u16 u16_rsrp_low_thr  ;   /*取值范围-120-120, 默认值0,rsrp低门限，小于该门限值主动断言*/
+    u16 u16_rsrp_high_thr ;   /*取值范围-120-120, 默认值97,rsrp高门限，大于该门限值主动断言*/
+}st_at_algo_lte_measpwr_outpara_check_t;
+
+
+/*测控输出参数检查配置，指示信息的位域结构体*/
+typedef union
+{
+    u16 v;
+    struct
+    {
+        u16 b16_target_agc_set_flag                :1 ;  /*0, target agc设置标志*/
+        u16 b16_irt_singular_value_set_flag        :1 ;  /*1, irt奇异值判断门限设置标志*/        
+        u16 b16_irt_adj_range_set_flag             :1 ;  /*2, irt调整范围设置标志*/
+        u16 b16_afc_adj_range_set_flag             :1 ;  /*3, afc调整范围设置标志*/
+        u16 b16_sinr_alphafilter_set_flag          :1 ;  /*4, sinr alpha滤波设置标志*/
+        u16 b16_doppler_alphafilter_set_flag       :1 ;  /*5, doppler alpha滤波设置标志*/
+        u16 b16_trms_para_set_flag                 :1 ;  /*6，trms参数设置标志*/
+        u16 b16_rssi_scale_factor_set_flag         :1 ;  /*7, rssi放大缩小移位因子设置标志*/
+        u16 b16_irt_alpha_count_max_set_flag       :1 ;  /*8, irt alpha滤波count最大值设置标志*/
+        u16 b16_rlm_sinr_offset_set_flag           :1 ;  /*9, rlm 补偿值修改*/
+        u16 b16_rlm_cnt_thr_set_flag               :1 ;  /*10,rlm QIN QOUT 次数门限修改*/
+        u16 b16_reserved_0                         :1 ;  /*11,reserverd*/
+        u16 b16_irt_offset_set_flag                :1 ;  /*12,IRT估计补偿值设置*/
+        u16 b16_reserved_1                         :1 ;  /*13,reserved*/
+        u16 b16_afcadj_irt_protec_thr_set_flag     :1 ;  /*14,大时延频率调整值保护IRT门限设置*/
+        u16 b16_reserved_2                         :1 ;  /*15,reserverd*/
+    } b;
+} l1cc_lte_measctrl_out_posthandle_bit_t;
+
+/*测控输出参数后处理参数设置*/
+typedef struct st_at_algo_lte_measctrl_out_posthandle_tag
+{
+    l1cc_lte_measctrl_out_posthandle_bit_t  un_measpwr_outpara_posthandle_bitmap;
+    u16 u16_low_target_agc             ;     /*取值范围1-60,默认值37,taget_agc低档位值*/
+    u16 u16_high_target_agc            ;     /*取值范围1-60,默认值49,taget_agc高档位值*/
+    u16 u16_irt_singular_val_thr       ;     /*取值范围20-170,默认值20,irt奇异值门限*/
+    s16 s16_low_irt_adjthr             ;     /*取值范围-170-0,默认值-20,irt调整值下限*/
+    s16 s16_high_irt_adjthr            ;     /*取值范围0-170,默认值20,irt调整值上限*/
+    s16 s16_afc_comm_lo_adjth          ;     /*取值范围-1000-0,默认值-192,afc_comm调整值下限*/    
+    s16 s16_afc_comm_hi_adjth          ;     /*取值范围0-1000,默认值192,afc_comm调整值上限*/
+    u16 u16_sinr_alphafilter_factor    ;     /*取值范围0-10,默认值3,sinr alpha filter factor*/
+    u16 u16_doppler_alphafilter_factor ;     /*取值范围0-10,默认值6,doppler alpha filter factor*/
+    u16 u16_trms_window_len_factor     ;     /*取值范围0-8,默认值6,trms滑动窗长因子*/
+    u16 u16_trms_limit                 ;     /*取值范围0-32767,默认值800, trms最大值限制*/
+    u16 u16_trms_hop                   ;     /*取值范围0-32767,默认值50, trms波动幅值限制*/
+    u16 u16_trms_eva_th                ;     /*取值范围0-32767,默认值200, trms eva门限值*/
+    u16 u16_trms_etu_th                ;     /*取值范围0-32767,默认值480, trms etu门限值*/
+    s16 s16_rssi_shift_factor          ;     /*取值范围-10-10,默认值3，RSSI线性值放大缩小移位因子*/
+    u16 u16_irt_alpha_count_max        ;     /*取值范围0-5,默认值3,IRT ALPHA COUNT最大值*/
+    u16 u16_oos_time_thr               ;     /*取值范围0-65535,默认值20, RLM out_sync 最大次数*/
+    u16 u16_is_time_thr                ;     /*取值范围0-65535,默认值20, RLM in_sync 最大次数*/
+    s16 s16_oos_thr_offset             ;     /*取值范围-32768-32767,默认值0, RLM in_sync sinr 门限补偿值*/
+    s16 s16_is_thr_offset              ;     /*取值范围-32768-32767,默认值0, RLM in_sync sinr 门限补偿值*/
+    s16 s16_delta_delay                ;     /*取值范围-32768-32767,默认值0, IRT调整补偿值*/
+    u16 u16_afcadj_irt_protec_thr      ;     /*大时延频偏估计不准频偏调整值保护IRT门限值*/
+    s16 s16_afc_hst_lo_adjth           ;     /*取值范围-1000-0,默认值-400,afc_hst调整值下限*/    
+    s16 s16_afc_hst_hi_adjth           ;     /*取值范围0-1000,默认值400,afc_hst调整值上限*/ 
+    u16 u16_afc_comm_filter_cntmax     ;     /*取值范围0-65535,默认值3,非高速移动环境afc阿尔法滤波计数最大值*/
+    u16 u16_afc_hst_filter_cntmax      ;     /*取值范围0-65535,默认值3,高速移动环境afc阿尔法滤波计数最大值*/
+    s16 s16_offline_afc_limit_sinrth   ;     /*高铁环境offline模式触发频偏幅度限制SINR门限, 单位db(Q1)*/
+    u16 u16_offline_soft_afc_limit     ;     /*高铁环境offline模式最大允许频偏软纠值*/
+    u16 u16_offline_rf_afc_limit       ;     /*高铁环境offline模式最大允许频偏rf调整值*/
+    s16 s16_online_afc_limit_sinrth    ;     /*高铁环境online模式触发频偏幅度限制SINR门限*/
+    u16 u16_channel_cnt                ;     /*AWGN观察窗长*/
+    u16 u16_rf_afc_limit               ;     /*高铁环境最大允许频偏rf调整值*/
+    u16 u16_soft_afc_limit             ;     /*高铁环境最大允许频偏软纠值*/
+    u16 u16_hst_dch_en                 ;     /*算法高铁连接态策略使能*/
+    u16 u16_freq_shift_th              ;     /*算法（1945866）多普勒频移门限值(HZ)*/
+    u16 u16_dopl_medi_spd_th           ;     /*算法（1945866）中速移动识别策略*/
+    u16 u16_dopl_high_spd_th           ;     /*算法（1945866）高速移动识别策略*/
+    u16 u16_dopl_total_cnt_th          ;     /*算法（1945866）多普勒统计周期内 多普勒统计总次数门限值*/
+    u16 u16_dopl_sinr_th               ;     /*算法（1945866）多普勒统计sinr门限值*/
+}st_at_algo_lte_measctrl_out_posthandle_t;
+
+typedef struct st_at_l1cc_lte_instrument_test_tag
+{
+    u16 u16_bler_test_en               ;     /*bler测试项开关；是否开启bler测试*/
+    u16 u16_bler_max_th                ;     /*取值0-100，表示误码率上限。默认值0xffff无效*/
+    u16 u16_idl_irt_afc_test_en        ;     /*是否开启idl_irt和afc异常检测*/
+    s16 s16_idl_irt_pos_max_th         ;     /*idl模式同步正向门限，默认值0xffff无效*/
+    s16 s16_idl_irt_neg_max_th         ;     /*idl模式同步负向门限，默认值0xffff无效*/
+    s16 s16_idl_afc_pos_max_th         ;     /*idl模式afc正向门限，默认值0xffff无效*/
+    s16 s16_idl_afc_neg_max_th         ;     /*idl模式afc负向门限，默认值0xffff无效*/
+    u16 u16_test_line_en               ;
+
+}st_at_l1cc_lte_instrument_test_t;
+
+typedef struct st_at_algo_lte_cat1bis_ncell_algo_sched_ctrl_tag
+{
+    u16  u16_nv_ctrl_bitmap;         /*启动是否启用nv控制 0：不启用 1启用
+                                        bit0 lte intra启动
+                                        bit1 lte inter启动
+                                        bit2 lte idle启动
+                                        bit3 irat idle启动
+                                        bit4 irat dch启动
+                                        default 0*/
+    u16  u16_intra_sample_num;        /*intra iddet样本数, 取值1/2/4, default:4*/
+    u16  u16_intra_report_type;       /*Intra 上报类型，0 按照固定周期上报 1 测量任务完成立即上报，default 0*/
+    u16  u16_intra_report_period;     /*report_type为0时配置的上报周期，单位ms，default 200*/
+    u16  u16_inter_sample_num;        /*inter iddet样本数, 取值1/2/4, default:4*/
+    u16  u16_inter_report_type;       /*Inter 上报类型，0 按照固定周期上报 1 测量任务完成立即上报，default 0*/
+    u16  u16_inter_report_period;     /*report_type为0时配置的上报周期，480或者960，default 480*/
+    u16  u16_irat_idle_sample_num;    /*irat idle iddet样本数 取值1/2/4，default 1*/
+    u16  u16_irat_dch_sample_num;     /*irat dch iddet样本数 取值1/2/4, default 1*/
+    u16  u16_idle_sample_num;         /*idle异频 iddet样本，取值1/2/4, default 1*/
+    u16  u16_reserved[2];             /*预留*/
+
+}st_at_algo_lte_cat1bis_ncell_algo_sched_ctrl_t;
+
+typedef struct st_at_algo_lte_cat1bis_ncell_sw_ctrl_tag
+{
+    u16  u16_tdd_cell_sync_valid_dif;   /*TDD频点iddet检测后处理中判断有效同步偏差的值,default:100ts*/
+    s16  s16_irt_judge_thr;             /*IRT跳变有效性判决门限, default:30*/
+    s16  s16_afc_judge_thr;             /*afc跳变有效性判决门限, default:30*/
+    u16  u16_reserved[3];
+}st_at_algo_lte_cat1bis_ncell_sw_ctrl_t;
+
+typedef struct st_at_algo_lte_cat1bis_ncell_measpwr_req_tag
+{
+    u16 u16_sync_subfnum       ;  /*取值范围:0~511, IRT/AFC总子帧个数：u16_sync_subfnum+1                                                 */
+    u16 u16_irt_scale_disable  ;  /*取值范围:0~1, IRT scale门限不使能控制, 0:使能, 1:不使能                                               */
+    u16 u16_pow_data_sel       ;  /*取值范围:0~3, AFC\POW数据输入选择, 0:hls, 1:hmmse, 2u16:freqfirst, 3:hls                              */
+    u16 u16_meas_wb_Index      ;  /*取值范围:0-5, 测量带宽索引                                                                            */
+    u16 u16_sigma_alpha        ;  /*取值范围:0~32768, 默认值, SIGMA 阿尔法滤波当前值权值系数                                              */
+    u16 u16_sigma_win          ;  /*取值范围:1-80,  SIGMA计算滑动窗长                                                                     */
+    u16 u16_sigpwr_ofdmnum     ;  /*取值范围:0,1,3, SIGPWR计算时域相关个数,=0:01;=1:02;=11:04;=Other：;                                   */
+    u16 u16_sigpwr_alpha       ;  /*取值范围:0~32768, 默认值, SIGPWR 阿尔法滤波当前值权值系数                                             */
+    u16 u16_sigpwr_renum       ;  /*取值范围:1~100, SIGPWR计算频域相关个数（按实际数据个数配置）                                          */
+    u16 u16_rsrp_d_flag        ;  /*取值范围:0-1, RSRP抽取标志，-连续抽取，-按表间隔抽取                                                  */
+    u16 u16_rsrp_beta          ;  /*取值范围:0~65535,RSRP的噪声门限值，Q10,3                                                              */
+    u16 u16_rsrp_dis_limit     ;  /*取值范围:1-63, 信号区域                                                                               */
+    s16 s16_rsrp_compensate    ;  /*取值范围:3*log2(Factor),RSRP补偿值                                                                    */
+    u16 u16_rsrp_agcadjust     ;  /*取值范围:30                                                                                           */
+    u16 u16_rsrp_s_th          ;  /*取值范围:0~65535, 默认值.01 * 2 ^ 15=327;, 信号门限因子                                               */
+    u16 u16_rsrp_rssi_q        ;  /*取值范围:2*QIndata                                                                                    */
+    u16 u16_rsrp_pow_q         ;  /*取值范围:2*QIndata                                                                                    */
+    u16 u16_rsrp_pow_pa        ;  /*取值范围:0,14-18, 经过FFT和IFFT的放大倍数                                                             */
+    u16 u16_rssi_compensate    ;  /*取值范围:0,3,6,9,12, RSSI补偿值                                                                       */
+    u16 u16_irt_val_sel        ;  /*取值范围:0-1,  默认值, IRT有效数据范围选择                                                            */
+    u16 u16_irt_pow_max_num    ;  /*取值范围:0-15, 默认值, pow最大值个数                                                                  */
+    u16 u16_irt_n_scale        ;  /*取值范围:0-15, 默认值, 计算Scale时信号功率用最大值和其左右各N_Scale条径叠加                           */
+    u16 u16_irt_dis_limit      ;  /*取值范围:1-63,  信号区域                                                                              */
+    u16 u16_irt_ofdmnum        ;  /*取值范围:0,1,3,IRT计算时域单次累加样本个数,=0:01;=1:02;=11:04;                                        */
+    u16 u16_irt_s_th           ;  /*取值范围:0,1,3,IRT的信号门限，Q15的数，参考值.95 * 2 ^ 15=31129;                                      */
+    u16 u16_irt_n_th           ;  /*取值范围:0~65535,   16bit的Q12的数，参考值LowSNR，* 2^10;HighSNR,4*2^10                               */
+    u32 u32_scaleth_1          ;  /*取值范围:0-0x7FFFFFFF, 1个子帧IRT SCALE门限                                                           */
+    u32 u32_scaleth_2          ;  /*取值范围:0-0x7FFFFFFF, 2个子帧IRT SCALE门限                                                           */
+    u32 u32_scaleth_4          ;  /*取值范围:0-0x7FFFFFFF, 4个子帧IRT SCALE门限                                                           */
+    u32 u32_scaleth_8          ;  /*取值范围:0-0x7FFFFFFF, 8个子帧IRT SCALE门限                                                           */
+    u32 u32_scaleth_16         ;  /*取值范围:0-0x7FFFFFFF, 16个子帧IRT SCALE门限                                                          */
+    u32 u32_scaleth_32         ;  /*取值范围:0-0x7FFFFFFF, 32个子帧IRT SCALE门限                                                          */
+    u32 u32_scaleth_64         ;  /*取值范围:0-0x7FFFFFFF, 64个子帧IRT SCALE门限                                                          */
+    u32 u32_scaleth_128        ;  /*取值范围:0-0x7FFFFFFF, 128个子帧IRT SCALE门限                                                         */
+    u32 u32_scaleth_256        ;  /*取值范围:0-0x7FFFFFFF, 256个子帧IRT SCALE门限                                                         */
+    u32 u32_scaleth_512        ;  /*取值范围:0-0x7FFFFFFF, 512个子帧IRT SCALE门限                                                         */
+    u16 u16_agc_compare        ;  /*取值范围:0-0x3FF,默认值,前后两个样本子帧AGC最大差值门限                                               */
+    u16 u16_reserved[11]       ;
+}st_at_algo_lte_cat1bis_ncell_measpwr_req_t;
+
+
+/*txrx的算法nv控制参数*/
+typedef struct st_at_algo_lte_camt_txrx_req_tag
+{
+    u16 u16_rx_dcoc_sel;    /*取值范围0-1,默认值=0,接收DCOC值基准选择,=1:软件配置基准值;=0:按符号计算基准值*/
+    s16 s16_rx_sat_val_max; /*取值0-0xFFF,默认值=0x7FF,饱和数最大值,12bit有符号数*/
+    s16 s16_rx_sat_val_min; /*取值0-0xFFF,默认值=0x800,饱和数最小值,12bit有符号数*/
+    u16 u16_rx_bitsel[6];   /*取值范围0-31,默认值={8,7,6,5,4,4},[x]:表示带宽x对应的截位因子,x=0:带宽1.4Mhz,=1:带宽3Mhz,=2:带宽5Mhz,=3:带宽10Mhz,=4:带宽15Mhz,=5:带宽20Mhz*/
+    u16 u16_reserved;       /*保留字，用于32比特对齐*/
+}st_at_algo_lte_camt_txrx_req_t;
+
+/*dlfft的算法nv控制参数*/
+typedef struct st_at_algo_lte_camt_dlfft_req_tag
+{
+    u16 u16_dlfft_gate;   /*取值范围0-4096,默认值20,FFT倒数第二级判饱和的门限个数值*/ 
+    u16 u16_reserved;     /*保留字，用于32比特对齐*/
+}st_at_algo_lte_camt_dlfft_req_t;
+
+
+
+/*ldtc调优类型配置参数，指示信息的位域结构体*/
+typedef union
+{
+    u16 v;
+    struct
+    {
+        u16 b16_che_coeff_set_flag          :1 ;  /*0, coeff_set_flag*/
+        u16 b16_che_uers_band_set_flag      :1 ;  /*1, uers_band_set_flag*/
+        u16 b16_che_bitsel_set_flag         :1 ;  /*2, bitsel_set_flag,用于截位因子控制*/
+        u16 b16_sd_set_flag                 :1 ;  /*3, sd_set_flag*/
+        u16 b16_harq_set_flag               :1 ;  /*4, harq_set_flag*/
+        u16 b16_turbo_set_flag              :1 ;  /*5, turbo_set_flag*/
+        u16 b16_viterbi_set_flag            :1 ;  /*6, viterbi_set_flag*/
+        u16 b16_rbis_set_flag               :1;   /*7, rbis_set_flag*/
+        u16 b16_ldtc_tuning_ctrl_reseaved   :8;   /*15:8 ,reseverd*/
+    } b;
+} at_l1cc_lte_ldtc_tuning_ctrl_set_bit_t;
+
+/*ldtc的算法nv链路调优参数，不分场景，直接使用此配置值，进行调优测试*/
+typedef struct st_at_algo_lte_camt_ldtc_req_tag
+{
+    at_l1cc_lte_ldtc_tuning_ctrl_set_bit_t  un_ldtc_tuning_ctrl_bitmap;   /*小区测控参数bitmap 指示*/
+    u16 u16_che_fir_iir_sel;
+    u16 u16_che_fir_win;
+    u16 u16_che_coef1_0;
+    u16 u16_che_coef1_1;
+    u16 u16_che_coef2_1;
+    u16 u16_che_coef2_0;
+    u16 u16_che_coef3_2;
+    u16 u16_che_coef3_1;
+    u16 u16_che_coef3_0;
+    u16 u16_che_coef4_3;
+    u16 u16_che_coef4_2;
+    u16 u16_che_coef4_1;
+    u16 u16_che_coef4_0;
+    u16 u16_che_ue_bund;
+    u16 u16_che_fh10_bitsel_type;
+    u16 u16_che_fh10_bitsel;
+    u16 u16_che_fh16_bitsel;
+    u16 u16_che_th16_bitsel;
+    u16 u16_sd_noise_th_datach;
+    u16 u16_sd_noise_th_ctrlch;
+    u16 u16_harq_ctrlch_cut1;
+    u16 u16_harq_ctrlch_cut2;
+    u16 u16_harq_datach_cut1;
+    u16 u16_harq_datach_cut2;
+    u16 u16_turbo_shift_en;
+    u16 u16_turbo_ave_sel;
+    u16 u16_turbo_shift_iternum1;
+    u16 u16_turbo_shift_iternum2;
+    u16 u16_turbo_iter_num_max;
+    u16 u16_ctrlch_vit_itnum;
+    u16 u16_ldtc_rbis_factor;
+    u16 u16_reserved;     /*保留字，用于32比特对齐*/
+}st_at_algo_lte_camt_ldtc_req_t;
+
+
+
+/*l1cc层AT控制参数的结构体 */
+typedef struct T_NVM_Static_PHY_tag
+{
+    st_at_l1cc_lte_ul_ctrl_t                      st_at_l1cc_lte_ul_ctrl_para;    /*AT下发上行数据处理控制参数*/
+    st_at_l1cc_lte_server_cellmeas_ctrl_t         st_at_l1cc_lte_servercell_meas_ctrl_para;   /*AT下发服务小区测控数据处理控制参数*/
+    st_at_l1cc_lte_cqi_ctrl_t                     st_at_l1cc_lte_cqi_ctrl_para;   /*AT下发cqi上报的控制参数*/
+    st_at_l1cc_lte_cat1bis_get_data_cfg_req_t     st_at_l1cc_lte_cat1bis_get_data_cfg_para;  /*phy抓数控制变量*/
+    st_at_algo_lte_cat1bis_measpwr_req_t          st_at_algo_lte_cat1bis_measpwr_req_para;  /*MeasPwr调优参数*/
+    st_at_algo_lte_cat1bis_coeff_req_t            st_at_algo_lte_cat1bis_coeff_req_para;  /*Coeff调优参数*/
+    st_at_algo_lte_cat1bis_pdcch_fa_req_t         st_at_algo_lte_cat1bis_pdcch_fa_req_para; /*pdcch fa 调忧参数*/  
+    st_at_algo_lte_measpwr_outpara_check_t        st_at_algo_lte_measpwr_outpara_check; /*measpwr输出测控参数异常check*/
+    st_at_algo_lte_measctrl_out_posthandle_t      st_at_algo_measctrl_out_posthandle;   /*测控输出后处理参数设置*/
+    st_at_l1cc_lte_instrument_test_t              st_at_l1cc_lte_instrument_test;   /*仪表测试设置*/
+    st_at_algo_lte_cat1bis_ncell_sw_ctrl_t        st_at_algo_lte_cat1bis_ncell_sw_cfg_para;  /*邻区测量算法软件调优策略参数*/
+    st_at_algo_lte_cat1bis_ncell_measpwr_req_t    st_at_algo_lte_cat1bis_ncell_measpwr_req_para;  /*邻区测量MeasPwr调优参数*/ 
+    st_at_l1cc_lte_ul_ctrl_t_1                    st_at_l1cc_lte_ul_ctrl_para1;    /*AT下发上行数据处理控制参数*/
+    st_at_algo_lte_cat1bis_ncell_algo_sched_ctrl_t  st_at_algo_lte_cat1bis_ncell_algo_sched_ctrl_para; /*不同状态下算法用于调度控制ncell的参数*/
+}T_NVM_Static_PHY;
+
+/*************************************************************************/
+/*                                                                       */
+/*                     NVM  dyanmic  parameters                          */
+/*                                                                       */
+/*************************************************************************/
+typedef struct T_NVM_Phy_Tag
+{
+  u16                 crcdata;
+  u16                 len;
+  T_NVM_Static_PHY    nvmPhy;//ps param,that can be changed frequently.
+}T_NVM_Phy;
+
+#endif
+
+
+
+

@@ -1,0 +1,59 @@
+/*****************************************************************************/
+/*                                                                           */
+/*Copyright (c) 2016.06.15                                                   */
+/*                                                                           */
+/*****************************************************************************/
+/*****************************************************************************/
+/* FILE NAME   nvm.hev                                                       */
+/*                                                                           */
+/* COMPONENT   PUB                                                           */
+/*                                                                           */
+/* DESCRIPTION                                                               */
+/*                                                                           */
+/* This file is used to describe the NVM variables.                          */
+/*                                                                           */
+/* FUNCTIONS                                                                 */
+/*                                                                           */
+/* NONE                                                                      */
+/*                                                                           */
+/* HISTORY                                                                   */
+/*                                                                           */
+/* NAME        DATE        VERSION  COMMENT                                  */
+/* yongluo     2016.07.01  v1.0.0   creation                                 */
+/*****************************************************************************/
+#ifndef NVM_IOT_HEV
+#define NVM_IOT_HEV
+
+extern  T_NVM_Static  s_NVM_Static;
+extern  T_NVM_Dynamic s_NVM_Dynamic;
+
+//add for supporting dualsim
+#if (defined(__DUALSIM__)||defined(CONFIG_DUAL_SIM_SUPPORT))
+extern  T_NVM_Static  s_NVM_Static_card2;
+extern  T_NVM_Dynamic s_NVM_Dynamic_card2;
+#endif
+
+//#if !defined PHY_ON_ZSP || defined CP_ZSP
+extern  T_NVM_Phy     s_NVM_Phy;
+//#endif
+#if (defined(__DUALSIM__)||defined(CONFIG_DUAL_SIM_SUPPORT))
+extern T_NVM_Phy   s_NVM_Phy_card2;
+#endif
+
+#if defined(__PROCESS_INFO_IN_FLASH) || \
+    defined(_8910DM_C2_SUPPORT_) || \
+    defined(_8910DM_C3_SUPPORT_)
+
+extern  T_NVM_ProcessInfo     s_NVM_ProcessInfo;
+
+//add for supporting dualsim
+#if (defined(__DUALSIM__)||defined(CONFIG_DUAL_SIM_SUPPORT))
+extern  T_NVM_ProcessInfo     s_NVM_ProcessInfo_card2;
+#endif
+
+#endif
+
+#endif
+
+
+

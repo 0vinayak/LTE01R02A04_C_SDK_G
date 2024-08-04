@@ -1,0 +1,11 @@
+SFS_CreateFile
+SFS_WriteFile
+SFS_ReadFile
+SFS_CloseFile
+SFS_DeleteFile
+SFS_FindClose
+SFS_DeleteDirectory
+SFS_GetFileSize
+SFS_SetFilePointer
+SFS_FindFirstFile
+SFS_FindNextFile

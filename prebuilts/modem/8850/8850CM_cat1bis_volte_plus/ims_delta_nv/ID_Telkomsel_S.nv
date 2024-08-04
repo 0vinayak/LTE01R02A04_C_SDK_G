@@ -1,0 +1,8 @@
+
+///////////////////////////////////////////// IMS /////////////////////////////////////////////
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\ss_XcapUri="xcap.ims.mnc010.mcc510.pub.3gppnetwork.org"
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\ss_BsfUri="bsf.ims.mnc010.mcc510.pub.3gppnetwork.org"
+
+

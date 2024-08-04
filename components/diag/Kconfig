@@ -1,0 +1,131 @@
+# Copyright (C) 2018 RDA Technologies Limited and/or its affiliates("RDA").
+# All rights reserved.
+#
+# This software is supplied "AS IS" without any warranties.
+# RDA assumes no responsibility or liability for the use of the software,
+# conveys no license or title under any patent, copyright, or mask work
+# right to the product. RDA reserves the right to make changes in the
+# software without notification.  RDA also make no representation or
+# warranty that such application will be suitable for the specified use
+# without further testing or modification.
+
+menu "Diag"
+
+config DIAG_ENABLED
+    bool "Enable diag"
+    default y
+
+if DIAG_ENABLED
+config DIAG_INBUF_SIZE
+    hex "Diag input buffer size"
+    default 0x100 if (SOC_8811) || (SOC_8821)
+    default 0x10040
+    help
+        To reduce dynamic memory allocation in diag processing, an input
+        buffer will be allocated at diag engine creation. When the input
+        packet is smaller than this size, the pre-allocated input buffer
+        will be used. When input packer is larger than this, memory will
+        be dynamic allocated.
+
+config DIAG_DEVICE_USRL_SUPPORT
+    bool "usb diag device support"
+    default y if (SOC_8910) || ((SOC_8850) && (USB_DEVICE_SUPPORT))
+    default n if (!USB_DEVICE_SUPPORT)
+
+if DIAG_DEVICE_USRL_SUPPORT
+choice
+    prompt "Default Userial"
+    default DIAG_DEFAULT_USRL_COM1
+
+config DIAG_DEFAULT_USRL_COM0
+    bool "USRL0"
+
+config DIAG_DEFAULT_USRL_COM1
+    bool "USRL1"
+
+config DIAG_DEFAULT_USRL_COM2
+    bool "USRL2"
+
+config DIAG_DEFAULT_USRL_COM3
+    bool "USRL3"
+
+config DIAG_DEFAULT_ACM4
+    bool "ACM4"
+
+config DIAG_DEFAULT_ACM5
+    bool "ACM5"
+
+endchoice
+
+config DIAG_DEFAULT_USERIAL
+    string
+    default "DRV_NAME_USRL_COM0" if DIAG_DEFAULT_USRL_COM0
+    default "DRV_NAME_USRL_COM1" if DIAG_DEFAULT_USRL_COM1
+    default "DRV_NAME_USRL_COM2" if DIAG_DEFAULT_USRL_COM2
+    default "DRV_NAME_USRL_COM3" if DIAG_DEFAULT_USRL_COM3
+    default "DRV_NAME_ACM4" if DIAG_DEFAULT_ACM4
+    default "DRV_NAME_ACM5" if DIAG_DEFAULT_ACM5
+    default ""
+endif
+
+choice
+    prompt "Default UART"
+    default DIAG_DEFAULT_UART2 if SOC_8910
+    default DIAG_DEFAULT_UART3 if (SOC_8811) || (SOC_8821)
+    default DIAG_DEFAULT_UART4 if SOC_8850
+
+config DIAG_DEFAULT_UART1
+    bool "UART1"
+
+config DIAG_DEFAULT_UART2
+    bool "UART2"
+
+config DIAG_DEFAULT_UART3
+    bool "UART3"
+
+config DIAG_DEFAULT_UART4
+    bool "UART4"
+
+config DIAG_DEFAULT_UART5
+    bool "UART5"
+
+config DIAG_DEFAULT_UART6
+    bool "UART6"
+
+endchoice
+
+config DIAG_DEFAULT_UART
+    string
+    default "DRV_NAME_UART1" if DIAG_DEFAULT_UART1
+    default "DRV_NAME_UART2" if DIAG_DEFAULT_UART2
+    default "DRV_NAME_UART3" if DIAG_DEFAULT_UART3
+    default "DRV_NAME_UART4" if DIAG_DEFAULT_UART4
+    default "DRV_NAME_UART5" if DIAG_DEFAULT_UART5
+    default "DRV_NAME_UART6" if DIAG_DEFAULT_UART6
+    default ""
+
+config DIAG_DEFAULT_UART_BAUD
+    int "Baud rate of default UART"
+    default 921600 if SOC_8910
+    default 2000000 if (SOC_8811) || (SOC_8821)
+    default 2000000 if SOC_8850
+
+config DIAG_DEBUG_SUPPORT
+    bool "Support Diag Port Debug"
+    default y
+
+config DIAG_ENC_BUF_STATIC
+    bool "Support Diag enc-data static buffer"
+    default y if (SOC_8910) || (SOC_8850)
+    depends on DIAG_DEBUG_SUPPORT
+    help
+        Diag support enc data used static buffer, when enabled.
+        Solve the issue of not being able to download bluescreen when OOM.
+
+config DIAG_BT_AUTOTEST_SUPPORT
+    bool "Support Diag BT Autotest"
+    default n
+    select BLUEU_BT_ENABLE
+
+endif
+endmenu

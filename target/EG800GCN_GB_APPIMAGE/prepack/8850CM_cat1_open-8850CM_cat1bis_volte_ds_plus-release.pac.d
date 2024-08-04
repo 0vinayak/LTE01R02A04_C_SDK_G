@@ -1,0 +1,1 @@
+hex\8850CM_cat1_open-8850CM_cat1bis_volte_ds_plus-release.pac: hex\norfdl.sign.img hex\boot.sign.img hex\8850CM_cat1bis_volte_ds_plus_nvitem.bin hex\8850CM_cat1_open.sign.img hex\8850CM_cat1bis_volte_ds_plus_modem.cpio hex\8850CM_cat1bis_volte_ds_plus_ims_deltanv.cpio hex\8850CM_cat1bis_volte_ds_plus_indeltanv.cpio hex\spl.sign.img ..\..\tools\pacgen.py

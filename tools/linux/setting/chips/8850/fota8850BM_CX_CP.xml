@@ -1,0 +1,183 @@
+<!--
+Copyright (C) 2023 RDA Technologies Limited and/or its affiliates("RDA").
+All rights reserved.
+
+This software is supplied "AS IS" without any warranties.
+RDA assumes no responsibility or liability for the use of the software,
+conveys no license or title under any patent, copyright, or mask work
+right to the product. RDA reserves the right to make changes in the
+software without notification.  RDA also make no representation or
+warranty that such application will be suitable for the specified use
+without further testing or modification.
+-->
+
+<!--
+Note: This config only contains the CP/modem related fota items.
+-->
+
+<!--
+Most likely the configuration is suitable. And it can be changed if needed.
+
+Method is patch method fine tune. The default method is "diff":
+* diff: (default option) create differential patch
+* ignore: not touch the file
+* remove: remove the file forcedly
+* replace: remove the file if exists, and insert with new content
+-->
+
+<pacdiff>
+    <!-- The default modem image ID is "CP". It is a CPIO image. -->
+    <paccpio id="CP" method="diff">
+        <!--
+            <file name="some_file_name" method="ignore"/>
+        -->
+    </paccpio>
+    <!--
+         NV will be updated according to the pacnvbin config in default replace mode.
+         There is no big size different between "diff" and "replace" method due to the compress of nv file.
+         Some NV files which contain calib param will be ignored during update.
+    -->
+    <pacnvbin id="NV" method="diff">
+        <!--
+        <nvitem id="id" fixednv="/xxx" method="ignore"/>
+        -->
+        <nvitem id="0x2" fixednv="/factory/calibparam.bin.lz4" method="ignore"/>
+        <nvitem id="0x5" fixednv="" method="ignore"/>
+        <nvitem id="0x100" fixednv="/factory/merge_flag.bin.lz4" method="diff"/>
+        <nvitem id="0x179" fixednv="" method="ignore"/>
+        <nvitem id="0x186" fixednv="" method="ignore"/>
+        <nvitem id="0x192" fixednv="/factory/db_record.bin.lz4" method="ignore"/>
+        <nvitem id="0x193" fixednv="/factory/gps_nv.bin.lz4" method="diff"/>
+        <nvitem id="0x1a9" fixednv="/factory/audio_arm_info.bin.lz4" method="diff"/>
+        <nvitem id="0x1aa" fixednv="/factory/audioarm.bin.lz4" method="diff"/>
+        <nvitem id="0x1ab" fixednv="/factory/cvs_param_info.bin.lz4" method="diff"/>
+        <nvitem id="0x1ac" fixednv="/factory/cvsparam.bin.lz4" method="diff"/>
+        <nvitem id="0x1b2" fixednv="/factory/gps_cptsx_nv.bin.lz4" method="diff"/>
+        <nvitem id="0x1b4" fixednv="/factory/gps_aptsx_nv.bin.lz4" method="ignore"/>
+        <nvitem id="0x1b7" fixednv="/factory/eq_info.bin.lz4" method="diff"/>
+        <nvitem id="0x1b8" fixednv="/factory/untunable_eq.bin.lz4" method="diff"/>
+        <nvitem id="0x1b9" fixednv="/factory/tunable_eq.bin.lz4" method="diff"/>
+        <nvitem id="0x1e4" fixednv="" method="ignore"/>
+        <nvitem id="0x1f0" fixednv="/factory/simlock_nv.bin.lz4"  method="ignore"/>
+        <nvitem id="0x1f1" fixednv="/factory/sim_lock_user_data.bin.lz4" method="ignore"/>
+        <nvitem id="0x1f2" fixednv="/factory/sim_lock_control_key.bin.lz4" method="ignore"/>
+        <nvitem id="0x259" fixednv="/factory/static_nv.bin.lz4" method="diff"/>
+        <nvitem id="0x25a" fixednv="/factory/phy_nv.bin.lz4" method="diff"/>
+        <nvitem id="0x25b" fixednv="/factory/dynamic_nv.bin.lz4" method="diff"/>
+        <nvitem id="0x25c" fixednv="/factory/static_nv_2.bin.lz4" method="diff"/>
+        <nvitem id="0x25d" fixednv="/factory/phy_nv_2.bin.lz4" method="diff"/>
+        <nvitem id="0x25e" fixednv="/factory/dynamic_nv_2.bin.lz4" method="diff"/>
+        <nvitem id="0x26c" fixednv="/factory/rf_nv.bin.lz4" method="diff"/>
+        <nvitem id="0x26d" fixednv="/factory/gsm_rf_calib.bin.lz4" method="ignore"/>
+        <nvitem id="0x26e" fixednv="/factory/lte_rf_calib.bin.lz4" method="ignore"/>
+        <nvitem id="0x26f" fixednv="/factory/golden_board.bin.lz4" method="ignore"/>
+        <nvitem id="0x277" fixednv="/factory/cfw_nv.bin.lz4" method="diff"/>
+        <nvitem id="0x278" fixednv="/factory/audio_calib.bin.lz4" method="diff"/>
+        <nvitem id="0x279" fixednv="/factory/phy_nv_catm.bin.lz4" method="diff"/>
+        <nvitem id="0x27a" fixednv="/factory/audio_codec_nv.bin.lz4" method="diff"/>
+        <nvitem id="0x800" fixednv="/factory/ims_csm_setting.bin.lz4" method="diff"/>
+        <nvitem id="0x801" fixednv="/factory/ims_sapp_setting.bin.lz4" method="diff"/>
+        <nvitem id="0x813" fixednv="/factory/ims_isim_setting.bin.lz4" method="diff"/>
+        <nvitem id="0x870" fixednv="/factory/sim_delta_nv.bin.lz4" method="diff"/>
+        <nvitem id="0x871" fixednv="/factory/sim_delta_nv_card2.bin.lz4" method="diff"/>
+        <nvitem id="0x872" fixednv="/factory/plmn_delta_nv.bin.lz4" method="diff"/>
+        <nvitem id="0x873" fixednv="/factory/plmn_delta_nv_card2.bin.lz4" method="diff"/>
+    </pacnvbin>
+
+    <!--
+        NV will be updated inside modem image. The following are only
+        describing clear running NV rules.
+
+        * always clear running NV:
+                <cleanrunning onchange="always"/>
+        * never clear running NV:
+                <cleanrunning onchange="never"/>
+        * clear running NV on any listed NV changes:
+                <cleanrunning onchange="any"/>
+        * clear running NV when either 0x123 or 0x456 is changed:
+                <cleanrunning onchange="0x123"/>
+                <cleanrunning onchange="0x456"/>
+    -->
+    <pacnv id="NV">
+        <nvitem id="0x100" runningnv="/runningnv/merge_flag.bin.lz4">
+            <cleanrunning onchange="always"/>
+        </nvitem>
+        <nvitem id="0x193" runningnv="/runningnv/gps_nv.bin.lz4">
+            <cleanrunning onchange="never"/>
+        </nvitem>
+        <nvitem id="0x1a9" runningnv="/runningnv/audio_arm_info.bin.lz4">
+            <cleanrunning onchange="0x1a9"/>
+        </nvitem>
+        <nvitem id="0x1aa" runningnv="/runningnv/audioarm.bin.lz4">
+            <cleanrunning onchange="0x1aa"/>
+        </nvitem>
+        <nvitem id="0x1ab" runningnv="/runningnv/cvs_param_info.bin.lz4">
+            <cleanrunning onchange="0x1ab"/>
+        </nvitem>
+        <nvitem id="0x1ac" runningnv="/runningnv/cvsparam.bin.lz4">
+            <cleanrunning onchange="0x1ac"/>
+        </nvitem>
+        <nvitem id="0x1b2" runningnv="/runningnv/gps_cptsx_nv.bin.lz4">
+            <cleanrunning onchange="never"/>
+        </nvitem>
+        <nvitem id="0x1b7" runningnv="/runningnv/eq_info.bin.lz4">
+            <cleanrunning onchange="0x1b7"/>
+        </nvitem>
+        <nvitem id="0x1b8" runningnv="/runningnv/untunable_eq.bin.lz4">
+            <cleanrunning onchange="0x1b8"/>
+        </nvitem>
+        <nvitem id="0x1b9" runningnv="/runningnv/tunable_eq.bin.lz4">
+            <cleanrunning onchange="0x1b9"/>
+        </nvitem>
+        <nvitem id="0x1f0" runningnv="/runningnv/simlock_nv.bin.lz4">
+            <cleanrunning onchange="never"/>
+        </nvitem>
+        <nvitem id="0x1f1" runningnv="/runningnv/sim_lock_user_data.bin.lz4">
+            <cleanrunning onchange="never"/>
+        </nvitem>
+        <nvitem id="0x1f2" runningnv="/runningnv/sim_lock_control_key.bin.lz4">
+            <cleanrunning onchange="never"/>
+        </nvitem>
+        <nvitem id="0x259" runningnv="/runningnv/static_nv.bin.lz4">
+            <cleanrunning onchange="always"/>
+        </nvitem>
+        <nvitem id="0x25a" runningnv="/runningnv/phy_nv.bin.lz4">
+            <cleanrunning onchange="any"/>
+        </nvitem>
+        <nvitem id="0x25b" runningnv="/runningnv/dynamic_nv.bin.lz4">
+            <cleanrunning onchange="any"/>
+        </nvitem>
+        <nvitem id="0x25c" runningnv="/runningnv/static_nv_2.bin.lz4">
+            <cleanrunning onchange="any"/>
+        </nvitem>
+        <nvitem id="0x25d" runningnv="/runningnv/phy_nv_2.bin.lz4">
+            <cleanrunning onchange="any"/>
+        </nvitem>
+        <nvitem id="0x25e" runningnv="/runningnv/dynamic_nv_2.bin.lz4">
+            <cleanrunning onchange="any"/>
+        </nvitem>
+        <nvitem id="0x26b" runningnv="/runningnv/rf_nv_31.bin.lz4">
+            <cleanrunning onchange="always"/>
+        </nvitem>
+        <nvitem id="0x26c" runningnv="/runningnv/rf_nv.bin.lz4">
+            <cleanrunning onchange="always"/>
+        </nvitem>
+        <nvitem id="0x277" runningnv="/runningnv/cfw_nv.bin.lz4">
+            <cleanrunning onchange="never"/>
+        </nvitem>
+        <nvitem id="0x278" runningnv="/runningnv/audio_calib.bin.lz4">
+            <cleanrunning onchange="0x278"/>
+        </nvitem>
+        <nvitem id="0x279" runningnv="/runningnv/phy_nv_catm.bin.lz4">
+            <cleanrunning onchange="any"/>
+        </nvitem>
+        <nvitem id="0x27a" runningnv="/runningnv/audio_codec_nv.bin.lz4">
+            <cleanrunning onchange="0x27a"/>
+        </nvitem>
+    </pacnv>
+    <paccpio id="INDELTANV" method="diff">
+        <!--
+            <file name="some_file_name" method="ignore"/>
+        -->
+    </paccpio>
+</pacdiff>

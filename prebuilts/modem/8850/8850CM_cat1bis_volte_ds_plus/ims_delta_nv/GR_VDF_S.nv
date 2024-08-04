@@ -1,0 +1,21 @@
+
+///////////////////////////////////////////// IMS /////////////////////////////////////////////
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\sip_sessionTimer=2400
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingingTimer=240
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\RingbackTimer=240
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\ss_MediaEnable=0
+
+//The BSF server URI.
+//If not set, UE will generate one according to TS23.003 with format:
+//  bsf.mnc***.mcc###.pub.3gppnetwork.org:[ss_BsfPort]
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\ss_BsfUri="bsf.ims.mnc005.mcc202.pub.3gppnetwork.org"
+
+//The XCAP server URI.
+//If not set, UE will generate one according to TS23.003 with format:
+//  xcap.mnc***.mcc###.pub.3gppnetwork.org:[ss_XcapPort]
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\ims_sim_nvinfo\ss_XcapUri="xcap.ims.mnc005.mcc202.pub.3gppnetwork.org"
+
+PS_NV_PARAMS\NV_PARAM_TYPE_SIM_DELTA_NV\mn_sim_nvinfo\cw_strategy=0x1

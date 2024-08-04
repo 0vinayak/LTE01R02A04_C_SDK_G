@@ -1,0 +1,18 @@
+# SpreadTrum NVEditor Project File, Format Version 1.0
+# WARNING: DO NOT EDIT OR DELETE THIS PROJECT FILE!
+
+################################################################################
+  PROJECT     =  NVitem
+  ALIGNMENT   =  4
+  TARGET      =  nvitem_8850_modem.bin
+  DESCRIPTION =  
+
+################################################################################
+
+# Begin Project Module
+
+  MODULE     =  MergeFlag.nvm
+
+# End Project Module
+
+################################################################################

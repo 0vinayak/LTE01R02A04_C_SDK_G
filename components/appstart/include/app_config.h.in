@@ -1,0 +1,73 @@
+/* Copyright (C) 2018 RDA Technologies Limited and/or its affiliates("RDA").
+ * All rights reserved.
+ *
+ * This software is supplied "AS IS" without any warranties.
+ * RDA assumes no responsibility or liability for the use of the software,
+ * conveys no license or title under any patent, copyright, or mask work
+ * right to the product. RDA reserves the right to make changes in the
+ * software without notification.  RDA also make no representation or
+ * warranty that such application will be suitable for the specified use
+ * without further testing or modification.
+ */
+
+#ifndef _APP_CONFIG_H_
+#define _APP_CONFIG_H_
+
+// @AUTO_GENERATION_NOTICE@
+
+/**
+ * Application version
+ */
+#cmakedefine CONFIG_APP_VERSION "@CONFIG_APP_VERSION@"
+
+/**
+ * whether to start AT engine
+ */
+#cmakedefine CONFIG_APP_START_ATR
+
+/**
+ * Whether to disable modem (8811 only)
+ */
+#cmakedefine CONFIG_APP_NOT_START_MODEM
+
+/**
+ * whether to enable watchdog
+ *
+ * By default, watchdog will be enabled when \p BUILD_RELEASE_TYPE is
+ * "release".
+ */
+#cmakedefine CONFIG_WDT_ENABLE
+
+/**
+ * Application watchdog max feed interval (ms)
+ */
+#cmakedefine CONFIG_APP_WDT_MAX_INTERVAL @CONFIG_APP_WDT_MAX_INTERVAL@
+
+/**
+ * Application watchdog normal feed interval (ms)
+ */
+#cmakedefine CONFIG_APP_WDT_FEED_INTERVAL @CONFIG_APP_WDT_FEED_INTERVAL@
+
+/**
+ * Whether to support softsim hot plug
+ */
+#cmakedefine CONFIG_APP_SSIM_SUPPORT
+
+/**
+ * Whether to reuse at uart at blue screen
+ */
+#cmakedefine CONFIG_ATR_UART_BLUE_SCREEN_DEBUG
+
+/**
+ * whether to enable daplink link 8850 AP 
+ *
+ * By default, it will be enabled when \p BUILD_RELEASE_TYPE is
+ * "release". If CONFIG_AP_A5_CLK_AUTO_GATE enable, daplink can't link AP A5.
+ */
+#cmakedefine CONFIG_AP_A5_CLK_AUTO_GATE
+
+/**
+ * Whether to compress APP librarys for code size reduction.
+ */
+#cmakedefine CONFIG_APP_COMPRESSED_SUPPORT
+#endif

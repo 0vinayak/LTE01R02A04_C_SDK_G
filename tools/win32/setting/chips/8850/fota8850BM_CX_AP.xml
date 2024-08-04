@@ -1,0 +1,66 @@
+<!--
+Copyright (C) 2023 RDA Technologies Limited and/or its affiliates("RDA").
+All rights reserved.
+
+This software is supplied "AS IS" without any warranties.
+RDA assumes no responsibility or liability for the use of the software,
+conveys no license or title under any patent, copyright, or mask work
+right to the product. RDA reserves the right to make changes in the
+software without notification.  RDA also make no representation or
+warranty that such application will be suitable for the specified use
+without further testing or modification.
+-->
+
+<!--
+Note: This config only contains the AP related fota items.
+-->
+
+<!--
+Most likely the configuration is suitable. And it can be changed if needed.
+
+Method is patch method fine tune. The default method is "diff":
+* diff: (default option) create differential patch
+* ignore: not touch the file
+* remove: remove the file forcedly
+* replace: remove the file if exists, and insert with new content
+-->
+
+<pacdiff>
+    <!-- The default AP application ID is "AP", and it runs on FLASH. -->
+    <pacflash id="AP" flash="SFL1" blocksize="0x8000" bundleblock="0" method="diff"/>
+    <!-- The default ap compress image ID is "APBIN". It is a CPIO image. -->
+    <paccpio id="APBIN" method="diff">
+        <!--
+            <file name="some_file_name" method="ignore"/>
+        -->
+    </paccpio>
+    <!-- The default OpenCPU mcu application ID is "OPENCPU_MCU", and it runs on FLASH. -->
+    <pacflash id="OPENCPU_MCU" flash="SFL1" blocksize="0x8000" bundleblock="8" method="diff"/>
+    <!-- The default OpenCPU AP App image application ID is "OPENCPU_APPIMG_FLASH", and it runs on FLASH. -->
+    <pacflash id="OPENCPU_APPIMG_FLASH" flash="SFL1" blocksize="0x8000" bundleblock="8" method="diff"/>
+    <!--
+        The App image application ID is "APPIMG", and it runs on FLASH.
+        It is different with OpenCPU App image.
+    -->
+    <pacflash id="APPIMG" flash="SFL1" blocksize="0x8000" bundleblock="8" method="diff"/>
+    <!--
+         note: prepack file size should not exceed 32k, or it may cause upgrade fail with lack available space.
+    -->
+    <paccpio id="PREPACK" method="diff">
+        <!--
+            <file name="some_file_name" method="ignore"/>
+        -->
+    </paccpio>
+    <!-- The default App image application ID is "APPIMG", and it runs as FILE. -->
+    <!-- <paccpio id="APPIMG" method="diff"> -->
+        <!--
+            <file name="some_file_name" method="ignore"/>
+        -->
+    <!-- </paccpio> -->
+    <!-- The default OpenCPU App image application ID is "OPENCPU_APPIMG_FILE", and it runs as FILE. -->
+    <paccpio id="OPENCPU_APPIMG_FILE" method="diff">
+        <!--
+            <file name="some_file_name" method="ignore"/>
+        -->
+    </paccpio>
+</pacdiff>

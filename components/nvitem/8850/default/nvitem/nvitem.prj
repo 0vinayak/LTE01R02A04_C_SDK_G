@@ -1,0 +1,21 @@
+# SpreadTrum NVEditor Project File, Format Version 1.0
+# WARNING: DO NOT EDIT OR DELETE THIS PROJECT FILE!
+
+################################################################################
+  PROJECT     =  NVitem
+  ALIGNMENT   =  4
+  TARGET      =  nvitem_8850_modem.bin
+  DESCRIPTION =  
+
+################################################################################
+
+# Begin Project Module
+
+  MODULE     =  GPS_nv.nvm
+  MODULE     =  gps_tsx_data.nvm
+  MODULE     =  AudioCvsParam.nvm
+#  MODULE     =  MergeFlag.nvm  quectel kevin.wang: 临时解决编译报错
+
+# End Project Module
+
+################################################################################

@@ -1,0 +1,375 @@
+#ifndef _AUD_M_H_
+#define _AUD_M_H_
+
+/// @defgroup aud EDRV Audio Driver (AUD)
+/// @{
+///
+/// This document describes the characteristics of the  Audio
+/// Driver and how to use it via its API.
+///
+/// This audio driver allows you to:
+///  - Record an audio stream in PCM;
+///  - Play an audio stream in PCM;
+///  - Manage all the audio configuration (gain, in/out selection...)
+///  - Generate Comfort Tone or DTMF generation, even while playing
+/// a PCM stream.
+///  .
+///
+/// @par Organization
+/// The AUD Audio Driver allows the use of several Audio Interfaces on the
+/// same Mobile Station, but not at the same time. As though using different
+/// Audio Interface at the same time might not prove itself very useful.
+/// These interface can be implemented on different devices.
+/// The ability to use different interfaces on different devices offers an easy
+/// way to implement
+/// and integrate drivers for I2S chips or bluetooth, for example.
+/// \n
+/// Each device for the AUD driver needs its own driver implementation.
+/// This driver must offer full compatibility to the following API, defined
+/// by the types:
+///  - <code> typedef AUD_ERR_T (*AUD_STREAM_RECORD_T) (CONST HAL_AIF_STREAM_T* stream, CONST AUD_DEVICE_CFG_T* cfg);</code>
+///  - <code> typedef AUD_ERR_T (*AUD_STREAM_STOP_T) (VOID);</code>
+///  - <code> typedef AUD_ERR_T (*AUD_STREAM_PAUSE_T) (BOOL);</code>
+///  - <code> typedef AUD_ERR_T (*AUD_STREAM_SETUP_T) (CONST AUD_DEVICE_CFG_T* cfg);</code>
+///  - <code> typedef AUD_ERR_T (*AUD_TONE_PLAY_T) (
+///                CONST SND_TONE_TYPE_T         tone,
+///                CONST AUD_DEVICE_CFG_T* cfg,
+///                CONST BOOL start);</code>
+///  - <code> typedef AUD_ERR_T (*AUD_TONE_PAUSE_T) (BOOL);</code>
+///  .
+/// That is each Audio Device Driver must implement functions of the above
+/// types.\n
+/// \n
+/// Moreover, each device can provide several inputs and/or outputs. The
+/// definition of an AUD receiver interface, for example, requires the set
+/// of driver functions of a device and of the input/output (probaly #AUD_SPK_RECEIVER
+/// and #AUD_MIC_RECEIVER of the device)
+/// \n
+/// An Audio Interface is then defined a an instance of the AUD_ITF_CFG_T structures: \n
+/// <code> typedef struct
+/// {
+///    AUD_STREAM_PLAY_T   play;
+///    AUD_STREAM_RECORD_T record;
+///    AUD_STREAM_STOP_T   stop;
+///    AUD_STREAM_PAUSE_T  pause;
+///    AUD_STREAM_SETUP_T  setup;
+///    AUD_TONE_PLAY_T     tone;
+///    AUD_TONE_PAUSE_T    tonePause;
+///    AUD_SPK_SEL         spkSel;
+///    AUD_MIC_SEL         micSel;
+/// } AUD_ITF_CFG_T; </code>
+/// which gather all the function needed, and the input/output to use to
+/// implement the interface on this device.\n
+/// \n
+/// AUD needs this API in order to be able to use the audio device
+/// corresponding to the Audio Interface.\n
+/// \n
+/// To specify to the AUD driver which interface to use for a given action
+/// (play stream, record stream, etc ...), a #SND_ITF_T parameter is used.\n
+/// \n
+/// New interfaces can them easily be added, following the examples of some
+/// implementations already done. The SND_ITF_QTY value can be updated
+/// according to specific needs, where more than 6 interfaces might be
+/// needed.
+/// \n
+/// The definition of the correspondance between the AUD interface and their
+/// implementation on the devices is explicited in the target module, thanks
+/// to a #AUD_CONFIG_T structure.
+///
+/// @par Audio Operation
+/// - <B> Audio Management for a Call: </B> \n
+///      The Audio Management for a Call is not managed directly by the
+///      AUD Audio Driver. It is managed by the VoiS Service. The VOIS
+///      service uses AUD internally, and thus that is not a concern for a
+///      AUD user. AUD developer of new interface drivers should be very
+///      careful to implement the AUD API for their interface, as it is
+///      used by VOIS to manage call's audio.
+///      \n
+/// - <B> Stream Record and Playback: </B> \n
+///      The driver allows to
+///      record an audio input and store it in a specified word buffer (i.e.
+///      aligned on 32-bit words) to play it back. \n
+///      At the end and at the middle of the audio buffer (during the record or
+///      the play) an interruption can be triggered and call a user function,
+///      typically to refill or empty the said buffer. \n
+///      The data played and recorded by the audio driver are encoded in PCM.
+///      The sample rate and the channel number (mono or stereo) are configurable.
+///      The size of the buffer must be a multiple of 16 bytes.
+///      \n
+///      <B>Nota: The receiver mode can only be used with voice quality streams.
+///      A voice quality stream is a mono, 8kHz, 13 bits encoded stream.
+///      Such a stream is described by a HAL_AIF_STREAM_T structure with the
+///      \c voiceQuality field set to \c TRUE.</B>
+///      \n
+/// - @b Tone @b Generation: \n
+///      The tones are fully generated by hardware. The CPU is not used to
+///      output the tone signals and therefore, remains available. Only one
+///      tone (Comfort or DTMF) can be generated at the same time. \n
+///      The DTMF Tones are used to inform the user that the number is being
+///      composed. All the standard DTMF are available: 0 to 9, A to D,
+///      pound and star. \n
+///      The Comfort Tones are used to inform the user on the current state of
+///      the call: Ringing, Busy, Unavailable... All frequencies needed to do
+///      the standard Comfort Tones are available: 425 Hz, 950 Hz, 1400 Hz and
+///      1800 Hz. \n
+///      The attenuation can be set to 0 dB, -3 dB, -9 dB and -15dB.
+///      When a tone is generated while a stream is played, the sound from the tone
+///      is heard instead of the stream, which continue being played at the same
+///      time, if the stream is a voice quality one. A tone cannot be generated
+///      when another kind of stream is being played. The stream must be stopped
+///      before the tone can be generated. And the stream must be resumed after
+///      the tone is finished.
+///      \n
+/// - <B> Input/Output Selection: </B>
+///      The choice of using different speaker/microphone to play or record stream
+///      is made at the call of the concerned functiom: #aud_StreamStart,
+///      #aud_StreamRecord, etc. It cannot be changed after that.
+///      To change from a hanset mode to a earpiece mode, for example, the stream
+///      must be stopped and restarted with a different parameter set applied to
+///      #aud_StreamStart and #aud_StreamRecord.
+///
+/// AUD is composed of this module:
+/// - @ref aud
+/// .
+///
+/// @par Flow Organisation
+/// @image latex vois.png
+/// @image html vois.png
+/// The picture above describes the place taken by AUD in the VoiS flow
+/// organistation. \n
+/// For the APS and ARS services, the flow is organised the same way,
+/// APS being restricted to the Rx flow and ARS to the Tx flow.\n
+/// \n
+///
+/// @par Resource Management
+/// A resource might be needed to allow the AUD driver to have a fast enough
+/// clock. This need depends on the Audio Interface used and of their own
+/// implementation. For example, the AUD Null Driver (No interface available
+/// for that interface Id) doesn't take a resource). \n
+/// It is thus needed to take care at which Audio Interface is used and
+/// how which are its frequency needs. \n
+/// The resource is managed internally by the Audio Interface Drivers, that is
+/// a resource is taken when the driver needs it and freed when possible. Typically,
+/// when a stream is played, a resource is taken until the stream is stopped.
+/// A stream paused still hold the resource.\n
+/// A common resource is shared with the stream record and tone capabilities
+/// of the Audio Interface Driver: an Audio Interface Driver takes one resource
+/// when it needs a given frequency, and frees it when it doesn't need it
+/// anymore. This is not a concern for the AUD user. It IS a concern for
+/// the Audio Interface Driver developpers.
+///
+/// @par Nota:
+/// This driver uses extensively the HAL_AIF_STREAM_T type, whose documentation
+/// can be found in the HAL API Documentation.
+///
+
+// =============================================================================
+//  MACROS
+// =============================================================================
+
+// =============================================================================
+//  TYPES
+// =============================================================================
+
+// =============================================================================
+// AUD_ERR_T
+// -----------------------------------------------------------------------------
+/// Error types for the AUD module.
+// =============================================================================
+typedef enum
+{
+    /// No error occured
+    AUD_ERR_NO,
+
+    /// An attempt to access a busy resource failed
+    /// (Resource use not possible at the time)
+    AUD_ERR_RESOURCE_BUSY,
+
+    /// Attempt to open a resource already opened,
+    /// (no need to open again to use).
+    AUD_ERR_ALREADY_OPENED,
+
+    /// Timeout while trying to access the resource
+    AUD_ERR_RESOURCE_TIMEOUT,
+
+    /// Invalid parameter
+    AUD_ERR_BAD_PARAMETER,
+
+    /// The specified interface does not exist
+    AUD_ERR_NO_ITF,
+
+    /// Unspecified error
+    AUD_ERR_UNKNOWN,
+
+    AUD_ERR_QTY
+} AUD_ERR_T;
+
+// =============================================================================
+// AUD_SPK_T
+// -----------------------------------------------------------------------------
+/// Speaker output selection.
+// =============================================================================
+typedef enum
+{
+    /// Output on receiver
+    /// This output can only use voice quality streams (Mono, 8kHz,
+    /// voiceQuality field set to TRUE).
+    AUD_SPK_RECEIVER = 0,
+    /// Output on ear-piece
+    AUD_SPK_EAR_PIECE,
+    /// Output on hand-free loud speaker
+    AUD_SPK_LOUD_SPEAKER,
+    /// Output on both hand-free loud speaker and ear-piece
+    AUD_SPK_LOUD_SPEAKER_EAR_PIECE,
+
+    AUD_SPK_QTY,
+
+    AUD_SPK_DISABLE = 255
+} AUD_SPK_T;
+
+// =============================================================================
+// AUD_MIC_T
+// -----------------------------------------------------------------------------
+/// Microphone input selection.
+// =============================================================================
+typedef enum
+{
+    /// Input from the regular microphone port
+    AUD_MIC_RECEIVER = 0,
+    /// Input from the ear-piece port,
+    AUD_MIC_EAR_PIECE,
+    /// Input from regular microphone, but for loudspeaker mode.
+    AUD_MIC_LOUD_SPEAKER,
+
+    AUD_MIC_QTY,
+
+    AUD_MIC_DISABLE = 255
+} AUD_MIC_T;
+
+// =============================================================================
+// AUD_SPEAKER_TYPE_T
+// -----------------------------------------------------------------------------
+/// Describes how the speaker is plugged on the stereo output:
+///   - is it a stereo speaker ? (speakers ?)
+///   - is it a mono speaker on the left channel ?
+///   - is it a mono speaker on the right channel ?
+///   - is this a mono output ?
+// =============================================================================
+typedef enum
+{
+    AUD_SPEAKER_STEREO,
+    AUD_SPEAKER_MONO_RIGHT,
+    AUD_SPEAKER_MONO_LEFT,
+    /// The output is mono only.
+    AUD_SPEAKER_STEREO_NA,
+
+    AUD_SPEAKER_QTY
+} AUD_SPEAKER_TYPE_T;
+
+// =============================================================================
+// AUD_LEVEL_T
+// -----------------------------------------------------------------------------
+/// Level configuration structure.
+///
+/// A level configuration structure allows to start an AUD operation (start
+/// stream, start record, or start tone) with the desired gains on an interface.
+// =============================================================================
+typedef struct
+{
+    /// Speaker level,
+    SND_SPK_LEVEL_T spkLevel;
+
+    /// Microphone level: muted or enabled
+    SND_MIC_LEVEL_T micLevel;
+
+    /// Sidetone
+    SND_SIDE_LEVEL_T sideLevel;
+
+    SND_TONE_ATTENUATION_T toneLevel;
+    SND_APP_MODE_T appMode;
+} AUD_LEVEL_T;
+
+// =============================================================================
+// AUD_DEVICE_CFG_T
+// -----------------------------------------------------------------------------
+/// Configuration structure for device drivers implementation.
+///
+/// A configuration structure allows to start an AUD operation (start stream, start
+/// record, or start tone) with the desired parameters.
+// =============================================================================
+typedef struct
+{
+    /// Type of speaker
+    AUD_SPK_T spkSel;
+
+    /// Kind of the speaker (stereo, mono, etc)
+    AUD_SPEAKER_TYPE_T spkType;
+
+    /// Type of mic
+    AUD_MIC_T micSel;
+
+    /// Speaker level,
+    CONST AUD_LEVEL_T *level;
+
+} AUD_DEVICE_CFG_T;
+
+typedef enum
+{
+    AUD_INPUT_MIC_CIRCUITY_TYPE_DIFFERENTIAL,
+    AUD_INPUT_MIC_CIRCUITY_TYPE_SINGLEEND,
+    AUD_INPUT_MIC_CIRCUITY_TYPE_QTY = 0xFF000000
+} AUD_INPUT_MIC_CIRCUITY_TYPE_T;
+
+typedef enum
+{
+    AUD_INPUT_TYPE_MAINMIC,
+    AUD_INPUT_TYPE_AUXMIC,
+    AUD_INPUT_TYPE_DUALMIC,
+    AUD_INPUT_TYPE_HPMIC_USE_L,
+    AUD_INPUT_TYPE_HPMIC_USE_R,
+    AUD_INPUT_TYPE_QTY = 0xFF000000
+} AUD_INPUT_TYPE_T;
+
+typedef enum
+{
+    AUD_INPUT_PATH1,
+    AUD_INPUT_PATH2,
+    AUD_INPUT_QTY = 0xFF000000
+} AUD_INPUT_PATH_T;
+
+typedef enum
+{
+    AUD_OUTPUT_TYPE_MONOMIX,
+    AUD_OUTPUT_TYPE_STEREO,
+    AUD_OUTPUT_TYPE_DOUBLEMODE,
+    AUD_OUTPUT_TYPE_USESPKLINEL,
+    AUD_OUTPUT_TYPE_USESPKLINER,
+} AUD_OUTPUT_TYPE_T;
+
+typedef enum
+{
+    AUD_SPKPA_TYPE_CLASSAB,
+    AUD_INPUT_TYPE_CLASSD,
+    AUD_INPUT_TYPE_CLASSK,
+    AUD_SPKPA_INPUT_TYPE_QTY = 0xFF000000
+} AUD_SPKPA_TYPE_T;
+
+typedef struct
+{
+    /// Type of mic
+    AUD_INPUT_TYPE_T inputType;
+    AUD_INPUT_MIC_CIRCUITY_TYPE_T inputCircuityType;
+    AUD_INPUT_PATH_T inputPath;
+    /// Type of speaker
+    AUD_SPKPA_TYPE_T spkpaType;
+} AUD_DEVICE_CFG_EXT_T;
+
+typedef enum
+{
+    AUD_HEADSET_TYPE_PLUGOUT,
+    AUD_HEADSET_TYPE_INSERT4P,
+    AUD_HEADSET_TYPE_INSERT3P,
+    AUD_HEADSET_TYPE_QTY = 0xFF000000
+} AUD_HEADSET_TYPE_T;
+
+#endif // _AUD_M_H_

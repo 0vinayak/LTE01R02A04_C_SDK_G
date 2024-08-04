@@ -1,0 +1,247 @@
+# Copyright (C) 2018 RDA Technologies Limited and/or its affiliates("RDA").
+# All rights reserved.
+#
+# This software is supplied "AS IS" without any warranties.
+# RDA assumes no responsibility or liability for the use of the software,
+# conveys no license or title under any patent, copyright, or mask work
+# right to the product. RDA reserves the right to make changes in the
+# software without notification.  RDA also make no representation or
+# warranty that such application will be suitable for the specified use
+# without further testing or modification.
+
+cmake_minimum_required(VERSION 3.13)
+
+set(SOURCE_TOP_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(BINARY_TOP_DIR ${CMAKE_CURRENT_BINARY_DIR})
+set(CMAKE_C_COMPILER_FORCED   1)
+set(CMAKE_CXX_COMPILER_FORCED 1)
+
+set(out_hex_dir ${CMAKE_CURRENT_BINARY_DIR}/hex)
+set(out_lib_dir ${CMAKE_CURRENT_BINARY_DIR}/lib)
+set(out_inc_dir ${CMAKE_CURRENT_BINARY_DIR}/include)
+set(tools_dir ${CMAKE_CURRENT_SOURCE_DIR}/tools)
+
+set(core_stub_o ${CMAKE_CURRENT_SOURCE_DIR}/components/lib/core_stub.o)
+set(flash_ldscript ${SOURCE_TOP_DIR}/ldscripts/app_flashimg.ld)
+set(file_ldscript ${SOURCE_TOP_DIR}/ldscripts/app_fileimg.ld)
+set(cmd_mkappimg dtools mkappimg)
+set(cmd_mksimage dtools mksimage)
+set(cmd_ssign dtools ssign)
+set(cmd_ssignchain dtools ssignchain)
+set(cmd_ssigndebug dtools ssigndebug)
+set(cmd_ssigndevel dtools ssigndevel)
+set(cmd_sencrypt dtools sencrypt)
+set(pacgen_py ${tools_dir}/pacgen.py)
+set(modemgen_py ${tools_dir}/modemgen.py)
+set(pac_fdl_files ${out_hex_dir}/norfdl.sign.img)
+
+# NEVER USE THESE KEYS IN PRODUCTION!
+set(security_version 1)
+set(with_chaincert false)
+set(with_debugcert_develcert false)
+set(with_encrypt false)
+set(SOC_ID 6655aa9900881122)
+set(ENC_KEY 40414243444546470123456789ABcdef55aa55aa55aa55aaA8a9aaabacadaeaf)
+set(ENC_IV 3132333435363738393a3b3c3d3e3f40)
+set(debug_mask 7c) # open the ap_ca5 bits
+
+set(key_root_prv ${SOURCE_TOP_DIR}/components/hal/config/8850/ecc/secp256r1_prv.pem)
+set(key_root_pub ${SOURCE_TOP_DIR}/components/hal/config/8850/ecc/secp256r1_pub.pem)
+if (${with_chaincert})
+    set(chain_cert_prv ${SOURCE_TOP_DIR}/components/hal/config/8850/ecc/secp224k1_prv.pem)
+    set(chain_cert_pub ${SOURCE_TOP_DIR}/components/hal/config/8850/ecc/secp224k1_pub.pem)
+endif()
+set(key_debug_prv ${SOURCE_TOP_DIR}/components/hal/config/8850/ecc/secp256k1_prv.pem)
+set(key_debug_pub ${SOURCE_TOP_DIR}/components/hal/config/8850/ecc/secp256k1_pub.pem)
+set(key_devel_prv ${SOURCE_TOP_DIR}/components/hal/config/8850/rsa/4096_prv.pem)
+set(key_devel_pub ${SOURCE_TOP_DIR}/components/hal/config/8850/rsa/4096_pub.pem)
+
+set(ssign_param --force)  # ssign parameters: --pkcsv15 --force
+if(${with_debugcert_develcert})
+    set(ssign_param ${ssign_param} --debug_pub ${key_debug_pub})
+endif()
+
+include(cmake/core_config.cmake)
+include(cmake/toolchain-gcc.cmake)
+set(BUILD_SHARED_LIBS OFF)
+
+project(core C CXX ASM)
+
+include_directories(components/include)
+
+function(cpp_only target file)
+    add_library(${target} OBJECT ${file})
+    set_source_files_properties(${file} PROPERTIES LANGUAGE C)
+    target_compile_options(${target} PRIVATE -E -P -x c)
+endfunction()
+
+function(sign_image src dst chain enc dev_debug)
+    if (enc)
+        set(CURR_CMD_ENC ${cmd_sencrypt} ${sencrypt_param} ${src} ${src}.enc)
+    else()
+        set(CURR_CMD_ENC ${CMAKE_COMMAND} -E copy ${src} ${src}.enc)
+    endif()
+
+    if (chain)
+        set(CURR_CMD_CHAIN ${cmd_ssignchain} ${ssignchain_param} ${chain_cert_prv} ${chain_cert_pub} ${src}.keycert ${src}.chaincert)
+    else()
+        set(CURR_CMD_CHAIN ${CMAKE_COMMAND} -E copy ${src}.keycert ${src}.chaincert)
+    endif()
+
+    if (dev_debug)
+        set(CURR_CMD_DEBUG ${cmd_ssigndebug} ${ssigndebug_param} ${key_debug_prv} ${key_debug_pub} ${key_devel_pub} ${debug_mask} ${src}.chaincert ${src}.debugcert)
+        set(CURR_CMD_DEV ${cmd_ssigndevel} ${ssigndevel_param} ${key_devel_prv} ${key_devel_pub}  ${debug_mask} ${SOC_ID} ${src}.debugcert ${dst})
+    else()
+        set(CURR_CMD_DEBUG ${CMAKE_COMMAND} -E copy ${src}.chaincert ${src}.debugcert)
+        set(CURR_CMD_DEV ${CMAKE_COMMAND} -E copy ${src}.debugcert ${dst})
+    endif()
+
+    add_custom_command(OUTPUT ${dst}
+            COMMAND ${CURR_CMD_ENC}
+            COMMAND ${cmd_ssign} ${ssign_param} ${key_root_prv} ${key_root_pub} ${security_version} ${src}.enc ${src}.keycert
+            COMMAND ${CURR_CMD_CHAIN}
+            COMMAND ${CURR_CMD_DEBUG}
+            COMMAND ${CURR_CMD_DEV}
+            DEPENDS ${src}
+        )
+endfunction()
+
+function(add_appimg target ldscript)
+    set(gen_ldscript ${target}_ldscript)
+    set(target_app_image_file ${out_hex_dir}/${target}.appimg)
+    set(target_map_file ${out_hex_dir}/${target}.map)
+    set(target_img_file ${out_hex_dir}/${target}.img)
+    cpp_only(${gen_ldscript} ${ldscript})
+    add_executable(${target} ${ARGN} ${core_stub_o})
+    set_target_properties(${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${out_hex_dir})
+    target_link_libraries(${target} PRIVATE -T $<TARGET_OBJECTS:${gen_ldscript}>)
+    target_link_libraries(${target} PRIVATE -Wl,-Map=${target_map_file} -nostdlib -Wl,--gc-sections)
+
+    add_custom_command(TARGET ${target} POST_BUILD
+        COMMAND ${cmd_mkappimg} $<TARGET_FILE:${target}> ${target_app_image_file}
+        BYPRODUCTS ${target_img_file} ${target_map_file} ${target_app_image_file}
+    )
+    add_custom_command(TARGET ${target} POST_BUILD
+        COMMAND ${cmd_mksimage} --bin --load 0x0 --entry 0x0
+        --name "${BUILD_REVISION}-${BUILD_AUTO_REVISION}"
+        --imgver "1.1" --platform "8850" --check crc
+        ${target_app_image_file} ${target_img_file}
+    )
+endfunction()
+
+configure_file(${SOURCE_TOP_DIR}/components/lib/norfdl.sign.img ${out_hex_dir}/norfdl.sign.img COPYONLY)
+
+macro(pac_init_fdl cmd)
+	set(${cmd}
+        cfg-init --pname "8850_MODEM" --palias "APPIMG"
+            --pversion "8850 MODULE" --version "BP_R1.0.0"
+            --flashtype 0
+        cfg-fdl -a ${CONFIG_NORFDL_IMAGE_START} -s ${CONFIG_NORFDL_IMAGE_SIZE}
+            -p ${pac_fdl_files}
+	)
+endmacro()
+
+if(CONFIG_APPIMG_LOAD_FLASH)
+    set(target appimg_flash_delete)
+    set(pac_file ${out_hex_dir}/${target}.pac)
+    pac_init_fdl(init_fdl)
+    add_custom_command(OUTPUT ${pac_file}
+        COMMAND python3 ${pacgen_py} ${init_fdl}
+            cfg-erase-flash -i ERASE_APPIMG
+                -a ${CONFIG_APPIMG_FLASH_ADDRESS}
+                -s ${CONFIG_APPIMG_FLASH_SIZE}
+            pac-gen ${pac_file}
+        DEPENDS ${pacgen_py}
+        WORKING_DIRECTORY ${SOURCE_TOP_DIR}
+    )
+    add_custom_target(${target}_pacgen ALL DEPENDS ${pac_file})
+endif()
+
+if(CONFIG_APPIMG_LOAD_FILE)
+    set(target appimg_file_delete)
+    set(pac_file ${out_hex_dir}/${target}.pac)
+    pac_init_fdl(init_fdl)
+    add_custom_command(OUTPUT ${pac_file}
+        COMMAND python3 ${pacgen_py} ${init_fdl}
+            cfg-del-appimg -i DEL_APPIMG
+            pac-gen ${pac_file}
+        DEPENDS ${pacgen_py}
+        WORKING_DIRECTORY ${SOURCE_TOP_DIR}
+    )
+    add_custom_target(${target}_pacgen ALL DEPENDS ${pac_file})
+endif()
+
+if(CONFIG_APPIMG_LOAD_FLASH)
+    set(target hello_flash)
+    add_appimg(${target} ${flash_ldscript}  hello_world.c)
+    target_link_libraries(${target} PRIVATE ${libc_file_name} ${libm_file_name} ${libgcc_file_name})
+    set(prepack_cpio ${out_hex_dir}/${target}_prepack.cpio)
+
+    set(pac_file ${out_hex_dir}/${target}.pac)
+    set(target_img_file ${out_hex_dir}/${target}.img)
+    set(target_sign_img_file ${out_hex_dir}/${target}.sign.img)
+    pac_init_fdl(init_fdl)
+    sign_image(${target_img_file} ${target_sign_img_file} ${with_chaincert} ${with_encrypt} ${with_debugcert_develcert})
+    add_custom_command(OUTPUT ${prepack_cpio}
+            COMMAND python3 ${modemgen_py} prepackgen
+                --source-top ${SOURCE_TOP_DIR}
+                --binary-top ${BINARY_TOP_DIR}
+                --prepackfile ${CONFIG_PACKAGE_FILE_APPIMG_JSON_PATH}
+                ${prepack_cpio}
+            DEPENDS ${modemgen_py}
+            WORKING_DIRECTORY ${SOURCE_TOP_DIR}
+    )
+    if(CONFIG_PACKAGE_FILE_APPIMG_JSON_PATH)
+        set(cfg_pack_gpio cfg-pack-cpio -i PREPACK -p ${prepack_cpio})
+        set(prepack_file ${prepack_cpio})
+    endif()
+
+    add_custom_command(OUTPUT ${pac_file}
+        COMMAND python3 ${pacgen_py} ${init_fdl}
+            cfg-image -i APPIMG -a ${CONFIG_APPIMG_FLASH_ADDRESS}
+                -s ${CONFIG_APPIMG_FLASH_SIZE}
+                -p ${target_sign_img_file}
+            ${cfg_pack_gpio}
+            pac-gen ${pac_file}
+        DEPENDS ${pacgen_py} ${target_sign_img_file} ${prepack_file}
+        WORKING_DIRECTORY ${SOURCE_TOP_DIR}
+    )
+    add_custom_target(${target}_pacgen ALL DEPENDS ${pac_file})
+endif()
+
+if(CONFIG_APPIMG_LOAD_FILE)
+    set(target hello_file)
+    add_appimg(${target} ${file_ldscript} hello_world.c)
+    target_link_libraries(${target} PRIVATE ${libc_file_name} ${libm_file_name} ${libgcc_file_name})
+    set(prepack_cpio ${out_hex_dir}/${target}_prepack.cpio)
+
+    set(pac_file ${out_hex_dir}/${target}.pac)
+    set(target_img_file ${out_hex_dir}/${target}.img)
+    set(target_sign_img_file ${out_hex_dir}/${target}.sign.img)
+    pac_init_fdl(init_fdl)
+    sign_image(${target_img_file} ${target_sign_img_file} ${with_chaincert} ${with_encrypt} ${with_debugcert_develcert})
+    add_custom_command(OUTPUT ${prepack_cpio}
+        COMMAND python3 ${modemgen_py} prepackgen
+            --source-top ${SOURCE_TOP_DIR}
+            --binary-top ${BINARY_TOP_DIR}
+            --prepackfile ${CONFIG_PACKAGE_FILE_APPIMG_JSON_PATH}
+            ${prepack_cpio}
+        DEPENDS ${modemgen_py}
+        WORKING_DIRECTORY ${SOURCE_TOP_DIR}
+    )
+    if(CONFIG_PACKAGE_FILE_APPIMG_JSON_PATH)
+        set(cfg_pack_gpio cfg-pack-cpio -i PREPACK -p ${prepack_cpio})
+        set(prepack_file ${prepack_cpio})
+    endif()
+
+    add_custom_command(OUTPUT ${pac_file}
+        COMMAND python3 ${pacgen_py} ${init_fdl}
+            cfg-pack-file -i APPIMG -p ${target_sign_img_file}
+                -n ${CONFIG_APPIMG_LOAD_FILE_NAME}
+            ${cfg_pack_gpio}
+            pac-gen ${pac_file}
+        DEPENDS ${pacgen_py} ${target_sign_img_file} ${prepack_file}
+        WORKING_DIRECTORY ${SOURCE_TOP_DIR}
+    )
+    add_custom_target(${target}_pacgen ALL DEPENDS ${pac_file})
+endif()

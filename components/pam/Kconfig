@@ -1,0 +1,53 @@
+# Copyright (C) 2018 RDA Technologies Limited and/or its affiliates("RDA").
+# All rights reserved.
+#
+# This software is supplied "AS IS" without any warranties.
+# RDA assumes no responsibility or liability for the use of the software,
+# conveys no license or title under any patent, copyright, or mask work
+# right to the product. RDA reserves the right to make changes in the
+# software without notification.  RDA also make no representation or
+# warranty that such application will be suitable for the specified use
+# without further testing or modification.
+
+menu "PAM"
+
+config PAM_LTE_GNSS_WIFISCAN_SUPPORT
+    bool "Support Pam"
+    default n if SOC_8811 || SOC_8821
+    default n
+
+config PAM_HANDSHAKE_LTE_TIMEOUT
+    int "timeout for handshake lte stack"
+    default 10000
+
+config PAM_WIFISCAN_TIMEOUT
+    int "timeout for wifiscan"
+    default 20000
+
+config PAM_GNSS_CONTEXT_TIMEOUT
+    int "timeout for gnss context handle to libgps"
+    default 10000
+
+config PAM_GNSS_EVENT_MAX_COUNT
+    int "gnss event count"
+    default 50
+
+config PAM_MEM_FREE_LATER_COUNT
+    int "Pam Maximum count of delay free memory"
+    default 16
+    help
+        Some memory will be freed after the event is processed. The typical use
+        case is pointer in event. It is tedious to free it at every return. And
+        "free later" concept is introduced. It means it will be freed in event
+        loop after the current event is processed.
+
+        The maximum count is to avoid dynamic management.
+
+config PAM_GNSS_PENDING_EVID_COUNT
+    int "Pam Maximum pending EVID count"
+    default 64
+    help
+        CFW response manager is used for CFW response callback. This is the
+        maximum count of pending UTI count.
+
+endmenu
