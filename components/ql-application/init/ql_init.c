@@ -114,9 +114,11 @@ WHEN              WHO         WHAT, WHERE, WHY
 #ifdef QL_APP_FEATURE_VOICE_CALL
 #include "voice_call_demo.h"
 #endif
-#ifdef QL_APP_FEATURE_GNSS
+
+#if 1
 #include "gnss_demo.h"
 #endif
+
 #ifdef QL_APP_FEATURE_HD_GNSS
 #include "hd_gnss_demo.h"
 #endif
@@ -329,12 +331,12 @@ static void ql_init_demo_thread(void *param)
 #endif
 
 #if 1
-    ql_gpio_app_init();
-    ql_gpioint_app_init();
+    // ql_gpio_app_init();
+    // ql_gpioint_app_init();
 #endif
 
 #ifdef QL_APP_FEATURE_LEDCFG
-    ql_ledcfg_app_init();
+    // ql_ledcfg_app_init();
 #endif
 
 /*
@@ -385,7 +387,7 @@ static void ql_init_demo_thread(void *param)
     // ql_adc_app_init();
 
 #ifdef QL_APP_FEATURE_UART
-    // ql_uart_app_init();
+   // ql_uart_app_init();
     // ql_uart_rb_app_init();
 #endif
 
@@ -428,7 +430,7 @@ static void ql_init_demo_thread(void *param)
 #endif
 
 #ifdef QL_APP_FEATURE_MQTT
-    ql_mqtt_app_init();
+    // ql_mqtt_app_init();
 #endif
 #ifdef QL_APP_FEATURE_SSL
     // ql_ssl_app_init();
@@ -477,10 +479,11 @@ static void ql_init_demo_thread(void *param)
     // ql_vsim_adapt_init();
 #endif
 
-#ifdef QL_APP_FEATURE_GNSS
-    QL_INIT_LOG("gnss init being done");
+#if 1
+    // QL_INIT_LOG("gnss init being done");
     ql_gnss_app_init();
 #endif
+
 #ifdef QL_APP_FEATURE_HD_GNSS // 外挂华大GNSS
     // ql_hd_gnss_app_init();
 #endif
@@ -619,8 +622,8 @@ static void ql_init_demo_thread(void *param)
 
 #ifdef QL_APP_FEATURE_GPRS_DATA_TRANSFER
 
-    QL_INIT_LOG("gnss init being done");
-    ql_gprs_data_transfer_app_init();
+    // QL_INIT_LOG("gnss init being done");
+    // ql_gprs_data_transfer_app_init();
 #endif
 
 #ifdef QL_APP_FEATURE_TP

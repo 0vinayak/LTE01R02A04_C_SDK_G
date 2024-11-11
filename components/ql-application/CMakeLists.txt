@@ -35,9 +35,10 @@ if(QL_APP_FEATURE_BT)
 add_subdirectory_if_exist(bt)
 endif()
 
-if(QL_APP_FEATURE_GNSS)
+if(1)
 add_subdirectory_if_exist(gnss)
 else()
+
 if(QL_APP_FEATURE_HD_GNSS)
 add_subdirectory_if_exist(gnss)
 endif()
