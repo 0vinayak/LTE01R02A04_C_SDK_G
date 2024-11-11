@@ -2808,33 +2808,33 @@ OUTPUT(hex\examples\APPIMAGE_APP.elf elf32-littlearm)
  .debug_ranges  0x00000138      0x108 lib/libql_app_mqtt.a(data.c.obj)
  .debug_ranges  0x00000240      0x800 lib/libql_app_mqtt.a(pbtools.c.obj)
 
-.debug_line     0x00000000     0x5410
- .debug_line    0x00000000      0x5e2 components/ql-application/init/CMakeFiles/APPIMAGE_APP.dir/ql_init.c.obj
- .debug_line    0x000005e2      0x4dc lib/libql_app_peripheral.a(gpio_demo.c.obj)
- .debug_line    0x00000abe      0x3b3 lib/libql_app_peripheral.a(gpio_int_demo.c.obj)
- .debug_line    0x00000e71      0x482 lib/libql_app_peripheral.a(led_cfg_demo.c.obj)
- .debug_line    0x000012f3      0x45e lib/libql_app_peripheral.a(uart_demo.c.obj)
- .debug_line    0x00001751      0xd4a lib/libql_app_mqtt.a(mqtt_demo.c.obj)
- .debug_line    0x0000249b      0xa91 lib/libql_app_mqtt.a(data.c.obj)
- .debug_line    0x00002f2c     0x24e4 lib/libql_app_mqtt.a(pbtools.c.obj)
+.debug_line     0x00000000     0x53c0
+ .debug_line    0x00000000      0x5d8 components/ql-application/init/CMakeFiles/APPIMAGE_APP.dir/ql_init.c.obj
+ .debug_line    0x000005d8      0x4d2 lib/libql_app_peripheral.a(gpio_demo.c.obj)
+ .debug_line    0x00000aaa      0x3a9 lib/libql_app_peripheral.a(gpio_int_demo.c.obj)
+ .debug_line    0x00000e53      0x478 lib/libql_app_peripheral.a(led_cfg_demo.c.obj)
+ .debug_line    0x000012cb      0x454 lib/libql_app_peripheral.a(uart_demo.c.obj)
+ .debug_line    0x0000171f      0xd40 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+ .debug_line    0x0000245f      0xa87 lib/libql_app_mqtt.a(data.c.obj)
+ .debug_line    0x00002ee6     0x24da lib/libql_app_mqtt.a(pbtools.c.obj)
 
-.debug_str      0x00000000     0x79f3
- .debug_str     0x00000000     0x1bea components/ql-application/init/CMakeFiles/APPIMAGE_APP.dir/ql_init.c.obj
-                               0x1d3a (size before relaxing)
- .debug_str     0x00001bea      0xa90 lib/libql_app_peripheral.a(gpio_demo.c.obj)
-                               0x175d (size before relaxing)
- .debug_str     0x0000267a      0x135 lib/libql_app_peripheral.a(gpio_int_demo.c.obj)
-                               0x1712 (size before relaxing)
- .debug_str     0x000027af     0x1552 lib/libql_app_peripheral.a(led_cfg_demo.c.obj)
-                               0x2961 (size before relaxing)
- .debug_str     0x00003d01      0x4ef lib/libql_app_peripheral.a(uart_demo.c.obj)
-                               0x248b (size before relaxing)
- .debug_str     0x000041f0     0x1789 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
-                               0x3127 (size before relaxing)
- .debug_str     0x00005979      0x960 lib/libql_app_mqtt.a(data.c.obj)
-                               0x17de (size before relaxing)
- .debug_str     0x000062d9     0x171a lib/libql_app_mqtt.a(pbtools.c.obj)
-                               0x2290 (size before relaxing)
+.debug_str      0x00000000     0x79e9
+ .debug_str     0x00000000     0x1be0 components/ql-application/init/CMakeFiles/APPIMAGE_APP.dir/ql_init.c.obj
+                               0x1d30 (size before relaxing)
+ .debug_str     0x00001be0      0xa90 lib/libql_app_peripheral.a(gpio_demo.c.obj)
+                               0x1753 (size before relaxing)
+ .debug_str     0x00002670      0x135 lib/libql_app_peripheral.a(gpio_int_demo.c.obj)
+                               0x1708 (size before relaxing)
+ .debug_str     0x000027a5     0x1552 lib/libql_app_peripheral.a(led_cfg_demo.c.obj)
+                               0x2957 (size before relaxing)
+ .debug_str     0x00003cf7      0x4ef lib/libql_app_peripheral.a(uart_demo.c.obj)
+                               0x2481 (size before relaxing)
+ .debug_str     0x000041e6     0x1789 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+                               0x311d (size before relaxing)
+ .debug_str     0x0000596f      0x960 lib/libql_app_mqtt.a(data.c.obj)
+                               0x17d4 (size before relaxing)
+ .debug_str     0x000062cf     0x171a lib/libql_app_mqtt.a(pbtools.c.obj)
+                               0x2286 (size before relaxing)
 
 .debug_frame    0x00000000     0x1890
  .debug_frame   0x00000000       0x60 components/ql-application/init/CMakeFiles/APPIMAGE_APP.dir/ql_init.c.obj
