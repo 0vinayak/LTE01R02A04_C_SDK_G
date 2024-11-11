@@ -241,7 +241,7 @@ option(QL_APP_FEATURE_GNSS  "Enable GNSS" OFF)
 endif()
 message(STATUS "QL_APP_FEATURE_GNSS ${QL_APP_FEATURE_GNSS}")
 
-if(CONFIG_QUEC_PROJECT_FEATURE_HD_GNSS)
+if(1)
 option(QL_APP_FEATURE_HD_GNSS  "Enable GNSS" ON)
 else()
 message(STATUS "FEATURE GNSS is disabled at core!")
