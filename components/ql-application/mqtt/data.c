@@ -85,8 +85,8 @@ void com_emotorad_backend_aggregation_flink_data_bike_init(
     self_p->ble_debug_signal3 = 8;
     self_p->emuser_id_p = "0b927d97-782a-4c82-b9d2-e4e06774ed37";
     self_p->vin_p = "Indian User";
-    self_p->latitude = 13.9210121;
-    self_p->longitude = 77.6722252;
+    self_p->latitude = nmeaData.latitude;
+    self_p->longitude = nmeaData.longitude;
     self_p->altitude = 10;
     self_p->time = 1720071401563;
 }

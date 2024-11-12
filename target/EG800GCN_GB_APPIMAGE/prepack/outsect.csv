@@ -22854,11 +22854,11 @@ COMMON,bss,320748
 .bss.cfw_socket_map,bss,576
 .bss.sDataEventCallback,bss,4
 .bss.sDataEventCallbackArg,bss,4
-.bss.s_aliases.19394,bss,4
-.bss.s_hostent.19393,bss,20
-.bss.s_hostent_addr.19395,bss,24
-.bss.s_hostname.19397,bss,257
-.bss.s_phostent_addr.19396,bss,8
+.bss.s_aliases.17779,bss,4
+.bss.s_hostent.17778,bss,20
+.bss.s_hostent_addr.17780,bss,24
+.bss.s_hostname.17782,bss,257
+.bss.s_phostent_addr.17781,bss,8
 .bss.global_error,bss,8
 .bss.FSb,bss,512
 .bss.FT0,bss,2048

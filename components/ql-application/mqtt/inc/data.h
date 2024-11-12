@@ -37,6 +37,9 @@
 // {
 // #endif
 #include "pbtools.h"
+#include "ql_gnss.h"
+
+extern ql_gnss_data_t nmeaData;
 
 /**
  * Enum com.emotorad.backend.AggregationFlink.data.Bike.Engmode.
