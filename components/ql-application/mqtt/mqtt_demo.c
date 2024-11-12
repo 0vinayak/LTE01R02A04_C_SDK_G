@@ -68,7 +68,9 @@ static ql_task_t mqtt_task = NULL;
 static ql_sem_t mqtt_semp;
 static int mqtt_connected = 0;
 
-char info_string[663] = {0};
+char* info_string;
+unsigned char* finalinfo_string;
+
 
 #if USE_CRT_BUFFER
 char *root_ca_crt_buffer = "-----BEGIN CERTIFICATE-----\r\n\
@@ -653,10 +655,13 @@ static void mqtt_app_thread(void *arg)
 
 				sprintf(info_string, "Longitude:%f,Latitude:%f,ID:123", nmeaData.longitude, nmeaData.latitude);
 
+				finalinfo_string = (unsigned char*)info_string;
+
 				make_Bike_message();
 				// mbedtls_base64_encode(&sendCore[0], 0, &encodedLengthBike, &encodedCore[0], sizeof(encodedCore));
 
-				sendBikePacket = base64Encoder((unsigned char*)info_string);
+
+				sendBikePacket = base64Encoder(finalinfo_string);
 				strncpy(sendBikeMqttPacket, sendBikePacket, 72);
 
 				QL_MQTT_LOG("bike data packet length:%d", strlen(sendBikePacket));
