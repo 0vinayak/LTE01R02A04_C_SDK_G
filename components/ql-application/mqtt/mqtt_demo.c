@@ -38,7 +38,7 @@ WHEN              WHO         WHAT, WHERE, WHY
 #define QL_MQTT_LOG_PUSH(msg, ...) QL_LOG_PUSH("ql_MQTT", msg, ##__VA_ARGS__)
 static ql_task_t mqtt_task = NULL;
 
-#define MQTT_CLIENT_IDENTITY "GPS Tracker"
+#define MQTT_CLIENT_IDENTITY "GPS_Target"
 #define MQTT_CLIENT_USER "test"
 #define MQTT_CLIENT_PASS "3Motorad"
 
@@ -49,6 +49,7 @@ static ql_task_t mqtt_task = NULL;
 
 #define USE_CRT_BUFFER 0
 
+//mqtts://em.mqtt.emotorad.com:8883
 #define MQTT_CLIENT_QUECTEL_URL "mqtts://em.mqtt.emotorad.com:8883"
 #define MQTT_CLIENT_ONENET_URL "mqtts://mqtt.emotorad.com:8883" // onenet 的ip地址
 
@@ -509,9 +510,9 @@ static void mqtt_app_thread(void *arg)
 		}
 		else
 		{
-			client_info.keep_alive = 60;
+			client_info.keep_alive = 65534;
 			client_info.pkt_timeout = 5;
-			client_info.retry_times = 3;
+			client_info.retry_times = 5;
 			client_info.clean_session = 1;
 			client_info.will_qos = 0;
 			client_info.will_retain = 0;
