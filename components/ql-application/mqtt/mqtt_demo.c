@@ -38,7 +38,7 @@ WHEN              WHO         WHAT, WHERE, WHY
 #define QL_MQTT_LOG_PUSH(msg, ...) QL_LOG_PUSH("ql_MQTT", msg, ##__VA_ARGS__)
 static ql_task_t mqtt_task = NULL;
 
-#define MQTT_CLIENT_IDENTITY "Amigo Bike"
+#define MQTT_CLIENT_IDENTITY "GPS Tracker"
 #define MQTT_CLIENT_USER "test"
 #define MQTT_CLIENT_PASS "3Motorad"
 
@@ -50,13 +50,13 @@ static ql_task_t mqtt_task = NULL;
 
 #define USE_CRT_BUFFER 0
 
-#define MQTT_CLIENT_QUECTEL_URL "mqtts://mqtt.emotorad.com:8883"
+#define MQTT_CLIENT_QUECTEL_URL "em.mqtt.emotorad.com"
 #define MQTT_CLIENT_ONENET_URL "mqtts://mqtt.emotorad.com:8883" // onenet 的ip地址
 
 #if USE_CRT_BUFFER
 #define MQTT_CLIENT_QUECTEL_SSL_URL              "mqtts://112.31.84.164:8308"
 #else
-#define MQTT_CLIENT_QUECTEL_SSL_URL "mqtts://mqtt.emotorad.com:8883"
+#define MQTT_CLIENT_QUECTEL_SSL_URL "em.mqtt.emotorad.com"
 #endif
 #define MQTT_CLIENT_ONENET_SSL_URL "mqtts://mqtt.emotorad.com:8883" // onenet 的ip地址
 

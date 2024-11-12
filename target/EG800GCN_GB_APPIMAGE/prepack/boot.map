@@ -234,8 +234,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x88 lib/libbootloader.a(boot_secure.c.obj)
  .debug_ranges  0x00000000       0xd0 lib/libbootloader.a(boot_secure.c.obj)
- .debug_line    0x00000000      0x7e3 lib/libbootloader.a(boot_secure.c.obj)
- .debug_str     0x00000000      0xfbc lib/libbootloader.a(boot_secure.c.obj)
+ .debug_line    0x00000000      0x7e7 lib/libbootloader.a(boot_secure.c.obj)
+ .debug_str     0x00000000      0xfc0 lib/libbootloader.a(boot_secure.c.obj)
  .comment       0x00000000       0x7a lib/libbootloader.a(boot_secure.c.obj)
  .debug_frame   0x00000000      0x154 lib/libbootloader.a(boot_secure.c.obj)
  .ARM.attributes
@@ -252,7 +252,7 @@ Discarded input sections
                 0x00000000       0xb0 lib/libbootloader.a(warmboot.c.obj)
  .debug_ranges  0x00000000      0x168 lib/libbootloader.a(warmboot.c.obj)
  .debug_line    0x00000000      0xc95 lib/libbootloader.a(warmboot.c.obj)
- .debug_str     0x00000000     0x7c6b lib/libbootloader.a(warmboot.c.obj)
+ .debug_str     0x00000000     0x7c6f lib/libbootloader.a(warmboot.c.obj)
  .comment       0x00000000       0x7a lib/libbootloader.a(warmboot.c.obj)
  .debug_frame   0x00000000      0x19c lib/libbootloader.a(warmboot.c.obj)
  .ARM.attributes
@@ -266,7 +266,7 @@ Discarded input sections
  .debug_abbrev  0x00000000       0x14 lib/libbootloader.a(warmboot_entry.s.obj)
  .debug_aranges
                 0x00000000       0x20 lib/libbootloader.a(warmboot_entry.s.obj)
- .debug_str     0x00000000       0x8a lib/libbootloader.a(warmboot_entry.s.obj)
+ .debug_str     0x00000000       0x8e lib/libbootloader.a(warmboot_entry.s.obj)
  .ARM.attributes
                 0x00000000       0x25 lib/libbootloader.a(warmboot_entry.s.obj)
  .text          0x00000000        0x0 lib/libbootloader.a(firewall_recovery.c.obj)
@@ -282,7 +282,7 @@ Discarded input sections
                 0x00000000       0x40 lib/libbootloader.a(firewall_recovery.c.obj)
  .debug_ranges  0x00000000       0x30 lib/libbootloader.a(firewall_recovery.c.obj)
  .debug_line    0x00000000      0x2d4 lib/libbootloader.a(firewall_recovery.c.obj)
- .debug_str     0x00000000      0x427 lib/libbootloader.a(firewall_recovery.c.obj)
+ .debug_str     0x00000000      0x42b lib/libbootloader.a(firewall_recovery.c.obj)
  .comment       0x00000000       0x7a lib/libbootloader.a(firewall_recovery.c.obj)
  .debug_frame   0x00000000       0x88 lib/libbootloader.a(firewall_recovery.c.obj)
  .ARM.attributes
@@ -312,8 +312,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x48 lib/libbootloader.a(boot_sffs_port.c.obj)
  .debug_ranges  0x00000000       0x38 lib/libbootloader.a(boot_sffs_port.c.obj)
- .debug_line    0x00000000      0x236 lib/libbootloader.a(boot_sffs_port.c.obj)
- .debug_str     0x00000000      0x37a lib/libbootloader.a(boot_sffs_port.c.obj)
+ .debug_line    0x00000000      0x23a lib/libbootloader.a(boot_sffs_port.c.obj)
+ .debug_str     0x00000000      0x37e lib/libbootloader.a(boot_sffs_port.c.obj)
  .comment       0x00000000       0x7a lib/libbootloader.a(boot_sffs_port.c.obj)
  .debug_frame   0x00000000       0x70 lib/libbootloader.a(boot_sffs_port.c.obj)
  .ARM.attributes
@@ -399,8 +399,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0xb0 lib/libbootloader.a(boot_spi_flash.c.obj)
  .debug_ranges  0x00000000      0x1a0 lib/libbootloader.a(boot_spi_flash.c.obj)
- .debug_line    0x00000000      0x9c8 lib/libbootloader.a(boot_spi_flash.c.obj)
- .debug_str     0x00000000      0xe56 lib/libbootloader.a(boot_spi_flash.c.obj)
+ .debug_line    0x00000000      0x9cc lib/libbootloader.a(boot_spi_flash.c.obj)
+ .debug_str     0x00000000      0xe5a lib/libbootloader.a(boot_spi_flash.c.obj)
  .comment       0x00000000       0x7a lib/libbootloader.a(boot_spi_flash.c.obj)
  .debug_frame   0x00000000      0x1f0 lib/libbootloader.a(boot_spi_flash.c.obj)
  .ARM.attributes
@@ -420,8 +420,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x30 lib/libbootloader.a(boot_debuguart.c.obj)
  .debug_ranges  0x00000000       0x50 lib/libbootloader.a(boot_debuguart.c.obj)
- .debug_line    0x00000000      0x31d lib/libbootloader.a(boot_debuguart.c.obj)
- .debug_str     0x00000000      0x5c5 lib/libbootloader.a(boot_debuguart.c.obj)
+ .debug_line    0x00000000      0x321 lib/libbootloader.a(boot_debuguart.c.obj)
+ .debug_str     0x00000000      0x5c9 lib/libbootloader.a(boot_debuguart.c.obj)
  .comment       0x00000000       0x7a lib/libbootloader.a(boot_debuguart.c.obj)
  .debug_frame   0x00000000       0x58 lib/libbootloader.a(boot_debuguart.c.obj)
  .ARM.attributes
@@ -472,8 +472,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x90 lib/libbootloader.a(boot_fdl.c.obj)
  .debug_ranges  0x00000000      0x178 lib/libbootloader.a(boot_fdl.c.obj)
- .debug_line    0x00000000      0xb2f lib/libbootloader.a(boot_fdl.c.obj)
- .debug_str     0x00000000     0x1558 lib/libbootloader.a(boot_fdl.c.obj)
+ .debug_line    0x00000000      0xb33 lib/libbootloader.a(boot_fdl.c.obj)
+ .debug_str     0x00000000     0x155c lib/libbootloader.a(boot_fdl.c.obj)
  .comment       0x00000000       0x7a lib/libbootloader.a(boot_fdl.c.obj)
  .debug_frame   0x00000000      0x1c0 lib/libbootloader.a(boot_fdl.c.obj)
  .ARM.attributes
@@ -571,8 +571,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000      0x110 lib/libbootloader.a(boot_vfs.c.obj)
  .debug_ranges  0x00000000      0x1f0 lib/libbootloader.a(boot_vfs.c.obj)
- .debug_line    0x00000000     0x11a2 lib/libbootloader.a(boot_vfs.c.obj)
- .debug_str     0x00000000     0x1ad9 lib/libbootloader.a(boot_vfs.c.obj)
+ .debug_line    0x00000000     0x11a6 lib/libbootloader.a(boot_vfs.c.obj)
+ .debug_str     0x00000000     0x1add lib/libbootloader.a(boot_vfs.c.obj)
  .comment       0x00000000       0x7a lib/libbootloader.a(boot_vfs.c.obj)
  .debug_frame   0x00000000      0x3f4 lib/libbootloader.a(boot_vfs.c.obj)
  .ARM.attributes
@@ -611,8 +611,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x30 lib/libbootloader.a(boot_timer.c.obj)
  .debug_ranges  0x00000000       0x98 lib/libbootloader.a(boot_timer.c.obj)
- .debug_line    0x00000000      0x3ee lib/libbootloader.a(boot_timer.c.obj)
- .debug_str     0x00000000      0x92e lib/libbootloader.a(boot_timer.c.obj)
+ .debug_line    0x00000000      0x3f2 lib/libbootloader.a(boot_timer.c.obj)
+ .debug_str     0x00000000      0x932 lib/libbootloader.a(boot_timer.c.obj)
  .comment       0x00000000       0x7a lib/libbootloader.a(boot_timer.c.obj)
  .debug_frame   0x00000000       0x60 lib/libbootloader.a(boot_timer.c.obj)
  .ARM.attributes
@@ -674,8 +674,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x58 lib/libbootloader.a(boot_userial.c.obj)
  .debug_ranges  0x00000000       0x48 lib/libbootloader.a(boot_userial.c.obj)
- .debug_line    0x00000000      0x477 lib/libbootloader.a(boot_userial.c.obj)
- .debug_str     0x00000000      0x9e3 lib/libbootloader.a(boot_userial.c.obj)
+ .debug_line    0x00000000      0x47b lib/libbootloader.a(boot_userial.c.obj)
+ .debug_str     0x00000000      0x9e7 lib/libbootloader.a(boot_userial.c.obj)
  .comment       0x00000000       0x7a lib/libbootloader.a(boot_userial.c.obj)
  .debug_frame   0x00000000       0xbc lib/libbootloader.a(boot_userial.c.obj)
  .ARM.attributes
@@ -694,7 +694,7 @@ Discarded input sections
                 0x00000000       0x28 lib/libbootloader.a(boot_mmu.c.obj)
  .debug_ranges  0x00000000      0x310 lib/libbootloader.a(boot_mmu.c.obj)
  .debug_line    0x00000000      0xa9a lib/libbootloader.a(boot_mmu.c.obj)
- .debug_str     0x00000000      0x52a lib/libbootloader.a(boot_mmu.c.obj)
+ .debug_str     0x00000000      0x52e lib/libbootloader.a(boot_mmu.c.obj)
  .comment       0x00000000       0x7a lib/libbootloader.a(boot_mmu.c.obj)
  .debug_frame   0x00000000       0x50 lib/libbootloader.a(boot_mmu.c.obj)
  .ARM.attributes
@@ -716,8 +716,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x38 lib/libbootloader.a(boot_uimage.c.obj)
  .debug_ranges  0x00000000       0x58 lib/libbootloader.a(boot_uimage.c.obj)
- .debug_line    0x00000000      0x3a6 lib/libbootloader.a(boot_uimage.c.obj)
- .debug_str     0x00000000      0x7aa lib/libbootloader.a(boot_uimage.c.obj)
+ .debug_line    0x00000000      0x3aa lib/libbootloader.a(boot_uimage.c.obj)
+ .debug_str     0x00000000      0x7ae lib/libbootloader.a(boot_uimage.c.obj)
  .comment       0x00000000       0x7a lib/libbootloader.a(boot_uimage.c.obj)
  .debug_frame   0x00000000       0x78 lib/libbootloader.a(boot_uimage.c.obj)
  .ARM.attributes
@@ -752,8 +752,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x38 lib/libbootloader.a(boot_unity.c.obj)
  .debug_ranges  0x00000000       0x48 lib/libbootloader.a(boot_unity.c.obj)
- .debug_line    0x00000000      0x684 lib/libbootloader.a(boot_unity.c.obj)
- .debug_str     0x00000000     0x15f2 lib/libbootloader.a(boot_unity.c.obj)
+ .debug_line    0x00000000      0x688 lib/libbootloader.a(boot_unity.c.obj)
+ .debug_str     0x00000000     0x15f6 lib/libbootloader.a(boot_unity.c.obj)
  .comment       0x00000000       0x7a lib/libbootloader.a(boot_unity.c.obj)
  .debug_frame   0x00000000       0x94 lib/libbootloader.a(boot_unity.c.obj)
  .ARM.attributes
@@ -804,7 +804,7 @@ Discarded input sections
                 0x00000000       0x78 lib/libbootloader.a(boot_override.c.obj)
  .debug_ranges  0x00000000       0x68 lib/libbootloader.a(boot_override.c.obj)
  .debug_line    0x00000000      0x226 lib/libbootloader.a(boot_override.c.obj)
- .debug_str     0x00000000      0x5c5 lib/libbootloader.a(boot_override.c.obj)
+ .debug_str     0x00000000      0x5c9 lib/libbootloader.a(boot_override.c.obj)
  .comment       0x00000000       0x7a lib/libbootloader.a(boot_override.c.obj)
  .debug_frame   0x00000000      0x110 lib/libbootloader.a(boot_override.c.obj)
  .ARM.attributes
@@ -847,8 +847,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x88 lib/libbootloader.a(boot_lcd.c.obj)
  .debug_ranges  0x00000000      0x3f8 lib/libbootloader.a(boot_lcd.c.obj)
- .debug_line    0x00000000      0xfb2 lib/libbootloader.a(boot_lcd.c.obj)
- .debug_str     0x00000000     0x4375 lib/libbootloader.a(boot_lcd.c.obj)
+ .debug_line    0x00000000      0xfb6 lib/libbootloader.a(boot_lcd.c.obj)
+ .debug_str     0x00000000     0x4379 lib/libbootloader.a(boot_lcd.c.obj)
  .comment       0x00000000       0x7a lib/libbootloader.a(boot_lcd.c.obj)
  .debug_frame   0x00000000      0x180 lib/libbootloader.a(boot_lcd.c.obj)
  .ARM.attributes
@@ -868,8 +868,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x28 lib/libbootloader.a(boot_efuse.c.obj)
  .debug_ranges  0x00000000       0x40 lib/libbootloader.a(boot_efuse.c.obj)
- .debug_line    0x00000000      0x302 lib/libbootloader.a(boot_efuse.c.obj)
- .debug_str     0x00000000      0x783 lib/libbootloader.a(boot_efuse.c.obj)
+ .debug_line    0x00000000      0x306 lib/libbootloader.a(boot_efuse.c.obj)
+ .debug_str     0x00000000      0x787 lib/libbootloader.a(boot_efuse.c.obj)
  .comment       0x00000000       0x7a lib/libbootloader.a(boot_efuse.c.obj)
  .debug_frame   0x00000000       0x4c lib/libbootloader.a(boot_efuse.c.obj)
  .ARM.attributes
@@ -896,8 +896,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x40 lib/libbootloader.a(boot_pdl.c.obj)
  .debug_ranges  0x00000000       0xf0 lib/libbootloader.a(boot_pdl.c.obj)
- .debug_line    0x00000000      0x4a4 lib/libbootloader.a(boot_pdl.c.obj)
- .debug_str     0x00000000      0x96c lib/libbootloader.a(boot_pdl.c.obj)
+ .debug_line    0x00000000      0x4a8 lib/libbootloader.a(boot_pdl.c.obj)
+ .debug_str     0x00000000      0x970 lib/libbootloader.a(boot_pdl.c.obj)
  .comment       0x00000000       0x7a lib/libbootloader.a(boot_pdl.c.obj)
  .debug_frame   0x00000000       0x98 lib/libbootloader.a(boot_pdl.c.obj)
  .ARM.attributes
@@ -933,8 +933,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x60 lib/libbootloader.a(boot_pdl_uimage.c.obj)
  .debug_ranges  0x00000000       0xe0 lib/libbootloader.a(boot_pdl_uimage.c.obj)
- .debug_line    0x00000000      0x741 lib/libbootloader.a(boot_pdl_uimage.c.obj)
- .debug_str     0x00000000     0x173e lib/libbootloader.a(boot_pdl_uimage.c.obj)
+ .debug_line    0x00000000      0x745 lib/libbootloader.a(boot_pdl_uimage.c.obj)
+ .debug_str     0x00000000     0x1742 lib/libbootloader.a(boot_pdl_uimage.c.obj)
  .comment       0x00000000       0x7a lib/libbootloader.a(boot_pdl_uimage.c.obj)
  .debug_frame   0x00000000      0x134 lib/libbootloader.a(boot_pdl_uimage.c.obj)
  .ARM.attributes
@@ -2149,8 +2149,8 @@ Discarded input sections
  .debug_abbrev  0x00000000      0x22f lib/libboot_ex_ql_pin.a(quec_boot_pin_map.c.obj)
  .debug_aranges
                 0x00000000       0x18 lib/libboot_ex_ql_pin.a(quec_boot_pin_map.c.obj)
- .debug_line    0x00000000      0x273 lib/libboot_ex_ql_pin.a(quec_boot_pin_map.c.obj)
- .debug_str     0x00000000     0x36c5 lib/libboot_ex_ql_pin.a(quec_boot_pin_map.c.obj)
+ .debug_line    0x00000000      0x277 lib/libboot_ex_ql_pin.a(quec_boot_pin_map.c.obj)
+ .debug_str     0x00000000     0x36c9 lib/libboot_ex_ql_pin.a(quec_boot_pin_map.c.obj)
  .comment       0x00000000       0x7a lib/libboot_ex_ql_pin.a(quec_boot_pin_map.c.obj)
  .ARM.attributes
                 0x00000000       0x3d lib/libboot_ex_ql_pin.a(quec_boot_pin_map.c.obj)
@@ -2210,8 +2210,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x20 lib/libhal_prop.a(ql_hal_spi_flash_prop.c.obj)
  .debug_ranges  0x00000000       0x10 lib/libhal_prop.a(ql_hal_spi_flash_prop.c.obj)
- .debug_line    0x00000000      0x2e4 lib/libhal_prop.a(ql_hal_spi_flash_prop.c.obj)
- .debug_str     0x00000000     0x19a7 lib/libhal_prop.a(ql_hal_spi_flash_prop.c.obj)
+ .debug_line    0x00000000      0x2e8 lib/libhal_prop.a(ql_hal_spi_flash_prop.c.obj)
+ .debug_str     0x00000000     0x19ab lib/libhal_prop.a(ql_hal_spi_flash_prop.c.obj)
  .comment       0x00000000       0x7a lib/libhal_prop.a(ql_hal_spi_flash_prop.c.obj)
  .debug_frame   0x00000000       0x20 lib/libhal_prop.a(ql_hal_spi_flash_prop.c.obj)
  .ARM.attributes
@@ -2851,63 +2851,63 @@ OUTPUT(hex\boot.elf elf32-littlearm)
  .debug_ranges  0x00001030      0x4a8 lib/libosi_lib.a(osi_log.c.obj)
  .debug_ranges  0x000014d8      0x350 lib/libhal_prop.a(hal_iomux.c.obj)
 
-.debug_line     0x00000000     0x90c8
- .debug_line    0x00000000      0x459 components/bootloader/CMakeFiles/boot.dir/8850/boot_start.c.obj
- .debug_line    0x00000459      0x58a lib/libbootloader.a(boot_platform.c.obj)
- .debug_line    0x000009e3      0x109 lib/libbootloader.a(boot_entry_v7a.S.obj)
- .debug_line    0x00000aec      0x25e lib/libbootloader.a(boot_delay.c.obj)
- .debug_line    0x00000d4a      0x65a lib/libbootloader.a(boot_mem.c.obj)
- .debug_line    0x000013a4      0x28b lib/libbootloader.a(boot_trace.c.obj)
- .debug_line    0x0000162f      0x6ea lib/libbootloader.a(boot_irq_gic.c.obj)
- .debug_line    0x00001d19      0x842 lib/libbootloader.a(boot_ifc_uart.c.obj)
- .debug_line    0x0000255b      0x35f lib/libbootloader.a(boot_uart_cmn.c.obj)
- .debug_line    0x000028ba     0x1068 lib/libhal.a(hal_clock_init.c.obj)
- .debug_line    0x00003922      0x788 lib/libhal.a(hal_chip.c.obj)
- .debug_line    0x000040aa     0x18ba lib/libhal.a(hal_chip_armv7a.c.obj)
- .debug_line    0x00005964      0x525 lib/libhal.a(hal_adi_bus.c.obj)
- .debug_line    0x00005e89      0x2ea lib/libhal.a(hal_blue_screen.c.obj)
- .debug_line    0x00006173      0x300 lib/libhal.a(hal_hwspinlock.c.obj)
- .debug_line    0x00006473      0x8ae lib/libcalclib.a(simage.c.obj)
- .debug_line    0x00006d21     0x1545 lib/libosi_lib.a(osi_log.c.obj)
- .debug_line    0x00008266      0xe62 lib/libhal_prop.a(hal_iomux.c.obj)
+.debug_line     0x00000000     0x90dc
+ .debug_line    0x00000000      0x45d components/bootloader/CMakeFiles/boot.dir/8850/boot_start.c.obj
+ .debug_line    0x0000045d      0x58a lib/libbootloader.a(boot_platform.c.obj)
+ .debug_line    0x000009e7      0x109 lib/libbootloader.a(boot_entry_v7a.S.obj)
+ .debug_line    0x00000af0      0x25e lib/libbootloader.a(boot_delay.c.obj)
+ .debug_line    0x00000d4e      0x65a lib/libbootloader.a(boot_mem.c.obj)
+ .debug_line    0x000013a8      0x28b lib/libbootloader.a(boot_trace.c.obj)
+ .debug_line    0x00001633      0x6ee lib/libbootloader.a(boot_irq_gic.c.obj)
+ .debug_line    0x00001d21      0x846 lib/libbootloader.a(boot_ifc_uart.c.obj)
+ .debug_line    0x00002567      0x363 lib/libbootloader.a(boot_uart_cmn.c.obj)
+ .debug_line    0x000028ca     0x1068 lib/libhal.a(hal_clock_init.c.obj)
+ .debug_line    0x00003932      0x788 lib/libhal.a(hal_chip.c.obj)
+ .debug_line    0x000040ba     0x18ba lib/libhal.a(hal_chip_armv7a.c.obj)
+ .debug_line    0x00005974      0x525 lib/libhal.a(hal_adi_bus.c.obj)
+ .debug_line    0x00005e99      0x2ea lib/libhal.a(hal_blue_screen.c.obj)
+ .debug_line    0x00006183      0x300 lib/libhal.a(hal_hwspinlock.c.obj)
+ .debug_line    0x00006483      0x8ae lib/libcalclib.a(simage.c.obj)
+ .debug_line    0x00006d31     0x1545 lib/libosi_lib.a(osi_log.c.obj)
+ .debug_line    0x00008276      0xe66 lib/libhal_prop.a(hal_iomux.c.obj)
 
-.debug_str      0x00000000     0xb831
- .debug_str     0x00000000      0x99c components/bootloader/CMakeFiles/boot.dir/8850/boot_start.c.obj
-                                0xa5e (size before relaxing)
- .debug_str     0x0000099c     0x2353 lib/libbootloader.a(boot_platform.c.obj)
-                               0x2624 (size before relaxing)
- .debug_str     0x00002cef       0x3f lib/libbootloader.a(boot_entry_v7a.S.obj)
-                                 0x89 (size before relaxing)
- .debug_str     0x00002d2e      0x19b lib/libbootloader.a(boot_delay.c.obj)
-                                0x408 (size before relaxing)
- .debug_str     0x00002ec9      0x23f lib/libbootloader.a(boot_mem.c.obj)
-                                0x4bc (size before relaxing)
- .debug_str     0x00003108      0x13c lib/libbootloader.a(boot_trace.c.obj)
-                                0x43d (size before relaxing)
- .debug_str     0x00003244      0x41f lib/libbootloader.a(boot_irq_gic.c.obj)
-                                0xa4e (size before relaxing)
- .debug_str     0x00003663     0x116a lib/libbootloader.a(boot_ifc_uart.c.obj)
-                               0x243e (size before relaxing)
- .debug_str     0x000047cd       0x68 lib/libbootloader.a(boot_uart_cmn.c.obj)
-                                0x2f6 (size before relaxing)
- .debug_str     0x00004835     0x4d1c lib/libhal.a(hal_clock_init.c.obj)
+.debug_str      0x00000000     0xb835
+ .debug_str     0x00000000      0x9a0 components/bootloader/CMakeFiles/boot.dir/8850/boot_start.c.obj
+                                0xa62 (size before relaxing)
+ .debug_str     0x000009a0     0x2353 lib/libbootloader.a(boot_platform.c.obj)
+                               0x2628 (size before relaxing)
+ .debug_str     0x00002cf3       0x3f lib/libbootloader.a(boot_entry_v7a.S.obj)
+                                 0x8d (size before relaxing)
+ .debug_str     0x00002d32      0x19b lib/libbootloader.a(boot_delay.c.obj)
+                                0x40c (size before relaxing)
+ .debug_str     0x00002ecd      0x23f lib/libbootloader.a(boot_mem.c.obj)
+                                0x4c0 (size before relaxing)
+ .debug_str     0x0000310c      0x13c lib/libbootloader.a(boot_trace.c.obj)
+                                0x441 (size before relaxing)
+ .debug_str     0x00003248      0x41f lib/libbootloader.a(boot_irq_gic.c.obj)
+                                0xa52 (size before relaxing)
+ .debug_str     0x00003667     0x116a lib/libbootloader.a(boot_ifc_uart.c.obj)
+                               0x2442 (size before relaxing)
+ .debug_str     0x000047d1       0x68 lib/libbootloader.a(boot_uart_cmn.c.obj)
+                                0x2fa (size before relaxing)
+ .debug_str     0x00004839     0x4d1c lib/libhal.a(hal_clock_init.c.obj)
                                0x76be (size before relaxing)
- .debug_str     0x00009551      0x2da lib/libhal.a(hal_chip.c.obj)
+ .debug_str     0x00009555      0x2da lib/libhal.a(hal_chip.c.obj)
                                 0x971 (size before relaxing)
- .debug_str     0x0000982b      0x888 lib/libhal.a(hal_chip_armv7a.c.obj)
+ .debug_str     0x0000982f      0x888 lib/libhal.a(hal_chip_armv7a.c.obj)
                                 0xc55 (size before relaxing)
- .debug_str     0x0000a0b3      0x552 lib/libhal.a(hal_adi_bus.c.obj)
+ .debug_str     0x0000a0b7      0x552 lib/libhal.a(hal_adi_bus.c.obj)
                                 0x85a (size before relaxing)
- .debug_str     0x0000a605       0x7a lib/libhal.a(hal_blue_screen.c.obj)
+ .debug_str     0x0000a609       0x7a lib/libhal.a(hal_blue_screen.c.obj)
                                 0x97d (size before relaxing)
- .debug_str     0x0000a67f       0xe5 lib/libhal.a(hal_hwspinlock.c.obj)
+ .debug_str     0x0000a683       0xe5 lib/libhal.a(hal_hwspinlock.c.obj)
                                 0x42f (size before relaxing)
- .debug_str     0x0000a764      0x3ff lib/libcalclib.a(simage.c.obj)
+ .debug_str     0x0000a768      0x3ff lib/libcalclib.a(simage.c.obj)
                                 0xc6a (size before relaxing)
- .debug_str     0x0000ab63      0x593 lib/libosi_lib.a(osi_log.c.obj)
+ .debug_str     0x0000ab67      0x593 lib/libosi_lib.a(osi_log.c.obj)
                                 0xd1a (size before relaxing)
- .debug_str     0x0000b0f6      0x73b lib/libhal_prop.a(hal_iomux.c.obj)
-                               0x350a (size before relaxing)
+ .debug_str     0x0000b0fa      0x73b lib/libhal_prop.a(hal_iomux.c.obj)
+                               0x350e (size before relaxing)
 
 .debug_frame    0x00000000     0x1634
  .debug_frame   0x00000000       0x28 components/bootloader/CMakeFiles/boot.dir/8850/boot_start.c.obj
