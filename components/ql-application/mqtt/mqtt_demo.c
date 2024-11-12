@@ -34,7 +34,7 @@ WHEN              WHO         WHAT, WHERE, WHY
 #define QL_MQTT_LOG_PUSH(msg, ...)	    QL_LOG_PUSH("ql_MQTT", msg, ##__VA_ARGS__)
 static ql_task_t mqtt_task = NULL;
 
-#define MQTT_CLIENT_IDENTITY        "quectel_01"
+#define MQTT_CLIENT_IDENTITY        "GPS_Tracker"
 #define MQTT_CLIENT_USER            "test"
 #define MQTT_CLIENT_PASS            "3Motorad"
 
@@ -46,13 +46,13 @@ static ql_task_t mqtt_task = NULL;
 
 #define USE_CRT_BUFFER 0
 
-#define MQTT_CLIENT_QUECTEL_URL                  "http://em.mqtt.emotorad.com/:8306"
+#define MQTT_CLIENT_QUECTEL_URL                  "mqtts://em.mqtt.emotorad.com:8883"
 #define MQTT_CLIENT_ONENET_URL                   "mqtt://mqtts.heclouds.com:1883" //onenet 的ip地址
 
 #if USE_CRT_BUFFER
 #define MQTT_CLIENT_QUECTEL_SSL_URL              "mqtts://112.31.84.164:8308"
 #else
-#define MQTT_CLIENT_QUECTEL_SSL_URL              "https://em.mqtt.emotorad.com/:8307"
+#define MQTT_CLIENT_QUECTEL_SSL_URL              "mqtts://em.mqtt.emotorad.com:8883"
 #endif
 #define MQTT_CLIENT_ONENET_SSL_URL               "mqtts://mqttstls.heclouds.com:8883"//onenet 的ip地址
 
@@ -325,9 +325,9 @@ static void mqtt_app_thread(void * arg)
         }
         else 
         {
-            client_info.keep_alive = 60;
+            client_info.keep_alive = 65534;
     		client_info.pkt_timeout = 5;
-    		client_info.retry_times = 3;
+    		client_info.retry_times = 5;
             client_info.clean_session = 1;
             client_info.will_qos = 0;
             client_info.will_retain = 0;
