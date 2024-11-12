@@ -35,8 +35,8 @@ WHEN              WHO         WHAT, WHERE, WHY
 static ql_task_t mqtt_task = NULL;
 
 #define MQTT_CLIENT_IDENTITY        "quectel_01"
-#define MQTT_CLIENT_USER            ""
-#define MQTT_CLIENT_PASS            ""
+#define MQTT_CLIENT_USER            "test"
+#define MQTT_CLIENT_PASS            "3Motorad"
 
 
 #define MQTT_CLIENT_ONENET_PRODUCTID             "417661"
@@ -46,13 +46,13 @@ static ql_task_t mqtt_task = NULL;
 
 #define USE_CRT_BUFFER 0
 
-#define MQTT_CLIENT_QUECTEL_URL                  "mqtt://220.180.239.212:8306"
+#define MQTT_CLIENT_QUECTEL_URL                  "http://em.mqtt.emotorad.com/:8306"
 #define MQTT_CLIENT_ONENET_URL                   "mqtt://mqtts.heclouds.com:1883" //onenet 的ip地址
 
 #if USE_CRT_BUFFER
 #define MQTT_CLIENT_QUECTEL_SSL_URL              "mqtts://112.31.84.164:8308"
 #else
-#define MQTT_CLIENT_QUECTEL_SSL_URL              "mqtts://220.180.239.212:8307"
+#define MQTT_CLIENT_QUECTEL_SSL_URL              "https://em.mqtt.emotorad.com/:8307"
 #endif
 #define MQTT_CLIENT_ONENET_SSL_URL               "mqtts://mqttstls.heclouds.com:8883"//onenet 的ip地址
 
@@ -207,7 +207,7 @@ static void mqtt_app_thread(void * arg)
 	uint16_t sim_cid;
     struct mqtt_connect_client_info_t  client_info = {0};
     char *token = NULL;
-    int is_user_onenet = 1;
+    int is_user_onenet = 0;
 	ql_rtos_semaphore_create(&mqtt_semp, 0);
 	ql_rtos_task_sleep_s(10);
 
