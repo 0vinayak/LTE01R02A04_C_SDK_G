@@ -68,8 +68,8 @@ static ql_task_t mqtt_task = NULL;
 static ql_sem_t mqtt_semp;
 static int mqtt_connected = 0;
 
-char* info_string;
-unsigned char* finalinfo_string;
+char info_string[256];
+uint8_t finalinfo_string[256];
 
 
 #if USE_CRT_BUFFER
@@ -648,14 +648,21 @@ static void mqtt_app_thread(void *arg)
 					ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
 				}
 
-				ql_get_gnss_info(&nmeaData);
+				// ql_get_gnss_info(&nmeaData);
 
-				nmeaData.longitude = 10.005;
-				nmeaData.latitude = 20.003;
+				// nmeaData.longitude = 10.005;
+				// nmeaData.latitude = 20.003;
 
-				sprintf(info_string, "Longitude:%f,Latitude:%f,ID:123", nmeaData.longitude, nmeaData.latitude);
+				volatile double longitude = 10.4567;
+				volatile double latitude = 20.4567; 
 
-				finalinfo_string = (unsigned char*)info_string;
+
+				sprintf(info_string, "Longitude:%lf,Latitude:%lf,ID:123", longitude, latitude);
+				for (size_t i = 0; i < strlen(info_string); i++)
+				{
+					finalinfo_string[i] = info_string[i];
+				}
+				// finalinfo_string = (unsigned char*)info_string;
 
 				make_Bike_message();
 				// mbedtls_base64_encode(&sendCore[0], 0, &encodedLengthBike, &encodedCore[0], sizeof(encodedCore));
@@ -664,11 +671,13 @@ static void mqtt_app_thread(void *arg)
 				sendBikePacket = base64Encoder(finalinfo_string);
 				strncpy(sendBikeMqttPacket, sendBikePacket, 72);
 
+				// QL_MQTT_LOG("trip1 data packet:%s", sendTrip1Packet);
+
 				QL_MQTT_LOG("bike data packet length:%d", strlen(sendBikePacket));
 				QL_MQTT_LOG("bike data packet length final:%d", strlen(sendBikeMqttPacket));
 				QL_MQTT_LOG("bike data packet:%s", sendBikePacket);
 
-				if (ql_mqtt_publish(&mqtt_cli, "topic/telemetry/gps/live", sendBikePacket, strlen(sendBikePacket), 0, 1, mqtt_requst_result_cb, NULL) == MQTTCLIENT_WOUNDBLOCK)
+				if (ql_mqtt_publish(&mqtt_cli,"topic/telemetry/gps/live",sendBikePacket,strlen(sendBikePacket), 0, 1, mqtt_requst_result_cb, NULL) == MQTTCLIENT_WOUNDBLOCK)
 				{
 					QL_MQTT_LOG("======wait publish result bike");
 					// ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
