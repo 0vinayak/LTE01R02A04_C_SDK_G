@@ -50,13 +50,13 @@ static ql_task_t mqtt_task = NULL;
 
 #define USE_CRT_BUFFER 0
 
-#define MQTT_CLIENT_QUECTEL_URL "mqtts://mqtt.emotorad.com:8883"
+#define MQTT_CLIENT_QUECTEL_URL "mqtts://em.mqtt.emotorad.com:8883"
 #define MQTT_CLIENT_ONENET_URL "mqtts://mqtt.emotorad.com:8883" // onenet 的ip地址
 
 #if USE_CRT_BUFFER
 #define MQTT_CLIENT_QUECTEL_SSL_URL              "mqtts://112.31.84.164:8308"
 #else
-#define MQTT_CLIENT_QUECTEL_SSL_URL "mqtts://mqtt.emotorad.com:8883"
+#define MQTT_CLIENT_QUECTEL_SSL_URL "mqtts://em.mqtt.emotorad.com:8883"
 #endif
 #define MQTT_CLIENT_ONENET_SSL_URL "mqtts://mqtt.emotorad.com:8883" // onenet 的ip地址
 
@@ -500,7 +500,7 @@ static void mqtt_app_thread(void *arg)
 		}
 		else
 		{
-			client_info.keep_alive = 60;
+			client_info.keep_alive = 65534;
 			client_info.pkt_timeout = 5;
 			client_info.retry_times = 3;
 			client_info.clean_session = 1;
