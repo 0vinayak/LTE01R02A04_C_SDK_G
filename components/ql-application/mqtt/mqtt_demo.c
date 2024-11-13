@@ -33,6 +33,8 @@ WHEN              WHO         WHAT, WHERE, WHY
 #include "data.h"
 #include "pbtools.h"
 
+#include "quec_gnss_handle.h"
+
 #define QL_MQTT_LOG_LEVEL QL_LOG_LEVEL_INFO
 #define QL_MQTT_LOG(msg, ...) QL_LOG(QL_MQTT_LOG_LEVEL, "ql_MQTT", msg, ##__VA_ARGS__)
 #define QL_MQTT_LOG_PUSH(msg, ...) QL_LOG_PUSH("ql_MQTT", msg, ##__VA_ARGS__)
@@ -67,6 +69,9 @@ static ql_task_t mqtt_task = NULL;
 
 static ql_sem_t  mqtt_semp;
 static int  mqtt_connected = 0;
+
+char* encodingString = "Init";
+
 
 #if USE_CRT_BUFFER
 char *root_ca_crt_buffer= "-----BEGIN CERTIFICATE-----\r\n\
@@ -191,7 +196,10 @@ struct pbtools_heap_t *heap_trip2;
 struct com_emotorad_backend_aggregation_flink_data_end_t *Bike_End_Data;
 struct pbtools_heap_t *heap_end;
 
-static void mqtt_state_exception_cb(mqtt_client_t *client)
+ql_gnss_data_t nmeaData;
+
+static void
+mqtt_state_exception_cb(mqtt_client_t *client)
 {
 	QL_MQTT_LOG("mqtt session abnormal disconnect");
 	mqtt_connected = 0;
@@ -615,7 +623,6 @@ static void mqtt_app_thread(void *arg)
 		{
 			while (test_num < 10000 && mqtt_connected == 1)
 			{
-				char* encodingString;
 
 				ql_mqtt_set_inpub_callback(&mqtt_cli, mqtt_inpub_data_cb, NULL);
 
@@ -627,7 +634,9 @@ static void mqtt_app_thread(void *arg)
 					ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
 				}
 
-				//make_Bike_message()
+				ql_get_gnss_info(&nmeaData);
+
+			//	make_Bike_message();
 				// mbedtls_base64_encode(&sendCore[0], 0, &encodedLengthBike, &encodedCore[0], sizeof(encodedCore));
 
 				sprintf(encodingString, "Longitude:%lf,Latitude:%lf,ID:123", nmeaData.longitude, nmeaData.latitude);

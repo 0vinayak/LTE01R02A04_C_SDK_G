@@ -16,14 +16,15 @@
 
 #ifndef QUEC_GNSS_HANDLE_H_
 #define QUEC_GNSS_HANDLE_H_
-#ifdef __cplusplus 
-extern "C" {
+#ifdef __cplusplus
+extern "C"
+{
 #endif
 
 #include "quec_proj_config.h"
 #include "ql_api_osi.h"
 #include "ql_gnss.h"
-#include "at_engine.h"
+// #include "at_engine.h"
 
 /*===========================================================================
  * Macro Definition
@@ -149,7 +150,7 @@ int quec_gps_handle_set(void);
 int quec_gps_handle_get(void);
 struct nmea_s* nmea_parse(char *sentence, int length, int check_checksum);
 int nmea_value_update(struct nmea_s *nmea, ql_gnss_data_t *gps_data);
-int ql_get_gnss_info(ql_gnss_data_t *data);
+    extern int ql_get_gnss_info(ql_gnss_data_t *data);
 char *strptime(const char *buf, const char *fmt, struct tm *tm);
 void nmea_write_pqgsv_addsystemid(unsigned char * nmea_sentence,int len);
 
