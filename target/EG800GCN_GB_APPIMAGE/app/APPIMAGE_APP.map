@@ -10,14 +10,8 @@ lib/libql_app_peripheral.a(uart_demo.c.obj)
                               components/ql-application/init/CMakeFiles/APPIMAGE_APP.dir/ql_init.c.obj (ql_uart_app_init)
 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
                               components/ql-application/init/CMakeFiles/APPIMAGE_APP.dir/ql_init.c.obj (ql_mqtt_app_init)
-lib/libql_app_mqtt.a(data.c.obj)
-                              lib/libql_app_mqtt.a(mqtt_demo.c.obj) (com_emotorad_backend_aggregation_flink_data_bike_init)
-lib/libql_app_mqtt.a(pbtools.c.obj)
-                              lib/libql_app_mqtt.a(data.c.obj) (pbtools_encoder_write_uint64)
 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memcpy-stub.o)
                               lib/libql_app_peripheral.a(uart_demo.c.obj) (memcpy)
-..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memmove.o)
-                              lib/libql_app_mqtt.a(pbtools.c.obj) (memmove)
 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memset.o)
                               lib/libql_app_peripheral.a(uart_demo.c.obj) (memset)
 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-strlen.o)
@@ -37,7 +31,7 @@ Common symbol       size              file
 heap_trip1          0x4               lib/libql_app_mqtt.a(mqtt_demo.c.obj)
 encodedLengthTrip2  0x4               lib/libql_app_mqtt.a(mqtt_demo.c.obj)
 encodedTrip2        0x100             lib/libql_app_mqtt.a(mqtt_demo.c.obj)
-encodedCore         0x400             lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+encodedCore         0x4               lib/libql_app_mqtt.a(mqtt_demo.c.obj)
 encodedEnd          0x80              lib/libql_app_mqtt.a(mqtt_demo.c.obj)
 Bike_Core_Data      0x4               lib/libql_app_mqtt.a(mqtt_demo.c.obj)
 Bike_Trip1_Data     0x4               lib/libql_app_mqtt.a(mqtt_demo.c.obj)
@@ -1624,412 +1618,9 @@ Discarded input sections
  .text          0x00000000        0x0 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
  .data          0x00000000        0x0 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
  .bss           0x00000000        0x0 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
- .text          0x00000000        0x0 lib/libql_app_mqtt.a(data.c.obj)
- .data          0x00000000        0x0 lib/libql_app_mqtt.a(data.c.obj)
- .bss           0x00000000        0x0 lib/libql_app_mqtt.a(data.c.obj)
- .text.com_emotorad_backend_aggregation_flink_data_bike_decode_inner
-                0x00000000      0x2a6 lib/libql_app_mqtt.a(data.c.obj)
- .text.com_emotorad_backend_aggregation_flink_data_trip1_decode_inner
-                0x00000000       0xc0 lib/libql_app_mqtt.a(data.c.obj)
- .text.com_emotorad_backend_aggregation_flink_data_trip2_decode_inner
-                0x00000000       0x8c lib/libql_app_mqtt.a(data.c.obj)
- .text.com_emotorad_backend_aggregation_flink_data_end_decode_inner
-                0x00000000       0x54 lib/libql_app_mqtt.a(data.c.obj)
- .text.com_emotorad_backend_aggregation_flink_data_bike_encode_repeated_inner
-                0x00000000       0x18 lib/libql_app_mqtt.a(data.c.obj)
- .text.com_emotorad_backend_aggregation_flink_data_bike_decode_repeated_inner
-                0x00000000       0x20 lib/libql_app_mqtt.a(data.c.obj)
- .text.com_emotorad_backend_aggregation_flink_data_bike_decode
-                0x00000000        0xc lib/libql_app_mqtt.a(data.c.obj)
- .text.com_emotorad_backend_aggregation_flink_data_trip1_encode_repeated_inner
-                0x00000000       0x18 lib/libql_app_mqtt.a(data.c.obj)
- .text.com_emotorad_backend_aggregation_flink_data_trip1_decode_repeated_inner
-                0x00000000       0x20 lib/libql_app_mqtt.a(data.c.obj)
- .text.com_emotorad_backend_aggregation_flink_data_trip1_decode
-                0x00000000        0xc lib/libql_app_mqtt.a(data.c.obj)
- .text.com_emotorad_backend_aggregation_flink_data_trip2_encode_repeated_inner
-                0x00000000       0x18 lib/libql_app_mqtt.a(data.c.obj)
- .text.com_emotorad_backend_aggregation_flink_data_trip2_decode_repeated_inner
-                0x00000000       0x20 lib/libql_app_mqtt.a(data.c.obj)
- .text.com_emotorad_backend_aggregation_flink_data_trip2_decode
-                0x00000000        0xc lib/libql_app_mqtt.a(data.c.obj)
- .text.com_emotorad_backend_aggregation_flink_data_end_encode_repeated_inner
-                0x00000000       0x18 lib/libql_app_mqtt.a(data.c.obj)
- .text.com_emotorad_backend_aggregation_flink_data_end_decode_repeated_inner
-                0x00000000       0x20 lib/libql_app_mqtt.a(data.c.obj)
- .text.com_emotorad_backend_aggregation_flink_data_end_decode
-                0x00000000        0xc lib/libql_app_mqtt.a(data.c.obj)
- .text          0x00000000        0x0 lib/libql_app_mqtt.a(pbtools.c.obj)
- .data          0x00000000        0x0 lib/libql_app_mqtt.a(pbtools.c.obj)
- .bss           0x00000000        0x0 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.decoder_abort
-                0x00000000        0xe lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.decoder_heap_alloc
-                0x00000000       0x1a lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.decoder_read_varint
-                0x00000000       0x6e lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_int32_item
-                0x00000000       0x10 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_int64_item
-                0x00000000       0x14 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_sint32_item
-                0x00000000       0x22 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_sint64_item
-                0x00000000       0x2a lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_uint32_item
-                0x00000000       0x10 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_uint64_item
-                0x00000000       0x10 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_bool_item
-                0x00000000       0x18 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.decoder_init_slice
-                0x00000000       0x26 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.decoder_seek
-                0x00000000       0x26 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.repeated_info_init_decode
-                0x00000000       0x16 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.decoder_read
-                0x00000000       0x34 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.decoder_read_32_bit_value
-                0x00000000       0x14 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_fixed32_item
-                0x00000000       0x10 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_sfixed32_item
-                0x00000000       0x10 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_float_item
-                0x00000000       0x1e lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.decoder_read_64_bit_value
-                0x00000000       0x14 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_fixed64_item
-                0x00000000       0x10 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_sfixed64_item
-                0x00000000       0x14 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_double_item
-                0x00000000       0x1e lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.calloc_repeated.isra.0
-                0x00000000       0x2a lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_varint_check_wire_type
-                0x00000000       0x1a lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.decoder_read_length_delimited
-                0x00000000       0x2e lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.repeated_info_decode_length_delimited
-                0x00000000       0x24 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.decode_repeated_inner_item
-                0x00000000       0x44 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.repeated_info_decode_32bit
-                0x00000000       0x54 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.repeated_info_decode_64bit
-                0x00000000       0x54 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.repeated_info_decode_varint
-                0x00000000       0x5c lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.decoder_read_repeated
-                0x00000000       0x58 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_sint64
-                0x00000000       0x1c lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_sfixed32
-                0x00000000       0x1c lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_fixed64
-                0x00000000       0x1c lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.encoder_write_repeated
-                0x00000000       0x3e lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.encoder_write_tagged_varint_always
-                0x00000000       0x1e lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.write_repeated_int32
-                0x00000000        0xa lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.write_repeated_int64
-                0x00000000        0xc lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.write_repeated_sint32
-                0x00000000       0x12 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.write_repeated_sint64
-                0x00000000       0x22 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.write_repeated_uint32
-                0x00000000        0xa lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.write_repeated_uint64
-                0x00000000        0xc lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.write_repeated_bool
-                0x00000000       0x10 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.encoder_write_length_delimited
-                0x00000000       0x18 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.encoder_write_32_bit_value
-                0x00000000       0x14 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.write_repeated_32bit
-                0x00000000        0x8 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.write_repeated_float
-                0x00000000       0x22 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.write_repeated_64bit
-                0x00000000        0xc lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.write_repeated_double
-                0x00000000       0x22 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_bool
-                0x00000000       0x18 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_double
-                0x00000000       0x1c lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_sfixed64
-                0x00000000       0x1c lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_float
-                0x00000000       0x1c lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_int32
-                0x00000000       0x1c lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_int64
-                0x00000000       0x1c lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_uint32
-                0x00000000       0x1c lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_uint64
-                0x00000000       0x1c lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_sint32
-                0x00000000       0x1c lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_fixed32
-                0x00000000       0x1c lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_int64
-                0x00000000       0x12 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_sint64
-                0x00000000       0x1c lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_sint32
-                0x00000000        0x6 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_fixed32
-                0x00000000       0x1e lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_sfixed32
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_sfixed64
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_float
-                0x00000000        0x8 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_bytes
-                0x00000000       0x28 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_int32_always
-                0x00000000       0x14 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_int64_always
-                0x00000000       0x12 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_uint64_always
-                0x00000000       0x12 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_sint64_always
-                0x00000000       0x1c lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_sint32_always
-                0x00000000        0x6 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_uint32_always
-                0x00000000        0x6 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_fixed32_always
-                0x00000000       0x1a lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_fixed64_always
-                0x00000000       0x18 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_sfixed32_always
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_sfixed64_always
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_float_always
-                0x00000000        0x8 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_double_always
-                0x00000000        0x8 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_bool_always
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_enum_always
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_string_always
-                0x00000000       0x2e lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_bytes_always
-                0x00000000       0x26 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_repeated_int32
-                0x00000000        0xc lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_repeated_int64
-                0x00000000        0xc lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_repeated_sint32
-                0x00000000        0xc lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_repeated_sint64
-                0x00000000        0xc lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_repeated_uint32
-                0x00000000        0xc lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_repeated_uint64
-                0x00000000        0xc lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_repeated_fixed32
-                0x00000000        0xc lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_repeated_fixed64
-                0x00000000        0xc lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_repeated_sfixed32
-                0x00000000        0xc lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_repeated_sfixed64
-                0x00000000        0xc lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_repeated_float
-                0x00000000        0xc lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_repeated_double
-                0x00000000        0xc lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_repeated_bool
-                0x00000000        0xc lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_repeated_string
-                0x00000000       0x3c lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_repeated_bytes
-                0x00000000       0x3e lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_available
-                0x00000000        0xe lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_read_tag
-                0x00000000       0x20 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_read_int32
-                0x00000000        0xa lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_read_int64
-                0x00000000        0x6 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_read_sint64
-                0x00000000       0x2e lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_read_sint32
-                0x00000000        0x8 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_read_uint32
-                0x00000000        0xa lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_read_uint64
-                0x00000000        0x6 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_read_fixed32
-                0x00000000       0x18 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_read_fixed64
-                0x00000000       0x1a lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_read_sfixed32
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_read_sfixed64
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_read_float
-                0x00000000        0xc lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_read_double
-                0x00000000        0xc lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_read_bool
-                0x00000000        0xe lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_read_enum
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_read_string
-                0x00000000       0x2c lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_string
-                0x00000000        0xe lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_read_bytes
-                0x00000000       0x2a lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.read_repeated_bytes
-                0x00000000        0xe lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_alloc_repeated_int32
-                0x00000000        0x8 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_repeated_info_decode_int32
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_alloc_repeated_int64
-                0x00000000        0x8 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_repeated_info_decode_int64
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_alloc_repeated_uint32
-                0x00000000        0x8 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_repeated_info_decode_uint32
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_alloc_repeated_uint64
-                0x00000000        0x8 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_repeated_info_decode_uint64
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_alloc_repeated_sint32
-                0x00000000        0x8 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_repeated_info_decode_sint32
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_alloc_repeated_sint64
-                0x00000000        0x8 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_repeated_info_decode_sint64
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_alloc_repeated_fixed32
-                0x00000000        0x8 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_repeated_info_decode_fixed32
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_alloc_repeated_fixed64
-                0x00000000        0x8 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_repeated_info_decode_fixed64
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_alloc_repeated_sfixed32
-                0x00000000        0x8 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_repeated_info_decode_sfixed32
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_alloc_repeated_sfixed64
-                0x00000000        0x8 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_repeated_info_decode_sfixed64
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_alloc_repeated_float
-                0x00000000        0x8 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_repeated_info_decode_float
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_alloc_repeated_double
-                0x00000000        0x8 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_repeated_info_decode_double
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_alloc_repeated_bool
-                0x00000000        0x8 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_repeated_info_decode_bool
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .rodata.pbtools_alloc_repeated_string.str1.1
-                0x00000000        0x1 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_alloc_repeated_string
-                0x00000000       0x38 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_repeated_info_decode_string
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_alloc_repeated_bytes
-                0x00000000        0x8 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_repeated_info_decode_bytes
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_skip_field
-                0x00000000       0x3e lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.decoder_decode_repeated
-                0x00000000       0x74 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_decode_repeated_int32
-                0x00000000       0x18 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_decode_repeated_int64
-                0x00000000       0x18 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_decode_repeated_uint32
-                0x00000000       0x18 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_decode_repeated_uint64
-                0x00000000       0x18 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_decode_repeated_sint32
-                0x00000000       0x18 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_decode_repeated_sint64
-                0x00000000       0x18 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_decode_repeated_fixed32
-                0x00000000       0x18 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_decode_repeated_fixed64
-                0x00000000       0x18 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_decode_repeated_sfixed32
-                0x00000000       0x18 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_decode_repeated_sfixed64
-                0x00000000       0x18 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_decode_repeated_float
-                0x00000000       0x18 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_decode_repeated_double
-                0x00000000       0x18 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_decode_repeated_bool
-                0x00000000       0x18 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_decode_repeated_string
-                0x00000000       0x18 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_decode_repeated_bytes
-                0x00000000       0x18 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_bytes_init
-                0x00000000        0x6 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_message_decode
-                0x00000000       0x1a lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_sub_message_alloc
-                0x00000000       0x26 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_alloc_repeated
-                0x00000000       0x42 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encode_repeated_inner
-                0x00000000       0x44 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decode_repeated_inner
-                0x00000000       0x74 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_sub_message_encode
-                0x00000000       0x22 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_sub_message_encode_always
-                0x00000000       0x24 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_decoder_sub_message_decode
-                0x00000000       0x44 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_repeated_info_init
-                0x00000000        0x8 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_repeated_info_decode
-                0x00000000        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
- .rodata.pbtools_error_code_to_string.str1.1
-                0x00000000        0xe lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_error_code_to_string
-                0x00000000       0x1c lib/libql_app_mqtt.a(pbtools.c.obj)
- .rodata.str1.1
-                0x00000000       0x87 lib/libql_app_mqtt.a(pbtools.c.obj)
- .rodata.CSWTCH.307
-                0x00000000       0x24 lib/libql_app_mqtt.a(pbtools.c.obj)
  .text          0x00000000        0x0 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memcpy-stub.o)
  .data          0x00000000        0x0 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memcpy-stub.o)
  .bss           0x00000000        0x0 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memcpy-stub.o)
- .text          0x00000000        0x0 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memmove.o)
- .data          0x00000000        0x0 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memmove.o)
- .bss           0x00000000        0x0 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memmove.o)
  .text          0x00000000        0x0 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memset.o)
  .data          0x00000000        0x0 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memset.o)
  .bss           0x00000000        0x0 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memset.o)
@@ -2145,19 +1736,19 @@ LOAD ../../prebuilts/win32/gcc-arm-none-eabi/gcc-arm-none-eabi-9.2.1/bin/../lib/
                 0x6040012c        0x4 LONG 0x807f0000 __corestub_start
                 0x60400130        0x4 LONG 0x4
                 0x60400134        0x4 LONG 0x220 (__text_load_start - __flash_start)
-                0x60400138        0x4 LONG 0x3380 (__text_end - __text_start)
+                0x60400138        0x4 LONG 0x2940 (__text_end - __text_start)
                 0x6040013c        0x4 LONG 0x60400320 __text_start
                 0x60400140        0x4 LONG 0x4
-                0x60400144        0x4 LONG 0x35a0 (__init_array_load_start - __flash_start)
+                0x60400144        0x4 LONG 0x2b60 (__init_array_load_start - __flash_start)
                 0x60400148        0x4 LONG 0x0 (__init_array_end - __init_array_start)
-                0x6040014c        0x4 LONG 0x604036a0 __init_array_start
+                0x6040014c        0x4 LONG 0x60402c60 __init_array_start
                 0x60400150        0x4 LONG 0x1
                 0x60400154        0x4 LONG 0x220 (__data_load_start - __flash_start)
                 0x60400158        0x4 LONG 0x0 (__data_end - __data_start)
                 0x6040015c        0x4 LONG 0x807f01a0 __data_start
                 0x60400160        0x4 LONG 0x3
                 0x60400164        0x4 LONG 0x0
-                0x60400168        0x4 LONG 0xd44 (__bss_end - __bss_start)
+                0x60400168        0x4 LONG 0x948 (__bss_end - __bss_start)
                 0x6040016c        0x4 LONG 0x807f01a0 __bss_start
                 0x60400170        0x4 LONG 0x0
                 0x60400174        0x4 LONG 0x0
@@ -2338,7 +1929,7 @@ LOAD ../../prebuilts/win32/gcc-arm-none-eabi/gcc-arm-none-eabi-9.2.1/bin/../lib/
 .igot.plt       0x60400320        0x0
  .igot.plt      0x60400320        0x0 lib/core_stub.o
 
-.bss            0x807f01a0      0xd60
+.bss            0x807f01a0      0x960
                 0x807f01a0                __bss_start = .
  *(.bss .bss.* COMMON .scommon .sbss .sbss.* .sbss2 .sbss2.* .gnu.linkonce.b.*)
  .bss.ql_intsel_flg
@@ -2354,33 +1945,33 @@ LOAD ../../prebuilts/win32/gcc-arm-none-eabi/gcc-arm-none-eabi-9.2.1/bin/../lib/
                 0x807f01ac        0x4 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
  .bss.mqtt_task
                 0x807f01b0        0x4 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
- COMMON         0x807f01b4      0xd30 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+ COMMON         0x807f01b4      0x934 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
                 0x807f01b4                heap_trip1
                 0x807f01b8                encodedLengthTrip2
                 0x807f01bc                encodedTrip2
                 0x807f02bc                encodedCore
-                0x807f06bc                encodedEnd
-                0x807f073c                Bike_Core_Data
-                0x807f0740                Bike_Trip1_Data
-                0x807f0744                sendEnd
-                0x807f07c4                encodedTrip1
-                0x807f08c4                sendCore
-                0x807f0cc4                sendTrip1
-                0x807f0dc4                sendTrip2
-                0x807f0ec4                heap_core
-                0x807f0ec8                Bike_Trip2_Data
-                0x807f0ecc                heap_trip2
-                0x807f0ed0                heap_end
-                0x807f0ed4                encodedLengthTrip1
-                0x807f0ed8                Bike_End_Data
-                0x807f0edc                encodedLengthEnd
-                0x807f0ee0                encodedLengthBike
-                0x807f0ee4                __bss_end = .
-                0x807f0f00                . = ALIGN (0x20)
- *fill*         0x807f0ee4       0x1c 
+                0x807f02c0                encodedEnd
+                0x807f0340                Bike_Core_Data
+                0x807f0344                Bike_Trip1_Data
+                0x807f0348                sendEnd
+                0x807f03c8                encodedTrip1
+                0x807f04c8                sendCore
+                0x807f08c8                sendTrip1
+                0x807f09c8                sendTrip2
+                0x807f0ac8                heap_core
+                0x807f0acc                Bike_Trip2_Data
+                0x807f0ad0                heap_trip2
+                0x807f0ad4                heap_end
+                0x807f0ad8                encodedLengthTrip1
+                0x807f0adc                Bike_End_Data
+                0x807f0ae0                encodedLengthEnd
+                0x807f0ae4                encodedLengthBike
+                0x807f0ae8                __bss_end = .
+                0x807f0b00                . = ALIGN (0x20)
+ *fill*         0x807f0ae8       0x18 
                 0x60400320                . = ((LOADADDR (.corestub) + SIZEOF (.corestub)) + SIZEOF (.data))
 
-.text           0x60400320     0x3380
+.text           0x60400320     0x2940
                 0x60400320                __text_start = .
  *(.text .text.* .gnu.linkonce.t.* .rdata .rodata .rodata.* .gnu.linkonce.r.* .glue_7 .glue_7t .vfp11_veneer .v4_bx)
  .glue_7        0x60400320        0x0 linker stubs
@@ -2533,161 +2124,65 @@ LOAD ../../prebuilts/win32/gcc-arm-none-eabi/gcc-arm-none-eabi-9.2.1/bin/../lib/
                 0x60401954       0xc0 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
                 0x60401954                base64Encoder
  .rodata.mqtt_app_thread.str1.1
-                0x60401a14      0x5f6 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
- *fill*         0x6040200a        0x2 
+                0x60401a14      0x4f1 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+ *fill*         0x60401f05        0x3 
  .text.mqtt_app_thread
-                0x6040200c      0x684 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+                0x60401f08      0x4dc lib/libql_app_mqtt.a(mqtt_demo.c.obj)
  .rodata.ql_mqtt_app_init.str1.1
-                0x60402690       0x2c lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+                0x604023e4       0x2c lib/libql_app_mqtt.a(mqtt_demo.c.obj)
  .text.ql_mqtt_app_init
-                0x604026bc       0x4c lib/libql_app_mqtt.a(mqtt_demo.c.obj)
-                0x604026bc                ql_mqtt_app_init
+                0x60402410       0x4c lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+                0x60402410                ql_mqtt_app_init
  .rodata.__FUNCTION__.20706
-                0x60402708       0x18 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+                0x6040245c       0x18 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
  .rodata.__FUNCTION__.20712
-                0x60402720       0x17 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+                0x60402474       0x17 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
  .rodata.__FUNCTION__.20718
-                0x60402737       0x16 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+                0x6040248b       0x16 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
  .rodata.__FUNCTION__.20727
-                0x6040274d       0x13 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
- .rodata.__FUNCTION__.20793
-                0x60402760       0x10 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
- .rodata.__FUNCTION__.20813
-                0x60402770       0x11 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
- .rodata.com_emotorad_backend_aggregation_flink_data_bike_init.str1.1
-                0x60402781       0x31 lib/libql_app_mqtt.a(data.c.obj)
- *fill*         0x604027b2        0x6 
- .text.com_emotorad_backend_aggregation_flink_data_bike_init
-                0x604027b8       0xcc lib/libql_app_mqtt.a(data.c.obj)
-                0x604027b8                com_emotorad_backend_aggregation_flink_data_bike_init
- *fill*         0x60402884        0x4 
- .text.com_emotorad_backend_aggregation_flink_data_trip1_init
-                0x60402888       0x50 lib/libql_app_mqtt.a(data.c.obj)
-                0x60402888                com_emotorad_backend_aggregation_flink_data_trip1_init
- .text.com_emotorad_backend_aggregation_flink_data_trip2_init
-                0x604028d8       0x40 lib/libql_app_mqtt.a(data.c.obj)
-                0x604028d8                com_emotorad_backend_aggregation_flink_data_trip2_init
- .text.com_emotorad_backend_aggregation_flink_data_end_init
-                0x60402918       0x28 lib/libql_app_mqtt.a(data.c.obj)
-                0x60402918                com_emotorad_backend_aggregation_flink_data_end_init
- .text.com_emotorad_backend_aggregation_flink_data_end_encode_inner
-                0x60402940       0x28 lib/libql_app_mqtt.a(data.c.obj)
-                0x60402940                com_emotorad_backend_aggregation_flink_data_end_encode_inner
- .text.com_emotorad_backend_aggregation_flink_data_trip1_encode_inner
-                0x60402968       0x78 lib/libql_app_mqtt.a(data.c.obj)
-                0x60402968                com_emotorad_backend_aggregation_flink_data_trip1_encode_inner
- .text.com_emotorad_backend_aggregation_flink_data_trip2_encode_inner
-                0x604029e0       0x50 lib/libql_app_mqtt.a(data.c.obj)
-                0x604029e0                com_emotorad_backend_aggregation_flink_data_trip2_encode_inner
- .text.com_emotorad_backend_aggregation_flink_data_bike_encode_inner
-                0x60402a30      0x1d8 lib/libql_app_mqtt.a(data.c.obj)
-                0x60402a30                com_emotorad_backend_aggregation_flink_data_bike_encode_inner
- .text.com_emotorad_backend_aggregation_flink_data_bike_new
-                0x60402c08        0xc lib/libql_app_mqtt.a(data.c.obj)
-                0x60402c08                com_emotorad_backend_aggregation_flink_data_bike_new
- .text.com_emotorad_backend_aggregation_flink_data_bike_encode
-                0x60402c14        0xc lib/libql_app_mqtt.a(data.c.obj)
-                0x60402c14                com_emotorad_backend_aggregation_flink_data_bike_encode
- .text.com_emotorad_backend_aggregation_flink_data_trip1_new
-                0x60402c20        0xc lib/libql_app_mqtt.a(data.c.obj)
-                0x60402c20                com_emotorad_backend_aggregation_flink_data_trip1_new
- .text.com_emotorad_backend_aggregation_flink_data_trip1_encode
-                0x60402c2c        0xc lib/libql_app_mqtt.a(data.c.obj)
-                0x60402c2c                com_emotorad_backend_aggregation_flink_data_trip1_encode
- .text.com_emotorad_backend_aggregation_flink_data_trip2_new
-                0x60402c38        0xc lib/libql_app_mqtt.a(data.c.obj)
-                0x60402c38                com_emotorad_backend_aggregation_flink_data_trip2_new
- .text.com_emotorad_backend_aggregation_flink_data_trip2_encode
-                0x60402c44        0xc lib/libql_app_mqtt.a(data.c.obj)
-                0x60402c44                com_emotorad_backend_aggregation_flink_data_trip2_encode
- .text.com_emotorad_backend_aggregation_flink_data_end_new
-                0x60402c50        0xc lib/libql_app_mqtt.a(data.c.obj)
-                0x60402c50                com_emotorad_backend_aggregation_flink_data_end_new
- .text.com_emotorad_backend_aggregation_flink_data_end_encode
-                0x60402c5c        0xc lib/libql_app_mqtt.a(data.c.obj)
-                0x60402c5c                com_emotorad_backend_aggregation_flink_data_end_encode
- .text.heap_alloc
-                0x60402c68       0x2e lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.encoder_write
-                0x60402c96       0x2e lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.encoder_write_varint
-                0x60402cc4       0x40 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.encoder_write_tag
-                0x60402d04        0xa lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.encoder_write_tagged_varint
-                0x60402d0e       0x26 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.encoder_write_64_bit_value
-                0x60402d34       0x28 lib/libql_app_mqtt.a(pbtools.c.obj)
- .text.pbtools_encoder_write_int32
-                0x60402d5c       0x14 lib/libql_app_mqtt.a(pbtools.c.obj)
-                0x60402d5c                pbtools_encoder_write_int32
- .text.pbtools_encoder_write_uint64
-                0x60402d70       0x12 lib/libql_app_mqtt.a(pbtools.c.obj)
-                0x60402d70                pbtools_encoder_write_uint64
- .text.pbtools_encoder_write_uint32
-                0x60402d82        0x6 lib/libql_app_mqtt.a(pbtools.c.obj)
-                0x60402d82                pbtools_encoder_write_uint32
- .text.pbtools_encoder_write_fixed64
-                0x60402d88       0x24 lib/libql_app_mqtt.a(pbtools.c.obj)
-                0x60402d88                pbtools_encoder_write_fixed64
- .text.pbtools_encoder_write_double
-                0x60402dac        0x8 lib/libql_app_mqtt.a(pbtools.c.obj)
-                0x60402dac                pbtools_encoder_write_double
- .text.pbtools_encoder_write_bool
-                0x60402db4        0xa lib/libql_app_mqtt.a(pbtools.c.obj)
-                0x60402db4                pbtools_encoder_write_bool
- .text.pbtools_encoder_write_enum
-                0x60402dbe        0x4 lib/libql_app_mqtt.a(pbtools.c.obj)
-                0x60402dbe                pbtools_encoder_write_enum
- .text.pbtools_encoder_write_string
-                0x60402dc2       0x30 lib/libql_app_mqtt.a(pbtools.c.obj)
-                0x60402dc2                pbtools_encoder_write_string
- .text.pbtools_message_new
-                0x60402df2       0x2c lib/libql_app_mqtt.a(pbtools.c.obj)
-                0x60402df2                pbtools_message_new
- .text.pbtools_message_encode
-                0x60402e1e       0x30 lib/libql_app_mqtt.a(pbtools.c.obj)
-                0x60402e1e                pbtools_message_encode
- *fill*         0x60402e4e        0x2 
- .text.memcpy   0x60402e50       0xc8 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memcpy-stub.o)
-                0x60402e50                memcpy
- .text.memmove  0x60402f18       0xd4 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memmove.o)
-                0x60402f18                memmove
- .text.memset   0x60402fec       0xa8 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memset.o)
-                0x60402fec                memset
- *fill*         0x60403094       0x2c 
- .text          0x604030c0       0xdc ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-strlen.o)
-                0x604030c0                strlen
- .text.strncpy  0x6040319c       0x74 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-strncpy.o)
-                0x6040319c                strncpy
- .text          0x60403210      0x2b0 ..\..\prebuilts\win32\gcc-arm-none-eabi\gcc-arm-none-eabi-9.2.1\lib\gcc\arm-none-eabi\9.2.1\thumb\v7+fp\hard\libgcc.a(_divsi3.o)
-                0x60403210                __divsi3
-                0x60403210                __aeabi_idiv
-                0x604034a4                __aeabi_idivmod
- .text          0x604034c0        0x4 ..\..\prebuilts\win32\gcc-arm-none-eabi\gcc-arm-none-eabi-9.2.1\lib\gcc\arm-none-eabi\9.2.1\thumb\v7+fp\hard\libgcc.a(_dvmd_tls.o)
-                0x604034c0                __aeabi_idiv0
-                0x604034c0                __aeabi_ldiv0
- *fill*         0x604034c4        0x4 
- .text.__stub   0x604034c8      0x1d8 linker stubs
-                0x604036a0                __text_end = .
-                0x604036a0                . = ALIGN (0x20)
- *fill*         0x604036a0        0x0 
+                0x604024a1       0x13 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+ .rodata.__FUNCTION__.20781
+                0x604024b4       0x10 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+ .rodata.__FUNCTION__.20801
+                0x604024c4       0x11 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+ *fill*         0x604024d5        0x3 
+ .text.memcpy   0x604024d8       0xc8 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memcpy-stub.o)
+                0x604024d8                memcpy
+ .text.memset   0x604025a0       0xa8 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memset.o)
+                0x604025a0                memset
+ *fill*         0x60402648       0x38 
+ .text          0x60402680       0xdc ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-strlen.o)
+                0x60402680                strlen
+ .text.strncpy  0x6040275c       0x74 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-strncpy.o)
+                0x6040275c                strncpy
+ .text          0x604027d0      0x2b0 ..\..\prebuilts\win32\gcc-arm-none-eabi\gcc-arm-none-eabi-9.2.1\lib\gcc\arm-none-eabi\9.2.1\thumb\v7+fp\hard\libgcc.a(_divsi3.o)
+                0x604027d0                __divsi3
+                0x604027d0                __aeabi_idiv
+                0x60402a64                __aeabi_idivmod
+ .text          0x60402a80        0x4 ..\..\prebuilts\win32\gcc-arm-none-eabi\gcc-arm-none-eabi-9.2.1\lib\gcc\arm-none-eabi\9.2.1\thumb\v7+fp\hard\libgcc.a(_dvmd_tls.o)
+                0x60402a80                __aeabi_idiv0
+                0x60402a80                __aeabi_ldiv0
+ *fill*         0x60402a84        0x4 
+ .text.__stub   0x60402a88      0x1d8 linker stubs
+                0x60402c60                __text_end = .
+                0x60402c60                . = ALIGN (0x20)
+ *fill*         0x60402c60        0x0 
                 0x60400320                __text_load_start = LOADADDR (.text)
 
-.iplt           0x604036a0        0x0
- .iplt          0x604036a0        0x0 lib/core_stub.o
+.iplt           0x60402c60        0x0
+ .iplt          0x60402c60        0x0 lib/core_stub.o
 
-.rel.dyn        0x604036a0        0x0
- .rel.iplt      0x604036a0        0x0 lib/core_stub.o
+.rel.dyn        0x60402c60        0x0
+ .rel.iplt      0x60402c60        0x0 lib/core_stub.o
 
-.init_array     0x604036a0        0x0
-                0x604036a0                __init_array_start = .
+.init_array     0x60402c60        0x0
+                0x60402c60                __init_array_start = .
  *(.init_array*)
-                0x604036a0                __init_array_end = .
-                0x604036a0                . = ALIGN (0x20)
-                0x604036a0                __init_array_load_start = LOADADDR (.init_array)
-                0x604036a0                __flash_end = (ADDR (.init_array) + SIZEOF (.init_array))
-                0x807f0f00                __ram_end = (ADDR (.bss) + SIZEOF (.bss))
+                0x60402c60                __init_array_end = .
+                0x60402c60                . = ALIGN (0x20)
+                0x60402c60                __init_array_load_start = LOADADDR (.init_array)
+                0x60402c60                __flash_end = (ADDR (.init_array) + SIZEOF (.init_array))
+                0x807f0b00                __ram_end = (ADDR (.bss) + SIZEOF (.bss))
                 0x00000001                ASSERT ((__flash_end <= (ORIGIN (flash) + LENGTH (flash))), FLASH overflow)
                 0x00000001                ASSERT ((__ram_end <= (ORIGIN (ram) + LENGTH (ram))), RAM overflow)
 
@@ -2700,10 +2195,7 @@ LOAD ../../prebuilts/win32/gcc-arm-none-eabi/gcc-arm-none-eabi-9.2.1/bin/../lib/
  .comment       0x00000079       0x7a lib/libql_app_peripheral.a(led_cfg_demo.c.obj)
  .comment       0x00000079       0x7a lib/libql_app_peripheral.a(uart_demo.c.obj)
  .comment       0x00000079       0x7a lib/libql_app_mqtt.a(mqtt_demo.c.obj)
- .comment       0x00000079       0x7a lib/libql_app_mqtt.a(data.c.obj)
- .comment       0x00000079       0x7a lib/libql_app_mqtt.a(pbtools.c.obj)
  .comment       0x00000079       0x7a ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memcpy-stub.o)
- .comment       0x00000079       0x7a ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memmove.o)
  .comment       0x00000079       0x7a ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memset.o)
  .comment       0x00000079       0x7a ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-strncpy.o)
 
@@ -2724,23 +2216,17 @@ LOAD ../../prebuilts/win32/gcc-arm-none-eabi/gcc-arm-none-eabi-9.2.1/bin/../lib/
  .ARM.attributes
                 0x00000138       0x37 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
  .ARM.attributes
-                0x0000016f       0x37 lib/libql_app_mqtt.a(data.c.obj)
+                0x0000016f       0x37 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memcpy-stub.o)
  .ARM.attributes
-                0x000001a6       0x37 lib/libql_app_mqtt.a(pbtools.c.obj)
+                0x000001a6       0x37 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memset.o)
  .ARM.attributes
-                0x000001dd       0x37 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memcpy-stub.o)
+                0x000001dd       0x1d ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-strlen.o)
  .ARM.attributes
-                0x00000214       0x37 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memmove.o)
+                0x000001fa       0x37 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-strncpy.o)
  .ARM.attributes
-                0x0000024b       0x37 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-memset.o)
+                0x00000231       0x19 ..\..\prebuilts\win32\gcc-arm-none-eabi\gcc-arm-none-eabi-9.2.1\lib\gcc\arm-none-eabi\9.2.1\thumb\v7+fp\hard\libgcc.a(_divsi3.o)
  .ARM.attributes
-                0x00000282       0x1d ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-strlen.o)
- .ARM.attributes
-                0x0000029f       0x37 ..\..\components\newlib\newlib-3.1.0\armca5\libc.a(lib_a-strncpy.o)
- .ARM.attributes
-                0x000002d6       0x19 ..\..\prebuilts\win32\gcc-arm-none-eabi\gcc-arm-none-eabi-9.2.1\lib\gcc\arm-none-eabi\9.2.1\thumb\v7+fp\hard\libgcc.a(_divsi3.o)
- .ARM.attributes
-                0x000002ef       0x19 ..\..\prebuilts\win32\gcc-arm-none-eabi\gcc-arm-none-eabi-9.2.1\lib\gcc\arm-none-eabi\9.2.1\thumb\v7+fp\hard\libgcc.a(_dvmd_tls.o)
+                0x0000024a       0x19 ..\..\prebuilts\win32\gcc-arm-none-eabi\gcc-arm-none-eabi-9.2.1\lib\gcc\arm-none-eabi\9.2.1\thumb\v7+fp\hard\libgcc.a(_dvmd_tls.o)
 
 /DISCARD/
  *(.dynstr*)
@@ -2750,37 +2236,31 @@ LOAD ../../prebuilts/win32/gcc-arm-none-eabi/gcc-arm-none-eabi-9.2.1/bin/../lib/
  *(.gnu*)
 OUTPUT(hex\examples\APPIMAGE_APP.elf elf32-littlearm)
 
-.debug_info     0x00000000    0x1735d
+.debug_info     0x00000000     0xc0e5
  .debug_info    0x00000000     0x239b components/ql-application/init/CMakeFiles/APPIMAGE_APP.dir/ql_init.c.obj
  .debug_info    0x0000239b     0x1baa lib/libql_app_peripheral.a(gpio_demo.c.obj)
  .debug_info    0x00003f45     0x1518 lib/libql_app_peripheral.a(gpio_int_demo.c.obj)
  .debug_info    0x0000545d     0x1ba7 lib/libql_app_peripheral.a(led_cfg_demo.c.obj)
  .debug_info    0x00007004     0x1ba2 lib/libql_app_peripheral.a(uart_demo.c.obj)
- .debug_info    0x00008ba6     0x3a00 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
- .debug_info    0x0000c5a6     0x29ed lib/libql_app_mqtt.a(data.c.obj)
- .debug_info    0x0000ef93     0x83ca lib/libql_app_mqtt.a(pbtools.c.obj)
+ .debug_info    0x00008ba6     0x353f lib/libql_app_mqtt.a(mqtt_demo.c.obj)
 
-.debug_abbrev   0x00000000     0x1d2b
+.debug_abbrev   0x00000000     0x1484
  .debug_abbrev  0x00000000      0x3d6 components/ql-application/init/CMakeFiles/APPIMAGE_APP.dir/ql_init.c.obj
  .debug_abbrev  0x000003d6      0x2e9 lib/libql_app_peripheral.a(gpio_demo.c.obj)
  .debug_abbrev  0x000006bf      0x2ee lib/libql_app_peripheral.a(gpio_int_demo.c.obj)
  .debug_abbrev  0x000009ad      0x384 lib/libql_app_peripheral.a(led_cfg_demo.c.obj)
  .debug_abbrev  0x00000d31      0x307 lib/libql_app_peripheral.a(uart_demo.c.obj)
- .debug_abbrev  0x00001038      0x47e lib/libql_app_mqtt.a(mqtt_demo.c.obj)
- .debug_abbrev  0x000014b6      0x2da lib/libql_app_mqtt.a(data.c.obj)
- .debug_abbrev  0x00001790      0x59b lib/libql_app_mqtt.a(pbtools.c.obj)
+ .debug_abbrev  0x00001038      0x44c lib/libql_app_mqtt.a(mqtt_demo.c.obj)
 
-.debug_loc      0x00000000     0x8e20
+.debug_loc      0x00000000     0x1054
  .debug_loc     0x00000000       0xda components/ql-application/init/CMakeFiles/APPIMAGE_APP.dir/ql_init.c.obj
  .debug_loc     0x000000da      0x1dc lib/libql_app_peripheral.a(gpio_demo.c.obj)
  .debug_loc     0x000002b6       0xa0 lib/libql_app_peripheral.a(gpio_int_demo.c.obj)
  .debug_loc     0x00000356      0x229 lib/libql_app_peripheral.a(led_cfg_demo.c.obj)
  .debug_loc     0x0000057f      0x2c4 lib/libql_app_peripheral.a(uart_demo.c.obj)
  .debug_loc     0x00000843      0x811 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
- .debug_loc     0x00001054      0xb55 lib/libql_app_mqtt.a(data.c.obj)
- .debug_loc     0x00001ba9     0x7277 lib/libql_app_mqtt.a(pbtools.c.obj)
 
-.debug_aranges  0x00000000      0x7f8
+.debug_aranges  0x00000000      0x150
  .debug_aranges
                 0x00000000       0x30 components/ql-application/init/CMakeFiles/APPIMAGE_APP.dir/ql_init.c.obj
  .debug_aranges
@@ -2793,56 +2273,42 @@ OUTPUT(hex\examples\APPIMAGE_APP.elf elf32-littlearm)
                 0x000000d0       0x30 lib/libql_app_peripheral.a(uart_demo.c.obj)
  .debug_aranges
                 0x00000100       0x50 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
- .debug_aranges
-                0x00000150      0x118 lib/libql_app_mqtt.a(data.c.obj)
- .debug_aranges
-                0x00000268      0x590 lib/libql_app_mqtt.a(pbtools.c.obj)
 
-.debug_ranges   0x00000000      0xa40
+.debug_ranges   0x00000000      0x138
  .debug_ranges  0x00000000       0x50 components/ql-application/init/CMakeFiles/APPIMAGE_APP.dir/ql_init.c.obj
  .debug_ranges  0x00000050       0x20 lib/libql_app_peripheral.a(gpio_demo.c.obj)
  .debug_ranges  0x00000070       0x28 lib/libql_app_peripheral.a(gpio_int_demo.c.obj)
  .debug_ranges  0x00000098       0x28 lib/libql_app_peripheral.a(led_cfg_demo.c.obj)
  .debug_ranges  0x000000c0       0x20 lib/libql_app_peripheral.a(uart_demo.c.obj)
  .debug_ranges  0x000000e0       0x58 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
- .debug_ranges  0x00000138      0x108 lib/libql_app_mqtt.a(data.c.obj)
- .debug_ranges  0x00000240      0x800 lib/libql_app_mqtt.a(pbtools.c.obj)
 
-.debug_line     0x00000000     0x5440
+.debug_line     0x00000000     0x233f
  .debug_line    0x00000000      0x5e8 components/ql-application/init/CMakeFiles/APPIMAGE_APP.dir/ql_init.c.obj
  .debug_line    0x000005e8      0x4e2 lib/libql_app_peripheral.a(gpio_demo.c.obj)
  .debug_line    0x00000aca      0x3b9 lib/libql_app_peripheral.a(gpio_int_demo.c.obj)
  .debug_line    0x00000e83      0x488 lib/libql_app_peripheral.a(led_cfg_demo.c.obj)
  .debug_line    0x0000130b      0x464 lib/libql_app_peripheral.a(uart_demo.c.obj)
- .debug_line    0x0000176f      0xd50 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
- .debug_line    0x000024bf      0xa97 lib/libql_app_mqtt.a(data.c.obj)
- .debug_line    0x00002f56     0x24ea lib/libql_app_mqtt.a(pbtools.c.obj)
+ .debug_line    0x0000176f      0xbd0 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
 
-.debug_str      0x00000000     0x79f9
- .debug_str     0x00000000     0x1bf0 components/ql-application/init/CMakeFiles/APPIMAGE_APP.dir/ql_init.c.obj
+.debug_str      0x00000000     0x569b
+ .debug_str     0x00000000     0x1c09 components/ql-application/init/CMakeFiles/APPIMAGE_APP.dir/ql_init.c.obj
                                0x1d40 (size before relaxing)
- .debug_str     0x00001bf0      0xa90 lib/libql_app_peripheral.a(gpio_demo.c.obj)
+ .debug_str     0x00001c09      0xa97 lib/libql_app_peripheral.a(gpio_demo.c.obj)
                                0x1763 (size before relaxing)
- .debug_str     0x00002680      0x135 lib/libql_app_peripheral.a(gpio_int_demo.c.obj)
+ .debug_str     0x000026a0      0x135 lib/libql_app_peripheral.a(gpio_int_demo.c.obj)
                                0x1718 (size before relaxing)
- .debug_str     0x000027b5     0x1552 lib/libql_app_peripheral.a(led_cfg_demo.c.obj)
+ .debug_str     0x000027d5     0x1552 lib/libql_app_peripheral.a(led_cfg_demo.c.obj)
                                0x2967 (size before relaxing)
- .debug_str     0x00003d07      0x4ef lib/libql_app_peripheral.a(uart_demo.c.obj)
+ .debug_str     0x00003d27      0x4ef lib/libql_app_peripheral.a(uart_demo.c.obj)
                                0x2491 (size before relaxing)
- .debug_str     0x000041f6     0x1789 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
-                               0x312d (size before relaxing)
- .debug_str     0x0000597f      0x960 lib/libql_app_mqtt.a(data.c.obj)
-                               0x17e4 (size before relaxing)
- .debug_str     0x000062df     0x171a lib/libql_app_mqtt.a(pbtools.c.obj)
-                               0x2296 (size before relaxing)
+ .debug_str     0x00004216     0x1485 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+                               0x2e29 (size before relaxing)
 
-.debug_frame    0x00000000     0x1890
+.debug_frame    0x00000000      0x378
  .debug_frame   0x00000000       0x60 components/ql-application/init/CMakeFiles/APPIMAGE_APP.dir/ql_init.c.obj
  .debug_frame   0x00000060       0x6c lib/libql_app_peripheral.a(gpio_demo.c.obj)
  .debug_frame   0x000000cc       0x84 lib/libql_app_peripheral.a(gpio_int_demo.c.obj)
  .debug_frame   0x00000150       0x80 lib/libql_app_peripheral.a(led_cfg_demo.c.obj)
  .debug_frame   0x000001d0       0x80 lib/libql_app_peripheral.a(uart_demo.c.obj)
  .debug_frame   0x00000250      0x108 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
- .debug_frame   0x00000358      0x2fc lib/libql_app_mqtt.a(data.c.obj)
- .debug_frame   0x00000654     0x121c lib/libql_app_mqtt.a(pbtools.c.obj)
- .debug_frame   0x00001870       0x20 ..\..\prebuilts\win32\gcc-arm-none-eabi\gcc-arm-none-eabi-9.2.1\lib\gcc\arm-none-eabi\9.2.1\thumb\v7+fp\hard\libgcc.a(_divsi3.o)
+ .debug_frame   0x00000358       0x20 ..\..\prebuilts\win32\gcc-arm-none-eabi\gcc-arm-none-eabi-9.2.1\lib\gcc\arm-none-eabi\9.2.1\thumb\v7+fp\hard\libgcc.a(_divsi3.o)

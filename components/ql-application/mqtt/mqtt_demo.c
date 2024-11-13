@@ -166,7 +166,7 @@ NeSK2tDE/kM2APQa0qJg2yzJydY28f+45vPXScNcmfhlJ8wHd/aV\r\n\
 -----END RSA PRIVATE KEY-----";
 #endif
 
-uint8_t encodedCore[1024];
+unsigned char *encodedCore;
 uint8_t encodedTrip1[256];
 uint8_t encodedTrip2[256];
 uint8_t encodedEnd[128];
@@ -299,62 +299,62 @@ char *base64Encoder(unsigned char input_str[])
 	return res_str;
 }
 
-static void make_Bike_message()
-{
-	// int rc;
-	// int size;
+// static void make_Bike_message()
+// {
+// 	// int rc;
+// 	// int size;
 
-	uint8_t workspace1[1024];
+// 	uint8_t workspace1[1024];
 
-	// heap_core->size = 4;
+// 	// heap_core->size = 4;
 
-	Bike_Core_Data = com_emotorad_backend_aggregation_flink_data_bike_new(&workspace1[0], sizeof(workspace1));
-	com_emotorad_backend_aggregation_flink_data_bike_init(Bike_Core_Data, heap_core);
+// 	Bike_Core_Data = com_emotorad_backend_aggregation_flink_data_bike_new(&workspace1[0], sizeof(workspace1));
+// 	com_emotorad_backend_aggregation_flink_data_bike_init(Bike_Core_Data, heap_core);
 
-	com_emotorad_backend_aggregation_flink_data_bike_encode(Bike_Core_Data, &encodedCore[0], sizeof(encodedCore));
-}
+// 	com_emotorad_backend_aggregation_flink_data_bike_encode(Bike_Core_Data, &encodedCore[0], sizeof(encodedCore));
+// }
 
-static void make_Trip1_message()
-{
-	// int rc;
-	// int size;
+// static void make_Trip1_message()
+// {
+// 	// int rc;
+// 	// int size;
 
-	uint8_t workspace2[1024];
-	// heap_trip1->size = 512;
+// 	uint8_t workspace2[1024];
+// 	// heap_trip1->size = 512;
 
-	Bike_Trip1_Data = com_emotorad_backend_aggregation_flink_data_trip1_new(&workspace2[0], sizeof(workspace2));
-	com_emotorad_backend_aggregation_flink_data_trip1_init(Bike_Trip1_Data, heap_trip1);
+// 	Bike_Trip1_Data = com_emotorad_backend_aggregation_flink_data_trip1_new(&workspace2[0], sizeof(workspace2));
+// 	com_emotorad_backend_aggregation_flink_data_trip1_init(Bike_Trip1_Data, heap_trip1);
 
-	com_emotorad_backend_aggregation_flink_data_trip1_encode(Bike_Trip1_Data, &encodedTrip1[0], sizeof(encodedTrip1));
-}
+// 	com_emotorad_backend_aggregation_flink_data_trip1_encode(Bike_Trip1_Data, &encodedTrip1[0], sizeof(encodedTrip1));
+// }
 
-static void make_Trip2_message()
-{
-	// int rc;
-	// int size;
+// static void make_Trip2_message()
+// {
+// 	// int rc;
+// 	// int size;
 
-	uint8_t workspace3[1024];
-	// heap_trip2->size = 512;
+// 	uint8_t workspace3[1024];
+// 	// heap_trip2->size = 512;
 
-	Bike_Trip2_Data = com_emotorad_backend_aggregation_flink_data_trip2_new(&workspace3[0], sizeof(workspace3));
-	com_emotorad_backend_aggregation_flink_data_trip2_init(Bike_Trip2_Data, heap_trip2);
+// 	Bike_Trip2_Data = com_emotorad_backend_aggregation_flink_data_trip2_new(&workspace3[0], sizeof(workspace3));
+// 	com_emotorad_backend_aggregation_flink_data_trip2_init(Bike_Trip2_Data, heap_trip2);
 
-	// size = com_emotorad_backend_aggregation_flink_data_trip2_encode(Bike_Trip2_Data, &encodedTrip2[0], sizeof(encodedTrip2));
-	com_emotorad_backend_aggregation_flink_data_trip2_encode(Bike_Trip2_Data, &encodedTrip2[0], sizeof(encodedTrip2));
-}
+// 	// size = com_emotorad_backend_aggregation_flink_data_trip2_encode(Bike_Trip2_Data, &encodedTrip2[0], sizeof(encodedTrip2));
+// 	com_emotorad_backend_aggregation_flink_data_trip2_encode(Bike_Trip2_Data, &encodedTrip2[0], sizeof(encodedTrip2));
+// }
 
-static void make_End_message()
-{
-	// int rc;
-	// int size;
+// static void make_End_message()
+// {
+// 	// int rc;
+// 	// int size;
 
-	uint8_t workspace4[1024];
-	// heap_end->size = 512;
-	Bike_End_Data = com_emotorad_backend_aggregation_flink_data_end_new(&workspace4[0], sizeof(workspace4));
-	com_emotorad_backend_aggregation_flink_data_end_init(Bike_End_Data, heap_end);
+// 	uint8_t workspace4[1024];
+// 	// heap_end->size = 512;
+// 	Bike_End_Data = com_emotorad_backend_aggregation_flink_data_end_new(&workspace4[0], sizeof(workspace4));
+// 	com_emotorad_backend_aggregation_flink_data_end_init(Bike_End_Data, heap_end);
 
-	com_emotorad_backend_aggregation_flink_data_end_encode(Bike_End_Data, &encodedEnd[0], sizeof(encodedEnd));
-}
+// 	com_emotorad_backend_aggregation_flink_data_end_encode(Bike_End_Data, &encodedEnd[0], sizeof(encodedEnd));
+// }
 
 static void mqtt_app_thread(void *arg)
 {
@@ -626,9 +626,9 @@ static void mqtt_app_thread(void *arg)
 					ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
 				}
 
-				make_Bike_message();
+				//make_Bike_message()
 				// mbedtls_base64_encode(&sendCore[0], 0, &encodedLengthBike, &encodedCore[0], sizeof(encodedCore));
-				encodedCore = ""
+				encodedCore = (unsigned char*)"Longitude:23.67,Latitude:10.45,ID:123";
 				sendBikePacket = base64Encoder(encodedCore);
 				strncpy(sendBikeMqttPacket, sendBikePacket, 72);
 
@@ -636,17 +636,17 @@ static void mqtt_app_thread(void *arg)
 				QL_MQTT_LOG("bike data packet length final:%d", strlen(sendBikeMqttPacket));
 				QL_MQTT_LOG("bike data packet:%s", sendBikePacket);
 
-				if (ql_mqtt_publish(&mqtt_cli, "topic/telemetry/bike", sendBikePacket, strlen(sendBikePacket), 0, 1, mqtt_requst_result_cb, NULL) == MQTTCLIENT_WOUNDBLOCK)
+				if (ql_mqtt_publish(&mqtt_cli, "topic/telemetry/gps/live", sendBikePacket, strlen(sendBikePacket), 0, 1, mqtt_requst_result_cb, NULL) == MQTTCLIENT_WOUNDBLOCK)
 				{
 					QL_MQTT_LOG("======wait publish result bike");
 					// ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
 				}
 
-				// make_Trip1_message();
+				//make_Trip1_message();
 				// // mbedtls_base64_encode(&sendTrip1[0], 0, &encodedLengthTrip1, &encodedTrip1[0], sizeof(encodedTrip1));
 
-				// sendTrip1Packet = base64Encoder(encodedTrip1);
-				// strncpy(sendTrip1MqttPacket, sendTrip1Packet, strlen(sendTrip1Packet));
+				sendTrip1Packet = base64Encoder(encodedTrip1);
+				strncpy(sendTrip1MqttPacket, sendTrip1Packet, strlen(sendTrip1Packet));
 				// QL_MQTT_LOG("trip1 data packet:%s", sendTrip1Packet);
 				// // QL_MQTT_LOG("trip1 data packet:%c", encodedTrip1);
 
@@ -656,12 +656,12 @@ static void mqtt_app_thread(void *arg)
 				// 	// ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
 				// }
 
-				// make_Trip2_message();
+				//make_Trip2_message();
 
 				// // mbedtls_base64_encode(&sendTrip2[0], 0, &encodedLengthTrip2, &encodedTrip2[0], sizeof(encodedTrip2));
 
-				// sendTrip2Packet = base64Encoder(encodedTrip2);
-				// strncpy(sendTrip2MqttPacket, sendTrip2Packet, strlen(sendTrip2Packet));
+				sendTrip2Packet = base64Encoder(encodedTrip2);
+				strncpy(sendTrip2MqttPacket, sendTrip2Packet, strlen(sendTrip2Packet));
 				// QL_MQTT_LOG("trip2 data packet:%s", sendTrip2Packet);
 
 				// // QL_MQTT_LOG("trip2 data packet:%c", &encodedTrip2);
@@ -672,11 +672,11 @@ static void mqtt_app_thread(void *arg)
 				// 	ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
 				// }
 
-				// make_End_message();
+				//make_End_message();
 				// // mbedtls_base64_encode(&sendEnd[0], 0, &encodedLengthEnd, &encodedEnd[0], sizeof(encodedEnd));
 
-				// sendEndPacket = base64Encoder(encodedEnd);
-				// strncpy(sendEndMqttPacket, sendEndPacket, strlen(sendEndPacket));
+				sendEndPacket = base64Encoder(encodedEnd);
+				strncpy(sendEndMqttPacket, sendEndPacket, strlen(sendEndPacket));
 				// QL_MQTT_LOG("end data packet:%s", sendEndPacket);
 
 				// //	QL_MQTT_LOG("trip2 data packet:%c", &encodedEnd);
