@@ -485,7 +485,7 @@ static void ql_init_demo_thread(void *param)
     //ql_gnss_app_init();
 #endif
 #ifdef QL_APP_FEATURE_HD_GNSS   //外挂华大GNSS
-    //ql_hd_gnss_app_init();
+    ql_hd_gnss_app_init();
 #endif
 #ifdef QL_APP_FEATURE_FILE_ZIP
     //ql_zip_app_init();

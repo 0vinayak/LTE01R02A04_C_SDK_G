@@ -38,7 +38,7 @@ WHEN              WHO         WHAT, WHERE, WHY
 #define QL_MQTT_LOG_PUSH(msg, ...) QL_LOG_PUSH("ql_MQTT", msg, ##__VA_ARGS__)
 static ql_task_t mqtt_task = NULL;
 
-#define MQTT_CLIENT_IDENTITY "Amigo Bike"
+#define MQTT_CLIENT_IDENTITY "GPS Tracker"
 #define MQTT_CLIENT_USER "test"
 #define MQTT_CLIENT_PASS "3Motorad"
 
@@ -615,6 +615,7 @@ static void mqtt_app_thread(void *arg)
 		{
 			while (test_num < 10000 && mqtt_connected == 1)
 			{
+				char* encodingString;
 
 				ql_mqtt_set_inpub_callback(&mqtt_cli, mqtt_inpub_data_cb, NULL);
 
@@ -628,7 +629,9 @@ static void mqtt_app_thread(void *arg)
 
 				//make_Bike_message()
 				// mbedtls_base64_encode(&sendCore[0], 0, &encodedLengthBike, &encodedCore[0], sizeof(encodedCore));
-				encodedCore = (unsigned char*)"Longitude:23.67,Latitude:10.45,ID:123";
+
+				sprintf(encodingString, "Longitude:%lf,Latitude:%lf,ID:123", nmeaData.longitude, nmeaData.latitude);
+				encodedCore = (unsigned char*)encodingString;//"Longitude:%lf,Latitude:%lf,ID:123,longitu);
 				sendBikePacket = base64Encoder(encodedCore);
 				strncpy(sendBikeMqttPacket, sendBikePacket, 72);
 
