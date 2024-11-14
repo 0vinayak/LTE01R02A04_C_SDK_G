@@ -623,6 +623,7 @@ static void mqtt_app_thread(void *arg)
 		{
 			while (test_num < 10000 && mqtt_connected == 1)
 			{
+				ql_get_gnss_info(&nmeaData);
 
 				ql_mqtt_set_inpub_callback(&mqtt_cli, mqtt_inpub_data_cb, NULL);
 
@@ -634,12 +635,11 @@ static void mqtt_app_thread(void *arg)
 					ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
 				}
 
-				ql_get_gnss_info(&nmeaData);
 
 			//	make_Bike_message();
 				// mbedtls_base64_encode(&sendCore[0], 0, &encodedLengthBike, &encodedCore[0], sizeof(encodedCore));
 
-				sprintf(encodingString, "Longitude:%lf,Latitude:%lf,ID:123", nmeaData.longitude, nmeaData.latitude);
+				sprintf(encodingString, "Longitude:%f,Latitude:%f,ID:123", nmeaData.longitude, nmeaData.latitude);
 				encodedCore = (unsigned char*)encodingString;//"Longitude:%lf,Latitude:%lf,ID:123,longitu);
 				sendBikePacket = base64Encoder(encodedCore);
 				strncpy(sendBikeMqttPacket, sendBikePacket, 72);

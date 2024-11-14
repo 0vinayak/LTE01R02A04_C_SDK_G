@@ -2375,127 +2375,126 @@ LOAD ../../prebuilts/win32/gcc-arm-none-eabi/gcc-arm-none-eabi-9.2.1/bin/../lib/
                 0x60401b18       0xc0 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
                 0x60401b18                base64Encoder
  .rodata.mqtt_app_thread.str1.1
-                0x60401bd8      0x4ee lib/libql_app_mqtt.a(mqtt_demo.c.obj)
- *fill*         0x604020c6        0x2 
+                0x60401bd8      0x4ec lib/libql_app_mqtt.a(mqtt_demo.c.obj)
  .text.mqtt_app_thread
-                0x604020c8      0x504 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+                0x604020c4      0x504 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
  .rodata.ql_mqtt_app_init.str1.1
-                0x604025cc       0x2c lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+                0x604025c8       0x2c lib/libql_app_mqtt.a(mqtt_demo.c.obj)
  .text.ql_mqtt_app_init
-                0x604025f8       0x4c lib/libql_app_mqtt.a(mqtt_demo.c.obj)
-                0x604025f8                ql_mqtt_app_init
+                0x604025f4       0x4c lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+                0x604025f4                ql_mqtt_app_init
  .rodata.str1.1
-                0x60402644        0x5 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+                0x60402640        0x5 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
  .rodata.__FUNCTION__.22096
-                0x60402649       0x18 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+                0x60402645       0x18 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
  .rodata.__FUNCTION__.22102
-                0x60402661       0x17 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+                0x6040265d       0x17 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
  .rodata.__FUNCTION__.22108
-                0x60402678       0x16 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+                0x60402674       0x16 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
  .rodata.__FUNCTION__.22117
-                0x6040268e       0x13 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+                0x6040268a       0x13 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
  .rodata.__FUNCTION__.22171
-                0x604026a1       0x10 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+                0x6040269d       0x10 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
  .rodata.__FUNCTION__.22191
-                0x604026b1       0x11 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
- *fill*         0x604026c2        0x2 
+                0x604026ad       0x11 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+ *fill*         0x604026be        0x2 
  .text.conv_num
-                0x604026c4       0x54 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x604026c0       0x54 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
  .rodata.ql_hd_gnss_notify_cb.str1.1
-                0x60402718       0x64 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x60402714       0x64 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
  .text.ql_hd_gnss_notify_cb
-                0x6040277c       0x60 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
-                0x6040277c                ql_hd_gnss_notify_cb
+                0x60402778       0x60 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x60402778                ql_hd_gnss_notify_cb
  .text._split_string_by_comma.constprop.0
-                0x604027dc       0x24 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x604027d8       0x24 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
  .rodata.ql_hd_gnss_app_init.str1.1
-                0x60402800       0x3f lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
- *fill*         0x6040283f        0x1 
+                0x604027fc       0x3f lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+ *fill*         0x6040283b        0x1 
  .text.ql_hd_gnss_app_init
-                0x60402840       0x50 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
-                0x60402840                ql_hd_gnss_app_init
+                0x6040283c       0x50 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x6040283c                ql_hd_gnss_app_init
  .rodata.ql_gnss_device_info_request.str1.1
-                0x60402890       0x59 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
- *fill*         0x604028e9        0x3 
+                0x6040288c       0x59 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+ *fill*         0x604028e5        0x3 
  .text.ql_gnss_device_info_request
-                0x604028ec       0x70 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
-                0x604028ec                ql_gnss_device_info_request
+                0x604028e8       0x70 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x604028e8                ql_gnss_device_info_request
  .text.nmea_get_checksum
-                0x6040295c       0x18 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
-                0x6040295c                nmea_get_checksum
+                0x60402958       0x18 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x60402958                nmea_get_checksum
  .text.nmea_has_checksum
-                0x60402974       0x10 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
-                0x60402974                nmea_has_checksum
+                0x60402970       0x10 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x60402970                nmea_has_checksum
  .rodata.nmea_validate.str1.1
-                0x60402984       0x12 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
- *fill*         0x60402996        0x2 
+                0x60402980       0x12 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+ *fill*         0x60402992        0x2 
  .text.nmea_validate
-                0x60402998       0xac lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
-                0x60402998                nmea_validate
+                0x60402994       0xac lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x60402994                nmea_validate
  .rodata.nmea_get_type.str1.1
-                0x60402a44       0x14 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x60402a40       0x14 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
  .text.nmea_get_type
-                0x60402a58       0x6c lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
-                0x60402a58                nmea_get_type
+                0x60402a54       0x6c lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x60402a54                nmea_get_type
  .text.nmea_position_parse
-                0x60402ac4       0x42 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
-                0x60402ac4                nmea_position_parse
- *fill*         0x60402b06        0x2 
+                0x60402ac0       0x42 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x60402ac0                nmea_position_parse
+ *fill*         0x60402b02        0x2 
  .text.nmea_cardinal_direction_parse
-                0x60402b08       0x1c lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
-                0x60402b08                nmea_cardinal_direction_parse
+                0x60402b04       0x1c lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x60402b04                nmea_cardinal_direction_parse
  .text.nmea_validate_parse
-                0x60402b24        0xe lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
-                0x60402b24                nmea_validate_parse
+                0x60402b20        0xe lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x60402b20                nmea_validate_parse
  .rodata.nmea_parse_gsv.str1.1
-                0x60402b32       0x2a lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x60402b2e       0x2a lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
  .text.nmea_parse_gsv
-                0x60402b5c      0x144 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
-                0x60402b5c                nmea_parse_gsv
+                0x60402b58      0x144 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x60402b58                nmea_parse_gsv
  .rodata.nmea_parse_gga.str1.1
-                0x60402ca0       0x2e lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
- *fill*         0x60402cce        0x2 
+                0x60402c9c       0x2e lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+ *fill*         0x60402cca        0x2 
  .text.nmea_parse_gga
-                0x60402cd0       0xe8 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
-                0x60402cd0                nmea_parse_gga
+                0x60402ccc       0xe8 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x60402ccc                nmea_parse_gga
  .rodata.nmea_parse_gsa.str1.1
-                0x60402db8       0x2e lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
- *fill*         0x60402de6        0x2 
+                0x60402db4       0x2e lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+ *fill*         0x60402de2        0x2 
  .text.nmea_parse_gsa
-                0x60402de8       0xc4 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
-                0x60402de8                nmea_parse_gsa
+                0x60402de4       0xc4 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x60402de4                nmea_parse_gsa
  .rodata.nmea_satellite_check.str1.1
-                0x60402eac       0x12 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x60402ea8       0x12 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
                                  0x15 (size before relaxing)
- *fill*         0x60402ebe        0x2 
+ *fill*         0x60402eba        0x2 
  .text.nmea_satellite_check
-                0x60402ec0       0x8c lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
-                0x60402ec0                nmea_satellite_check
+                0x60402ebc       0x8c lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x60402ebc                nmea_satellite_check
  .rodata.strptime.str1.1
-                0x60402f4c       0x30 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x60402f48       0x30 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
  .text.strptime
-                0x60402f7c      0x408 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
-                0x60402f7c                strptime
+                0x60402f78      0x408 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x60402f78                strptime
  .rodata.nmea_time_parse.str1.1
-                0x60403384        0x7 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
- *fill*         0x6040338b        0x1 
+                0x60403380        0x7 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+ *fill*         0x60403387        0x1 
  .text.nmea_time_parse
-                0x6040338c       0x30 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
-                0x6040338c                nmea_time_parse
+                0x60403388       0x30 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x60403388                nmea_time_parse
  .rodata.nmea_date_parse.str1.1
-                0x604033bc        0x7 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
- *fill*         0x604033c3        0x1 
+                0x604033b8        0x7 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+ *fill*         0x604033bf        0x1 
  .text.nmea_date_parse
-                0x604033c4       0x30 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
-                0x604033c4                nmea_date_parse
+                0x604033c0       0x30 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x604033c0                nmea_date_parse
  .rodata.nmea_parse_rmc.str1.1
-                0x604033f4       0xe4 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x604033f0       0xe4 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
  .text.nmea_parse_rmc
-                0x604034d8      0x140 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
-                0x604034d8                nmea_parse_rmc
+                0x604034d4      0x140 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                0x604034d4                nmea_parse_rmc
  .rodata.nmea_value_update.str1.1
-                0x60403618       0x4d lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
- *fill*         0x60403665        0x3 
+                0x60403614       0x4d lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+ *fill*         0x60403661        0x7 
  .text.nmea_value_update
                 0x60403668      0x260 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
                 0x60403668                nmea_value_update
@@ -2959,30 +2958,30 @@ OUTPUT(hex\examples\APPIMAGE_APP.elf elf32-littlearm)
  .debug_ranges  0x000000e0       0x58 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
  .debug_ranges  0x00000138      0x140 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
 
-.debug_line     0x00000000     0x425b
- .debug_line    0x00000000      0x626 components/ql-application/init/CMakeFiles/APPIMAGE_APP.dir/ql_init.c.obj
- .debug_line    0x00000626      0x4e2 lib/libql_app_peripheral.a(gpio_demo.c.obj)
- .debug_line    0x00000b08      0x3b9 lib/libql_app_peripheral.a(gpio_int_demo.c.obj)
- .debug_line    0x00000ec1      0x488 lib/libql_app_peripheral.a(led_cfg_demo.c.obj)
- .debug_line    0x00001349      0x464 lib/libql_app_peripheral.a(uart_demo.c.obj)
- .debug_line    0x000017ad      0xc41 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
- .debug_line    0x000023ee     0x1e6d lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+.debug_line     0x00000000     0x41b3
+ .debug_line    0x00000000      0x60e components/ql-application/init/CMakeFiles/APPIMAGE_APP.dir/ql_init.c.obj
+ .debug_line    0x0000060e      0x4ca lib/libql_app_peripheral.a(gpio_demo.c.obj)
+ .debug_line    0x00000ad8      0x3a1 lib/libql_app_peripheral.a(gpio_int_demo.c.obj)
+ .debug_line    0x00000e79      0x470 lib/libql_app_peripheral.a(led_cfg_demo.c.obj)
+ .debug_line    0x000012e9      0x44c lib/libql_app_peripheral.a(uart_demo.c.obj)
+ .debug_line    0x00001735      0xc29 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+ .debug_line    0x0000235e     0x1e55 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
 
-.debug_str      0x00000000     0x663d
- .debug_str     0x00000000     0x1c18 components/ql-application/init/CMakeFiles/APPIMAGE_APP.dir/ql_init.c.obj
-                               0x1d54 (size before relaxing)
- .debug_str     0x00001c18      0xa97 lib/libql_app_peripheral.a(gpio_demo.c.obj)
-                               0x1763 (size before relaxing)
- .debug_str     0x000026af      0x135 lib/libql_app_peripheral.a(gpio_int_demo.c.obj)
-                               0x1718 (size before relaxing)
- .debug_str     0x000027e4     0x1552 lib/libql_app_peripheral.a(led_cfg_demo.c.obj)
-                               0x2967 (size before relaxing)
- .debug_str     0x00003d36      0x4ef lib/libql_app_peripheral.a(uart_demo.c.obj)
-                               0x2491 (size before relaxing)
- .debug_str     0x00004225     0x1a94 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
-                               0x3dd1 (size before relaxing)
- .debug_str     0x00005cb9      0x984 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
-                               0x4315 (size before relaxing)
+.debug_str      0x00000000     0x6625
+ .debug_str     0x00000000     0x1c00 components/ql-application/init/CMakeFiles/APPIMAGE_APP.dir/ql_init.c.obj
+                               0x1d3c (size before relaxing)
+ .debug_str     0x00001c00      0xa97 lib/libql_app_peripheral.a(gpio_demo.c.obj)
+                               0x174b (size before relaxing)
+ .debug_str     0x00002697      0x135 lib/libql_app_peripheral.a(gpio_int_demo.c.obj)
+                               0x1700 (size before relaxing)
+ .debug_str     0x000027cc     0x1552 lib/libql_app_peripheral.a(led_cfg_demo.c.obj)
+                               0x294f (size before relaxing)
+ .debug_str     0x00003d1e      0x4ef lib/libql_app_peripheral.a(uart_demo.c.obj)
+                               0x2479 (size before relaxing)
+ .debug_str     0x0000420d     0x1a94 lib/libql_app_mqtt.a(mqtt_demo.c.obj)
+                               0x3db9 (size before relaxing)
+ .debug_str     0x00005ca1      0x984 lib/libql_app_hd_gnss.a(hd_gnss_demo.c.obj)
+                               0x42fd (size before relaxing)
 
 .debug_frame    0x00000000      0x8bc
  .debug_frame   0x00000000       0x60 components/ql-application/init/CMakeFiles/APPIMAGE_APP.dir/ql_init.c.obj
