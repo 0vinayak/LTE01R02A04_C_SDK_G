@@ -70,7 +70,7 @@ static ql_task_t mqtt_task = NULL;
 static ql_sem_t  mqtt_semp;
 static int  mqtt_connected = 0;
 
-char* encodingString = "Init";
+unsigned char* encodingString;
 
 
 #if USE_CRT_BUFFER
@@ -621,9 +621,14 @@ static void mqtt_app_thread(void *arg)
         }
 		else
 		{
+			ql_get_gnss_info(&nmeaData);
+
+			QL_MQTT_LOG("Received longitude:%f", nmeaData.longitude);
+			QL_MQTT_LOG("Received latitude:%f", nmeaData.latitude);
+
 			while (test_num < 10000 && mqtt_connected == 1)
 			{
-				ql_get_gnss_info(&nmeaData);
+				// ql_get_gnss_info(&nmeaData);
 
 				ql_mqtt_set_inpub_callback(&mqtt_cli, mqtt_inpub_data_cb, NULL);
 
@@ -639,9 +644,13 @@ static void mqtt_app_thread(void *arg)
 			//	make_Bike_message();
 				// mbedtls_base64_encode(&sendCore[0], 0, &encodedLengthBike, &encodedCore[0], sizeof(encodedCore));
 
-				sprintf(encodingString, "Longitude:%f,Latitude:%f,ID:123", nmeaData.longitude, nmeaData.latitude);
-				encodedCore = (unsigned char*)encodingString;//"Longitude:%lf,Latitude:%lf,ID:123,longitu);
-				sendBikePacket = base64Encoder(encodedCore);
+				// QL_MQTT_LOG("Received longitude:%f", nmeaData.longitude);
+				// QL_MQTT_LOG("Received latitude:%f", nmeaData.latitude);
+
+				encodingString = (unsigned char*)"Longitude:12.45,Latitude:76.8,ID:123";
+				// sprintf(encodingString, "Longitude:%f,Latitude:%f,ID:123", nmeaData.longitude, nmeaData.latitude);
+				// encodedCore = (unsigned char*)encodingString;//"Longitude:%lf,Latitude:%lf,ID:123,longitu);
+				sendBikePacket = base64Encoder(encodingString);
 				strncpy(sendBikeMqttPacket, sendBikePacket, 72);
 
 				QL_MQTT_LOG("bike data packet length:%d", strlen(sendBikePacket));
