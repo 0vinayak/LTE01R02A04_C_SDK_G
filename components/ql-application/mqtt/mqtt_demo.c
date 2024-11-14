@@ -71,8 +71,8 @@ static ql_sem_t  mqtt_semp;
 static int  mqtt_connected = 0;
 
 char *encodingString = "Init";
-volatile double longitude = 10.56;
-volatile double latitude = 43.56;
+// volatile double longitude = 10.56;
+// volatile double latitude = 43.56;
 
 
 #if USE_CRT_BUFFER
@@ -380,15 +380,15 @@ static void mqtt_app_thread(void *arg)
 	// char *token = NULL;
 	int is_user_onenet = 0;
 
-	char *sendBikePacket;
-	char *sendTrip1Packet;
-	char *sendTrip2Packet;
-	char *sendEndPacket;
+	// char *sendBikePacket;
+	// char *sendTrip1Packet;
+	// char *sendTrip2Packet;
+	// char *sendEndPacket;
 
-	char sendBikeMqttPacket[152];
-	char sendTrip1MqttPacket[256];
-	char sendTrip2MqttPacket[256];
-	char sendEndMqttPacket[256];
+	// char sendBikeMqttPacket[152];
+	// char sendTrip1MqttPacket[256];
+	// char sendTrip2MqttPacket[256];
+	// char sendEndMqttPacket[256];
 
 	mqtt_error_code_e subscribeResult;
 
@@ -623,6 +623,11 @@ static void mqtt_app_thread(void *arg)
         }
 		else
 		{
+			volatile double longitude = 10.56;
+			volatile double latitude = 43.56;
+
+			QL_MQTT_LOG("Received longitude:%lf", longitude);
+			QL_MQTT_LOG("Received latitude:%lf", latitude);
 			while (test_num < 10000 && mqtt_connected == 1)
 			{
 
@@ -638,35 +643,35 @@ static void mqtt_app_thread(void *arg)
 
 				// ql_get_gnss_info(&nmeaData);
 
-				QL_MQTT_LOG("Received longitude:%lf", longitude);
-				QL_MQTT_LOG("Received latitude:%lf", latitude);
+				// QL_MQTT_LOG("Received longitude:%lf", longitude);
+				// QL_MQTT_LOG("Received latitude:%lf", latitude);
 
 			//	make_Bike_message();
 				// mbedtls_base64_encode(&sendCore[0], 0, &encodedLengthBike, &encodedCore[0], sizeof(encodedCore));
 
-				sprintf(encodingString, "Longitude:%lf,Latitude:%lf,ID:123", longitude, latitude);
-				QL_MQTT_LOG("string after sprintf:%s", encodingString);
-				encodedCore = (unsigned char*)encodingString;//"Longitude:%lf,Latitude:%lf,ID:123,longitu);
-				QL_MQTT_LOG("string before encode:%s", encodedCore);
+				// sprintf(encodingString, "Longitude:%lf,Latitude:%lf,ID:123", longitude, latitude);
+				// QL_MQTT_LOG("string after sprintf:%s", encodingString);
+				// encodedCore = (unsigned char*)encodingString;//"Longitude:%lf,Latitude:%lf,ID:123,longitu);
+				// QL_MQTT_LOG("string before encode:%s", encodedCore);
 
-				sendBikePacket = base64Encoder(encodedCore);
-				// strncpy(sendBikeMqttPacket, sendBikePacket, 72);
+				// sendBikePacket = base64Encoder(encodedCore);
+				// // strncpy(sendBikeMqttPacket, sendBikePacket, 72);
 
-				QL_MQTT_LOG("bike data packet length:%d", strlen(sendBikePacket));
-				QL_MQTT_LOG("bike data packet length final:%d", strlen(sendBikeMqttPacket));
-				QL_MQTT_LOG("bike data packet:%s", sendBikePacket);
+				// QL_MQTT_LOG("bike data packet length:%d", strlen(sendBikePacket));
+				// QL_MQTT_LOG("bike data packet length final:%d", strlen(sendBikeMqttPacket));
+				// QL_MQTT_LOG("bike data packet:%s", sendBikePacket);
 
-				if (ql_mqtt_publish(&mqtt_cli, "topic/telemetry/gps/live", sendBikePacket, strlen(sendBikePacket), 0, 1, mqtt_requst_result_cb, NULL) == MQTTCLIENT_WOUNDBLOCK)
-				{
-					QL_MQTT_LOG("======wait publish result bike");
-					// ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
-				}
+				// if (ql_mqtt_publish(&mqtt_cli, "topic/telemetry/gps/live", sendBikePacket, strlen(sendBikePacket), 0, 1, mqtt_requst_result_cb, NULL) == MQTTCLIENT_WOUNDBLOCK)
+				// {
+				// 	QL_MQTT_LOG("======wait publish result bike");
+				// 	// ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
+				// }
 
 				//make_Trip1_message();
 				// // mbedtls_base64_encode(&sendTrip1[0], 0, &encodedLengthTrip1, &encodedTrip1[0], sizeof(encodedTrip1));
 
-				sendTrip1Packet = base64Encoder(encodedTrip1);
-				strncpy(sendTrip1MqttPacket, sendTrip1Packet, strlen(sendTrip1Packet));
+				// sendTrip1Packet = base64Encoder(encodedTrip1);
+				// strncpy(sendTrip1MqttPacket, sendTrip1Packet, strlen(sendTrip1Packet));
 				// QL_MQTT_LOG("trip1 data packet:%s", sendTrip1Packet);
 				// // QL_MQTT_LOG("trip1 data packet:%c", encodedTrip1);
 
@@ -680,8 +685,8 @@ static void mqtt_app_thread(void *arg)
 
 				// // mbedtls_base64_encode(&sendTrip2[0], 0, &encodedLengthTrip2, &encodedTrip2[0], sizeof(encodedTrip2));
 
-				sendTrip2Packet = base64Encoder(encodedTrip2);
-				strncpy(sendTrip2MqttPacket, sendTrip2Packet, strlen(sendTrip2Packet));
+				// sendTrip2Packet = base64Encoder(encodedTrip2);
+				// strncpy(sendTrip2MqttPacket, sendTrip2Packet, strlen(sendTrip2Packet));
 				// QL_MQTT_LOG("trip2 data packet:%s", sendTrip2Packet);
 
 				// // QL_MQTT_LOG("trip2 data packet:%c", &encodedTrip2);
@@ -695,8 +700,8 @@ static void mqtt_app_thread(void *arg)
 				//make_End_message();
 				// // mbedtls_base64_encode(&sendEnd[0], 0, &encodedLengthEnd, &encodedEnd[0], sizeof(encodedEnd));
 
-				sendEndPacket = base64Encoder(encodedEnd);
-				strncpy(sendEndMqttPacket, sendEndPacket, strlen(sendEndPacket));
+				// sendEndPacket = base64Encoder(encodedEnd);
+				// strncpy(sendEndMqttPacket, sendEndPacket, strlen(sendEndPacket));
 				// QL_MQTT_LOG("end data packet:%s", sendEndPacket);
 
 				// //	QL_MQTT_LOG("trip2 data packet:%c", &encodedEnd);
