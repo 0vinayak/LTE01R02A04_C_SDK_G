@@ -622,17 +622,20 @@ static void mqtt_app_thread(void *arg)
         }
 		else
 		{
-			//ql_get_gnss_info(&nmeaData);
+			// ql_get_gnss_info(&nmeaData);	
 
-			volatile double longitude = 54.456;
-			volatile double latitude = 76.456;
+			// volatile double longitude = 54.456;
+			// volatile double latitude = 76.456;
 
-			QL_MQTT_LOG("Received longitude:%f", longitude);
-			QL_MQTT_LOG("Received latitude:%f", latitude);
+			// QL_MQTT_LOG("Received longitude from thread:%.6f", nmeaData.longitude);
+			// QL_MQTT_LOG("Received latitude from thread:%.6f", nmeaData.latitude);
 
 			while (test_num < 10000 && mqtt_connected == 1)
 			{
-				// ql_get_gnss_info(&nmeaData);
+				ql_get_gnss_info(&nmeaData);
+
+				QL_MQTT_LOG("Received longitude from thread:%.6f", nmeaData.longitude);
+				QL_MQTT_LOG("Received latitude from thread:%.6f", nmeaData.latitude);
 
 				ql_mqtt_set_inpub_callback(&mqtt_cli, mqtt_inpub_data_cb, NULL);
 
@@ -653,7 +656,7 @@ static void mqtt_app_thread(void *arg)
 
 				// encodingString = (unsigned char*)"Longitude:12.45,Latitude:76.8,ID:123";
 				// sprintf(encodingString, "Longitude:%f,Latitude:%f,ID:123",longitude, latitude);
-				snprintf(encodingString, sizeof(encodingString), "Longitude:%.6f,Latitude:%.6f,ID:123", longitude, latitude);
+				snprintf(encodingString, sizeof(encodingString), "Longitude:%.6f,Latitude:%.6f,ID:123", nmeaData.longitude, nmeaData.latitude);
 				encodedCore = (unsigned char*)encodingString;//"Longitude:%lf,Latitude:%lf,ID:123,longitu);
 				sendBikePacket = base64Encoder(encodedCore);
 				// strncpy(sendBikeMqttPacket, sendBikePacket, 72);
