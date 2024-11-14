@@ -399,14 +399,14 @@ static void mqtt_app_thread(void *arg)
     char* client_user = (char*)malloc(256);
     char* client_pass = (char*)malloc(256);
 
-	volatile double longitude = 10.56;
-	volatile double latitude = 43.56;
+	// volatile double longitude = 10.56;
+	// volatile double latitude = 43.56;
 
-	QL_MQTT_LOG("Received longitude:%f", longitude);
-	QL_MQTT_LOG("Received latitude:%f", latitude);
+	// QL_MQTT_LOG("Received longitude:%f", longitude);
+	// QL_MQTT_LOG("Received latitude:%f", latitude);
     
-	QL_MQTT_LOG("========== mqtt demo start ==========");
-	QL_MQTT_LOG("wait for network register done");
+	// QL_MQTT_LOG("========== mqtt demo start ==========");
+	// QL_MQTT_LOG("wait for network register done");
 		
 	while((ret = ql_network_register_wait(nSim, 120)) != 0 && i < 10){
     	i++;
@@ -651,6 +651,12 @@ static void mqtt_app_thread(void *arg)
 
 				// QL_MQTT_LOG("Received longitude:%lf", longitude);
 				// QL_MQTT_LOG("Received latitude:%lf", latitude);
+
+				volatile double longitude = 10.56;
+				volatile double latitude = 43.56;
+
+				QL_MQTT_LOG("Received longitude:%f", longitude);
+				QL_MQTT_LOG("Received latitude:%f", latitude);
 
 			//	make_Bike_message();
 				// mbedtls_base64_encode(&sendCore[0], 0, &encodedLengthBike, &encodedCore[0], sizeof(encodedCore));
