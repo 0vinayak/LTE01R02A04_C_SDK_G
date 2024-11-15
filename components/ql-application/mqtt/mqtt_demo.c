@@ -200,7 +200,7 @@ static void
 mqtt_state_exception_cb(mqtt_client_t *client)
 {
 	QL_MQTT_LOG("mqtt session abnormal disconnect");
-	// mqtt_connected = 0;
+	mqtt_connected = 0;
 }
 
 static void mqtt_connect_result_cb(mqtt_client_t *client, void *arg, mqtt_connection_status_e status)
@@ -590,13 +590,14 @@ static void mqtt_app_thread(void *arg)
 			}
 			else
 			{
+				// ConnectIndication = 0;
 				client_info.ssl_cfg = &quectel_ssl_cfg;
-				QL_MQTT_LOG("Connection check before SSL:%u", ConnectIndication);
-				if (ConnectIndication == true)
-				{
-
-					ret = ql_mqtt_connect(&mqtt_cli, MQTT_CLIENT_QUECTEL_SSL_URL, mqtt_connect_result_cb, NULL, (const struct mqtt_connect_client_info_t *)&client_info, mqtt_state_exception_cb);
-				}
+				// QL_MQTT_LOG("Connection check before SSL:%u", ConnectIndication);
+				// if (ConnectIndication == 1)
+				// {
+				// 	ret = ql_mqtt_connect(&mqtt_cli, MQTT_CLIENT_QUECTEL_SSL_URL, mqtt_connect_result_cb, NULL, (const struct mqtt_connect_client_info_t *)&client_info, mqtt_state_exception_cb);
+				// 	ConnectIndication = 0;
+				// }
 			}
 		}
 		if (ret == MQTTCLIENT_WOUNDBLOCK)
