@@ -4,7 +4,7 @@
 =================================================================*/
 /*=================================================================
 
-                        EDIT HISTORY FOR MODULE
+						EDIT HISTORY FOR MODULE
 
 This section contains comments describing changes made to the module.
 Notice that changes are listed in reverse chronological order.
@@ -13,8 +13,6 @@ WHEN              WHO         WHAT, WHERE, WHY
 ------------     -------     -------------------------------------------------------------------------------
 
 =================================================================*/
-
-
 
 #include <stdio.h>
 #include <string.h>
@@ -44,11 +42,10 @@ static ql_task_t mqtt_task = NULL;
 #define MQTT_CLIENT_USER "test"
 #define MQTT_CLIENT_PASS "3Motorad"
 
-
-#define MQTT_CLIENT_ONENET_PRODUCTID             "417661"
-#define MQTT_CLIENT_ONENET_ACCESSKEY             "aggblpDBWoKg2CGdbxp/CVKt9xXWcV162hJ1+Bhzvw4="
-#define MQTT_CLIENT_ONENET_DEVICENAME            "test_led"
-#define MQTT_CLIENT_ONENET_VERSION               "2018-10-31"
+#define MQTT_CLIENT_ONENET_PRODUCTID "417661"
+#define MQTT_CLIENT_ONENET_ACCESSKEY "aggblpDBWoKg2CGdbxp/CVKt9xXWcV162hJ1+Bhzvw4="
+#define MQTT_CLIENT_ONENET_DEVICENAME "test_led"
+#define MQTT_CLIENT_ONENET_VERSION "2018-10-31"
 
 #define USE_CRT_BUFFER 0
 
@@ -56,7 +53,7 @@ static ql_task_t mqtt_task = NULL;
 #define MQTT_CLIENT_ONENET_URL "mqtts://mqtt.emotorad.com:8883" // onenet 的ip地址
 
 #if USE_CRT_BUFFER
-#define MQTT_CLIENT_QUECTEL_SSL_URL              "mqtts://112.31.84.164:8308"
+#define MQTT_CLIENT_QUECTEL_SSL_URL "mqtts://112.31.84.164:8308"
 #else
 #define MQTT_CLIENT_QUECTEL_SSL_URL "mqtts://em.mqtt.emotorad.com:8883"
 #endif
@@ -67,15 +64,14 @@ static ql_task_t mqtt_task = NULL;
 #define MQTT_PUB_MSG1 "{\"id\": 111111,\"dp\": {\"temperatrue\": [{\"v\": 1.000,}],\"power\": [{\"v\": 1.001,}]}}"
 #define MQTT_PUB_MSG2 "{\"id\": 222222,\"dp\": {\"temperatrue\": [{\"v\": 2.000,}],\"power\": [{\"v\": 2.002,}]}}"
 
-static ql_sem_t  mqtt_semp;
-static int  mqtt_connected = 0;
+static ql_sem_t mqtt_semp;
+static int mqtt_connected = 0;
 
 // char* encodingString = {"Init"};
 char encodingString[50];
 
-
 #if USE_CRT_BUFFER
-char *root_ca_crt_buffer= "-----BEGIN CERTIFICATE-----\r\n\
+char *root_ca_crt_buffer = "-----BEGIN CERTIFICATE-----\r\n\
 MIIEhDCCAuwCCQDuE1BpeAeMwzANBgkqhkiG9w0BAQsFADCBgjELMAkGA1UEBhMC\r\n\
 Q04xCzAJBgNVBAgMAkFIMQswCQYDVQQHDAJIRjEQMA4GA1UECgwHUVVFQ1RFTDEL\r\n\
 MAkGA1UECwwCU1QxFjAUBgNVBAMMDTExMi4zMS44NC4xNjQxIjAgBgkqhkiG9w0B\r\n\
@@ -103,7 +99,7 @@ UC5G5DzxzYspMzQv/yidti0scMSKFObseZmNGlRYymCWhXnxmoCFjLpw5RnJSB2+\r\n\
 cZ/1KFFHHZI=\r\n\
 -----END CERTIFICATE-----";
 
-char *client_crt_buffer= "-----BEGIN CERTIFICATE-----\r\n\
+char *client_crt_buffer = "-----BEGIN CERTIFICATE-----\r\n\
 MIIEhDCCAuwCCQDuE1BpeAeMwzANBgkqhkiG9w0BAQsFADCBgjELMAkGA1UEBhMC\r\n\
 Q04xCzAJBgNVBAgMAkFIMQswCQYDVQQHDAJIRjEQMA4GA1UECgwHUVVFQ1RFTDEL\r\n\
 MAkGA1UECwwCU1QxFjAUBgNVBAMMDTExMi4zMS44NC4xNjQxIjAgBgkqhkiG9w0B\r\n\
@@ -131,7 +127,7 @@ UC5G5DzxzYspMzQv/yidti0scMSKFObseZmNGlRYymCWhXnxmoCFjLpw5RnJSB2+\r\n\
 cZ/1KFFHHZI=\r\n\
 -----END CERTIFICATE-----";
 
-char *client_key_buffer= "-----BEGIN RSA PRIVATE KEY-----\r\n\
+char *client_key_buffer = "-----BEGIN RSA PRIVATE KEY-----\r\n\
 MIIG4wIBAAKCAYEAy3dyNjR4sQOq/xjsWiYD7s0bnO0BtHv4/9bGM+Wh2pENnkdA\r\n\
 5GR8CvjiABlxawqijgMdMifCv0kFsGcRMEycvz7XeHU9GnkJ/BcoW+OmlZi8Fl95\r\n\
 PCFZBhtIwog2hL53VmXXWOD/5ltJ3sWLRtiryKkdu3fQf40A1Bk/VdB2wJ/n+S+f\r\n\
@@ -209,16 +205,17 @@ mqtt_state_exception_cb(mqtt_client_t *client)
 static void mqtt_connect_result_cb(mqtt_client_t *client, void *arg, mqtt_connection_status_e status)
 {
 	QL_MQTT_LOG("status: %d", status);
-	if(status == 0){
+	if (status == 0)
+	{
 		mqtt_connected = 1;
 	}
 	ql_rtos_semaphore_release(mqtt_semp);
 }
 
-static void mqtt_requst_result_cb(mqtt_client_t *client, void *arg,int err)
+static void mqtt_requst_result_cb(mqtt_client_t *client, void *arg, int err)
 {
 	QL_MQTT_LOG("err: %d", err);
-	
+
 	ql_rtos_semaphore_release(mqtt_semp);
 }
 
@@ -230,7 +227,7 @@ static void mqtt_inpub_data_cb(mqtt_client_t *client, void *arg, int pkt_id, con
 
 // static void mqtt_disconnect_result_cb(mqtt_client_t *client, void *arg,int err){
 // 	QL_MQTT_LOG("err: %d", err);
-	
+
 // 	ql_rtos_semaphore_release(mqtt_semp);
 // }
 
@@ -370,9 +367,9 @@ static void mqtt_app_thread(void *arg)
 	int ret = 0;
 	int i = 0, run_num = 1;
 	int profile_idx = 1;
-    ql_data_call_info_s info;
+	ql_data_call_info_s info;
 	char ip4_addr_str[16] = {0};
-	mqtt_client_t  mqtt_cli;
+	mqtt_client_t mqtt_cli;
 	uint8_t nSim = 0;
 	uint16_t sim_cid;
 	struct mqtt_connect_client_info_t client_info = {0};
@@ -394,21 +391,25 @@ static void mqtt_app_thread(void *arg)
 	ql_rtos_semaphore_create(&mqtt_semp, 0);
 	ql_rtos_task_sleep_s(10);
 
-    char* client_id = (char*)malloc(256);
-    char* client_user = (char*)malloc(256);
-    char* client_pass = (char*)malloc(256);
-    
+	char *client_id = (char *)malloc(256);
+	char *client_user = (char *)malloc(256);
+	char *client_pass = (char *)malloc(256);
+
 	QL_MQTT_LOG("========== mqtt demo start ==========");
 	QL_MQTT_LOG("wait for network register done");
-		
-	while((ret = ql_network_register_wait(nSim, 120)) != 0 && i < 10){
-    	i++;
+
+	while ((ret = ql_network_register_wait(nSim, 120)) != 0 && i < 10)
+	{
+		i++;
 		ql_rtos_task_sleep_s(1);
 	}
-	if(ret == 0){
+	if (ret == 0)
+	{
 		i = 0;
 		QL_MQTT_LOG("====network registered!!!!====");
-	}else{
+	}
+	else
+	{
 		QL_MQTT_LOG("====network register failure!!!!!====");
 		goto exit;
 	}
@@ -418,21 +419,23 @@ static void mqtt_app_thread(void *arg)
 	QL_MQTT_LOG("===start data call====");
 	ret = ql_start_data_call(nSim, profile_idx, QL_PDP_TYPE_IP, "airtelgprs.com", NULL, NULL, 0);
 	QL_MQTT_LOG("===data call result:%d", ret);
-	if(ret != 0){
+	if (ret != 0)
+	{
 		QL_MQTT_LOG("====data call failure!!!!=====");
 	}
 	memset(&info, 0x00, sizeof(ql_data_call_info_s));
-	
+
 	ret = ql_get_data_call_info(nSim, profile_idx, &info);
-	if(ret != 0){
+	if (ret != 0)
+	{
 		QL_MQTT_LOG("ql_get_data_call_info ret: %d", ret);
 		ql_stop_data_call(nSim, profile_idx);
 		goto exit;
 	}
-    QL_MQTT_LOG("info->profile_idx: %d", info.profile_idx);
+	QL_MQTT_LOG("info->profile_idx: %d", info.profile_idx);
 	QL_MQTT_LOG("info->ip_version: %d", info.ip_version);
-            
-	QL_MQTT_LOG("info->v4.state: %d", info.v4.state); 
+
+	QL_MQTT_LOG("info->v4.state: %d", info.v4.state);
 	inet_ntop(AF_INET, &info.v4.addr.ip, ip4_addr_str, sizeof(ip4_addr_str));
 	QL_MQTT_LOG("info.v4.addr.ip: %s\r\n", ip4_addr_str);
 
@@ -442,27 +445,27 @@ static void mqtt_app_thread(void *arg)
 	inet_ntop(AF_INET, &info.v4.addr.sec_dns, ip4_addr_str, sizeof(ip4_addr_str));
 	QL_MQTT_LOG("info.v4.addr.sec_dns: %s\r\n", ip4_addr_str);
 
-	
-	while(run_num <= 100)
-	{	
-        int test_num = 0;
-        int case_id = 0;
-        if(is_user_onenet != 1)
-        {   
-            case_id = run_num%2;
-        }
+	while (run_num <= 100)
+	{
+		int test_num = 0;
+		int case_id = 0;
+		if (is_user_onenet != 1)
+		{
+			case_id = run_num % 2;
+		}
 
 		int ret = MQTTCLIENT_SUCCESS;
-		
-		QL_MQTT_LOG("==============mqtt_client_test[%d]================\n",run_num);
 
-		if(QL_DATACALL_SUCCESS != ql_bind_sim_and_profile(nSim, profile_idx, &sim_cid))
+		QL_MQTT_LOG("==============mqtt_client_test[%d]================\n", run_num);
+
+		if (QL_DATACALL_SUCCESS != ql_bind_sim_and_profile(nSim, profile_idx, &sim_cid))
 		{
 			QL_MQTT_LOG("nSim or profile_idx is invalid!!!!");
 			break;
 		}
-		
-		if(ql_mqtt_client_init(&mqtt_cli, sim_cid) != MQTTCLIENT_SUCCESS){
+
+		if (ql_mqtt_client_init(&mqtt_cli, sim_cid) != MQTTCLIENT_SUCCESS)
+		{
 			QL_MQTT_LOG("mqtt client init failed!!!!");
 			break;
 		}
@@ -525,22 +528,23 @@ static void mqtt_app_thread(void *arg)
 		if (case_id == 0)
 		{
 			client_info.ssl_cfg = NULL;
-		    if(is_user_onenet == 1)
-		    {
-                ret = ql_mqtt_connect(&mqtt_cli, MQTT_CLIENT_ONENET_URL, mqtt_connect_result_cb, NULL, (const struct mqtt_connect_client_info_t *)&client_info, mqtt_state_exception_cb);
-		    }
-            else 
-            {
-                ret = ql_mqtt_connect(&mqtt_cli, MQTT_CLIENT_QUECTEL_URL , mqtt_connect_result_cb, NULL, (const struct mqtt_connect_client_info_t *)&client_info, mqtt_state_exception_cb);
-            }
-			
-		}else{
+			if (is_user_onenet == 1)
+			{
+				ret = ql_mqtt_connect(&mqtt_cli, MQTT_CLIENT_ONENET_URL, mqtt_connect_result_cb, NULL, (const struct mqtt_connect_client_info_t *)&client_info, mqtt_state_exception_cb);
+			}
+			else
+			{
+				ret = ql_mqtt_connect(&mqtt_cli, MQTT_CLIENT_QUECTEL_URL, mqtt_connect_result_cb, NULL, (const struct mqtt_connect_client_info_t *)&client_info, mqtt_state_exception_cb);
+			}
+		}
+		else
+		{
 			struct mqtt_ssl_config_t quectel_ssl_cfg = {
 				.ssl_ctx_id = 1,
 #if USE_CRT_BUFFER
 				.verify_level = MQTT_SSL_VERIFY_SERVER_CLIENT,
-                .client_cert_type= QL_SSL_CLIENT_CERT_BUFFER,
-                .cacert_buffer = root_ca_crt_buffer,
+				.client_cert_type = QL_SSL_CLIENT_CERT_BUFFER,
+				.cacert_buffer = root_ca_crt_buffer,
 				.client_cert_path = client_crt_buffer,
 				.client_key_path = client_key_buffer,
 #else
@@ -548,81 +552,88 @@ static void mqtt_app_thread(void *arg)
 				.cacert_path = NULL,
 				.client_cert_path = NULL,
 				.client_key_path = NULL,
-#endif			
+#endif
 				.client_key_pwd = NULL,
 				.ssl_version = QL_SSL_VERSION_ALL,
 				.sni_enable = 0,
 				.ssl_negotiate_timeout = QL_SSL_NEGOTIATE_TIME_DEF,
 				.ignore_invalid_certsign = 0,
 				.ignore_multi_certchain_verify = 0,
-				.ignore_certitem = MBEDTLS_X509_BADCERT_NOT_TRUSTED|MBEDTLS_X509_BADCERT_EXPIRED|MBEDTLS_X509_BADCERT_FUTURE,
+				.ignore_certitem = MBEDTLS_X509_BADCERT_NOT_TRUSTED | MBEDTLS_X509_BADCERT_EXPIRED | MBEDTLS_X509_BADCERT_FUTURE,
 			};
-            struct mqtt_ssl_config_t ontnet_ssl_cfg = {
-                .ssl_ctx_id = 1,
-                .verify_level = MQTT_SSL_VERIFY_NONE,
-                .cacert_path = "UFS:MQTTS-certificate.pem",
-                .client_cert_path = NULL,
-                .client_key_path = NULL,
-                .client_key_pwd = NULL,
+			struct mqtt_ssl_config_t ontnet_ssl_cfg = {
+				.ssl_ctx_id = 1,
+				.verify_level = MQTT_SSL_VERIFY_NONE,
+				.cacert_path = "UFS:MQTTS-certificate.pem",
+				.client_cert_path = NULL,
+				.client_key_path = NULL,
+				.client_key_pwd = NULL,
 				.ssl_version = QL_SSL_VERSION_ALL,
 				.sni_enable = 0,
 				.ssl_negotiate_timeout = QL_SSL_NEGOTIATE_TIME_DEF,
 				.ignore_invalid_certsign = 0,
 				.ignore_multi_certchain_verify = 0,
-				.ignore_certitem = MBEDTLS_X509_BADCERT_EXPIRED|MBEDTLS_X509_BADCERT_FUTURE,
-            };
-		    if(is_user_onenet == 1)
-		    {
-                client_info.ssl_cfg = &ontnet_ssl_cfg;
-                ret = ql_mqtt_connect(&mqtt_cli, MQTT_CLIENT_ONENET_SSL_URL, mqtt_connect_result_cb, NULL, (const struct mqtt_connect_client_info_t *)&client_info, mqtt_state_exception_cb);
-		    }
-            else 
-            {
-                client_info.ssl_cfg = &quectel_ssl_cfg;
-                ret = ql_mqtt_connect(&mqtt_cli, MQTT_CLIENT_QUECTEL_SSL_URL, mqtt_connect_result_cb, NULL, (const struct mqtt_connect_client_info_t *)&client_info, mqtt_state_exception_cb);
-            }
-            
+				.ignore_certitem = MBEDTLS_X509_BADCERT_EXPIRED | MBEDTLS_X509_BADCERT_FUTURE,
+			};
+			if (is_user_onenet == 1)
+			{
+				client_info.ssl_cfg = &ontnet_ssl_cfg;
+				ret = ql_mqtt_connect(&mqtt_cli, MQTT_CLIENT_ONENET_SSL_URL, mqtt_connect_result_cb, NULL, (const struct mqtt_connect_client_info_t *)&client_info, mqtt_state_exception_cb);
+			}
+			else
+			{
+				client_info.ssl_cfg = &quectel_ssl_cfg;
+				ret = ql_mqtt_connect(&mqtt_cli, MQTT_CLIENT_QUECTEL_SSL_URL, mqtt_connect_result_cb, NULL, (const struct mqtt_connect_client_info_t *)&client_info, mqtt_state_exception_cb);
+			}
 		}
-		if(ret  == MQTTCLIENT_WOUNDBLOCK){
+		if (ret == MQTTCLIENT_WOUNDBLOCK)
+		{
 			QL_MQTT_LOG("====wait connect result");
 			ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
-			if(mqtt_connected == 0){
+			if (mqtt_connected == 0)
+			{
 				ql_mqtt_client_deinit(&mqtt_cli);
 				break;
 			}
-		}else{
-			QL_MQTT_LOG("===mqtt connect failed ,ret = %d",ret);
+		}
+		else
+		{
+			QL_MQTT_LOG("===mqtt connect failed ,ret = %d", ret);
 			break;
 		}
 
 		ql_mqtt_set_inpub_callback(&mqtt_cli, mqtt_inpub_data_cb, NULL);
 
-        if(is_user_onenet == 1)
-        {
-            if(is_user_onenet == 1)
-            {
-                if(ql_mqtt_sub_unsub(&mqtt_cli, "$sys/417661/test_led/dp/post/json/+", 1, mqtt_requst_result_cb,NULL, 1) == MQTTCLIENT_WOUNDBLOCK){
-                	QL_MQTT_LOG("======wait subscrible result");
-                	ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
-                }
-                if(ql_mqtt_publish(&mqtt_cli, "$sys/417661/test_led/dp/post/json",MQTT_PUB_MSG0, strlen(MQTT_PUB_MSG0), 0, 0, mqtt_requst_result_cb,NULL) == MQTTCLIENT_WOUNDBLOCK){
-                	QL_MQTT_LOG("======wait publish result");
-                	ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
-                }
-                if(ql_mqtt_publish(&mqtt_cli, "$sys/417661/test_led/dp/post/json", MQTT_PUB_MSG1, strlen(MQTT_PUB_MSG1), 1, 0, mqtt_requst_result_cb,NULL) == MQTTCLIENT_WOUNDBLOCK){
-                	QL_MQTT_LOG("======wait publish result");
-                	ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
-                }
-                //  onenet 平台不支持qos2
-                if(ql_mqtt_sub_unsub(&mqtt_cli,"$sys/417661/test_led/dp/post/json/+", 1, mqtt_requst_result_cb,NULL, 0) == MQTTCLIENT_WOUNDBLOCK){
-                	QL_MQTT_LOG("=====wait unsubscrible result");
-                	ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
-                }
-            }
-        }
+		if (is_user_onenet == 1)
+		{
+			if (is_user_onenet == 1)
+			{
+				if (ql_mqtt_sub_unsub(&mqtt_cli, "$sys/417661/test_led/dp/post/json/+", 1, mqtt_requst_result_cb, NULL, 1) == MQTTCLIENT_WOUNDBLOCK)
+				{
+					QL_MQTT_LOG("======wait subscrible result");
+					ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
+				}
+				if (ql_mqtt_publish(&mqtt_cli, "$sys/417661/test_led/dp/post/json", MQTT_PUB_MSG0, strlen(MQTT_PUB_MSG0), 0, 0, mqtt_requst_result_cb, NULL) == MQTTCLIENT_WOUNDBLOCK)
+				{
+					QL_MQTT_LOG("======wait publish result");
+					ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
+				}
+				if (ql_mqtt_publish(&mqtt_cli, "$sys/417661/test_led/dp/post/json", MQTT_PUB_MSG1, strlen(MQTT_PUB_MSG1), 1, 0, mqtt_requst_result_cb, NULL) == MQTTCLIENT_WOUNDBLOCK)
+				{
+					QL_MQTT_LOG("======wait publish result");
+					ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
+				}
+				//  onenet 平台不支持qos2
+				if (ql_mqtt_sub_unsub(&mqtt_cli, "$sys/417661/test_led/dp/post/json/+", 1, mqtt_requst_result_cb, NULL, 0) == MQTTCLIENT_WOUNDBLOCK)
+				{
+					QL_MQTT_LOG("=====wait unsubscrible result");
+					ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
+				}
+			}
+		}
 		else
 		{
-			// ql_get_gnss_info(&nmeaData);	
+			// ql_get_gnss_info(&nmeaData);
 
 			// volatile double longitude = 54.456;
 			// volatile double latitude = 76.456;
@@ -635,7 +646,8 @@ static void mqtt_app_thread(void *arg)
 				ql_get_gnss_info(&nmeaData);
 
 				QL_MQTT_LOG("Received longitude from thread:%.6f", nmeaData.longitude);
-				QL_MQTT_LOG("Received latitude from thread:%.6f", nmeaData.latitude);
+				QL_MQTT_LOG("Received latitude from thread:%.6f", nmeaData.latitude); // nmeaData
+				QL_MQTT_LOG("Number of satellites connected:%i", nmeaData.satellites_num);
 
 				ql_mqtt_set_inpub_callback(&mqtt_cli, mqtt_inpub_data_cb, NULL);
 
@@ -647,8 +659,7 @@ static void mqtt_app_thread(void *arg)
 					ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
 				}
 
-
-			//	make_Bike_message();
+				//	make_Bike_message();
 				// mbedtls_base64_encode(&sendCore[0], 0, &encodedLengthBike, &encodedCore[0], sizeof(encodedCore));
 
 				// QL_MQTT_LOG("Received inside loop longitude:%f", longitude);
@@ -657,7 +668,7 @@ static void mqtt_app_thread(void *arg)
 				// encodingString = (unsigned char*)"Longitude:12.45,Latitude:76.8,ID:123";
 				// sprintf(encodingString, "Longitude:%f,Latitude:%f,ID:123",longitude, latitude);
 				snprintf(encodingString, sizeof(encodingString), "Longitude:%.6f,Latitude:%.6f,ID:123", nmeaData.longitude, nmeaData.latitude);
-				encodedCore = (unsigned char*)encodingString;//"Longitude:%lf,Latitude:%lf,ID:123,longitu);
+				encodedCore = (unsigned char *)encodingString; //"Longitude:%lf,Latitude:%lf,ID:123,longitu);
 				sendBikePacket = base64Encoder(encodedCore);
 				// strncpy(sendBikeMqttPacket, sendBikePacket, 72);
 
@@ -671,8 +682,8 @@ static void mqtt_app_thread(void *arg)
 					// ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
 				}
 
-				//make_Trip1_message();
-				// // mbedtls_base64_encode(&sendTrip1[0], 0, &encodedLengthTrip1, &encodedTrip1[0], sizeof(encodedTrip1));
+				// make_Trip1_message();
+				//  // mbedtls_base64_encode(&sendTrip1[0], 0, &encodedLengthTrip1, &encodedTrip1[0], sizeof(encodedTrip1));
 
 				sendTrip1Packet = base64Encoder(encodedTrip1);
 				strncpy(sendTrip1MqttPacket, sendTrip1Packet, strlen(sendTrip1Packet));
@@ -685,7 +696,7 @@ static void mqtt_app_thread(void *arg)
 				// 	// ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
 				// }
 
-				//make_Trip2_message();
+				// make_Trip2_message();
 
 				// // mbedtls_base64_encode(&sendTrip2[0], 0, &encodedLengthTrip2, &encodedTrip2[0], sizeof(encodedTrip2));
 
@@ -701,8 +712,8 @@ static void mqtt_app_thread(void *arg)
 				// 	ql_rtos_semaphore_wait(mqtt_semp, QL_WAIT_FOREVER);
 				// }
 
-				//make_End_message();
-				// // mbedtls_base64_encode(&sendEnd[0], 0, &encodedLengthEnd, &encodedEnd[0], sizeof(encodedEnd));
+				// make_End_message();
+				//  // mbedtls_base64_encode(&sendEnd[0], 0, &encodedLengthEnd, &encodedEnd[0], sizeof(encodedEnd));
 
 				sendEndPacket = base64Encoder(encodedEnd);
 				strncpy(sendEndMqttPacket, sendEndPacket, strlen(sendEndPacket));
@@ -740,35 +751,33 @@ static void mqtt_app_thread(void *arg)
 		// // 	break;
 		// // }
 	}
-	
+
 exit:
-    if(is_user_onenet == 1)
-    {
-        free((void*)client_id);
-        free((void*)client_user);
-        free((void*)client_pass);
-        client_id = NULL;
-        client_user = NULL;
-        client_pass = NULL;
-    }
+	if (is_user_onenet == 1)
+	{
+		free((void *)client_id);
+		free((void *)client_user);
+		free((void *)client_pass);
+		client_id = NULL;
+		client_user = NULL;
+		client_pass = NULL;
+	}
 
-    ql_rtos_semaphore_delete(mqtt_semp);
-    ql_rtos_task_delete(mqtt_task);	
+	ql_rtos_semaphore_delete(mqtt_semp);
+	ql_rtos_task_delete(mqtt_task);
 
-   return;	
+	return;
 }
-
 
 int ql_mqtt_app_init(void)
 {
 	QlOSStatus err = QL_OSI_SUCCESS;
-	
-    err = ql_rtos_task_create(&mqtt_task, 16*1024, APP_PRIORITY_ABOVE_NORMAL, "QmqttApp", mqtt_app_thread, NULL, 5);
-	if(err != QL_OSI_SUCCESS)
-    {
+
+	err = ql_rtos_task_create(&mqtt_task, 16 * 1024, APP_PRIORITY_ABOVE_NORMAL, "QmqttApp", mqtt_app_thread, NULL, 5);
+	if (err != QL_OSI_SUCCESS)
+	{
 		QL_MQTT_LOG("mqtt_app init failed");
 	}
 
 	return err;
 }
-
