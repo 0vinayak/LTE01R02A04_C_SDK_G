@@ -194,6 +194,7 @@ struct com_emotorad_backend_aggregation_flink_data_end_t *Bike_End_Data;
 struct pbtools_heap_t *heap_end;
 
 ql_gnss_data_t nmeaData;
+static boolean ConnectIndication = true;
 
 static void
 mqtt_state_exception_cb(mqtt_client_t *client)
@@ -525,7 +526,7 @@ static void mqtt_app_thread(void *arg)
 			client_info.client_pass = MQTT_CLIENT_PASS;
 		}
 		QL_MQTT_LOG("connect ssl %d onenet mode %d", case_id, is_user_onenet);
-		if (case_id == 0)
+		if (case_id == 0 && ConnectIndication == true)
 		{
 			client_info.ssl_cfg = NULL;
 			if (is_user_onenet == 1)
@@ -535,6 +536,10 @@ static void mqtt_app_thread(void *arg)
 			else
 			{
 				ret = ql_mqtt_connect(&mqtt_cli, MQTT_CLIENT_QUECTEL_URL, mqtt_connect_result_cb, NULL, (const struct mqtt_connect_client_info_t *)&client_info, mqtt_state_exception_cb);
+				if (ret == 0)
+				{
+					ConnectIndication = false;
+				}
 			}
 		}
 		else
@@ -583,7 +588,10 @@ static void mqtt_app_thread(void *arg)
 			else
 			{
 				client_info.ssl_cfg = &quectel_ssl_cfg;
-				ret = ql_mqtt_connect(&mqtt_cli, MQTT_CLIENT_QUECTEL_SSL_URL, mqtt_connect_result_cb, NULL, (const struct mqtt_connect_client_info_t *)&client_info, mqtt_state_exception_cb);
+				if (ConnectIndication == true)
+				{
+					ret = ql_mqtt_connect(&mqtt_cli, MQTT_CLIENT_QUECTEL_SSL_URL, mqtt_connect_result_cb, NULL, (const struct mqtt_connect_client_info_t *)&client_info, mqtt_state_exception_cb);
+				}
 			}
 		}
 		if (ret == MQTTCLIENT_WOUNDBLOCK)
