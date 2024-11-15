@@ -194,13 +194,13 @@ struct com_emotorad_backend_aggregation_flink_data_end_t *Bike_End_Data;
 struct pbtools_heap_t *heap_end;
 
 ql_gnss_data_t nmeaData;
-static boolean ConnectIndication = true;
+static uint16_t ConnectIndication = 1;
 
 static void
 mqtt_state_exception_cb(mqtt_client_t *client)
 {
 	QL_MQTT_LOG("mqtt session abnormal disconnect");
-	mqtt_connected = 0;
+	// mqtt_connected = 0;
 }
 
 static void mqtt_connect_result_cb(mqtt_client_t *client, void *arg, mqtt_connection_status_e status)
@@ -366,7 +366,8 @@ char *base64Encoder(unsigned char input_str[])
 static void mqtt_app_thread(void *arg)
 {
 	int ret = 0;
-	int i = 0, run_num = 1;
+	int i = 0;
+	long long run_num = 1;
 	int profile_idx = 1;
 	ql_data_call_info_s info;
 	char ip4_addr_str[16] = {0};
@@ -446,9 +447,9 @@ static void mqtt_app_thread(void *arg)
 	inet_ntop(AF_INET, &info.v4.addr.sec_dns, ip4_addr_str, sizeof(ip4_addr_str));
 	QL_MQTT_LOG("info.v4.addr.sec_dns: %s\r\n", ip4_addr_str);
 
-	while (run_num <= 100)
+	while (run_num <= 1e9)
 	{
-		int test_num = 0;
+		long long test_num = 0;
 		int case_id = 0;
 		if (is_user_onenet != 1)
 		{
@@ -526,7 +527,7 @@ static void mqtt_app_thread(void *arg)
 			client_info.client_pass = MQTT_CLIENT_PASS;
 		}
 		QL_MQTT_LOG("connect ssl %d onenet mode %d", case_id, is_user_onenet);
-		if (case_id == 0 && ConnectIndication == true)
+		if (case_id == 0 && ConnectIndication == 1)
 		{
 			client_info.ssl_cfg = NULL;
 			if (is_user_onenet == 1)
@@ -538,8 +539,10 @@ static void mqtt_app_thread(void *arg)
 				ret = ql_mqtt_connect(&mqtt_cli, MQTT_CLIENT_QUECTEL_URL, mqtt_connect_result_cb, NULL, (const struct mqtt_connect_client_info_t *)&client_info, mqtt_state_exception_cb);
 				if (ret == 0)
 				{
-					ConnectIndication = false;
+					QL_MQTT_LOG("MQTT connection established, stop trying now!");
+					ConnectIndication = 0;
 				}
+				QL_MQTT_LOG("Connection check before normal connect:%u", ConnectIndication);
 			}
 		}
 		else
@@ -588,8 +591,10 @@ static void mqtt_app_thread(void *arg)
 			else
 			{
 				client_info.ssl_cfg = &quectel_ssl_cfg;
+				QL_MQTT_LOG("Connection check before SSL:%u", ConnectIndication);
 				if (ConnectIndication == true)
 				{
+
 					ret = ql_mqtt_connect(&mqtt_cli, MQTT_CLIENT_QUECTEL_SSL_URL, mqtt_connect_result_cb, NULL, (const struct mqtt_connect_client_info_t *)&client_info, mqtt_state_exception_cb);
 				}
 			}
@@ -649,7 +654,7 @@ static void mqtt_app_thread(void *arg)
 			// QL_MQTT_LOG("Received longitude from thread:%.6f", nmeaData.longitude);
 			// QL_MQTT_LOG("Received latitude from thread:%.6f", nmeaData.latitude);
 
-			while (test_num < 10000 && mqtt_connected == 1)
+			while (test_num < 1e7 && mqtt_connected == 1)
 			{
 				ql_get_gnss_info(&nmeaData);
 
@@ -781,7 +786,7 @@ int ql_mqtt_app_init(void)
 {
 	QlOSStatus err = QL_OSI_SUCCESS;
 
-	err = ql_rtos_task_create(&mqtt_task, 16 * 1024, APP_PRIORITY_ABOVE_NORMAL, "QmqttApp", mqtt_app_thread, NULL, 5);
+	err = ql_rtos_task_create(&mqtt_task, 16 * 1024, APP_PRIORITY_NORMAL, "QmqttApp", mqtt_app_thread, NULL, 5);
 	if (err != QL_OSI_SUCCESS)
 	{
 		QL_MQTT_LOG("mqtt_app init failed");
