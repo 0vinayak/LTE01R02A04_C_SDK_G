@@ -514,12 +514,12 @@ static void mqtt_app_thread(void *arg)
 		}
 		else
 		{
-			client_info.keep_alive = 65534;
-			client_info.pkt_timeout = 5;
-			client_info.retry_times = 3;
+			client_info.keep_alive = 60000;
+			client_info.pkt_timeout = 30;
+			client_info.retry_times = 9;
 			client_info.clean_session = 1;
 			client_info.will_qos = 0;
-			client_info.will_retain = 0;
+			client_info.will_retain = 1;
 			client_info.will_topic = NULL;
 			client_info.will_msg = NULL;
 			client_info.client_id = MQTT_CLIENT_IDENTITY;
@@ -532,7 +532,7 @@ static void mqtt_app_thread(void *arg)
 			client_info.ssl_cfg = NULL;
 			if (is_user_onenet == 1)
 			{
-				ret = ql_mqtt_connect(&mqtt_cli, MQTT_CLIENT_ONENET_URL, mqtt_connect_result_cb, NULL, (const struct mqtt_connect_client_info_t *)&client_info, mqtt_state_exception_cb);
+				// ret = ql_mqtt_connect(&mqtt_cli, MQTT_CLIENT_ONENET_URL, mqtt_connect_result_cb, NULL, (const struct mqtt_connect_client_info_t *)&client_info, mqtt_state_exception_cb);
 			}
 			else
 			{
@@ -542,7 +542,7 @@ static void mqtt_app_thread(void *arg)
 					QL_MQTT_LOG("MQTT connection established, stop trying now!");
 					ConnectIndication = 0;
 				}
-				QL_MQTT_LOG("Connection check before normal connect:%u", ConnectIndication);
+				QL_MQTT_LOG("Connection check for normal connect:%u", ConnectIndication);
 			}
 		}
 		else
@@ -586,18 +586,22 @@ static void mqtt_app_thread(void *arg)
 			if (is_user_onenet == 1)
 			{
 				client_info.ssl_cfg = &ontnet_ssl_cfg;
-				ret = ql_mqtt_connect(&mqtt_cli, MQTT_CLIENT_ONENET_SSL_URL, mqtt_connect_result_cb, NULL, (const struct mqtt_connect_client_info_t *)&client_info, mqtt_state_exception_cb);
+				// ret = ql_mqtt_connect(&mqtt_cli, MQTT_CLIENT_ONENET_SSL_URL, mqtt_connect_result_cb, NULL, (const struct mqtt_connect_client_info_t *)&client_info, mqtt_state_exception_cb);
 			}
 			else
 			{
 				// ConnectIndication = 0;
 				client_info.ssl_cfg = &quectel_ssl_cfg;
 				// QL_MQTT_LOG("Connection check before SSL:%u", ConnectIndication);
-				// if (ConnectIndication == 1)
-				// {
-				// 	ret = ql_mqtt_connect(&mqtt_cli, MQTT_CLIENT_QUECTEL_SSL_URL, mqtt_connect_result_cb, NULL, (const struct mqtt_connect_client_info_t *)&client_info, mqtt_state_exception_cb);
-				// 	ConnectIndication = 0;
-				// }
+				if (ConnectIndication == 1)
+				{
+					ret = ql_mqtt_connect(&mqtt_cli, MQTT_CLIENT_QUECTEL_SSL_URL, mqtt_connect_result_cb, NULL, (const struct mqtt_connect_client_info_t *)&client_info, mqtt_state_exception_cb);
+					if(ret == 0)
+					{
+					ConnectIndication = 0;
+					}
+
+				}
 			}
 		}
 		if (ret == MQTTCLIENT_WOUNDBLOCK)
